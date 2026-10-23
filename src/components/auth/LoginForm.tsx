@@ -162,6 +162,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToSignu
             </>
           )}
         </button>
+
+        {/* Quick Demo Access */}
+        <button
+          type="button"
+          onClick={() => onSuccess({ name: 'Alex Chen', email: 'alex.chen@jobtransit.ai' })}
+          className="w-full h-10 rounded-2xl bg-white/70 hover:bg-white text-slate-800 font-semibold text-xs border border-white/90 transition-all duration-150 shadow-xs active:scale-[0.99] flex items-center justify-center gap-1.5 cursor-pointer"
+        >
+          <span>🚀 Explore with Demo Profile (Instant Access)</span>
+        </button>
       </form>
 
       {/* Switch to Signup */}

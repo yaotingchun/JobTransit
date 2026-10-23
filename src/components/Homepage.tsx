@@ -11,6 +11,8 @@ import {
   Database,
   Brain,
 } from 'lucide-react'
+import { ProfileOnboarding } from './ProfileOnboarding'
+import { TransitPassStudio } from './transit/TransitPassStudio'
 
 interface HomepageProps {
   currentUser: UserProfile
@@ -89,7 +91,7 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
       />
 
       {/* Main Container */}
-      <main className="relative z-10 pt-28 sm:pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-16 custom-scrollbar">
+      <main className={`relative z-10 pt-28 sm:pt-32 pb-24 px-4 sm:px-6 lg:px-8 mx-auto space-y-16 custom-scrollbar ${activeTab === 'profile' ? 'max-w-[1680px]' : 'max-w-7xl'}`}>
         {activeTab === 'home' && (
           <>
             {/* SECTION 2: HERO SECTION WITH DAILY NEWS CATCHUP ON RIGHT  */}
@@ -299,9 +301,24 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
               <p>© 2026 JobTransit Inc. Career navigation built for the AI transformation era.</p>
               <p>Your skills. Your next destination. A route that adapts.</p>
             </footer>
-          </>
-        )}
-      </main>
+            </>
+          )}
+
+          {activeTab === 'profile' && (
+            <ProfileOnboarding
+              currentUser={currentUser}
+              onClose={() => setActiveTab('home')}
+            />
+          )}
+
+          {activeTab === 'transit' && (
+            <TransitPassStudio
+              currentUser={currentUser}
+              onNavigateHome={() => setActiveTab('home')}
+            />
+          )}
+        </main>
+
     </div>
   )
 }

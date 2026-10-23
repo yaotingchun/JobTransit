@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from './lib/firebase'
 import { Header } from './components/Header'
 import { VideoBackground } from './components/VideoBackground'
 import { HeroText } from './components/HeroText'
@@ -40,6 +42,21 @@ export default function App() {
     }
   }
 
+  const handleDemoLogin = async () => {
+    try {
+      const cred = await signInWithEmailAndPassword(auth, 'alex@gmail.com', '123456')
+      handleAuthSuccess({
+        name: cred.user.displayName || 'Alex',
+        email: cred.user.email || 'alex@gmail.com',
+      })
+    } catch {
+      handleAuthSuccess({
+        name: 'Alex',
+        email: 'alex@gmail.com',
+      })
+    }
+  }
+
   // After login, redirect to Homepage with the glassmorphism navbar on top
   if (currentUser) {
     return <Homepage currentUser={currentUser} onLogout={handleLogout} />
@@ -56,6 +73,7 @@ export default function App() {
         onOpenAuth={handleOpenAuth}
         currentUser={currentUser}
         onLogout={handleLogout}
+        onDemoLogin={handleDemoLogin}
       />
 
       {/* Hero Text at Exact Location */}
