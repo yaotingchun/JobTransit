@@ -27,6 +27,10 @@ const AuthDialogContent: React.FC<{
   const handleSuccess = (user: UserProfile) => {
     setAuthenticatedUser(user)
     onAuthSuccess(user)
+    // Auto-redirect to homepage
+    setTimeout(() => {
+      onClose()
+    }, 700)
   }
 
   return (
@@ -117,15 +121,16 @@ const AuthDialogContent: React.FC<{
             </h3>
 
             <p className="text-sm text-slate-800/90 mb-6 max-w-xs mx-auto leading-relaxed">
-              Signed in as <span className="font-semibold text-slate-950">{authenticatedUser.email}</span>. Your workspace is ready.
+              Signed in as <span className="font-semibold text-slate-950">{authenticatedUser.email}</span>. Redirecting to your homepage...
             </p>
 
             <button
               type="button"
               onClick={onClose}
-              className="w-full h-11 rounded-2xl bg-slate-950 hover:bg-slate-900 text-white text-sm font-semibold shadow-lg transition-all cursor-pointer active:scale-[0.98]"
+              className="w-full h-11 rounded-2xl bg-slate-950 hover:bg-slate-900 text-white text-sm font-semibold shadow-lg transition-all cursor-pointer active:scale-[0.98] flex items-center justify-center gap-2"
             >
-              Continue to Workspace
+              <span>Go to Homepage</span>
+              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             </button>
           </div>
         )}
