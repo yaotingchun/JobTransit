@@ -10,7 +10,10 @@ import {
   Bot,
   Database,
   Brain,
+  Route,
 } from 'lucide-react'
+import { CatchupTab } from './catchup/CatchupTab'
+import catchupBg from '../assets/catchup-bg.png'
 
 interface HomepageProps {
   currentUser: UserProfile
@@ -61,24 +64,42 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
   const [selectedRole, setSelectedRole] = useState<string>('Agentic AI Engineer')
 
   return (
-    <div className="relative h-screen w-full bg-[#f8fafc] text-slate-900 font-sans overflow-y-auto overflow-x-hidden custom-scrollbar selection:bg-orange-500/20 selection:text-orange-900">
-      {/* Ambient Glassmorphic Background Elements */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute -top-40 -left-40 w-[640px] h-[640px] rounded-full bg-gradient-to-br from-blue-300/35 via-sky-200/25 to-transparent blur-[130px]" />
-        <div className="absolute top-12 right-0 w-[620px] h-[620px] rounded-full bg-gradient-to-bl from-teal-200/35 via-sky-100/30 to-indigo-100/20 blur-[120px]" />
-        <div className="absolute top-1/2 -right-40 w-[680px] h-[680px] rounded-full bg-gradient-to-bl from-teal-200/30 via-cyan-100/25 to-transparent blur-[140px]" />
-        <div className="absolute -bottom-40 left-1/4 w-[740px] h-[740px] rounded-full bg-gradient-to-tr from-orange-200/20 via-amber-100/15 to-transparent blur-[150px]" />
+    <div
+      className={`relative h-screen w-full font-sans overflow-y-auto overflow-x-hidden custom-scrollbar selection:bg-orange-500/20 selection:text-orange-900 transition-colors duration-500 ${
+        activeTab === 'catchup' ? 'bg-slate-900 text-slate-900' : 'bg-[#f8fafc] text-slate-900'
+      }`}
+    >
+      {/* Background Layer: Atmospheric Cloudy Sky for Catchup tab, or ambient mesh for Home */}
+      {activeTab === 'catchup' ? (
+        <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+          <img
+            src={catchupBg}
+            alt="Catchup Cloudy Sky Background"
+            className="w-full h-full object-cover object-center filter saturate-[1.05] brightness-[0.98] transition-opacity duration-700"
+          />
+          {/* Subtle atmospheric wash for pristine legibility and specular light contrast */}
+          <div className="absolute inset-0 bg-slate-950/10 backdrop-blur-[0.5px]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/35 via-white/10 to-slate-900/15" />
+        </div>
+      ) : (
+        /* Ambient Glassmorphic Background Elements */
+        <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+          <div className="absolute -top-40 -left-40 w-[640px] h-[640px] rounded-full bg-gradient-to-br from-blue-300/35 via-sky-200/25 to-transparent blur-[130px]" />
+          <div className="absolute top-12 right-0 w-[620px] h-[620px] rounded-full bg-gradient-to-bl from-teal-200/35 via-sky-100/30 to-indigo-100/20 blur-[120px]" />
+          <div className="absolute top-1/2 -right-40 w-[680px] h-[680px] rounded-full bg-gradient-to-bl from-teal-200/30 via-cyan-100/25 to-transparent blur-[140px]" />
+          <div className="absolute -bottom-40 left-1/4 w-[740px] h-[740px] rounded-full bg-gradient-to-tr from-orange-200/20 via-amber-100/15 to-transparent blur-[150px]" />
 
-        {/* Ambient Grid Matrix */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              'radial-gradient(circle, #0f172a 1.2px, transparent 1.2px)',
-            backgroundSize: '28px 28px',
-          }}
-        />
-      </div>
+          {/* Ambient Grid Matrix */}
+          <div
+            className="absolute inset-0 opacity-[0.03]"
+            style={{
+              backgroundImage:
+                'radial-gradient(circle, #0f172a 1.2px, transparent 1.2px)',
+              backgroundSize: '28px 28px',
+            }}
+          />
+        </div>
+      )}
 
       {/* Top Glassmorphic Navigation Bar */}
       <Navbar
@@ -89,7 +110,11 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
       />
 
       {/* Main Container */}
-      <main className="relative z-10 pt-28 sm:pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-16 custom-scrollbar">
+      <main
+        className={`relative z-10 pt-24 sm:pt-28 pb-20 px-4 sm:px-6 lg:px-8 mx-auto transition-all duration-300 custom-scrollbar ${
+          activeTab === 'catchup' ? 'max-w-7xl' : 'max-w-7xl space-y-16'
+        }`}
+      >
         {activeTab === 'home' && (
           <>
             {/* SECTION 2: HERO SECTION WITH DAILY NEWS CATCHUP ON RIGHT  */}
@@ -300,6 +325,46 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
               <p>Your skills. Your next destination. A route that adapts.</p>
             </footer>
           </>
+        )}
+
+        {/* CATCHUP TAB (NEWS & INTELLIGENCE) */}
+        {activeTab === 'catchup' && (
+          <CatchupTab
+            currentUser={currentUser}
+            onSelectTab={setActiveTab}
+            onLogout={onLogout}
+          />
+        )}
+
+        {/* TRANSIT & TREND PLACEHOLDER FALLBACKS */}
+        {(activeTab === 'transit' || activeTab === 'trend' || activeTab === 'profile') && (
+          <div className="rounded-3xl glass-card-ambient p-8 sm:p-12 text-center space-y-4 max-w-2xl mx-auto border border-white/80 shadow-[0_12px_40px_rgba(15,23,42,0.06)]">
+            <div className="w-12 h-12 rounded-2xl bg-teal-500/15 text-teal-700 mx-auto flex items-center justify-center">
+              <Route className="w-6 h-6" />
+            </div>
+            <h2 className="font-hero text-2xl font-bold text-slate-950">
+              {activeTab === 'transit' ? 'Career Transit Route' : activeTab === 'trend' ? 'Industry Roles & Trends' : 'Explorer Profile'}
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
+              Explore your next station and track industry skill shifts in real-time. Navigate to Catchup to see today's curated tech intelligence briefing.
+            </p>
+            <div className="pt-2 flex items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => setActiveTab('catchup')}
+                className="px-5 py-2.5 rounded-full bg-teal-700 hover:bg-teal-800 text-white text-xs font-semibold shadow-sm transition-all cursor-pointer"
+              >
+                Go to Catchup Tab
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('home')}
+                className="px-5 py-2.5 rounded-full glass-btn text-slate-800 text-xs font-semibold cursor-pointer"
+              >
+                Return to Home
+              </button>
+            </div>
+          </div>
         )}
       </main>
     </div>
