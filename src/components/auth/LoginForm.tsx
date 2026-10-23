@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { ArrowRight, Eye, EyeOff, Lock, Mail } from 'lucide-react'
+import { ArrowRight, Eye, EyeOff, Lock, Mail, AlertCircle } from 'lucide-react'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../../lib/firebase'
 
 interface LoginFormProps {
   onSuccess: (user: { name: string; email: string }) => void
@@ -12,18 +14,46 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToSignu
   const [showPassword, setShowPassword] = useState(false)
   const [rememberMe, setRememberMe] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!email.trim() || !password.trim()) return
 
     setIsLoading(true)
-    setTimeout(() => {
+    setError(null)
+
+    try {
+      const credential = await signInWithEmailAndPassword(auth, email.trim(), password)
+      const firebaseUser = credential.user
+
+      // Derive display name: prefer Firebase displayName, fallback to email prefix
+      const displayName =
+        firebaseUser.displayName ||
+        (() => {
+          const prefix = email.split('@')[0]
+          return prefix.charAt(0).toUpperCase() + prefix.slice(1)
+        })()
+
+      onSuccess({ name: displayName, email: firebaseUser.email ?? email })
+    } catch (err: unknown) {
+      const code = (err as { code?: string }).code ?? ''
+      if (
+        code === 'auth/user-not-found' ||
+        code === 'auth/wrong-password' ||
+        code === 'auth/invalid-credential'
+      ) {
+        setError('Incorrect email or password. Please try again.')
+      } else if (code === 'auth/invalid-email') {
+        setError('Please enter a valid email address.')
+      } else if (code === 'auth/too-many-requests') {
+        setError('Too many failed attempts. Please try again later.')
+      } else {
+        setError('Something went wrong. Please try again.')
+      }
+    } finally {
       setIsLoading(false)
-      const username = email.split('@')[0]
-      const capitalized = username.charAt(0).toUpperCase() + username.slice(1)
-      onSuccess({ name: capitalized, email })
-    }, 500)
+    }
   }
 
   return (
@@ -37,6 +67,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToSignu
           Access your transit dashboard, applications, and saved routes.
         </p>
       </div>
+
+      {/* Error Banner */}
+      {error && (
+        <div className="flex items-start gap-2.5 px-3.5 py-3 rounded-2xl bg-red-500/15 border border-red-400/30 text-red-900 text-xs font-medium">
+          <AlertCircle className="w-4 h-4 mt-0.5 shrink-0 text-red-600" />
+          <span>{error}</span>
+        </div>
+      )}
 
       {/* Login Form */}
       <form onSubmit={handleSubmit} className="space-y-3.5">
@@ -52,7 +90,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToSignu
               type="email"
               required
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => { setEmail(e.target.value); setError(null) }}
               placeholder="name@example.com"
               className="w-full h-11 pl-10 pr-4 rounded-2xl bg-white/40 border border-white/50 text-slate-950 placeholder:text-slate-600 focus:outline-none focus:bg-white/60 focus:border-white/80 focus:ring-2 focus:ring-orange-500/40 backdrop-blur-md text-sm transition-all shadow-sm"
             />
@@ -80,7 +118,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToSignu
               type={showPassword ? 'text' : 'password'}
               required
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => { setPassword(e.target.value); setError(null) }}
               placeholder="Enter your password"
               className="w-full h-11 pl-10 pr-10 rounded-2xl bg-white/40 border border-white/50 text-slate-950 placeholder:text-slate-600 focus:outline-none focus:bg-white/60 focus:border-white/80 focus:ring-2 focus:ring-orange-500/40 backdrop-blur-md text-sm transition-all shadow-sm"
             />

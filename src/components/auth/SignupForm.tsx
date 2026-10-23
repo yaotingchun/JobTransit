@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { ArrowRight, Eye, EyeOff, Lock, Mail, User } from 'lucide-react'
+import { ArrowRight, Eye, EyeOff, Lock, Mail, User, AlertCircle } from 'lucide-react'
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { auth } from '../../lib/firebase'
 
 interface SignupFormProps {
   onSuccess: (user: { name: string; email: string }) => void
@@ -13,6 +15,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onSuccess, onSwitchToLog
   const [showPassword, setShowPassword] = useState(false)
   const [agreed, setAgreed] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const getPasswordStrength = () => {
     if (!password) return 0
@@ -26,15 +29,35 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onSuccess, onSwitchToLog
 
   const strength = getPasswordStrength()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!name.trim() || !email.trim() || !password.trim()) return
 
     setIsLoading(true)
-    setTimeout(() => {
+    setError(null)
+
+    try {
+      // Create user in Firebase Authentication
+      const credential = await createUserWithEmailAndPassword(auth, email.trim(), password)
+
+      // Store the display name on the Firebase user profile
+      await updateProfile(credential.user, { displayName: name.trim() })
+
+      onSuccess({ name: name.trim(), email: credential.user.email ?? email.trim() })
+    } catch (err: unknown) {
+      const code = (err as { code?: string }).code ?? ''
+      if (code === 'auth/email-already-in-use') {
+        setError('An account with this email already exists. Try signing in instead.')
+      } else if (code === 'auth/invalid-email') {
+        setError('Please enter a valid email address.')
+      } else if (code === 'auth/weak-password') {
+        setError('Password must be at least 6 characters.')
+      } else {
+        setError('Something went wrong. Please try again.')
+      }
+    } finally {
       setIsLoading(false)
-      onSuccess({ name: name.trim(), email: email.trim() })
-    }, 500)
+    }
   }
 
   return (
@@ -48,6 +71,14 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onSuccess, onSwitchToLog
           Join thousands of transit leaders, engineers, and operators.
         </p>
       </div>
+
+      {/* Error Banner */}
+      {error && (
+        <div className="flex items-start gap-2.5 px-3.5 py-3 rounded-2xl bg-red-500/15 border border-red-400/30 text-red-900 text-xs font-medium">
+          <AlertCircle className="w-4 h-4 mt-0.5 shrink-0 text-red-600" />
+          <span>{error}</span>
+        </div>
+      )}
 
       {/* Signup Form */}
       <form onSubmit={handleSubmit} className="space-y-3">
@@ -63,7 +94,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onSuccess, onSwitchToLog
               type="text"
               required
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => { setName(e.target.value); setError(null) }}
               placeholder="Alex Morgan"
               className="w-full h-11 pl-10 pr-4 rounded-2xl bg-white/40 border border-white/50 text-slate-950 placeholder:text-slate-600 focus:outline-none focus:bg-white/60 focus:border-white/80 focus:ring-2 focus:ring-orange-500/40 backdrop-blur-md text-sm transition-all shadow-sm"
             />
@@ -82,7 +113,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onSuccess, onSwitchToLog
               type="email"
               required
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => { setEmail(e.target.value); setError(null) }}
               placeholder="alex@example.com"
               className="w-full h-11 pl-10 pr-4 rounded-2xl bg-white/40 border border-white/50 text-slate-950 placeholder:text-slate-600 focus:outline-none focus:bg-white/60 focus:border-white/80 focus:ring-2 focus:ring-orange-500/40 backdrop-blur-md text-sm transition-all shadow-sm"
             />
@@ -102,7 +133,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onSuccess, onSwitchToLog
               required
               minLength={6}
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => { setPassword(e.target.value); setError(null) }}
               placeholder="At least 6 characters"
               className="w-full h-11 pl-10 pr-10 rounded-2xl bg-white/40 border border-white/50 text-slate-950 placeholder:text-slate-600 focus:outline-none focus:bg-white/60 focus:border-white/80 focus:ring-2 focus:ring-orange-500/40 backdrop-blur-md text-sm transition-all shadow-sm"
             />
