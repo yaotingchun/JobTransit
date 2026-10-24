@@ -53,3 +53,4 @@ Thumbs.db
 credentials*
 firebase.json
 src/lib/firebase.ts
+server/data/
