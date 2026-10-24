@@ -199,6 +199,12 @@ export const Realistic3DCard = React.forwardRef<Realistic3DCardRef, Realistic3DC
       // Only primary mouse button or touch
       if (e.button !== 0) return
 
+      // Don't capture pointer or drag when interacting with buttons, links, or interactive elements
+      const target = e.target as HTMLElement | null
+      if (target?.closest('button, a, input, select, textarea, [data-interactive="true"]')) {
+        return
+      }
+
       // Stop any existing animation
       if (isSpinning) setSpinning(false)
       velocityRef.current = { vx: 0, vy: 0 }
@@ -273,6 +279,11 @@ export const Realistic3DCard = React.forwardRef<Realistic3DCardRef, Realistic3DC
     }
 
     const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+      const target = e.target as HTMLElement | null
+      if (target?.closest('button, a, input, select, textarea, [data-interactive="true"]')) {
+        setIsDragging(false)
+        return
+      }
       if (!isDragging) return
       setIsDragging(false)
       try {
@@ -342,7 +353,7 @@ export const Realistic3DCard = React.forwardRef<Realistic3DCardRef, Realistic3DC
 
     return (
       <div
-        className={`relative flex flex-col items-center justify-center select-none py-8 sm:py-12 px-4 ${className}`}
+        className={`relative w-full flex flex-col items-center justify-center select-none py-6 sm:py-8 px-4 ${className}`}
         style={{ perspective: '1200px' }}
       >
         {/* ── Dynamic Cast Shadow on Floor ── */}
@@ -396,7 +407,8 @@ export const Realistic3DCard = React.forwardRef<Realistic3DCardRef, Realistic3DC
           }`}
           style={{
             width: '100%',
-            maxWidth: cardMaxWidth || '660px',
+            maxWidth: cardMaxWidth || '640px',
+            minWidth: 'min(100%, 580px)',
             aspectRatio: '1.586', // Standard credit/transit card ratio
             transformStyle: 'preserve-3d',
             transform: `translate3d(0, 0, ${cardElevationZ}px) rotateX(${rotX}deg) rotateY(${rotY}deg)`,

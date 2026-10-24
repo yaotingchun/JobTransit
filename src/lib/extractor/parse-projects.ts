@@ -67,18 +67,22 @@ export function cleanProjectTitle(raw: string, knownNames: string[] = []): strin
   title = title.replace(/\s*\((?:by|supervisor|advisor|author)[^)]*\)/i, '');
   title = title.replace(/\s*\[(?:by|supervisor|advisor|author)[^\]]*\]/i, '');
 
-  // If title has a separator like "Yao Ting Chun | Smart Transit App" or "Smart Transit App - Yao Ting Chun"
+  // If title has a separator like "JobTransit | React, TypeScript" or "Smart Transit App - Yao Ting Chun"
   if (/[|–—-]/.test(title)) {
     const parts = title.split(/\s+[|–—-]\s+/).map((p) => p.trim()).filter(Boolean);
     const nonHumanParts = parts.filter((p) =>
       !isHumanName(p, knownNames)
       && !/^(?:19|20)\d{2}/.test(p)
       && !/^(?:role|position|lead|developer|engineer|completed|ongoing)\b/i.test(p)
+      && !/^(?:typescript|javascript|react|python|node|fastapi|three\.js|docker|sql|aws|c\+\+|java)\b/i.test(p)
     );
     if (nonHumanParts.length > 0) {
-      title = nonHumanParts.join(' - ');
+      title = nonHumanParts[0]; // The main project name is the first non-human non-tech part
     }
   }
+
+  // Strip trailing tech stack without separator e.g. "JobTransit Engine TypeScript, React, Firestore"
+  title = title.replace(/\s+(?:TypeScript|JavaScript|React|Python|Node\.js|Express|FastAPI|Three\.js|Firestore|PostgreSQL|Docker)(?:,\s*[A-Za-z0-9._\s-]+)+$/i, '').trim();
 
   // Also strip trailing human name if separated by colon
   const colonMatch = title.match(/^(.+?)\s*:\s*(.+)$/);
@@ -122,8 +126,8 @@ function isTitleCandidate(text: string, allowLongTitle = false, knownNames: stri
   if (isHumanName(text, knownNames)) return false;
   if (humanRolePrefixes.test(text)) return false;
 
-  return text.length <= (allowLongTitle ? 110 : 80)
-    && wordCount <= (allowLongTitle ? 12 : 7)
+  return text.length <= (allowLongTitle ? 120 : 90)
+    && wordCount <= (allowLongTitle ? 14 : 10)
     && !descriptionLead.test(text)
     && !/[.!?]$/.test(text);
 }

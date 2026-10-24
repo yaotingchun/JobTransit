@@ -395,9 +395,20 @@ function extractEducation(sectionText: string, awardsText: string = '', fullDocu
       ? cleanValue(degreeMatch[1].replace(/^(?:science|arts|engineering|business administration)\s+in\s+/i, ''))
       : '';
   }
+  if (fieldOfStudy) {
+    fieldOfStudy = fieldOfStudy.replace(/\s+\b(?:university|universiti|universitas|college|institute|school|academy)\b.*/i, '').trim();
+  }
 
-  const institutionLine = splitLines(text).find((line) => /\b(university|college|institute|school|academy)\b/i.test(line)) ?? '';
-  const institutionName = extractLabeledValue(text, ['institution', 'university', 'college', 'school']) || cleanValue(institutionLine);
+  const institutionLine = splitLines(text).find((line) => /\b(university|universiti|universitas|college|institute|school|academy)\b/i.test(line)) ?? '';
+  let institutionName = extractLabeledValue(text, ['institution', 'university', 'college', 'school']);
+  if (!institutionName && institutionLine) {
+    // If the line has "Universiti Malaya | Graduated 2024", extract just the institution
+    const cleanInst = institutionLine.split(/[|–—-]/)[0].trim();
+    institutionName = cleanValue(cleanInst.replace(/\b(?:bachelor|master|phd|degree)\s+of\s+[^,\n|()]+/i, ''));
+  }
+  if (!institutionName && /\buniversiti\s+malaya\b/i.test(text)) {
+    institutionName = 'Universiti Malaya';
+  }
   const graduationMatch = text.match(/(?:graduat(?:ed|ion)|expected graduation|completion)\D{0,24}((?:19|20)\d{2})/i);
   const years = [...text.matchAll(/\b(?:19|20)\d{2}\b/g)].map((match) => Number(match[0]));
   const graduationYear = graduationMatch

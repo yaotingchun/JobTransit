@@ -25,7 +25,6 @@ import {
 import { CatchupTab } from './catchup/CatchupTab'
 import { TransitTab } from './transit/TransitTab'
 import catchupBg from '../assets/catchup-bg.png'
-import { FollowUpPage } from './followUp/FollowUpPage'
 import { TrendView } from './trend/TrendView'
 import { ProfileOnboarding } from './ProfileOnboarding'
 import { AIChatbox } from './chat/AIChatbox'
@@ -139,16 +138,6 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
   const handleNavigateToPathway = (stationId: string) => {
     window.location.hash = `#pathway-${stationId}`
     setActiveTab('transit')
-  }
-
-  if (activeTab === 'follow-up') {
-    return (
-      <FollowUpPage
-        currentUser={currentUser}
-        onLogout={onLogout}
-        onNavigateTab={setActiveTab}
-      />
-    )
   }
 
   return (

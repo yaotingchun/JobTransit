@@ -14,8 +14,8 @@ import {
   getCardDataFromFirebase,
   subscribeCardDataFromFirebase,
   profileToCardData,
+  DEMO_UID,
 } from '../../lib/cardFirebase'
-import { auth } from '../../lib/firebase'
 import { CareerReceipt } from './CareerReceipt'
 import {
   RotateCw,
@@ -47,7 +47,7 @@ export const TransitPassStudio: React.FC<TransitPassStudioProps> = ({
   const cardRef = useRef<Realistic3DCardRef>(null)
 
   // ── Card State ──
-  const [theme, setTheme] = useState<CardTheme>('creative-license')
+  const theme: CardTheme = 'creative-license'
   const [isFlipped, setIsFlipped] = useState(false)
   const [isSpinning, setIsSpinning] = useState(false)
   const [showGlare, setShowGlare] = useState(true)
@@ -110,7 +110,7 @@ export const TransitPassStudio: React.FC<TransitPassStudioProps> = ({
   // ── 2. Save Card Data to Firebase ──
   const handleSaveToCloud = useCallback(async (dataToSave?: CardPassData) => {
     const payload = dataToSave || cardData
-    const uid = userId || auth.currentUser?.uid
+    const uid = userId || DEMO_UID
     if (!uid) return
 
     setFirebaseStatus('saving')
@@ -188,17 +188,7 @@ export const TransitPassStudio: React.FC<TransitPassStudioProps> = ({
       {/* ── Main Stage Area: 3D Card Showcase ── */}
       <div className="relative max-w-4xl mx-auto">
         {/* Ambient Glow behind Card */}
-        <div
-          className={`absolute inset-0 rounded-3xl blur-[100px] opacity-25 pointer-events-none transition-colors duration-700 ${
-            theme === 'creative-license'
-              ? 'bg-gradient-to-tr from-emerald-500 via-orange-400 to-teal-500'
-              : theme === 'metro-taipei'
-              ? 'bg-gradient-to-tr from-orange-500 via-amber-400 to-blue-500'
-              : theme === 'jobtransit-obsidian'
-              ? 'bg-gradient-to-tr from-cyan-500 via-indigo-600 to-purple-600'
-              : 'bg-gradient-to-tr from-emerald-500 via-teal-400 to-amber-400'
-          }`}
-        />
+        <div className="absolute inset-0 rounded-3xl blur-[100px] opacity-25 pointer-events-none transition-colors duration-700 bg-gradient-to-tr from-emerald-500 via-orange-400 to-teal-500" />
 
         {/* NFC Tap Celebration Banner if active */}
         {nfcTapped && (
@@ -343,7 +333,7 @@ export const TransitPassStudio: React.FC<TransitPassStudioProps> = ({
             }`}
           >
             <Layers className="w-4 h-4" />
-            <span>Card Themes & Editions</span>
+            <span>Transit Pass Overview</span>
           </button>
 
           <button
@@ -373,118 +363,32 @@ export const TransitPassStudio: React.FC<TransitPassStudioProps> = ({
           </button>
         </div>
 
-        {/* Tab 1: Card Themes & Editions */}
+        {/* Tab 1: Transit Pass Overview */}
         {activeTab === 'controls' && (
           <div className="p-6 sm:p-8 space-y-6">
             <div>
               <h3 className="font-hero text-base font-bold text-slate-900">
-                Select Card Design Edition
+                Official Career Metro Transit Pass
               </h3>
               <p className="text-xs text-slate-500 mt-1">
-                Choose between the featured JobTransit license pass and regional transit editions.
+                Unified rapid transit pass verified across all routes, stations, and skill terminals.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {/* Theme 1: Creative License (Featured) */}
-              <button
-                type="button"
-                onClick={() => setTheme('creative-license')}
-                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer relative overflow-hidden group ${
-                  theme === 'creative-license'
-                    ? 'border-emerald-500 bg-emerald-50/50 shadow-md ring-2 ring-emerald-400/20'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
-                }`}
-              >
-                <div className="w-full h-12 rounded-xl bg-[#f4f5f7] border border-slate-300 flex items-center justify-between px-3 text-slate-800 mb-3 shadow-inner">
-                  <span className="font-black text-xs text-[#1e293b] truncate">{cardData.holderName}</span>
-                  <span className="font-mono font-black text-base text-[#f97316]">0051</span>
+            <div className="max-w-xl">
+              <div className="p-5 rounded-2xl border-2 border-emerald-500 bg-emerald-50/50 shadow-md ring-2 ring-emerald-400/20 text-left">
+                <div className="w-full h-12 rounded-xl bg-amber-400 border border-stone-800 flex items-center justify-between px-3 text-stone-950 mb-3 shadow-inner">
+                  <span className="font-signage font-black text-sm text-stone-950 truncate">{cardData.roleTitle || 'CAREER METRO'}</span>
+                  <span className="font-mono-board font-black text-xs text-stone-950">ZONE 1 • ALL LINES</span>
                 </div>
                 <h4 className="font-bold text-sm text-slate-900 flex items-center justify-between">
-                  <span>JobTransit License</span>
-                  {theme === 'creative-license' && (
-                    <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                  )}
+                  <span>Career Metro Pass (Official Edition)</span>
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                 </h4>
-                <p className="text-xs text-slate-500 mt-1">
-                  Featured design with JobTransit train logo, user name, stars, barcode, and sticker collage back.
+                <p className="text-xs text-slate-600 mt-1.5 leading-relaxed">
+                  Official Career Metro design with transit line badges, 10-segment gauges, transparent barcode, dual-sided 3D architecture, and verified credentials.
                 </p>
-              </button>
-
-              {/* Theme 2: Metro Taipei 48H Pass */}
-              <button
-                type="button"
-                onClick={() => setTheme('metro-taipei')}
-                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer relative overflow-hidden group ${
-                  theme === 'metro-taipei'
-                    ? 'border-orange-500 bg-orange-50/50 shadow-md ring-2 ring-orange-400/20'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
-                }`}
-              >
-                <div className="w-full h-12 rounded-xl bg-gradient-to-r from-[#ea580c] via-[#f97316] to-[#1d4ed8] flex items-center justify-between px-3 text-white mb-3 shadow-inner">
-                  <span className="font-black text-lg">48</span>
-                  <span className="text-[10px] font-mono tracking-widest uppercase">TAIPEI METRO</span>
-                </div>
-                <h4 className="font-bold text-sm text-slate-900 flex items-center justify-between">
-                  <span>Taipei Metro 48H</span>
-                  {theme === 'metro-taipei' && (
-                    <span className="w-2 h-2 rounded-full bg-orange-500" />
-                  )}
-                </h4>
-                <p className="text-xs text-slate-500 mt-1">
-                  Authentic Taipei 101 skyline with sunset gradient and mountain river waves.
-                </p>
-              </button>
-
-              {/* Theme 3: JobTransit Cyber Obsidian */}
-              <button
-                type="button"
-                onClick={() => setTheme('jobtransit-obsidian')}
-                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer relative overflow-hidden group ${
-                  theme === 'jobtransit-obsidian'
-                    ? 'border-cyan-500 bg-slate-900/5 shadow-md ring-2 ring-cyan-400/20'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
-                }`}
-              >
-                <div className="w-full h-12 rounded-xl bg-gradient-to-r from-slate-950 via-indigo-950 to-cyan-950 flex items-center justify-between px-3 text-cyan-300 mb-3 shadow-inner border border-cyan-500/20">
-                  <span className="font-black text-lg">AI</span>
-                  <span className="text-[10px] font-mono tracking-widest uppercase">OBSIDIAN 24/7</span>
-                </div>
-                <h4 className="font-bold text-sm text-slate-900 flex items-center justify-between">
-                  <span>Cyber Obsidian</span>
-                  {theme === 'jobtransit-obsidian' && (
-                    <span className="w-2 h-2 rounded-full bg-cyan-500" />
-                  )}
-                </h4>
-                <p className="text-xs text-slate-500 mt-1">
-                  High-velocity AI career navigation with neon cyan metro route lines and dark glass.
-                </p>
-              </button>
-
-              {/* Theme 4: Emerald Botanical Line */}
-              <button
-                type="button"
-                onClick={() => setTheme('emerald-line')}
-                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer relative overflow-hidden group ${
-                  theme === 'emerald-line'
-                    ? 'border-emerald-500 bg-emerald-50/50 shadow-md ring-2 ring-emerald-400/20'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
-                }`}
-              >
-                <div className="w-full h-12 rounded-xl bg-gradient-to-r from-emerald-800 via-emerald-600 to-amber-700 flex items-center justify-between px-3 text-emerald-200 mb-3 shadow-inner">
-                  <span className="font-black text-lg">JT</span>
-                  <span className="text-[10px] font-mono tracking-widest uppercase">GREEN LINE</span>
-                </div>
-                <h4 className="font-bold text-sm text-slate-900 flex items-center justify-between">
-                  <span>Emerald Botanical</span>
-                  {theme === 'emerald-line' && (
-                    <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                  )}
-                </h4>
-                <p className="text-xs text-slate-500 mt-1">
-                  Harmonious green mountain pass celebrating eco-friendly and balanced career journeys.
-                </p>
-              </button>
+              </div>
             </div>
           </div>
         )}

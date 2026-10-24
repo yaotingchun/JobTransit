@@ -2,13 +2,14 @@ import React, { useState, useRef, useCallback } from 'react'
 import {
   CreditCard, Upload, CheckCircle2, ArrowRight, FileText,
   User, Briefcase, Code2, GraduationCap,
-  Sparkles, Star, Zap, X, ChevronRight, Plus, Trash2,
+  Sparkles, Star, X, Plus, Trash2,
   Target, Globe, Building2, BookOpen, Award, Languages, Brain,
-  Wrench, Heart, ChevronDown, Save, Loader2, AlertCircle,
-  Image as ImageIcon, Presentation, RefreshCw, Layers,
+  Wrench, Heart, ChevronDown, Loader2, AlertCircle,
+  Image as ImageIcon, Presentation, Layers,
+  RotateCw, Play, Square, Compass, ShieldCheck, ArrowUpRight,
 } from 'lucide-react'
 import { doc, setDoc, getDoc } from 'firebase/firestore'
-import { auth, db } from '../lib/firebase'
+import { db } from '../lib/firebase'
 import type { UserProfile } from './Navbar'
 import type {
   UserProfileData, PersonalInfo, Education, SkillsProfile,
@@ -18,13 +19,24 @@ import type {
 import {
   defaultPersonal, defaultEducation, defaultSkills, defaultCareerPreferences,
 } from '../types/profile'
-import { Realistic3DCard } from './transit/Realistic3DCard'
-import { CareerReceipt } from './transit/CareerReceipt'
+import { Realistic3DCard, type Realistic3DCardRef } from './transit/Realistic3DCard'
 import type { CardTheme } from './transit/types'
-import { profileToCardData } from '../lib/cardFirebase'
+import { profileToCardData, DEMO_UID } from '../lib/cardFirebase'
 import {
   extractTextFromAnyFile, parseStructuredResume, normalizeToMonthYear, type ExtractionProgress,
 } from '../lib/cvParser'
+
+import type {
+  FollowUpQuestion,
+  QuestionId,
+  SessionProgress,
+  SessionStatus,
+} from '../types/followUpQuestion'
+import type { CareerProfile, CareerSkill, EducationEntry, ExperienceEntry, ProjectEntry } from '../types/careerProfile'
+import { followUpApi } from '../client/followUpApi'
+import { QuestionPanel } from './followUp/QuestionPanel'
+import { ProfileConfirmation } from './followUp/ProfileConfirmation'
+import { LoadingState } from './followUp/LoadingState'
 
 // ─── Props ────────────────────────────────────────────────────────────────────
 
@@ -35,9 +47,9 @@ interface ProfileOnboardingProps {
 
 // ─── Wizard steps ─────────────────────────────────────────────────────────────
 
-type Step = 'welcome' | 'upload' | 'personal' | 'education' | 'skills' | 'experience' | 'projects' | 'career' | 'pass'
+type Step = 'welcome' | 'upload' | 'personal' | 'education' | 'skills' | 'experience' | 'projects' | 'career' | 'follow_up' | 'pass'
 
-export const STEP_ORDER: Step[] = ['welcome', 'upload', 'personal', 'education', 'skills', 'experience', 'projects', 'career', 'pass']
+export const STEP_ORDER: Step[] = ['welcome', 'upload', 'personal', 'education', 'skills', 'experience', 'projects', 'career', 'follow_up', 'pass']
 
 export const STEP_LABELS: Record<Step, string> = {
   welcome:    'Welcome',
@@ -48,6 +60,7 @@ export const STEP_LABELS: Record<Step, string> = {
   experience: 'Experience',
   projects:   'Projects',
   career:     'Career Goals',
+  follow_up:  'Follow-Up Questions',
   pass:       'Transit Pass',
 }
 
@@ -71,8 +84,8 @@ const TagInput: React.FC<{
     setVal('')
   }
   return (
-    <div className="flex flex-col gap-1.5">
-      <div className="flex gap-2">
+    <div className="flex flex-col gap-1.5 w-full">
+      <div className="flex gap-2 p-0.5">
         <input
           value={val}
           onChange={e => setVal(e.target.value)}
@@ -85,7 +98,7 @@ const TagInput: React.FC<{
         </button>
       </div>
       {tags.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mt-1">
+        <div className="flex flex-wrap gap-1.5 mt-1 px-0.5">
           {tags.map(tag => (
             <span key={tag} className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-indigo-100 border border-indigo-200 text-indigo-800 text-xs font-semibold">
               {tag}
@@ -112,8 +125,10 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
   const [saveError, setSaveError] = useState<string | null>(null)
   const [uploadError, setUploadError] = useState<string | null>(null)
   const [uploadedFile, setUploadedFile] = useState<File | null>(null)
+  const [previewFile, setPreviewFile] = useState<File | null>(null)
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+  const [isLoadingDemoCV, setIsLoadingDemoCV] = useState(false)
   const [rawText, setRawText] = useState('')
-  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const [passId, setPassId] = useState(() => `JT-${Math.random().toString(36).slice(2,8).toUpperCase()}-${new Date().getFullYear()}`)
   const [extractionProgress, setExtractionProgress] = useState<ExtractionProgress>({ stage: 'Extracting text…', percent: 10 })
@@ -125,9 +140,26 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
   const [workExp, setWorkExp] = useState<WorkExperienceEntry[]>([])
   const [projects, setProjects] = useState<Project[]>([])
   const [career, setCareer] = useState<CareerPreferences>(defaultCareerPreferences())
-  const [cardTheme, setCardTheme] = useState<CardTheme>('creative-license')
+  const cardTheme: CardTheme = 'creative-license'
   const [section4Tab, setSection4Tab] = useState<'experience' | 'projects' | 'career' | 'all'>('experience')
-  const [showAllDetails, setShowAllDetails] = useState(false)
+  const cardRef = useRef<Realistic3DCardRef>(null)
+  const uploadTopRef = useRef<HTMLDivElement>(null)
+  const [isFlipped, setIsFlipped] = useState(false)
+  const [isSpinning, setIsSpinning] = useState(false)
+
+  // ── Follow-Up Question Machine State ──
+  const [followUpSessionId, setFollowUpSessionId] = useState<string | null>(null)
+  const [followUpStatus, setFollowUpStatus] = useState<SessionStatus>('in_progress')
+  const [followUpQuestion, setFollowUpQuestion] = useState<FollowUpQuestion | null>(null)
+  const [followUpProfile, setFollowUpProfile] = useState<CareerProfile | null>(null)
+  const [followUpProgress, setFollowUpProgress] = useState<SessionProgress | null>(null)
+  const [followUpSelectedOptionIds, setFollowUpSelectedOptionIds] = useState<string[]>([])
+  const [followUpHistory, setFollowUpHistory] = useState<QuestionId[]>([])
+  const [followUpHistoryIndex, setFollowUpHistoryIndex] = useState<number>(-1)
+  const [followUpSlideDirection, setFollowUpSlideDirection] = useState<'forward' | 'backward'>('forward')
+  const [isFollowUpLoading, setIsFollowUpLoading] = useState<boolean>(false)
+  const [isFollowUpSubmitting, setIsFollowUpSubmitting] = useState<boolean>(false)
+  const [followUpValidationError, setFollowUpValidationError] = useState<string | null>(null)
 
   // ── Check if database already has information on mount ──
   React.useEffect(() => {
@@ -135,7 +167,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
 
     const checkDatabaseProfile = async () => {
       try {
-        const uid = auth.currentUser?.uid || currentUser.email.replace(/[.@]/g, '_')
+        const uid = DEMO_UID
         if (!uid) {
           if (isMounted) setIsCheckingExisting(false)
           return
@@ -231,23 +263,44 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
     }
   }, [currentUser])
 
+  const scrollToTop = () => {
+    try {
+      const scrollContainers = document.querySelectorAll('.overflow-y-auto, .overflow-auto, main, #root, body, html')
+      scrollContainers.forEach((el) => {
+        el.scrollTo({ top: 0, behavior: 'smooth' })
+      })
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } catch (e) {
+      console.warn('Scroll error:', e)
+    }
+  }
+
   // ── Multi-Format File Handling (Word, PDF, PPTX, Images with OCR) ──
   const handleFileSelect = useCallback(async (file: File) => {
     setUploadedFile(file)
     setIsProcessing(true)
     setUploadError(null)
-    setExtractionProgress({ stage: `Preparing ${file.name}…`, percent: 12 })
     setStep('upload')
+    scrollToTop()
 
     try {
-      const text = await extractTextFromAnyFile(file, (p) => {
-        setExtractionProgress(p)
-      })
+      // Stage 1: Initialize Optical & Document Parsing
+      setExtractionProgress({ stage: 'Initializing CV Extraction Engine & OCR Layer…', percent: 18 })
+      await new Promise((r) => setTimeout(r, 450))
+
+      // Stage 2: Read PDF layers and stream text
+      setExtractionProgress({ stage: 'Reading document layers & extracting text streams…', percent: 42 })
+      const textPromise = extractTextFromAnyFile(file)
+      await new Promise((r) => setTimeout(r, 550))
+      const text = await textPromise
       setRawText(text)
 
-      setExtractionProgress({ stage: 'Structuring profile data & career goals…', percent: 92 })
-      await new Promise((r) => setTimeout(r, 280))
+      // Stage 3: Extract credentials, work history and contact
+      setExtractionProgress({ stage: 'Extracting candidate contact, education & experience…', percent: 70 })
+      await new Promise((r) => setTimeout(r, 500))
 
+      // Stage 4: Skills taxonomy classification
+      setExtractionProgress({ stage: 'Classifying technical proficiencies & skill taxonomy…', percent: 88 })
       const parsed = parseStructuredResume(text, currentUser)
       setPersonal(parsed.personal)
       setEducation(parsed.education)
@@ -255,7 +308,14 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
       if (parsed.work_experience?.length) setWorkExp(parsed.work_experience)
       if (parsed.projects?.length) setProjects(parsed.projects)
       if (parsed.career) setCareer(parsed.career)
+      await new Promise((r) => setTimeout(r, 450))
+
+      // Stage 5: Final structuring
+      setExtractionProgress({ stage: 'Structuring dossier data into 3-fold review…', percent: 100 })
+      await new Promise((r) => setTimeout(r, 350))
+
       setStep('personal')
+      setTimeout(scrollToTop, 60)
     } catch (err: any) {
       console.error('Error during multi-format CV extraction:', err)
       setUploadError(err?.message || 'Failed to extract text from document using OCR.')
@@ -264,10 +324,35 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
     }
   }, [currentUser])
 
+  const handleLoadDemoCV = async () => {
+    try {
+      setIsLoadingDemoCV(true)
+      setUploadError(null)
+      const [res] = await Promise.all([
+        fetch('/demo_alex_chen_resume.pdf'),
+        new Promise((r) => setTimeout(r, 500)), // realistic feel
+      ])
+      if (!res.ok) throw new Error('Could not load demo CV PDF')
+      const blob = await res.blob()
+      const demoFile = new File([blob], 'Alex_Chen_Demo_Resume.pdf', { type: 'application/pdf' })
+      setPreviewFile(demoFile)
+      setPreviewUrl('/demo_alex_chen_resume.pdf')
+      setTimeout(() => {
+        scrollToTop()
+        uploadTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 60)
+    } catch (err: any) {
+      console.error('Failed to load demo CV:', err)
+      setUploadError('Failed to load demo CV: ' + (err?.message || 'Network error'))
+    } finally {
+      setIsLoadingDemoCV(false)
+    }
+  }
+
   const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault(); setIsDragging(false)
-    const file = e.dataTransfer.files[0]
-    if (file) handleFileSelect(file)
+    e.preventDefault()
+    setIsDragging(false)
+    handleLoadDemoCV()
   }
 
   // ── Firestore save ──
@@ -285,8 +370,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
   }
 
   const handleSaveToFirestore = async (): Promise<boolean> => {
-    const uid = auth.currentUser?.uid || currentUser.email.replace(/[.@]/g, '_')
-    if (!uid) { setSaveError('Not signed in.'); return false }
+    const uid = DEMO_UID
     setIsSaving(true); setSaveError(null)
     const now = new Date().toISOString()
     const profileData: UserProfileData = {
@@ -336,6 +420,317 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
     if (ok) {
       setHasExistingProfile(true)
       setStep('pass')
+    }
+  }
+
+  // ── Follow-Up Machine Bridge & Handlers ──
+  const buildCareerProfileFromState = (): CareerProfile => {
+    const allSkillNames = [
+      ...(skills.technical_skills || []),
+      ...(skills.ai_skills || []),
+      ...(skills.tools_and_technologies || []),
+    ]
+
+    const careerSkills: CareerSkill[] = allSkillNames.map(name => ({
+      name,
+      proficiency: 'intermediate',
+      source: 'cv',
+      evidence: [{ description: `Extracted from CV for ${personal.full_name || 'Candidate'}`, source: 'cv' }],
+    }))
+
+    const formatQual = (level?: string, field?: string) => {
+      const cleanField = field?.replace(/\b(universiti|university|malaya|utm|uitm|ukm)\b.*/i, '').trim() || 'Computer Science'
+      const cleanLevel = level && level.toLowerCase() !== 'bachelor'
+        ? level.charAt(0).toUpperCase() + level.slice(1).toLowerCase()
+        : 'Bachelor'
+      return `${cleanLevel} of ${cleanField}`
+    }
+
+    const eduEntries: EducationEntry[] = education.institution_name ? [{
+      qualification: formatQual(education.education_level, education.field_of_study),
+      field: (education.field_of_study || 'Computer Science').replace(/\b(universiti|university|malaya|utm|uitm|ukm)\b.*/i, '').trim() || 'Software Engineering & Intelligent Systems',
+      institution: education.institution_name || 'Universiti Malaya',
+      year: education.graduation_year || undefined,
+    }] : []
+
+    const expEntries: ExperienceEntry[] = workExp.map(w => ({
+      title: w.job_title,
+      company: w.company_name,
+      duration: `${w.employment_start_date || ''} - ${w.employment_end_date || 'Present'}`,
+      responsibilities: [
+        ...(w.job_responsibilities || []),
+        ...(w.achievements || []),
+      ],
+    }))
+
+    const projEntries: ProjectEntry[] = projects.map(p => ({
+      name: p.project_name,
+      context: p.project_description,
+      technologies: p.project_technologies || [],
+      responsibilities: p.project_outcomes || [],
+    }))
+
+    const certs: string[] = (skills.certifications || []).map(c => c.name).filter(Boolean)
+
+    return {
+      candidateName: personal.full_name || 'Alex Chen',
+      skills: careerSkills,
+      education: eduEntries,
+      projects: projEntries,
+      experience: expEntries,
+      certifications: certs,
+      careerStage: personal.years_of_experience > 5 ? 'Senior' : personal.years_of_experience > 2 ? 'Mid-level' : 'Early Career',
+      experienceContext: null,
+      careerPreferences: {
+        targetRoles: career.target_job_roles || [],
+        workInterests: career.career_interests || [],
+      },
+      learningPreferences: {
+        hoursPerWeekRange: null,
+        timelineMonths: null,
+        timelinePreference: null,
+        willingnessToLearn: null,
+      },
+    }
+  }
+
+  const handleStartFollowUp = async () => {
+    setIsFollowUpLoading(true)
+    setFollowUpValidationError(null)
+    setStep('follow_up')
+
+    try {
+      const initialProfile = buildCareerProfileFromState()
+      const startRes = await followUpApi.startSession({
+        initialProfile,
+        source: 'cv_extractor',
+      })
+
+      setFollowUpSessionId(startRes.sessionId)
+      setFollowUpStatus(startRes.status)
+      setFollowUpQuestion(startRes.currentQuestion)
+      setFollowUpProfile(startRes.profileSummary)
+      setFollowUpProgress(startRes.progress)
+      setFollowUpSelectedOptionIds([])
+
+      if (startRes.currentQuestion) {
+        setFollowUpHistory([startRes.currentQuestion.id])
+        setFollowUpHistoryIndex(0)
+      } else {
+        setFollowUpHistory([])
+        setFollowUpHistoryIndex(-1)
+      }
+    } catch (err: any) {
+      console.error('Failed to start follow-up session:', err)
+      setFollowUpValidationError(err?.message || 'Failed to start follow-up machine session.')
+    } finally {
+      setIsFollowUpLoading(false)
+    }
+  }
+
+  const handleFollowUpToggleOption = (optionId: string) => {
+    if (!followUpQuestion) return
+    if (followUpQuestion.selectionType === 'single') {
+      setFollowUpSelectedOptionIds([optionId])
+    } else {
+      setFollowUpSelectedOptionIds(prev =>
+        prev.includes(optionId) ? prev.filter(id => id !== optionId) : [...prev, optionId]
+      )
+    }
+  }
+
+  const handleFollowUpContinue = async () => {
+    if (!followUpSessionId || !followUpQuestion) return
+    setIsFollowUpSubmitting(true)
+    setFollowUpValidationError(null)
+    setFollowUpSlideDirection('forward')
+
+    try {
+      const res = await followUpApi.submitAnswer(followUpSessionId, {
+        questionId: followUpQuestion.id,
+        selectedOptionIds: followUpSelectedOptionIds,
+        isSkipped: false,
+      })
+
+      setFollowUpStatus(res.status)
+      setFollowUpProfile(res.updatedProfile)
+      setFollowUpProgress(res.progress)
+
+      if (res.currentQuestion) {
+        setFollowUpQuestion(res.currentQuestion)
+        const newHist = [...followUpHistory.slice(0, followUpHistoryIndex + 1), res.currentQuestion.id]
+        setFollowUpHistory(newHist)
+        setFollowUpHistoryIndex(newHist.length - 1)
+
+        const summary = await followUpApi.getProfileSummary(followUpSessionId)
+        const existing = summary.answers[res.currentQuestion.id]
+        setFollowUpSelectedOptionIds(existing?.selectedOptionIds || [])
+      } else {
+        setFollowUpQuestion(null)
+      }
+    } catch (err: any) {
+      setFollowUpValidationError(err.message || 'Submission failed. Please try again.')
+    } finally {
+      setIsFollowUpSubmitting(false)
+    }
+  }
+
+  const handleFollowUpSkip = async () => {
+    if (!followUpSessionId || !followUpQuestion) return
+    setIsFollowUpSubmitting(true)
+    setFollowUpValidationError(null)
+    setFollowUpSlideDirection('forward')
+
+    try {
+      const res = await followUpApi.submitAnswer(followUpSessionId, {
+        questionId: followUpQuestion.id,
+        selectedOptionIds: [],
+        isSkipped: true,
+      })
+
+      setFollowUpStatus(res.status)
+      setFollowUpProfile(res.updatedProfile)
+      setFollowUpProgress(res.progress)
+
+      if (res.currentQuestion) {
+        setFollowUpQuestion(res.currentQuestion)
+        const newHist = [...followUpHistory.slice(0, followUpHistoryIndex + 1), res.currentQuestion.id]
+        setFollowUpHistory(newHist)
+        setFollowUpHistoryIndex(newHist.length - 1)
+
+        const summary = await followUpApi.getProfileSummary(followUpSessionId)
+        const existing = summary.answers[res.currentQuestion.id]
+        setFollowUpSelectedOptionIds(existing?.selectedOptionIds || [])
+      } else {
+        setFollowUpQuestion(null)
+      }
+    } catch (err: any) {
+      setFollowUpValidationError(err.message || 'Skip failed. Please try again.')
+    } finally {
+      setIsFollowUpSubmitting(false)
+    }
+  }
+
+  const handleFollowUpBack = async () => {
+    if (!followUpSessionId) return
+    if (followUpHistoryIndex <= 0) {
+      setStep('personal')
+      return
+    }
+
+    const prevIndex = followUpHistoryIndex - 1
+    const prevQId = followUpHistory[prevIndex]
+
+    setIsFollowUpLoading(true)
+    setFollowUpValidationError(null)
+    setFollowUpSlideDirection('backward')
+
+    try {
+      const navRes = await followUpApi.navigateToQuestion(followUpSessionId, prevQId)
+      setFollowUpQuestion(navRes.currentQuestion)
+      setFollowUpProgress(navRes.progress)
+      setFollowUpHistoryIndex(prevIndex)
+      setFollowUpStatus('in_progress')
+
+      const summary = await followUpApi.getProfileSummary(followUpSessionId)
+      const existing = summary.answers[prevQId]
+      setFollowUpSelectedOptionIds(existing?.selectedOptionIds || [])
+    } catch (err: any) {
+      console.error('Follow-up back failed:', err)
+    } finally {
+      setIsFollowUpLoading(false)
+    }
+  }
+
+  const handleFollowUpEditSection = async (questionId: QuestionId) => {
+    if (!followUpSessionId) return
+    setIsFollowUpLoading(true)
+    setFollowUpSlideDirection('backward')
+
+    try {
+      const navRes = await followUpApi.navigateToQuestion(followUpSessionId, questionId)
+      setFollowUpQuestion(navRes.currentQuestion)
+      setFollowUpProgress(navRes.progress)
+      setFollowUpStatus('in_progress')
+
+      const summary = await followUpApi.getProfileSummary(followUpSessionId)
+      const existing = summary.answers[questionId]
+      setFollowUpSelectedOptionIds(existing?.selectedOptionIds || [])
+
+      if (!followUpHistory.includes(questionId)) {
+        setFollowUpHistory([...followUpHistory, questionId])
+        setFollowUpHistoryIndex(followUpHistory.length)
+      } else {
+        setFollowUpHistoryIndex(followUpHistory.indexOf(questionId))
+      }
+    } catch (err: any) {
+      console.error('Failed to navigate to question:', err)
+    } finally {
+      setIsFollowUpLoading(false)
+    }
+  }
+
+  const handleFollowUpBackFromReview = async () => {
+    if (!followUpSessionId || followUpHistory.length === 0) {
+      setStep('personal')
+      return
+    }
+    const lastQIndex = followUpHistoryIndex >= 0 ? followUpHistoryIndex : followUpHistory.length - 1
+    const targetQId = followUpHistory[lastQIndex]
+
+    setIsFollowUpLoading(true)
+    try {
+      setFollowUpSlideDirection('backward')
+      const navRes = await followUpApi.navigateToQuestion(followUpSessionId, targetQId)
+      setFollowUpQuestion(navRes.currentQuestion)
+      setFollowUpProgress(navRes.progress)
+      setFollowUpHistoryIndex(lastQIndex)
+      setFollowUpStatus('in_progress')
+
+      const summary = await followUpApi.getProfileSummary(followUpSessionId)
+      const existing = summary.answers[targetQId]
+      setFollowUpSelectedOptionIds(existing?.selectedOptionIds || [])
+    } catch (err: any) {
+      console.error('Failed back from review:', err)
+    } finally {
+      setIsFollowUpLoading(false)
+    }
+  }
+
+  const handleConfirmProfileAndGeneratePass = async (updatedProfile?: CareerProfile) => {
+    setIsSaving(true)
+    setSaveError(null)
+
+    try {
+      let finalProfileToUse = updatedProfile || followUpProfile
+      if (followUpSessionId) {
+        const completeRes = await followUpApi.completeSession(followUpSessionId)
+        finalProfileToUse = updatedProfile
+          ? { ...completeRes.finalProfile, ...updatedProfile }
+          : completeRes.finalProfile
+      }
+
+      if (finalProfileToUse) {
+        setFollowUpProfile(finalProfileToUse)
+        if (finalProfileToUse.candidateName) {
+          setPersonal(p => ({ ...p, full_name: finalProfileToUse!.candidateName || p.full_name }))
+        }
+        if (finalProfileToUse.careerPreferences?.targetRoles?.length) {
+          setCareer(c => ({ ...c, target_job_roles: finalProfileToUse!.careerPreferences.targetRoles }))
+        }
+        if (finalProfileToUse.careerPreferences?.workInterests?.length) {
+          setCareer(c => ({ ...c, career_interests: finalProfileToUse!.careerPreferences.workInterests }))
+        }
+      }
+
+      await handleSaveToFirestore()
+      setHasExistingProfile(true)
+      setStep('pass')
+    } catch (err: any) {
+      console.error('Failed to complete profile & generate pass:', err)
+      setSaveError(err?.message || 'Failed to complete profile.')
+    } finally {
+      setIsSaving(false)
     }
   }
 
@@ -401,7 +796,10 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
             </div>
             <button
               type="button"
-              onClick={() => setStep('upload')}
+              onClick={() => {
+                setStep('upload')
+                setTimeout(scrollToTop, 60)
+              }}
               className="w-full h-14 rounded-2xl bg-gradient-to-r from-slate-950 to-indigo-900 hover:from-indigo-900 hover:to-slate-950 text-white font-bold text-base shadow-[0_12px_30px_rgba(15,23,42,0.3)] transition-all duration-300 cursor-pointer active:scale-[0.98] flex items-center justify-center gap-3 group"
             >
               <span>Letsgooo! 🎉</span>
@@ -413,15 +811,26 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
 
       {/* ── UPLOAD ───────────────────────────────────────────────────── */}
       {step === 'upload' && (
-        <div className="w-full max-w-lg mx-auto animate-in fade-in slide-in-from-right-4 duration-400">
+        <div
+          ref={uploadTopRef}
+          className={`w-full ${previewFile && !isProcessing ? 'max-w-2xl sm:max-w-3xl pt-2 sm:pt-4 scroll-mt-28' : 'max-w-lg'} mx-auto transition-all duration-300 animate-in fade-in slide-in-from-right-4`}
+        >
           <div className={panelCls}>
             <div className="text-center">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50/80 border border-indigo-200/60 mb-4">
                 <Upload className="w-3.5 h-3.5 text-indigo-600" />
-                <span className="text-xs font-bold text-indigo-700 tracking-wide uppercase">Step 1 — Upload CV</span>
+                <span className="text-xs font-bold text-indigo-700 tracking-wide uppercase">
+                  {previewFile && !isProcessing ? 'Confirm & Preview CV' : 'Step 1 — Upload CV'}
+                </span>
               </div>
-              <h2 className="font-hero text-2xl sm:text-3xl font-extrabold text-slate-950">Upload Your CV</h2>
-              <p className="text-slate-500 text-sm mt-1">We'll extract your info automatically. You can edit everything next.</p>
+              <h2 className="font-hero text-2xl sm:text-3xl font-extrabold text-slate-950">
+                {previewFile && !isProcessing ? 'Review Demo CV' : 'Upload Your CV'}
+              </h2>
+              <p className="text-slate-500 text-sm mt-1">
+                {previewFile && !isProcessing
+                  ? 'Confirm the Demo CV below before extracting with the live CV extractor.'
+                  : "We'll extract your info automatically. (Use Demo CV)"}
+              </p>
             </div>
 
             {uploadError && (
@@ -431,27 +840,94 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
               </div>
             )}
 
-            {!isProcessing && (
+            {/* CASE 1: PREVIEW READY & NOT PROCESSING YET */}
+            {previewFile && !isProcessing && (
+              <div className="space-y-4 animate-in fade-in zoom-in-95 duration-300">
+                {/* Document metadata bar */}
+                <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center shrink-0">
+                      <FileText className="w-4 h-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="font-bold text-slate-900 truncate">{previewFile.name}</p>
+                      <p className="text-[11px] text-slate-500">{(previewFile.size / 1024).toFixed(1)} KB • Demo PDF Document</p>
+                    </div>
+                  </div>
+                  {previewUrl && (
+                    <a
+                      href={previewUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition-colors shrink-0 ml-3"
+                    >
+                      <span>Open tab</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                </div>
+
+                {/* PDF Live Preview Display */}
+                <div className="relative rounded-2xl overflow-hidden border border-slate-200/90 shadow-md bg-slate-100">
+                  <iframe
+                    src={`${previewUrl}#toolbar=0&navpanes=0`}
+                    className="w-full h-[460px] sm:h-[520px] bg-white border-0"
+                    title="CV PDF Preview"
+                  />
+                </div>
+
+                {/* Live Extractor Notice */}
+                <div className="p-3 rounded-xl bg-indigo-50/70 border border-indigo-200/60 flex items-center gap-2.5 text-xs text-indigo-900">
+                  <ShieldCheck className="w-4 h-4 text-indigo-600 shrink-0" />
+                  <p className="text-[11px] text-indigo-700">
+                    Clicking confirm will send this Demo CV to the real CV extractor backend to populate your Transit Pass.
+                  </p>
+                </div>
+
+                {/* Actions: Re-pick or Confirm */}
+                <div className="flex items-center gap-3 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => { setPreviewFile(null); setPreviewUrl(null); }}
+                    className="flex-1 py-2.5 px-4 rounded-xl border border-slate-200/90 hover:bg-slate-50 text-slate-700 text-xs font-semibold transition-all cursor-pointer shadow-xs"
+                  >
+                    ← Back
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleFileSelect(previewFile)}
+                    className="flex-[2] py-2.5 px-5 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-700 to-sky-600 hover:from-indigo-700 hover:to-sky-700 text-white text-xs font-bold shadow-md shadow-indigo-500/25 transition-all cursor-pointer flex items-center justify-center gap-2 group active:scale-98"
+                  >
+                    <span>Confirm & Extract Data</span>
+                    <Sparkles className="w-4 h-4 text-amber-300 group-hover:scale-110 transition-transform" />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* CASE 2: ORIGINAL DASHED CONTAINER (CLICK DIRECTLY LOADS DEMO CV) */}
+            {!previewFile && !isProcessing && (
               <div
                 onDragOver={e => { e.preventDefault(); setIsDragging(true) }}
                 onDragLeave={() => setIsDragging(false)}
                 onDrop={handleDrop}
-                onClick={() => fileInputRef.current?.click()}
+                onClick={handleLoadDemoCV}
                 className={`relative cursor-pointer rounded-2xl border-2 border-dashed p-8 sm:p-10 flex flex-col items-center gap-4 transition-all duration-300 ${isDragging ? 'border-indigo-500 bg-indigo-50/60 scale-[1.01]' : 'border-slate-300/70 hover:border-indigo-400 hover:bg-indigo-50/30 bg-white/40'}`}
               >
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept=".pdf,.doc,.docx,.pptx,.ppt,.png,.jpg,.jpeg,.webp,.txt,.rtf"
-                  className="hidden"
-                  onChange={e => { const f = e.target.files?.[0]; if (f) handleFileSelect(f) }}
-                />
                 <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all ${isDragging ? 'bg-indigo-100 scale-110 shadow-sm' : 'bg-slate-100/90'}`}>
-                  <Upload className={`w-7 h-7 ${isDragging ? 'text-indigo-600' : 'text-slate-500'}`} />
+                  {isLoadingDemoCV ? (
+                    <Loader2 className="w-7 h-7 text-indigo-600 animate-spin" />
+                  ) : (
+                    <Upload className={`w-7 h-7 ${isDragging ? 'text-indigo-600' : 'text-slate-500'}`} />
+                  )}
                 </div>
                 <div className="text-center">
-                  <p className="font-bold text-slate-900 text-base">{isDragging ? 'Drop it right here!' : 'Drag & drop your Resume / CV'}</p>
-                  <p className="text-xs text-slate-500 mt-1">or click to browse from your device</p>
+                  <p className="font-bold text-slate-900 text-base">
+                    {isLoadingDemoCV ? 'Loading Demo CV...' : isDragging ? 'Drop it right here!' : 'Drag & drop your Resume / CV'}
+                  </p>
+                  <p className="text-xs text-indigo-600 font-semibold mt-1">
+                    Click to use Demo CV
+                  </p>
                 </div>
 
                 {/* Multi-Format Badges */}
@@ -472,6 +948,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
               </div>
             )}
 
+            {/* CASE 3: EXTRACTOR RUNNING IN BACKGROUND */}
             {isProcessing && uploadedFile && (
               <div className="flex flex-col items-center gap-5 py-6 px-4 animate-in fade-in duration-300">
                 <div className="relative w-20 h-20">
@@ -499,7 +976,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
               </div>
             )}
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 pt-2">
               <button
                 type="button"
                 onClick={() => (hasExistingProfile ? setStep('pass') : setStep('welcome'))}
@@ -566,14 +1043,14 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
               </button>
               <button
                 type="button"
-                onClick={handleFinish}
-                disabled={isSaving}
+                onClick={handleStartFollowUp}
+                disabled={isFollowUpLoading}
                 className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-slate-950 to-indigo-900 hover:from-indigo-900 hover:to-slate-950 text-white text-xs font-bold shadow-md transition-all cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed group active:scale-95"
               >
-                {isSaving ? (
-                  <><Loader2 className="w-3.5 h-3.5 animate-spin"/> Saving…</>
+                {isFollowUpLoading ? (
+                  <><Loader2 className="w-3.5 h-3.5 animate-spin"/> Loading Questions…</>
                 ) : (
-                  <><Save className="w-3.5 h-3.5"/> Save & View Pass <Zap className="w-3.5 h-3.5 text-amber-300 group-hover:scale-110 transition-transform"/></>
+                  <>Next: Follow-Up Questions <ArrowRight className="w-3.5 h-3.5 text-indigo-300 group-hover:translate-x-1 transition-transform"/></>
                 )}
               </button>
             </div>
@@ -613,7 +1090,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
                 </div>
 
                 {/* Scrollable Content Container */}
-                <div className="flex flex-col gap-5 max-h-[660px] overflow-y-auto pr-2 custom-scrollbar relative z-10">
+                <div className="flex flex-col gap-5 max-h-[660px] overflow-y-auto pl-2 pr-2 custom-scrollbar relative z-10">
 
                   {/* 1A. Personal Info */}
                   <div className="space-y-3.5">
@@ -770,7 +1247,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
                 </div>
 
                 {/* Scrollable Content Container */}
-                <div className="flex flex-col gap-4 max-h-[660px] overflow-y-auto pr-2 custom-scrollbar relative z-10">
+                <div className="flex flex-col gap-4 max-h-[660px] overflow-y-auto pl-2 pr-2 custom-scrollbar relative z-10">
 
                   <div>
                     <label className={labelCls + ' flex items-center gap-1'}><Code2 className="w-3 h-3 text-indigo-600"/>Technical Skills</label>
@@ -929,7 +1406,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
                 </div>
 
                 {/* Scrollable Content Container */}
-                <div className="flex flex-col gap-4 max-h-[615px] overflow-y-auto pr-2 custom-scrollbar relative z-10">
+                <div className="flex flex-col gap-4 max-h-[615px] overflow-y-auto pl-2 pr-2 custom-scrollbar relative z-10">
 
                   {/* 3A: Work Experience */}
                   {(section4Tab === 'experience' || section4Tab === 'all') && (
@@ -1187,16 +1664,14 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
 
             <button
               type="button"
-              onClick={handleFinish}
-              disabled={isSaving}
+              onClick={handleStartFollowUp}
+              disabled={isFollowUpLoading}
               className="w-full sm:w-auto min-w-[280px] h-12 px-7 rounded-2xl bg-gradient-to-r from-slate-950 to-indigo-900 hover:from-indigo-900 hover:to-slate-950 text-white font-bold text-sm shadow-[0_12px_30px_rgba(15,23,42,0.25)] transition-all duration-300 cursor-pointer active:scale-[0.98] flex items-center justify-center gap-2.5 group disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {isSaving ? (
-                <><Loader2 className="w-4 h-4 animate-spin"/>Saving Profile Details…</>
-              ) : hasExistingProfile ? (
-                <><Save className="w-4 h-4"/>Save Changes & View Transit Pass <Zap className="w-4 h-4 text-amber-300 group-hover:scale-110 transition-transform"/></>
+              {isFollowUpLoading ? (
+                <><Loader2 className="w-4 h-4 animate-spin"/> Loading Questions…</>
               ) : (
-                <><Save className="w-4 h-4"/>Save & Generate Transit Pass <Zap className="w-4 h-4 text-amber-300 group-hover:scale-110 transition-transform"/></>
+                <>Next: Answer Follow-Up Questions <ArrowRight className="w-4 h-4 text-indigo-300 group-hover:translate-x-1.5 transition-transform"/></>
               )}
             </button>
           </div>
@@ -1204,13 +1679,94 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
         </div>
       )}
 
+      {/* ── FOLLOW-UP QUESTION MACHINE (QUESTIONS & CONFIRMATION) ── */}
+      {step === 'follow_up' && (
+        <div className="w-full max-w-4xl mx-auto animate-in fade-in duration-400 space-y-6">
+          {/* Top navigation bar (only for question answering phase) */}
+          {followUpStatus !== 'review_ready' && (
+            <div className="rounded-2xl bg-white/80 backdrop-blur-2xl border border-white/80 shadow-[0_12px_36px_rgba(15,23,42,0.06)] p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="w-2.5 h-2.5 rounded-full bg-indigo-600 animate-pulse" />
+                  <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+                    Step 4 of 7 • Follow-Up Machine
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
+                    Targeted Questions
+                  </span>
+                </div>
+                <h2 className="font-hero text-2xl font-extrabold text-slate-950">
+                  Answer Follow-Up Questions
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
+                  Questions not provided in your CV to personalize your career transit route.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setStep('personal')}
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200 shadow-xs transition-all cursor-pointer"
+              >
+                ← Back to CV Document
+              </button>
+            </div>
+          )}
+
+          {/* Follow-Up Machine Workspace */}
+          {isFollowUpLoading ? (
+            <LoadingState />
+          ) : followUpStatus === 'review_ready' && followUpProfile ? (
+            <ProfileConfirmation
+              profile={followUpProfile}
+              cvData={{
+                personal,
+                education,
+                skills,
+                workExp,
+                projects,
+                career,
+              }}
+              onEditSection={handleFollowUpEditSection}
+              onConfirm={handleConfirmProfileAndGeneratePass}
+              onBack={() => {
+                if (followUpHistory.length > 0) {
+                  handleFollowUpBackFromReview()
+                } else {
+                  setStep('personal')
+                }
+              }}
+              isSubmitting={isSaving}
+              validationError={saveError}
+              stepIndicator="Consolidated Review"
+              onUpdateProfile={(p) => setFollowUpProfile(p)}
+            />
+          ) : followUpQuestion && followUpProgress && followUpProfile ? (
+            <div className="w-full flex justify-center py-2 animate-in fade-in duration-300">
+              <QuestionPanel
+                question={followUpQuestion}
+                selectedOptionIds={followUpSelectedOptionIds}
+                onToggleOption={handleFollowUpToggleOption}
+                onContinue={handleFollowUpContinue}
+                onBack={handleFollowUpBack}
+                onSkip={handleFollowUpSkip}
+                canGoBack={true}
+                isSubmitting={isFollowUpSubmitting}
+                validationError={followUpValidationError}
+                progress={followUpProgress}
+                isLastQuestion={followUpProgress.estimatedRemaining === 1 || followUpProgress.isReviewReady}
+                slideDirection={followUpSlideDirection}
+              />
+            </div>
+          ) : null}
+        </div>
+      )}
+
       {/* ── TRANSIT PASS ─────────────────────────────────────────────── */}
       {step === 'pass' && (
-        <div className={`w-full mx-auto animate-in fade-in zoom-in-95 duration-500 flex flex-col items-center gap-7 transition-all ${
-          showAllDetails ? 'max-w-6xl' : 'max-w-3xl'
-        }`}>
+        <div className="w-full max-w-4xl mx-auto animate-in fade-in zoom-in-95 duration-500 flex flex-col items-center gap-8 transition-all">
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50/80 border border-emerald-200/60 mb-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50/80 border border-emerald-200/60 mb-3 shadow-2xs">
               <Star className="w-3.5 h-3.5 text-emerald-600"/>
               <span className="text-xs font-bold text-emerald-700 tracking-wide uppercase">
                 {hasExistingProfile ? 'Transit Pass Active' : 'Transit Pass Generated!'}
@@ -1224,135 +1780,108 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
             </p>
           </div>
 
-          {/* ── Main Content Area: Side-by-Side (Card on Left, Receipt on Right) ── */}
-          <div className={`w-full flex flex-col ${
-            showAllDetails
-              ? 'lg:flex-row items-center lg:items-start justify-center gap-8 xl:gap-12'
-              : 'items-center gap-6'
-          }`}>
-            {/* Left Column: 3D Card, Themes & Toggle Button */}
-            <div className={`w-full flex flex-col items-center ${
-              showAllDetails ? 'lg:flex-1 lg:max-w-[620px]' : 'max-w-3xl'
-            }`}>
-              <div className="w-full space-y-4">
-                <Realistic3DCard
-                  data={profileToCardData(
-                    {
-                      personal,
-                      education,
-                      skills,
-                      work_experience: workExp,
-                      projects,
-                      career_preferences: career,
-                      pass_id: passId,
-                    },
-                    auth.currentUser?.uid || 'user',
-                    currentUser
-                  )}
-                  theme={cardTheme}
-                />
+          {/* ── 1. Transit Card at the Center (Original Full Size) ── */}
+          <div className="w-full max-w-3xl mx-auto flex flex-col items-center gap-4">
+            <Realistic3DCard
+              ref={cardRef}
+              className="w-full"
+              cardMaxWidth="640px"
+              data={profileToCardData(
+                {
+                  personal,
+                  education,
+                  skills,
+                  work_experience: workExp,
+                  projects,
+                  career_preferences: career,
+                  pass_id: passId,
+                },
+                DEMO_UID,
+                currentUser
+              )}
+              theme={cardTheme}
+              isFlipped={isFlipped}
+              onFlipChange={setIsFlipped}
+              isSpinning={isSpinning}
+              onSpinChange={setIsSpinning}
+            />
 
-                {/* Theme Selector Pills */}
-                <div className="flex flex-wrap items-center justify-center gap-2">
-                  {(['creative-license', 'metro-taipei', 'jobtransit-obsidian', 'emerald-line'] as CardTheme[]).map((t) => (
-                    <button
-                      key={t}
-                      type="button"
-                      onClick={() => setCardTheme(t)}
-                      className={`px-3 py-1 rounded-full text-[11px] font-semibold border transition-all cursor-pointer ${
-                        cardTheme === t
-                          ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
-                          : 'bg-white/60 text-slate-600 border-slate-200 hover:bg-white'
-                      }`}
-                    >
-                      {t === 'creative-license'
-                        ? 'Transit Pass'
-                        : t === 'metro-taipei'
-                        ? 'Taipei 48H'
-                        : t === 'jobtransit-obsidian'
-                        ? 'Cyber Obsidian'
-                        : 'Emerald Line'}
-                    </button>
-                  ))}
-                </div>
+            {/* 3D Card Interactive Quick Action Bar */}
+            <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
+              <button
+                type="button"
+                onClick={() => cardRef.current?.flip()}
+                className="px-4 py-2 rounded-xl bg-white/90 hover:bg-white text-stone-800 font-bold text-xs sm:text-sm border border-stone-200/90 shadow-xs hover:shadow-sm transition-all flex items-center gap-1.5 cursor-pointer active:scale-95"
+                title="Flip between Front and Back face"
+              >
+                <RotateCw className="w-3.5 h-3.5 text-amber-600" />
+                <span>Flip to {isFlipped ? 'Front Face' : 'Back Face'}</span>
+              </button>
 
-                {/* Show all Details Button */}
-                <div className="pt-2 flex justify-center">
-                  <button
-                    type="button"
-                    onClick={() => setShowAllDetails((prev) => !prev)}
-                    className={`inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl font-bold text-sm border shadow-[0_8px_20px_rgba(15,23,42,0.06)] hover:shadow-[0_12px_28px_rgba(15,23,42,0.12)] transition-all cursor-pointer active:scale-95 group ${
-                      showAllDetails
-                        ? 'bg-slate-900 text-white border-slate-900 shadow-slate-900/20'
-                        : 'bg-white/85 hover:bg-white text-slate-900 border-slate-200'
-                    }`}
-                  >
-                    <FileText className={`w-4 h-4 transition-transform group-hover:scale-110 ${showAllDetails ? 'text-emerald-400' : 'text-emerald-600'}`} />
-                    <span>{showAllDetails ? 'Hide Details' : 'Show all Details'}</span>
-                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full font-bold uppercase border ${
-                      showAllDetails
-                        ? 'bg-white/20 text-emerald-300 border-white/30'
-                        : 'bg-emerald-50 text-emerald-700 border-emerald-200/60'
-                    }`}>
-                      Receipt
-                    </span>
-                  </button>
-                </div>
-              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  if (isSpinning) {
+                    cardRef.current?.stopSpin()
+                  } else {
+                    cardRef.current?.startSpin()
+                  }
+                }}
+                className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 ${
+                  isSpinning
+                    ? 'bg-amber-500 text-stone-950 border-amber-600 shadow-sm'
+                    : 'bg-white/90 hover:bg-white text-stone-800 border-stone-200/90 shadow-xs'
+                }`}
+                title="Continuous 360° rotation"
+              >
+                {isSpinning ? (
+                  <>
+                    <Square className="w-3.5 h-3.5 fill-current" />
+                    <span>Stop Spin</span>
+                  </>
+                ) : (
+                  <>
+                    <Play className="w-3.5 h-3.5 fill-current text-amber-600" />
+                    <span>Spin 360°</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => cardRef.current?.reset()}
+                className="px-3 py-2 rounded-xl bg-white/90 hover:bg-white text-stone-700 font-bold text-xs border border-stone-200/90 shadow-xs transition-all flex items-center gap-1 cursor-pointer active:scale-95"
+                title="Reset viewing angle"
+              >
+                <Compass className="w-3.5 h-3.5 text-stone-500" />
+                <span>Reset</span>
+              </button>
             </div>
-
-            {/* Right Column: Receiptify Style Receipt (Shows on Right Side of the page) */}
-            {showAllDetails && (
-              <div className="w-full max-w-md lg:w-[420px] lg:shrink-0 animate-in fade-in slide-in-from-right-4 duration-300">
-                <CareerReceipt
-                  cardData={profileToCardData(
-                    {
-                      personal,
-                      education,
-                      skills,
-                      work_experience: workExp,
-                      projects,
-                      career_preferences: career,
-                      pass_id: passId,
-                    },
-                    auth.currentUser?.uid || 'user',
-                    currentUser
-                  )}
-                  personal={personal}
-                  education={education}
-                  skills={skills}
-                  career={career}
-                  onClose={() => setShowAllDetails(false)}
-                />
-              </div>
-            )}
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-2xl pt-2">
-            <button
-              type="button"
-              onClick={() => setStep('personal')}
-              className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-white/70 hover:bg-white border border-white text-slate-800 font-semibold text-sm shadow-xs transition-all cursor-pointer active:scale-95"
-            >
-              <RefreshCw className="w-4 h-4 text-indigo-600"/>
-              <span>Change Details</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => { setUploadedFile(null); setStep('upload'); }}
-              className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-white/70 hover:bg-white border border-white text-slate-800 font-semibold text-sm shadow-xs transition-all cursor-pointer active:scale-95"
-            >
-              <Upload className="w-4 h-4 text-indigo-600"/>
-              <span>Reupload Resume</span>
-            </button>
-            <button
-              type="button"
-              onClick={onClose}
-              className="w-full sm:flex-1 h-12 rounded-2xl bg-gradient-to-r from-slate-950 to-indigo-900 hover:from-indigo-900 hover:to-slate-950 text-white font-bold text-sm shadow-[0_12px_30px_rgba(15,23,42,0.25)] transition-all duration-300 cursor-pointer active:scale-[0.98] flex items-center justify-center gap-2 group"
-            >
-              <span>Go to Dashboard</span>
-              <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5"/>
-            </button>
+          {/* ── 2. Full Transit Dossier Container Below Card ── */}
+          <div className="w-full">
+            <ProfileConfirmation
+              profile={followUpProfile || buildCareerProfileFromState()}
+              cvData={{
+                personal,
+                education,
+                skills,
+                workExp,
+                projects,
+                career,
+              }}
+              onEditSection={handleFollowUpEditSection}
+              onConfirm={() => {}}
+              mode="view"
+              title="Career Transit Dossier"
+              subtitle="Comprehensive career credentials, transit roadmap, and portfolio specifications."
+              badgeText="VERIFIED TRANSIT PASS PROFILE"
+              passId={passId}
+              onClose={onClose}
+              onReupload={() => { setUploadedFile(null); setStep('upload'); }}
+              onUpdateProfile={(p) => setFollowUpProfile(p)}
+            />
           </div>
         </div>
       )}

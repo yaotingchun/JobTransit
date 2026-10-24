@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { ArrowRight, Eye, EyeOff, Lock, Mail, AlertCircle } from 'lucide-react'
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../../lib/firebase'
+import { DEMO_USER } from '../../lib/cardFirebase'
 
 interface LoginFormProps {
   onSuccess: (user: { name: string; email: string }) => void
@@ -9,8 +8,8 @@ interface LoginFormProps {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToSignup }) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('alex@gmail.com')
+  const [password, setPassword] = useState('123456')
   const [showPassword, setShowPassword] = useState(false)
   const [rememberMe, setRememberMe] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
@@ -18,42 +17,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToSignu
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!email.trim() || !password.trim()) return
-
     setIsLoading(true)
     setError(null)
 
-    try {
-      const credential = await signInWithEmailAndPassword(auth, email.trim(), password)
-      const firebaseUser = credential.user
-
-      // Derive display name: prefer Firebase displayName, fallback to email prefix
-      const displayName =
-        firebaseUser.displayName ||
-        (() => {
-          const prefix = email.split('@')[0]
-          return prefix.charAt(0).toUpperCase() + prefix.slice(1)
-        })()
-
-      onSuccess({ name: displayName, email: firebaseUser.email ?? email })
-    } catch (err: unknown) {
-      const code = (err as { code?: string }).code ?? ''
-      if (
-        code === 'auth/user-not-found' ||
-        code === 'auth/wrong-password' ||
-        code === 'auth/invalid-credential'
-      ) {
-        setError('Incorrect email or password. Please try again.')
-      } else if (code === 'auth/invalid-email') {
-        setError('Please enter a valid email address.')
-      } else if (code === 'auth/too-many-requests') {
-        setError('Too many failed attempts. Please try again later.')
-      } else {
-        setError('Something went wrong. Please try again.')
-      }
-    } finally {
+    setTimeout(() => {
       setIsLoading(false)
-    }
+      onSuccess(DEMO_USER)
+    }, 150)
   }
 
   return (
@@ -157,19 +127,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToSignu
             <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
           ) : (
             <>
-              <span>Sign in</span>
+              <span>Use Demo Account</span>
               <ArrowRight className="w-4 h-4" />
             </>
           )}
-        </button>
-
-        {/* Quick Demo Access */}
-        <button
-          type="button"
-          onClick={() => onSuccess({ name: 'Alex Chen', email: 'alex.chen@jobtransit.ai' })}
-          className="w-full h-10 rounded-2xl bg-white/70 hover:bg-white text-slate-800 font-semibold text-xs border border-white/90 transition-all duration-150 shadow-xs active:scale-[0.99] flex items-center justify-center gap-1.5 cursor-pointer"
-        >
-          <span>🚀 Explore with Demo Profile (Instant Access)</span>
         </button>
       </form>
 
