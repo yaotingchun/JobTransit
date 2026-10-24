@@ -222,6 +222,27 @@ body,
   box-shadow: 6px 6px 0 0 rgba(28, 25, 23, 0.9);
 }
 
+.planner-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.planner-scrollbar::-webkit-scrollbar-track {
+  background: rgba(28, 25, 23, 0.05);
+  border-radius: 9999px;
+  margin: 4px 0;
+}
+.planner-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(28, 25, 23, 0.32);
+  border-radius: 9999px;
+  border: 2px solid #FBF8F1;
+}
+.planner-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(28, 25, 23, 0.58);
+}
+.planner-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(28, 25, 23, 0.35) rgba(28, 25, 23, 0.05);
+}
+
 .passport-card {
   background:
     repeating-linear-gradient(0deg, transparent 0 22px, rgba(138, 117, 80, 0.12) 22px 23px),
@@ -642,6 +663,85 @@ body,
   transform-origin: center;
   animation: beaconRadarWave 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
   pointer-events: none;
+}
+
+/* ═════════════════════════════════════════════════════════════
+   NEW-RIDER ONBOARDING · Career Metro skin
+   Re-skins the shared wizard screens (verify, follow-up, card) in the
+   Transit tab look: amber + enamel-stone palette, signage headings.
+   ═════════════════════════════════════════════════════════════ */
+.onb-transit {
+  --color-indigo-50: #FFFBEB;
+  --color-indigo-100: #FEF3C7;
+  --color-indigo-200: #FDE68A;
+  --color-indigo-300: #FCD34D;
+  --color-indigo-400: #FBBF24;
+  --color-indigo-500: #F59E0B;
+  --color-indigo-600: #292524;
+  --color-indigo-700: #1C1917;
+  --color-indigo-800: #1C1917;
+  --color-indigo-900: #0C0A09;
+  --color-indigo-950: #0C0A09;
+}
+
+.onb-transit .font-hero {
+  font-family: 'Big Shoulders Display', 'Plus Jakarta Sans', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  font-weight: 800;
+}
+
+@keyframes onbFadeUp {
+  0% { opacity: 0; transform: translateY(16px); filter: blur(4px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+@keyframes onbFadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes onbRadarSweep {
+  to { transform: rotate(360deg); }
+}
+@keyframes onbLineGrow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes onbBlipPop {
+  0% { transform: scale(0); opacity: 0; }
+  70% { transform: scale(1.25); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.onb-fade-up {
+  animation: onbFadeUp 950ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.onb-fade-out {
+  animation: onbFadeOut 800ms ease-in both;
+}
+.onb-radar-sweep {
+  transform-origin: 180px 180px;
+  animation: onbRadarSweep 5s linear infinite;
+}
+.onb-line-grow {
+  transform-origin: left center;
+  animation: onbLineGrow 1400ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.onb-blip {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: onbBlipPop 520ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .onb-fade-up,
+  .onb-fade-out,
+  .onb-radar-sweep,
+  .onb-line-grow,
+  .onb-blip {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 

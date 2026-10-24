@@ -31,6 +31,8 @@ import { FloatingAIChatTrigger } from './chat/FloatingAIChatTrigger'
 interface HomepageProps {
   currentUser: UserProfile
   onLogout: () => void
+  /** Tab to open first (defaults to Home). */
+  initialTab?: NavTab
 }
 
 interface TopRolePick {
@@ -105,8 +107,8 @@ const TOP_ROLES: TopRolePick[] = [
   },
 ]
 
-export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => {
-  const [activeTab, setActiveTab] = useState<NavTab>('home')
+export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout, initialTab = 'home' }) => {
+  const [activeTab, setActiveTab] = useState<NavTab>(initialTab)
 
   // Player progress (matches TransitTab state)
   const [xp] = useState<number>(() => {

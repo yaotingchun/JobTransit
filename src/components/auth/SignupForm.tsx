@@ -3,7 +3,7 @@ import { ArrowRight, Eye, EyeOff, Lock, Mail, User, AlertCircle } from 'lucide-r
 import { DEMO_USER } from '../../lib/cardFirebase'
 
 interface SignupFormProps {
-  onSuccess: (user: { name: string; email: string }) => void
+  onSuccess: (user: { name: string; email: string }, meta?: { isNewUser: boolean }) => void
   onSwitchToLogin: () => void
 }
 
@@ -35,7 +35,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onSuccess, onSwitchToLog
 
     setTimeout(() => {
       setIsLoading(false)
-      onSuccess(DEMO_USER)
+      onSuccess(DEMO_USER, { isNewUser: true })
     }, 150)
   }
 

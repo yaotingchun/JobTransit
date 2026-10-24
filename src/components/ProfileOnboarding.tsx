@@ -37,12 +37,23 @@ import { followUpApi } from '../client/followUpApi'
 import { QuestionPanel } from './followUp/QuestionPanel'
 import { ProfileConfirmation } from './followUp/ProfileConfirmation'
 import { LoadingState } from './followUp/LoadingState'
+import type { FlowStage, FlowProfileSnapshot } from './onboarding/onboardingData'
 
 // ─── Props ────────────────────────────────────────────────────────────────────
 
 interface ProfileOnboardingProps {
   currentUser: UserProfile
   onClose?: () => void
+  /**
+   * New-rider onboarding mode: starts at the CV / LinkedIn upload, never jumps to an
+   * existing saved profile, and hands off to the next onboarding stop after the
+   * Transit Card instead of showing the profile dossier.
+   */
+  flowMode?: boolean
+  /** Reports which wizard stage is on screen (flow mode only). */
+  onFlowStageChange?: (stage: FlowStage) => void
+  /** Called when the user continues past the generated Transit Card (flow mode only). */
+  onFlowContinue?: (snapshot: FlowProfileSnapshot) => void
 }
 
 // ─── Wizard steps ─────────────────────────────────────────────────────────────
@@ -115,10 +126,16 @@ const TagInput: React.FC<{
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUser, onClose }) => {
-  const [step, setStep] = useState<Step>('welcome')
+export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({
+  currentUser,
+  onClose,
+  flowMode = false,
+  onFlowStageChange,
+  onFlowContinue,
+}) => {
+  const [step, setStep] = useState<Step>(flowMode ? 'upload' : 'welcome')
   const [hasExistingProfile, setHasExistingProfile] = useState(false)
-  const [isCheckingExisting, setIsCheckingExisting] = useState(true)
+  const [isCheckingExisting, setIsCheckingExisting] = useState(!flowMode)
   const [isDragging, setIsDragging] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
@@ -129,6 +146,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [isLoadingDemoCV, setIsLoadingDemoCV] = useState(false)
   const [rawText, setRawText] = useState('')
+  const [linkedinInput, setLinkedinInput] = useState('')
 
   const [passId, setPassId] = useState(() => `JT-${Math.random().toString(36).slice(2,8).toUpperCase()}-${new Date().getFullYear()}`)
   const [extractionProgress, setExtractionProgress] = useState<ExtractionProgress>({ stage: 'Extracting text…', percent: 10 })
@@ -163,6 +181,9 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
 
   // ── Check if database already has information on mount ──
   React.useEffect(() => {
+    // A brand-new rider must never be dropped onto a previously saved profile.
+    if (flowMode) return
+
     let isMounted = true
 
     const checkDatabaseProfile = async () => {
@@ -261,7 +282,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
     return () => {
       isMounted = false
     }
-  }, [currentUser])
+  }, [currentUser, flowMode])
 
   const scrollToTop = () => {
     try {
@@ -274,6 +295,19 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
       console.warn('Scroll error:', e)
     }
   }
+
+  // ── Flow mode: report which wizard stage is on screen & keep the viewport at the top ──
+  React.useEffect(() => {
+    if (!flowMode) return
+    const stage: FlowStage =
+      step === 'upload' || step === 'welcome' ? 'upload'
+      : step === 'follow_up' ? 'followup'
+      : step === 'pass' ? 'card'
+      : 'verify'
+    onFlowStageChange?.(stage)
+    const t = window.setTimeout(scrollToTop, 60)
+    return () => window.clearTimeout(t)
+  }, [flowMode, step, onFlowStageChange])
 
   // ── Multi-Format File Handling (Word, PDF, PPTX, Images with OCR) ──
   const handleFileSelect = useCallback(async (file: File) => {
@@ -302,7 +336,10 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
       // Stage 4: Skills taxonomy classification
       setExtractionProgress({ stage: 'Classifying technical proficiencies & skill taxonomy…', percent: 88 })
       const parsed = parseStructuredResume(text, currentUser)
-      setPersonal(parsed.personal)
+      setPersonal({
+        ...parsed.personal,
+        linkedin_url: linkedinInput.trim() || parsed.personal.linkedin_url || '',
+      })
       setEducation(parsed.education)
       setSkills(parsed.skills)
       if (parsed.work_experience?.length) setWorkExp(parsed.work_experience)
@@ -322,7 +359,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
     } finally {
       setIsProcessing(false)
     }
-  }, [currentUser])
+  }, [currentUser, linkedinInput])
 
   const handleLoadDemoCV = async () => {
     try {
@@ -724,7 +761,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
       }
 
       await handleSaveToFirestore()
-      setHasExistingProfile(true)
+      if (!flowMode) setHasExistingProfile(true)
       setStep('pass')
     } catch (err: any) {
       console.error('Failed to complete profile & generate pass:', err)
@@ -732,6 +769,30 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
     } finally {
       setIsSaving(false)
     }
+  }
+
+  // ── Flow mode: hand the finished profile to the radar / match stops ──
+  const handleFlowContinue = () => {
+    const names = new Set<string>()
+    ;[
+      ...(skills.technical_skills || []),
+      ...(skills.ai_skills || []),
+      ...(skills.tools_and_technologies || []),
+      ...(skills.other_skills || []),
+    ].forEach(s => { if (s) names.add(s) })
+    followUpProfile?.skills?.forEach(s => { if (s?.name) names.add(s.name) })
+
+    const roles = new Set<string>([
+      ...(career.target_job_roles || []),
+      ...(followUpProfile?.careerPreferences?.targetRoles || []),
+    ])
+
+    onFlowContinue?.({
+      name: personal.full_name || currentUser.name,
+      skills: Array.from(names),
+      targetRoles: Array.from(roles),
+      currentTitle: personal.current_job_title || '',
+    })
   }
 
   // ── Work experience helpers ──
@@ -744,7 +805,37 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
   const updateProject = (i: number, patch: Partial<Project>) => setProjects(prev => prev.map((p,idx) => idx===i ? {...p,...patch} : p))
   const removeProject = (i: number) => setProjects(prev => prev.filter((_,idx) => idx!==i))
 
-  const panelCls = 'relative rounded-3xl bg-white/35 backdrop-blur-2xl border border-white/55 shadow-[0_24px_60px_rgba(15,23,42,0.12)] p-6 sm:p-8 flex flex-col gap-5'
+  const panelCls = flowMode
+    ? 'planner-card relative rounded-[28px] p-6 sm:p-8 flex flex-col gap-5'
+    : 'relative rounded-3xl bg-white/35 backdrop-blur-2xl border border-white/55 shadow-[0_24px_60px_rgba(15,23,42,0.12)] p-6 sm:p-8 flex flex-col gap-5'
+
+  const linkedinField = (
+    <div className="rounded-2xl border border-stone-200/80 bg-white/70 p-3.5 flex flex-col gap-2 text-left">
+      <div className="flex items-center justify-between gap-3">
+        <label htmlFor="onb-linkedin" className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wide text-slate-600">
+          <span className="w-5 h-5 rounded-[5px] bg-[#0A66C2] text-white text-[11px] font-black flex items-center justify-center leading-none normal-case">in</span>
+          <span>LinkedIn profile</span>
+          <span className="text-slate-400 normal-case font-medium">(optional)</span>
+        </label>
+        <button
+          type="button"
+          onClick={() => setLinkedinInput('https://linkedin.com/in/alex-chen')}
+          className="text-[11px] font-semibold text-indigo-600 hover:text-indigo-800 transition-colors cursor-pointer shrink-0"
+        >
+          Use demo profile
+        </button>
+      </div>
+      <input
+        id="onb-linkedin"
+        type="url"
+        className={inputCls}
+        value={linkedinInput}
+        onChange={e => setLinkedinInput(e.target.value)}
+        placeholder="https://linkedin.com/in/your-name"
+      />
+      <p className="text-[11px] text-slate-500">Shown on your Transit Pass and saved to your profile.</p>
+    </div>
+  )
 
   if (isCheckingExisting) {
     return (
@@ -820,11 +911,13 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50/80 border border-indigo-200/60 mb-4">
                 <Upload className="w-3.5 h-3.5 text-indigo-600" />
                 <span className="text-xs font-bold text-indigo-700 tracking-wide uppercase">
-                  {previewFile && !isProcessing ? 'Confirm & Preview CV' : 'Step 1 — Upload CV'}
+                  {previewFile && !isProcessing
+                    ? 'Confirm & Preview CV'
+                    : flowMode ? 'Station 02 — CV & LinkedIn' : 'Step 1 — Upload CV'}
                 </span>
               </div>
               <h2 className="font-hero text-2xl sm:text-3xl font-extrabold text-slate-950">
-                {previewFile && !isProcessing ? 'Review Demo CV' : 'Upload Your CV'}
+                {previewFile && !isProcessing ? 'Review Demo CV' : flowMode ? 'Upload Your CV & LinkedIn' : 'Upload Your CV'}
               </h2>
               <p className="text-slate-500 text-sm mt-1">
                 {previewFile && !isProcessing
@@ -875,6 +968,8 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
                     title="CV PDF Preview"
                   />
                 </div>
+
+                {linkedinField}
 
                 {/* Live Extractor Notice */}
                 <div className="p-3 rounded-xl bg-indigo-50/70 border border-indigo-200/60 flex items-center gap-2.5 text-xs text-indigo-900">
@@ -948,6 +1043,8 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
               </div>
             )}
 
+            {!previewFile && !isProcessing && linkedinField}
+
             {/* CASE 3: EXTRACTOR RUNNING IN BACKGROUND */}
             {isProcessing && uploadedFile && (
               <div className="flex flex-col items-center gap-5 py-6 px-4 animate-in fade-in duration-300">
@@ -977,13 +1074,15 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
             )}
 
             <div className="flex items-center gap-3 pt-2">
-              <button
-                type="button"
-                onClick={() => (hasExistingProfile ? setStep('pass') : setStep('welcome'))}
-                className="text-xs text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
-              >
-                ← {hasExistingProfile ? 'Cancel & Back to Transit Pass' : 'Back'}
-              </button>
+              {!flowMode && (
+                <button
+                  type="button"
+                  onClick={() => (hasExistingProfile ? setStep('pass') : setStep('welcome'))}
+                  className="text-xs text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
+                >
+                  ← {hasExistingProfile ? 'Cancel & Back to Transit Pass' : 'Back'}
+                </button>
+              )}
               <button
                 type="button"
                 onClick={() => setStep('personal')}
@@ -1689,7 +1788,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
                 <div className="flex items-center gap-2 mb-1">
                   <span className="w-2.5 h-2.5 rounded-full bg-indigo-600 animate-pulse" />
                   <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">
-                    Step 4 of 7 • Follow-Up Machine
+                    {flowMode ? 'Station 04 of 08' : 'Step 4 of 7'} • Follow-Up Machine
                   </span>
                   <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
                     Targeted Questions
@@ -1769,14 +1868,16 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50/80 border border-emerald-200/60 mb-3 shadow-2xs">
               <Star className="w-3.5 h-3.5 text-emerald-600"/>
               <span className="text-xs font-bold text-emerald-700 tracking-wide uppercase">
-                {hasExistingProfile ? 'Transit Pass Active' : 'Transit Pass Generated!'}
+                {flowMode ? 'Station 05 — Transit Card Generated!' : hasExistingProfile ? 'Transit Pass Active' : 'Transit Pass Generated!'}
               </span>
             </div>
             <h2 className="font-hero text-3xl sm:text-4xl font-extrabold text-slate-950">Your Career Transit Pass 🎉</h2>
             <p className="text-slate-500 text-sm mt-1.5">
-              {hasExistingProfile
-                ? 'Your transit pass is loaded and synced with your database profile.'
-                : 'Profile saved to your account. Your career journey starts now.'}
+              {flowMode
+                ? 'Your personal Career Transit Pass is ready. Next stop: the Future Skills Radar.'
+                : hasExistingProfile
+                  ? 'Your transit pass is loaded and synced with your database profile.'
+                  : 'Profile saved to your account. Your career journey starts now.'}
             </p>
           </div>
 
@@ -1859,7 +1960,25 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
             </div>
           </div>
 
+          {/* ── Onboarding: continue the journey instead of opening the profile ── */}
+          {flowMode && (
+            <div className="w-full max-w-3xl mx-auto flex flex-col items-center gap-2.5">
+              <button
+                type="button"
+                onClick={handleFlowContinue}
+                className="group w-full sm:w-auto min-w-[320px] h-14 px-8 rounded-full bg-amber-400 hover:bg-amber-300 text-stone-950 font-mono-board text-sm font-black tracking-wider shadow-md transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2.5"
+              >
+                <span>NEXT STOP · FUTURE SKILLS RADAR</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </button>
+              <p className="text-[11px] font-mono-board tracking-wider text-stone-500">
+                YOUR PROFILE IS SAVED · THE JOURNEY CONTINUES
+              </p>
+            </div>
+          )}
+
           {/* ── 2. Full Transit Dossier Container Below Card ── */}
+          {!flowMode && (
           <div className="w-full">
             <ProfileConfirmation
               profile={followUpProfile || buildCareerProfileFromState()}
@@ -1883,6 +2002,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
               onUpdateProfile={(p) => setFollowUpProfile(p)}
             />
           </div>
+          )}
         </div>
       )}
     </div>

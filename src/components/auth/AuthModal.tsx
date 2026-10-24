@@ -9,24 +9,31 @@ export interface UserProfile {
   email: string
 }
 
+export interface AuthSuccessMeta {
+  /** True when the user just signed up (drives the onboarding journey). */
+  isNewUser?: boolean
+}
+
 interface AuthModalProps {
   isOpen: boolean
   initialMode?: 'login' | 'signup'
   onClose: () => void
-  onAuthSuccess: (user: UserProfile) => void
+  onAuthSuccess: (user: UserProfile, meta?: AuthSuccessMeta) => void
 }
 
 const AuthDialogContent: React.FC<{
   initialMode: 'login' | 'signup'
   onClose: () => void
-  onAuthSuccess: (user: UserProfile) => void
+  onAuthSuccess: (user: UserProfile, meta?: AuthSuccessMeta) => void
 }> = ({ initialMode, onClose, onAuthSuccess }) => {
   const [mode, setMode] = useState<'login' | 'signup'>(initialMode)
   const [authenticatedUser, setAuthenticatedUser] = useState<UserProfile | null>(null)
+  const [isNewUser, setIsNewUser] = useState(false)
 
-  const handleSuccess = (user: UserProfile) => {
+  const handleSuccess = (user: UserProfile, meta?: AuthSuccessMeta) => {
     setAuthenticatedUser(user)
-    onAuthSuccess(user)
+    setIsNewUser(!!meta?.isNewUser)
+    onAuthSuccess(user, meta)
     // Auto-redirect to homepage
     setTimeout(() => {
       onClose()
@@ -121,7 +128,8 @@ const AuthDialogContent: React.FC<{
             </h3>
 
             <p className="text-sm text-slate-800/90 mb-6 max-w-xs mx-auto leading-relaxed">
-              Signed in as <span className="font-semibold text-slate-950">{authenticatedUser.email}</span>. Redirecting to your homepage...
+              Signed in as <span className="font-semibold text-slate-950">{authenticatedUser.email}</span>.{' '}
+              {isNewUser ? 'Boarding your onboarding journey...' : 'Redirecting to your homepage...'}
             </p>
 
             <button
@@ -129,7 +137,7 @@ const AuthDialogContent: React.FC<{
               onClick={onClose}
               className="w-full h-11 rounded-2xl bg-slate-950 hover:bg-slate-900 text-white text-sm font-semibold shadow-lg transition-all cursor-pointer active:scale-[0.98] flex items-center justify-center gap-2"
             >
-              <span>Go to Homepage</span>
+              <span>{isNewUser ? 'Start Onboarding' : 'Go to Homepage'}</span>
               <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             </button>
           </div>
