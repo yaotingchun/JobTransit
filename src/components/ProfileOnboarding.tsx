@@ -1,11 +1,11 @@
 import React, { useState, useRef, useCallback } from 'react'
 import {
   CreditCard, Upload, CheckCircle2, ArrowRight, FileText,
-  User, Mail, Briefcase, Code2, GraduationCap, MapPin, Phone,
-  Sparkles, Star, Zap, X, ChevronRight, RefreshCw, Plus, Trash2,
+  User, Briefcase, Code2, GraduationCap,
+  Sparkles, Star, Zap, X, ChevronRight, Plus, Trash2,
   Target, Globe, Building2, BookOpen, Award, Languages, Brain,
-  Wrench, Heart, ChevronDown, Save, Loader2, AlertCircle, Layers,
-  Image as ImageIcon, Presentation,
+  Wrench, Heart, ChevronDown, Save, Loader2, AlertCircle,
+  Image as ImageIcon, Presentation, RefreshCw, Layers,
 } from 'lucide-react'
 import { doc, setDoc, getDoc } from 'firebase/firestore'
 import { auth, db } from '../lib/firebase'
@@ -19,10 +19,11 @@ import {
   defaultPersonal, defaultEducation, defaultSkills, defaultCareerPreferences,
 } from '../types/profile'
 import { Realistic3DCard } from './transit/Realistic3DCard'
+import { CareerReceipt } from './transit/CareerReceipt'
 import type { CardTheme } from './transit/types'
 import { profileToCardData } from '../lib/cardFirebase'
 import {
-  extractTextFromAnyFile, parseStructuredResume, type ExtractionProgress,
+  extractTextFromAnyFile, parseStructuredResume, normalizeToMonthYear, type ExtractionProgress,
 } from '../lib/cvParser'
 
 // ─── Props ────────────────────────────────────────────────────────────────────
@@ -109,6 +110,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
   const [isProcessing, setIsProcessing] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
+  const [uploadError, setUploadError] = useState<string | null>(null)
   const [uploadedFile, setUploadedFile] = useState<File | null>(null)
   const [rawText, setRawText] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -125,18 +127,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
   const [career, setCareer] = useState<CareerPreferences>(defaultCareerPreferences())
   const [cardTheme, setCardTheme] = useState<CardTheme>('creative-license')
   const [section4Tab, setSection4Tab] = useState<'experience' | 'projects' | 'career' | 'all'>('experience')
-  const [isBrochureFolded, setIsBrochureFolded] = useState(true)
-
-  // Auto-open 3-fold brochure animation when entering this page
-  React.useEffect(() => {
-    if (step === 'personal' || step === 'education' || step === 'skills' || step === 'experience' || step === 'projects' || step === 'career') {
-      setIsBrochureFolded(true)
-      const timer = setTimeout(() => {
-        setIsBrochureFolded(false)
-      }, 400)
-      return () => clearTimeout(timer)
-    }
-  }, [step])
+  const [showAllDetails, setShowAllDetails] = useState(false)
 
   // ── Check if database already has information on mount ──
   React.useEffect(() => {
@@ -244,17 +235,18 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
   const handleFileSelect = useCallback(async (file: File) => {
     setUploadedFile(file)
     setIsProcessing(true)
+    setUploadError(null)
     setExtractionProgress({ stage: `Preparing ${file.name}…`, percent: 12 })
     setStep('upload')
 
     try {
-      const text = await extractTextFromAnyFile(file, p => {
+      const text = await extractTextFromAnyFile(file, (p) => {
         setExtractionProgress(p)
       })
       setRawText(text)
 
       setExtractionProgress({ stage: 'Structuring profile data & career goals…', percent: 92 })
-      await new Promise(r => setTimeout(r, 280))
+      await new Promise((r) => setTimeout(r, 280))
 
       const parsed = parseStructuredResume(text, currentUser)
       setPersonal(parsed.personal)
@@ -263,11 +255,12 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
       if (parsed.work_experience?.length) setWorkExp(parsed.work_experience)
       if (parsed.projects?.length) setProjects(parsed.projects)
       if (parsed.career) setCareer(parsed.career)
-    } catch (err) {
+      setStep('personal')
+    } catch (err: any) {
       console.error('Error during multi-format CV extraction:', err)
+      setUploadError(err?.message || 'Failed to extract text from document using OCR.')
     } finally {
       setIsProcessing(false)
-      setStep('personal')
     }
   }, [currentUser])
 
@@ -431,6 +424,13 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
               <p className="text-slate-500 text-sm mt-1">We'll extract your info automatically. You can edit everything next.</p>
             </div>
 
+            {uploadError && (
+              <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2 animate-in fade-in">
+                <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                <span className="flex-1">{uploadError}</span>
+              </div>
+            )}
+
             {!isProcessing && (
               <div
                 onDragOver={e => { e.preventDefault(); setIsDragging(true) }}
@@ -532,7 +532,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
                   3-Fold Career Paper Document
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/70">
-                  {isBrochureFolded ? '📄 Paper Folded (Right on Top • Left on Bottom)' : '📄 Paper Unfolded (Open Flat)'}
+                  📄 3-Fold Paper Layout
                 </span>
               </div>
               <h2 className="font-hero text-2xl sm:text-3xl font-extrabold text-slate-950">
@@ -544,28 +544,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
             </div>
 
             <div className="flex flex-wrap items-center gap-2.5 shrink-0 w-full lg:w-auto">
-              {/* Interactive Toggle for Auto-Open Animation */}
-              <button
-                type="button"
-                onClick={() => {
-                  setIsBrochureFolded(true)
-                  setTimeout(() => setIsBrochureFolded(false), 450)
-                }}
-                className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200 shadow-xs transition-all cursor-pointer active:scale-95"
-                title="Replay the paper unfolding animation"
-              >
-                <RefreshCw className="w-3.5 h-3.5 text-indigo-600" />
-                <span>Replay Unfold</span>
-              </button>
 
-              <button
-                type="button"
-                onClick={() => setIsBrochureFolded(prev => !prev)}
-                className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200 shadow-xs transition-all cursor-pointer active:scale-95"
-              >
-                <Layers className="w-3.5 h-3.5 text-indigo-600" />
-                <span>{isBrochureFolded ? 'Unfold Paper Document' : 'Fold Paper (Right on Top)'}</span>
-              </button>
 
               {hasExistingProfile && (
                 <button
@@ -600,33 +579,15 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
             </div>
           </div>
 
-          {/* ── 3-FOLD PAPER SHEET CONTAINER WITH 3D PERSPECTIVE ── */}
-          <div
-            className="relative w-full py-4"
-            style={{ perspective: '2800px' }}
-          >
+          {/* ── 3-FOLD PAPER SHEET CONTAINER ── */}
+          <div className="relative w-full py-4">
             {/* The 3-panel paper sheet (Clean paper aesthetic, NO green background) */}
-            <div
-              className="relative flex flex-col lg:flex-row items-stretch justify-center rounded-xl bg-white shadow-[0_16px_50px_rgba(15,23,42,0.08),0_1px_3px_rgba(0,0,0,0.04)] border border-slate-200/90"
-              style={{ transformStyle: 'preserve-3d' }}
-            >
+            <div className="relative flex flex-col lg:flex-row items-stretch justify-center rounded-xl bg-white shadow-[0_16px_50px_rgba(15,23,42,0.08),0_1px_3px_rgba(0,0,0,0.04)] border border-slate-200/90">
 
               {/* ─────────────────────────────────────────────────────────────
-                  PANEL 1 (LEFT FLAP): SECTION 1 — PERSONAL & EDUCATION
-                  (When folded, left flap is underneath / bottom of the fold)
+                  PANEL 1 (LEFT): SECTION 1 — PERSONAL & EDUCATION
               ───────────────────────────────────────────────────────────── */}
-              <div
-                className="flex-1 min-w-[320px] max-w-full lg:max-w-[500px] bg-white border-b lg:border-b-0 lg:border-r border-slate-200/80 p-5 sm:p-6 flex flex-col relative origin-right rounded-t-xl lg:rounded-tr-none lg:rounded-l-xl"
-                style={{
-                  transformStyle: 'preserve-3d',
-                  transform: isBrochureFolded ? 'rotateY(64deg)' : 'rotateY(0deg)',
-                  zIndex: isBrochureFolded ? 20 : 10,
-                  transition: isBrochureFolded
-                    ? 'transform 950ms cubic-bezier(0.16,1,0.3,1), box-shadow 950ms ease'
-                    : 'transform 1050ms cubic-bezier(0.16,1,0.3,1) 120ms, box-shadow 1050ms ease',
-                  boxShadow: isBrochureFolded ? 'inset -12px 0 20px rgba(0,0,0,0.08), 8px 0 24px rgba(0,0,0,0.06)' : 'none',
-                }}
-              >
+              <div className="flex-1 min-w-[320px] max-w-full lg:max-w-[500px] bg-white border-b lg:border-b-0 lg:border-r border-slate-200/80 p-5 sm:p-6 flex flex-col relative rounded-t-xl lg:rounded-tr-none lg:rounded-l-xl">
                 {/* Subtle Paper Registration Marks */}
                 <div className="absolute top-2.5 left-2.5 text-slate-300 pointer-events-none select-none text-[11px] leading-none">✦</div>
                 <div className="absolute top-2.5 right-2.5 text-slate-300 pointer-events-none select-none text-[11px] leading-none">✦</div>
@@ -647,7 +608,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
                     </div>
                   </div>
                   <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/60 shrink-0">
-                    Fold 1 • Left (Bottom Layer)
+                    Fold 1 • Left
                   </span>
                 </div>
 
@@ -703,6 +664,18 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
                           </select>
                           <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                         </div>
+                      </div>
+                      <div>
+                        <label className={labelCls}>GitHub Profile URL</label>
+                        <input className={inputCls} value={personal.github_url || ''} onChange={e => setPersonal({...personal, github_url: e.target.value})} placeholder="https://github.com/alex" />
+                      </div>
+                      <div>
+                        <label className={labelCls}>LinkedIn Profile URL</label>
+                        <input className={inputCls} value={personal.linkedin_url || ''} onChange={e => setPersonal({...personal, linkedin_url: e.target.value})} placeholder="https://linkedin.com/in/alex" />
+                      </div>
+                      <div className="sm:col-span-2">
+                        <label className={labelCls}>Portfolio / Personal Website</label>
+                        <input className={inputCls} value={personal.portfolio_url || ''} onChange={e => setPersonal({...personal, portfolio_url: e.target.value})} placeholder="https://alexmorgan.dev" />
                       </div>
                     </div>
                   </div>
@@ -769,18 +742,9 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
               </div>
 
               {/* ─────────────────────────────────────────────────────────────
-                  PANEL 2 (CENTER BASE): SECTION 2 — SKILLS & COMPETENCIES
-                  (Fixed central base panel of the 3-fold paper)
+                  PANEL 2 (CENTER): SECTION 2 — SKILLS & COMPETENCIES
               ───────────────────────────────────────────────────────────── */}
-              <div
-                className="flex-1 min-w-[320px] max-w-full lg:max-w-[500px] bg-[#fafaf8] p-5 sm:p-6 flex flex-col relative z-10"
-                style={{
-                  boxShadow: isBrochureFolded
-                    ? 'inset 16px 0 24px -8px rgba(0,0,0,0.08), inset -16px 0 24px -8px rgba(0,0,0,0.08)'
-                    : 'inset 4px 0 10px -4px rgba(0,0,0,0.02), inset -4px 0 10px -4px rgba(0,0,0,0.02)',
-                  transition: 'box-shadow 950ms ease',
-                }}
-              >
+              <div className="flex-1 min-w-[320px] max-w-full lg:max-w-[500px] bg-[#fafaf8] p-5 sm:p-6 flex flex-col relative z-10">
                 {/* Subtle Paper Registration Marks */}
                 <div className="absolute top-2.5 left-2.5 text-slate-300 pointer-events-none select-none text-[11px] leading-none">✦</div>
                 <div className="absolute top-2.5 right-2.5 text-slate-300 pointer-events-none select-none text-[11px] leading-none">✦</div>
@@ -801,7 +765,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
                     </div>
                   </div>
                   <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-purple-50 text-purple-700 border border-purple-200/60 shrink-0">
-                    Fold 2 • Center Base
+                    Fold 2 • Center
                   </span>
                 </div>
 
@@ -826,6 +790,11 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
                   <div>
                     <label className={labelCls + ' flex items-center gap-1'}><Heart className="w-3 h-3 text-rose-500"/>Soft Skills</label>
                     <TagInput tags={skills.soft_skills} onChange={v => setSkills({...skills, soft_skills: v})} placeholder="Leadership, Communication…" />
+                  </div>
+
+                  <div>
+                    <label className={labelCls + ' flex items-center gap-1'}><Layers className="w-3 h-3 text-emerald-600"/>Other Skills</label>
+                    <TagInput tags={skills.other_skills || []} onChange={v => setSkills({...skills, other_skills: v})} placeholder="Agile/Scrum, Kanban, Linux…" />
                   </div>
 
                   {/* Certifications & Languages side-by-side */}
@@ -884,23 +853,9 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
               </div>
 
               {/* ─────────────────────────────────────────────────────────────
-                  PANEL 3 (RIGHT FLAP): SECTION 3 — EXPERIENCE & GOALS
-                  (When folded, right flap is ON TOP of the left flap)
+                  PANEL 3 (RIGHT): SECTION 3 — EXPERIENCE & GOALS
               ───────────────────────────────────────────────────────────── */}
-              <div
-                className="flex-1 min-w-[320px] max-w-full lg:max-w-[500px] bg-white border-t lg:border-t-0 lg:border-l border-slate-200/80 p-5 sm:p-6 flex flex-col relative origin-left rounded-b-xl lg:rounded-bl-none lg:rounded-r-xl"
-                style={{
-                  transformStyle: 'preserve-3d',
-                  transform: isBrochureFolded ? 'rotateY(-76deg)' : 'rotateY(0deg)',
-                  zIndex: isBrochureFolded ? 30 : 10,
-                  transition: isBrochureFolded
-                    ? 'transform 1000ms cubic-bezier(0.16,1,0.3,1) 80ms, box-shadow 1000ms ease'
-                    : 'transform 950ms cubic-bezier(0.16,1,0.3,1), box-shadow 950ms ease',
-                  boxShadow: isBrochureFolded
-                    ? '-20px 0 35px -5px rgba(15,23,42,0.24), -4px 0 10px -2px rgba(15,23,42,0.12)'
-                    : 'none',
-                }}
-              >
+              <div className="flex-1 min-w-[320px] max-w-full lg:max-w-[500px] bg-white border-t lg:border-t-0 lg:border-l border-slate-200/80 p-5 sm:p-6 flex flex-col relative rounded-b-xl lg:rounded-bl-none lg:rounded-r-xl">
                 {/* Subtle Paper Registration Marks */}
                 <div className="absolute top-2.5 left-2.5 text-slate-300 pointer-events-none select-none text-[11px] leading-none">✦</div>
                 <div className="absolute top-2.5 right-2.5 text-slate-300 pointer-events-none select-none text-[11px] leading-none">✦</div>
@@ -921,7 +876,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
                     </div>
                   </div>
                   <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-sky-50 text-sky-700 border border-sky-200/60 shrink-0">
-                    Fold 3 • Right (Top Flap)
+                    Fold 3 • Right
                   </span>
                 </div>
 
@@ -1031,11 +986,11 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
                             </div>
                             <div>
                               <label className={labelCls}>Start Date</label>
-                              <input className={inputCls + ' h-8 text-xs bg-white'} type="month" value={job.employment_start_date} onChange={e => updateJob(i,{employment_start_date:e.target.value})} />
+                              <input className={inputCls + ' h-8 text-xs bg-white'} type="month" value={normalizeToMonthYear(job.employment_start_date) || job.employment_start_date} onChange={e => updateJob(i,{employment_start_date:e.target.value})} />
                             </div>
                             <div>
                               <label className={labelCls}>End Date</label>
-                              <input className={inputCls + ' h-8 text-xs bg-white'} type="month" value={job.employment_end_date ?? ''} onChange={e => updateJob(i,{employment_end_date:e.target.value||null})} />
+                              <input className={inputCls + ' h-8 text-xs bg-white'} type="month" value={normalizeToMonthYear(job.employment_end_date) || job.employment_end_date || ''} onChange={e => updateJob(i,{employment_end_date:e.target.value||null})} />
                             </div>
                           </div>
                           <div>
@@ -1120,10 +1075,6 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
                           <div>
                             <label className={labelCls}>Outcomes / Impact</label>
                             <TagInput tags={proj.project_outcomes} onChange={v => updateProject(i,{project_outcomes:v})} placeholder="Metrics, users…" />
-                          </div>
-                          <div>
-                            <label className={labelCls}>Portfolio / Repo URL</label>
-                            <input className={inputCls + ' h-8 text-xs bg-white'} value={proj.portfolio_url ?? ''} onChange={e => updateProject(i,{portfolio_url:e.target.value||null})} placeholder="https://github.com/…" />
                           </div>
                         </div>
                       ))}
@@ -1255,7 +1206,9 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
 
       {/* ── TRANSIT PASS ─────────────────────────────────────────────── */}
       {step === 'pass' && (
-        <div className="w-full max-w-lg mx-auto animate-in fade-in zoom-in-95 duration-500 flex flex-col items-center gap-7">
+        <div className={`w-full mx-auto animate-in fade-in zoom-in-95 duration-500 flex flex-col items-center gap-7 transition-all ${
+          showAllDetails ? 'max-w-6xl' : 'max-w-3xl'
+        }`}>
           <div className="text-center">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50/80 border border-emerald-200/60 mb-3">
               <Star className="w-3.5 h-3.5 text-emerald-600"/>
@@ -1271,72 +1224,111 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
             </p>
           </div>
 
-          <div className="w-full">
-            <div className="space-y-4">
-              <Realistic3DCard
-                data={profileToCardData(
-                  {
-                    personal,
-                    education,
-                    skills,
-                    work_experience: workExp,
-                    projects,
-                    career_preferences: career,
-                    pass_id: passId,
-                  },
-                  auth.currentUser?.uid || 'user',
-                  currentUser
-                )}
-                theme={cardTheme}
-              />
+          {/* ── Main Content Area: Side-by-Side (Card on Left, Receipt on Right) ── */}
+          <div className={`w-full flex flex-col ${
+            showAllDetails
+              ? 'lg:flex-row items-center lg:items-start justify-center gap-8 xl:gap-12'
+              : 'items-center gap-6'
+          }`}>
+            {/* Left Column: 3D Card, Themes & Toggle Button */}
+            <div className={`w-full flex flex-col items-center ${
+              showAllDetails ? 'lg:flex-1 lg:max-w-[620px]' : 'max-w-3xl'
+            }`}>
+              <div className="w-full space-y-4">
+                <Realistic3DCard
+                  data={profileToCardData(
+                    {
+                      personal,
+                      education,
+                      skills,
+                      work_experience: workExp,
+                      projects,
+                      career_preferences: career,
+                      pass_id: passId,
+                    },
+                    auth.currentUser?.uid || 'user',
+                    currentUser
+                  )}
+                  theme={cardTheme}
+                />
 
-              {/* Theme Selector Pills */}
-              <div className="flex flex-wrap items-center justify-center gap-2">
-                {(['creative-license', 'metro-taipei', 'jobtransit-obsidian', 'emerald-line'] as CardTheme[]).map((t) => (
+                {/* Theme Selector Pills */}
+                <div className="flex flex-wrap items-center justify-center gap-2">
+                  {(['creative-license', 'metro-taipei', 'jobtransit-obsidian', 'emerald-line'] as CardTheme[]).map((t) => (
+                    <button
+                      key={t}
+                      type="button"
+                      onClick={() => setCardTheme(t)}
+                      className={`px-3 py-1 rounded-full text-[11px] font-semibold border transition-all cursor-pointer ${
+                        cardTheme === t
+                          ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
+                          : 'bg-white/60 text-slate-600 border-slate-200 hover:bg-white'
+                      }`}
+                    >
+                      {t === 'creative-license'
+                        ? 'Transit Pass'
+                        : t === 'metro-taipei'
+                        ? 'Taipei 48H'
+                        : t === 'jobtransit-obsidian'
+                        ? 'Cyber Obsidian'
+                        : 'Emerald Line'}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Show all Details Button */}
+                <div className="pt-2 flex justify-center">
                   <button
-                    key={t}
                     type="button"
-                    onClick={() => setCardTheme(t)}
-                    className={`px-3 py-1 rounded-full text-[11px] font-semibold border transition-all cursor-pointer ${
-                      cardTheme === t
-                        ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
-                        : 'bg-white/60 text-slate-600 border-slate-200 hover:bg-white'
+                    onClick={() => setShowAllDetails((prev) => !prev)}
+                    className={`inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl font-bold text-sm border shadow-[0_8px_20px_rgba(15,23,42,0.06)] hover:shadow-[0_12px_28px_rgba(15,23,42,0.12)] transition-all cursor-pointer active:scale-95 group ${
+                      showAllDetails
+                        ? 'bg-slate-900 text-white border-slate-900 shadow-slate-900/20'
+                        : 'bg-white/85 hover:bg-white text-slate-900 border-slate-200'
                     }`}
                   >
-                    {t === 'creative-license'
-                      ? 'Transit Pass'
-                      : t === 'metro-taipei'
-                      ? 'Taipei 48H'
-                      : t === 'jobtransit-obsidian'
-                      ? 'Cyber Obsidian'
-                      : 'Emerald Line'}
+                    <FileText className={`w-4 h-4 transition-transform group-hover:scale-110 ${showAllDetails ? 'text-emerald-400' : 'text-emerald-600'}`} />
+                    <span>{showAllDetails ? 'Hide Details' : 'Show all Details'}</span>
+                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full font-bold uppercase border ${
+                      showAllDetails
+                        ? 'bg-white/20 text-emerald-300 border-white/30'
+                        : 'bg-emerald-50 text-emerald-700 border-emerald-200/60'
+                    }`}>
+                      Receipt
+                    </span>
                   </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Summary info tiles */}
-          <div className="w-full rounded-3xl bg-white/35 backdrop-blur-2xl border border-white/55 shadow-[0_16px_40px_rgba(15,23,42,0.08)] p-5 sm:p-6 grid grid-cols-2 gap-3">
-            {[
-              { icon: Mail,          label: 'Email',       value: personal.email },
-              { icon: Phone,         label: 'Phone',       value: personal.phone_number || '—' },
-              { icon: MapPin,        label: 'Location',    value: personal.location || '—' },
-              { icon: GraduationCap, label: 'Education',   value: education.institution_name || '—' },
-              { icon: Briefcase,     label: 'Experience',  value: `${personal.years_of_experience} yr${personal.years_of_experience===1?'':'s'}` },
-              { icon: Target,        label: 'Work Mode',   value: career.preferred_work_mode },
-            ].map(({ icon: Icon, label, value }) => (
-              <div key={label} className="flex items-start gap-2.5 p-3 rounded-2xl bg-white/40 border border-white/50">
-                <Icon className="w-4 h-4 text-slate-400 mt-0.5 shrink-0"/>
-                <div className="min-w-0">
-                  <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">{label}</p>
-                  <p className="text-xs font-semibold text-slate-800 truncate">{value}</p>
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* Right Column: Receiptify Style Receipt (Shows on Right Side of the page) */}
+            {showAllDetails && (
+              <div className="w-full max-w-md lg:w-[420px] lg:shrink-0 animate-in fade-in slide-in-from-right-4 duration-300">
+                <CareerReceipt
+                  cardData={profileToCardData(
+                    {
+                      personal,
+                      education,
+                      skills,
+                      work_experience: workExp,
+                      projects,
+                      career_preferences: career,
+                      pass_id: passId,
+                    },
+                    auth.currentUser?.uid || 'user',
+                    currentUser
+                  )}
+                  personal={personal}
+                  education={education}
+                  skills={skills}
+                  career={career}
+                  onClose={() => setShowAllDetails(false)}
+                />
+              </div>
+            )}
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
+          <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-2xl pt-2">
             <button
               type="button"
               onClick={() => setStep('personal')}

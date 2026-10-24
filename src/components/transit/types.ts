@@ -31,23 +31,25 @@ export interface CardPassData {
   phone: string
   email: string
   instagram: string
+  github?: string
+  linkedin?: string
   quote: string
   quoteAuthor: string
 }
 
 export const DEFAULT_PASS_DATA: CardPassData = {
-  passId: 'JT-PASS-1001',
-  licenseNumber: '1001',
-  holderName: 'Transit User',
-  firstName: 'TRANSIT',
-  occupation: 'CAREER PROFESSIONAL',
-  roleTitle: 'Career Navigator',
-  industry: 'Technology & Innovation',
-  dob: '15/09/2000',
-  nationality: 'MALAYSIA',
-  roleBadge: 'TRANSIT USER',
-  expertise: 'CAREER TRANSIT MEMBER',
-  photoUrl: '', // Uses JobTransitTrainLogo.jpg by default
+  passId: 'JT-DYYAQX-2026',
+  licenseNumber: '8618',
+  holderName: 'Alexander J. Mercer',
+  firstName: 'ALEXANDER',
+  occupation: 'SOFTWARE PROFESSIONAL',
+  roleTitle: 'Software Professional',
+  industry: 'TECHNOLOGY',
+  dob: '15/09/2005',
+  nationality: 'JOHOR',
+  roleBadge: 'SOFTWARE PROFESSIONAL',
+  expertise: 'TECHNOLOGY',
+  photoUrl: '',
   subBadgeTitle: 'VERIFIED PASS 🌐',
   subBadgeSub: 'JobTransit Network',
   hours: 48,
@@ -71,6 +73,8 @@ export const DEFAULT_PASS_DATA: CardPassData = {
   phone: '',
   email: 'user@jobtransit.ai',
   instagram: '@transit_user',
+  github: '',
+  linkedin: '',
   quote: 'Creativity takes courage.',
   quoteAuthor: 'Henri Matisse',
   matchScore: 98,

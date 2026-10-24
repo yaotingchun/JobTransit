@@ -117,6 +117,7 @@ export function profileToCardData(
     ...(Array.isArray(profile?.skills?.ai_skills) ? profile.skills.ai_skills : []),
     ...(Array.isArray(profile?.skills?.tools_and_technologies) ? profile.skills.tools_and_technologies : []),
     ...(Array.isArray(profile?.skills?.soft_skills) ? profile.skills.soft_skills : []),
+    ...(Array.isArray(profile?.skills?.other_skills) ? profile.skills.other_skills : []),
     ...(Array.isArray(profile?.skills) ? profile.skills : []),
   ].filter(Boolean)
 
@@ -140,6 +141,8 @@ export function profileToCardData(
   const phone = profile?.personal?.phone_number || profile?.phone || ''
   const email = profile?.personal?.email || profile?.email || fallbackUser?.email || ''
   const instagram = profile?.instagram || `@${fullName.toLowerCase().replace(/[^a-z0-9]/g, '_')}`
+  const github = profile?.personal?.github_url || profile?.github || ''
+  const linkedin = profile?.personal?.linkedin_url || profile?.linkedin || ''
 
   return {
     ...DEFAULT_PASS_DATA,
@@ -157,6 +160,8 @@ export function profileToCardData(
     email,
     phone,
     instagram,
+    github,
+    linkedin,
     skills,
     softwareList,
     photoUrl: profile?.photoUrl || '',

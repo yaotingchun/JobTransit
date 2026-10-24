@@ -16,6 +16,9 @@ export interface PersonalInfo {
   years_of_experience: number
   industry: string
   location: string
+  github_url?: string
+  linkedin_url?: string
+  portfolio_url?: string
 }
 
 // ─── B. Education ─────────────────────────────────────────────────────────────
@@ -47,6 +50,7 @@ export interface SkillsProfile {
   soft_skills: string[]
   ai_skills: string[]
   tools_and_technologies: string[]
+  other_skills?: string[]
   skill_proficiency: Record<string, SkillProficiency>
   skill_evidence: Record<string, string>
   certifications: Certification[]
@@ -114,6 +118,9 @@ export const defaultPersonal = (): PersonalInfo => ({
   years_of_experience: 0,
   industry: '',
   location: '',
+  github_url: '',
+  linkedin_url: '',
+  portfolio_url: '',
 })
 
 export const defaultEducation = (): Education => ({
@@ -130,6 +137,7 @@ export const defaultSkills = (): SkillsProfile => ({
   soft_skills: [],
   ai_skills: [],
   tools_and_technologies: [],
+  other_skills: [],
   skill_proficiency: {},
   skill_evidence: {},
   certifications: [],

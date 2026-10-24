@@ -9,6 +9,7 @@ export interface Realistic3DCardProps {
   onNfcTap?: () => void
   showGlare?: boolean
   className?: string
+  cardMaxWidth?: string
   // External imperative control bindings
   isSpinning?: boolean
   onSpinChange?: (spinning: boolean) => void
@@ -31,6 +32,7 @@ export const Realistic3DCard = React.forwardRef<Realistic3DCardRef, Realistic3DC
       onNfcTap,
       showGlare = true,
       className = '',
+      cardMaxWidth = '660px',
       isSpinning: externalIsSpinning,
       onSpinChange,
       isFlipped: externalIsFlipped,
@@ -348,9 +350,9 @@ export const Realistic3DCard = React.forwardRef<Realistic3DCardRef, Realistic3DC
           className="absolute pointer-events-none transition-all duration-150 ease-out z-0"
           style={{
             bottom: '24px',
-            width: '82%',
-            maxWidth: '460px',
-            height: '42px',
+            width: '85%',
+            maxWidth: '580px',
+            height: '46px',
             borderRadius: '50%',
             background: 'radial-gradient(ellipse at center, rgba(15, 23, 42, 0.45) 0%, rgba(15, 23, 42, 0.15) 50%, transparent 75%)',
             filter: `blur(${shadowBlur}px)`,
@@ -365,9 +367,9 @@ export const Realistic3DCard = React.forwardRef<Realistic3DCardRef, Realistic3DC
           className="absolute pointer-events-none z-0"
           style={{
             bottom: '36px',
-            width: '68%',
-            maxWidth: '380px',
-            height: '18px',
+            width: '72%',
+            maxWidth: '460px',
+            height: '20px',
             borderRadius: '50%',
             background: 'radial-gradient(ellipse at center, rgba(15, 23, 42, 0.35) 0%, transparent 70%)',
             filter: 'blur(10px)',
@@ -394,7 +396,7 @@ export const Realistic3DCard = React.forwardRef<Realistic3DCardRef, Realistic3DC
           }`}
           style={{
             width: '100%',
-            maxWidth: '540px',
+            maxWidth: cardMaxWidth || '660px',
             aspectRatio: '1.586', // Standard credit/transit card ratio
             transformStyle: 'preserve-3d',
             transform: `translate3d(0, 0, ${cardElevationZ}px) rotateX(${rotX}deg) rotateY(${rotY}deg)`,

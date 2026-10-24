@@ -16,6 +16,7 @@ import {
   profileToCardData,
 } from '../../lib/cardFirebase'
 import { auth } from '../../lib/firebase'
+import { CareerReceipt } from './CareerReceipt'
 import {
   RotateCw,
   Play,
@@ -32,6 +33,7 @@ import {
   Cloud,
   Save,
   Loader2,
+  FileText,
 } from 'lucide-react'
 
 interface TransitPassStudioProps {
@@ -51,6 +53,7 @@ export const TransitPassStudio: React.FC<TransitPassStudioProps> = ({
   const [showGlare, setShowGlare] = useState(true)
   const [copied, setCopied] = useState(false)
   const [nfcTapped, setNfcTapped] = useState(false)
+  const [showReceipt, setShowReceipt] = useState(false)
   const [activeTab, setActiveTab] = useState<'controls' | 'stats' | 'personalize'>('controls')
 
   // ── Firebase Sync State ──
@@ -291,7 +294,39 @@ export const TransitPassStudio: React.FC<TransitPassStudioProps> = ({
             <span className="hidden sm:inline">Luster Glare</span>
             <span>{showGlare ? 'ON' : 'OFF'}</span>
           </button>
+
+          {/* Show all Details (Receipt) Button */}
+          <button
+            type="button"
+            onClick={() => setShowReceipt((prev) => !prev)}
+            className={`px-3.5 py-2.5 rounded-2xl font-bold text-xs sm:text-sm border transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-xs ${
+              showReceipt
+                ? 'bg-slate-900 text-white border-slate-900 shadow-slate-900/20'
+                : 'bg-white/90 hover:bg-white text-slate-800 border-slate-200/80 shadow-[0_8px_20px_rgba(15,23,42,0.06)]'
+            }`}
+            title="Show all pass credentials in authentic thermal receipt style"
+          >
+            <FileText className={`w-4 h-4 ${showReceipt ? 'text-emerald-400' : 'text-emerald-600'}`} />
+            <span>{showReceipt ? 'Hide Details' : 'Show all Details'}</span>
+            <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded-full font-bold uppercase border ${
+              showReceipt
+                ? 'bg-white/20 text-emerald-300 border-white/30'
+                : 'bg-emerald-50 text-emerald-700 border-emerald-200/60'
+            }`}>
+              Receipt
+            </span>
+          </button>
         </div>
+
+        {/* Receiptify Style Receipt Display */}
+        {showReceipt && (
+          <div className="relative z-20 max-w-xl mx-auto my-6 px-4">
+            <CareerReceipt
+              cardData={cardData}
+              onClose={() => setShowReceipt(false)}
+            />
+          </div>
+        )}
       </div>
 
       {/* ── Studio Customizer & Information Dashboard ── */}
