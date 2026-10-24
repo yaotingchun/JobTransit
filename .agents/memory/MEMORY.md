@@ -1,0 +1,1 @@
+- [Locked dependency installs](locked-installs.md) — prefer the lockfile install when npm's peer resolver crashes on the imported dependency graph.
