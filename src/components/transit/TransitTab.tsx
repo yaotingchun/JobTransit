@@ -11,6 +11,7 @@ import {
   GraduationCap,
   MapPinned,
   Trophy,
+  Globe2,
 } from 'lucide-react'
 import type { UserProfile } from '../Navbar'
 import { TransitMap } from './TransitMap'
@@ -18,6 +19,7 @@ import { DepartureBoard } from './DepartureBoard'
 import { StationTicket } from './StationTicket'
 import { ReskillingPathwayPage } from './ReskillingPathwayPage'
 import { getReskillingPathway } from './pathwayData'
+import { SDG_GOALS, type SDGId } from './sdgData'
 import {
   LINES,
   LINE_ORDER,
@@ -479,6 +481,36 @@ export const TransitTab: React.FC<TransitTabProps> = ({ currentUser }) => {
               <div className="text-[8.5px] font-mono-board text-stone-500 tracking-widest">CHARTED</div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* ── UN SDG ALIGNMENT BAR ── */}
+      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2.5 rounded-2xl bg-stone-900/90 border border-stone-800 text-white shadow-xs">
+        <div className="flex items-center gap-2">
+          <Globe2 className="w-4 h-4 text-rose-400 shrink-0" />
+          <span className="text-[11px] font-mono-board tracking-wider uppercase font-bold text-stone-200">
+            UN SDG Global Goals Mapping:
+          </span>
+          <span className="text-xs text-stone-400 hidden sm:inline">
+            Every station & reskilling pathway advances the United Nations 2030 Agenda
+          </span>
+        </div>
+
+        <div className="flex items-center gap-1.5 flex-wrap">
+          {(['sdg-4', 'sdg-8', 'sdg-9', 'sdg-10', 'sdg-12'] as SDGId[]).map((id) => {
+            const g = SDG_GOALS[id]
+            return (
+              <span
+                key={id}
+                className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono-board font-black text-white shadow-2xs"
+                style={{ background: g.color }}
+                title={`${g.badge}: ${g.name} (${g.primaryTarget}) — ${g.targetDescription}`}
+              >
+                <span>{g.badge}</span>
+                <span className="font-normal opacity-90 hidden md:inline">· {g.shortTitle}</span>
+              </span>
+            )
+          })}
         </div>
       </div>
 

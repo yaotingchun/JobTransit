@@ -1,6 +1,7 @@
 import React from 'react'
-import { Check, CloudFog, Lock, Sparkles, TrainFront, TrendingUp, GraduationCap, ArrowRight } from 'lucide-react'
+import { Check, CloudFog, Lock, Sparkles, TrainFront, TrendingUp, GraduationCap, ArrowRight, Globe2 } from 'lucide-react'
 import { LINES, ORIGIN_ID, RANK_COLORS, type Route, type Station } from './transitData'
+import { getStationSDGMapping, getSkillSDG, SDG_GOALS } from './sdgData'
 
 interface StationTicketProps {
   station: Station
@@ -91,6 +92,7 @@ export const StationTicket: React.FC<StationTicketProps> = ({
   const isOrigin = s.id === ORIGIN_ID
   const line = LINES[s.lines[0]]
   const accent = s.topRank ? RANK_COLORS[s.topRank].ring : line.color
+  const sdgMapping = getStationSDGMapping(s.id, s.name)
 
   const signal = s.signal ?? {
     skillFit: s.fit,
@@ -183,29 +185,91 @@ export const StationTicket: React.FC<StationTicketProps> = ({
           ))}
         </ul>
 
+        {/* UN SDG Impact Mapping Box */}
+        <div className="p-3 rounded-xl bg-gradient-to-br from-stone-900/[0.04] to-stone-900/[0.02] border border-stone-900/10 space-y-2">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1.5">
+              <Globe2 className="w-3.5 h-3.5 text-rose-600" />
+              <span className="text-[9.5px] font-mono-board tracking-[0.18em] text-stone-700 font-bold">
+                UN SDG IMPACT
+              </span>
+            </div>
+            <span className="text-[10px] font-mono-board font-black text-rose-800 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
+              {sdgMapping.leadTarget}
+            </span>
+          </div>
+
+          <div className="flex flex-wrap gap-1.5">
+            {sdgMapping.primarySDGs.map((sdgId) => {
+              const g = SDG_GOALS[sdgId]
+              return (
+                <span
+                  key={sdgId}
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono-board font-black text-white shadow-2xs"
+                  style={{ background: g.color }}
+                  title={`${g.name} (${g.primaryTarget}): ${g.targetDescription}`}
+                >
+                  <span>{g.badge}</span>
+                  <span className="font-medium opacity-90 hidden sm:inline">· {g.shortTitle}</span>
+                </span>
+              )
+            })}
+          </div>
+
+          <p className="text-[11px] text-stone-600 leading-relaxed pt-0.5">
+            {sdgMapping.contributionNarrative}
+          </p>
+        </div>
+
         {/* Skills */}
         <div className="space-y-2">
           <div className="text-[9.5px] font-mono-board tracking-[0.18em] text-stone-500">
             {isOrigin ? 'SKILLS ON YOUR CARD' : 'TICKETS IN HAND'}
           </div>
           <div className="flex flex-wrap gap-1.5">
-            {s.skillsHave.map((k) => (
-              <span key={k} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-600/10 text-emerald-800 border border-emerald-700/15">
-                <Check className="w-3 h-3" />
-                {k}
-              </span>
-            ))}
+            {s.skillsHave.map((k) => {
+              const skillSdg = getSkillSDG(k)
+              return (
+                <span
+                  key={k}
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-600/10 text-emerald-800 border border-emerald-700/15"
+                  title={`Contributes to ${skillSdg.badge} (${skillSdg.name})`}
+                >
+                  <Check className="w-3 h-3" />
+                  <span>{k}</span>
+                  <span
+                    className="px-1 py-0.2 rounded text-[8.5px] font-mono-board font-black text-white ml-0.5 shadow-2xs"
+                    style={{ background: skillSdg.color }}
+                  >
+                    {skillSdg.badge}
+                  </span>
+                </span>
+              )
+            })}
           </div>
           {s.skillsGap.length > 0 && (
             <>
               <div className="text-[9.5px] font-mono-board tracking-[0.18em] text-stone-500 pt-1">FARES TO PAY · SKILL GAPS</div>
               <div className="flex flex-wrap gap-1.5">
-                {s.skillsGap.map((k) => (
-                  <span key={k} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold bg-white text-stone-800 border border-dashed border-stone-400">
-                    {k}
-                    <span className="text-amber-600 font-mono-board text-[10px]">◈</span>
-                  </span>
-                ))}
+                {s.skillsGap.map((k) => {
+                  const skillSdg = getSkillSDG(k)
+                  return (
+                    <span
+                      key={k}
+                      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold bg-white text-stone-800 border border-dashed border-stone-400"
+                      title={`Target skill advancing ${skillSdg.badge} (${skillSdg.name})`}
+                    >
+                      <span>{k}</span>
+                      <span
+                        className="px-1 py-0.2 rounded text-[8.5px] font-mono-board font-black text-white ml-0.5 shadow-2xs"
+                        style={{ background: skillSdg.color }}
+                      >
+                        {skillSdg.badge}
+                      </span>
+                      <span className="text-amber-600 font-mono-board text-[10px]">◈</span>
+                    </span>
+                  )
+                })}
               </div>
             </>
           )}
