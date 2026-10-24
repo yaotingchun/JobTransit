@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { ArrowRight, Eye, EyeOff, Lock, Mail, User, AlertCircle } from 'lucide-react'
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
-import { auth } from '../../lib/firebase'
+import { DEMO_USER } from '../../lib/cardFirebase'
 
 interface SignupFormProps {
   onSuccess: (user: { name: string; email: string }) => void
@@ -9,9 +8,9 @@ interface SignupFormProps {
 }
 
 export const SignupForm: React.FC<SignupFormProps> = ({ onSuccess, onSwitchToLogin }) => {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [name, setName] = useState('Alex Chen')
+  const [email, setEmail] = useState('alex@gmail.com')
+  const [password, setPassword] = useState('123456')
   const [showPassword, setShowPassword] = useState(false)
   const [agreed, setAgreed] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
@@ -31,33 +30,13 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onSuccess, onSwitchToLog
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!name.trim() || !email.trim() || !password.trim()) return
-
     setIsLoading(true)
     setError(null)
 
-    try {
-      // Create user in Firebase Authentication
-      const credential = await createUserWithEmailAndPassword(auth, email.trim(), password)
-
-      // Store the display name on the Firebase user profile
-      await updateProfile(credential.user, { displayName: name.trim() })
-
-      onSuccess({ name: name.trim(), email: credential.user.email ?? email.trim() })
-    } catch (err: unknown) {
-      const code = (err as { code?: string }).code ?? ''
-      if (code === 'auth/email-already-in-use') {
-        setError('An account with this email already exists. Try signing in instead.')
-      } else if (code === 'auth/invalid-email') {
-        setError('Please enter a valid email address.')
-      } else if (code === 'auth/weak-password') {
-        setError('Password must be at least 6 characters.')
-      } else {
-        setError('Something went wrong. Please try again.')
-      }
-    } finally {
+    setTimeout(() => {
       setIsLoading(false)
-    }
+      onSuccess(DEMO_USER)
+    }, 150)
   }
 
   return (
@@ -201,7 +180,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onSuccess, onSwitchToLog
             <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
           ) : (
             <>
-              <span>Create Account</span>
+              <span>Use Demo Account</span>
               <ArrowRight className="w-4 h-4" />
             </>
           )}

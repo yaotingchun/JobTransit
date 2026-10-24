@@ -140,7 +140,7 @@ export function parseStructuredResume(
     ...defaultEducation(),
     education_level: (rawEdu.education_level as EducationLevel) || 'bachelor',
     field_of_study: rawEdu.field_of_study || 'Computer Science',
-    institution_name: rawEdu.institution_name || 'Universiti Teknologi Malaysia',
+    institution_name: rawEdu.institution_name || 'Universiti Malaya',
     graduation_year: typeof rawEdu.graduation_year === 'number' ? rawEdu.graduation_year : new Date().getFullYear(),
     academic_achievements: rawEdu.academic_achievements || [],
     relevant_coursework: rawEdu.relevant_coursework || [],
@@ -203,14 +203,14 @@ export function parseStructuredResume(
 
   const career: CareerPreferences = {
     ...defaultCareerPreferences(),
-    target_job_roles: rawCareer.target_job_roles && rawCareer.target_job_roles.length > 0 ? rawCareer.target_job_roles : [personal.current_job_title || 'Software Engineer'],
+    target_job_roles: rawCareer.target_job_roles && rawCareer.target_job_roles.length > 0 ? rawCareer.target_job_roles : [],
     preferred_industries: rawCareer.preferred_industries && rawCareer.preferred_industries.length > 0 ? rawCareer.preferred_industries : [personal.industry || 'Technology'],
     preferred_work_location: rawCareer.preferred_work_location && rawCareer.preferred_work_location.length > 0
       ? rawCareer.preferred_work_location
-      : (personal.location ? [personal.location] : ['Johor, Malaysia']),
+      : (personal.location ? [personal.location] : ['Kuala Lumpur, Malaysia']),
     preferred_work_mode: (rawCareer.preferred_work_mode as WorkMode) || 'hybrid',
     career_goals: rawCareer.career_goals || 'Aspiring to contribute as an impactful software professional, building scalable products and driving innovation.',
-    career_interests: rawCareer.target_job_roles && rawCareer.target_job_roles.length > 0 ? rawCareer.target_job_roles : ['Software Development', 'Cloud Computing'],
+    career_interests: [],
   }
 
   return {

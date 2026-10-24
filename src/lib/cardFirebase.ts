@@ -5,10 +5,15 @@ import {
   onSnapshot,
   type Unsubscribe,
 } from 'firebase/firestore'
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { db, auth } from './firebase'
+import { db } from './firebase'
 import { DEFAULT_PASS_DATA, type CardPassData } from '../components/transit/types'
 import type { UserProfile } from '../components/Navbar'
+
+export const DEMO_UID = '7tm22YRiXNbWaqTeJcTAgXtM6Um2'
+export const DEMO_USER: UserProfile = {
+  name: 'Alex Chen',
+  email: 'alex@gmail.com',
+}
 
 /**
  * Generate a unique, deterministic license number for each user based on their UID.
@@ -253,20 +258,10 @@ export function profileToCardData(
 
 /**
  * Ensure user is authenticated with Firebase Auth.
- * If not already signed in, signs in to the pre-seeded demo user (alex@gmail.com).
+ * Authentication has been removed: returns the shared demo account UID directly.
  */
 export async function ensureFirebaseAuth(): Promise<string> {
-  if (auth.currentUser) {
-    return auth.currentUser.uid
-  }
-
-  try {
-    const cred = await signInWithEmailAndPassword(auth, 'alex@gmail.com', '123456')
-    return cred.user.uid
-  } catch (err) {
-    console.warn('Firebase auto-auth warning:', err)
-    return (auth as any).currentUser?.uid ?? '7tm22YRiXNbWaqTeJcTAgXtM6Um2'
-  }
+  return DEMO_UID
 }
 
 /**

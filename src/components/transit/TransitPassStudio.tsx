@@ -14,8 +14,8 @@ import {
   getCardDataFromFirebase,
   subscribeCardDataFromFirebase,
   profileToCardData,
+  DEMO_UID,
 } from '../../lib/cardFirebase'
-import { auth } from '../../lib/firebase'
 import { CareerReceipt } from './CareerReceipt'
 import {
   RotateCw,
@@ -110,7 +110,7 @@ export const TransitPassStudio: React.FC<TransitPassStudioProps> = ({
   // ── 2. Save Card Data to Firebase ──
   const handleSaveToCloud = useCallback(async (dataToSave?: CardPassData) => {
     const payload = dataToSave || cardData
-    const uid = userId || auth.currentUser?.uid
+    const uid = userId || DEMO_UID
     if (!uid) return
 
     setFirebaseStatus('saving')

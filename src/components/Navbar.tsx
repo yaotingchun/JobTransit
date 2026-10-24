@@ -9,11 +9,10 @@ import {
   Menu,
   X,
   Compass,
-  HelpCircle,
 } from 'lucide-react'
 import logoImg from '../assets/JobTransitLogo.png'
 
-export type NavTab = 'home' | 'transit' | 'catchup' | 'trend' | 'profile' | 'follow-up'
+export type NavTab = 'home' | 'transit' | 'catchup' | 'trend' | 'profile'
 
 export interface UserProfile {
   name: string
@@ -97,13 +96,6 @@ export const Navbar: React.FC<NavbarProps> = ({
       label: 'Trend',
       icon: TrendingUp,
       badgeType: 'pulse',
-    },
-    {
-      id: 'follow-up',
-      label: 'Follow-Up',
-      icon: HelpCircle,
-      badge: 'Beta',
-      badgeType: 'count',
     },
   ]
 

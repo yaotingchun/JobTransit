@@ -353,7 +353,7 @@ export const Realistic3DCard = React.forwardRef<Realistic3DCardRef, Realistic3DC
 
     return (
       <div
-        className={`relative flex flex-col items-center justify-center select-none py-8 sm:py-12 px-4 ${className}`}
+        className={`relative w-full flex flex-col items-center justify-center select-none py-6 sm:py-8 px-4 ${className}`}
         style={{ perspective: '1200px' }}
       >
         {/* ── Dynamic Cast Shadow on Floor ── */}
@@ -407,7 +407,8 @@ export const Realistic3DCard = React.forwardRef<Realistic3DCardRef, Realistic3DC
           }`}
           style={{
             width: '100%',
-            maxWidth: cardMaxWidth || '660px',
+            maxWidth: cardMaxWidth || '640px',
+            minWidth: 'min(100%, 580px)',
             aspectRatio: '1.586', // Standard credit/transit card ratio
             transformStyle: 'preserve-3d',
             transform: `translate3d(0, 0, ${cardElevationZ}px) rotateX(${rotX}deg) rotateY(${rotY}deg)`,
