@@ -1,0 +1,27 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Daily tech news articles - public read, backend write only
+    match /daily_articles/{articleId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Clustered news events - public read, backend write only
+    match /news_events/{eventId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Ingestion health & sync status - public read, backend write only
+    match /source_status/{sourceId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

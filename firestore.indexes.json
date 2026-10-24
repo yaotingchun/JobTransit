@@ -1,0 +1,29 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "daily_articles",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "category", "order": "ASCENDING" },
+        { "fieldPath": "scores.composite", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "daily_articles",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "category", "order": "ASCENDING" },
+        { "fieldPath": "publishedAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "daily_articles",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "scores.composite", "order": "DESCENDING" },
+        { "fieldPath": "publishedAt", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

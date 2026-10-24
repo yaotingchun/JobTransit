@@ -1,24 +1,23 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import {
   Search,
-  SlidersHorizontal,
   Bookmark,
   BookmarkCheck,
   ExternalLink,
   ChevronDown,
   Sparkles,
-  Lightbulb,
   ArrowRight,
-  Target,
   Newspaper,
   BarChart3,
   CheckCircle2,
   X,
   Clock,
   ArrowUpRight,
+  ChevronRight,
 } from 'lucide-react'
 import type { NavTab, UserProfile } from '../Navbar'
 import { WeeklySummaryReport } from './WeeklySummaryReport'
+import { useDailyNews } from '../../hooks/useDailyNews'
 
 interface CatchupTabProps {
   currentUser: UserProfile
@@ -125,6 +124,102 @@ const CareerTrendThumbnail = () => (
   </div>
 )
 
+// Featured Landscape Artwork for Lead Story (Matching Image 2 wind turbines & clean-tech energy landscape)
+const HeroStoryArtwork = () => (
+  <div className="w-full md:w-72 lg:w-84 h-48 sm:h-56 rounded-xl overflow-hidden relative shadow-sm shrink-0 border border-slate-200/80 group/art select-none">
+    <svg viewBox="0 0 400 250" className="w-full h-full object-cover" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#38bdf8" />
+          <stop offset="55%" stopColor="#bae6fd" />
+          <stop offset="100%" stopColor="#f0f9ff" />
+        </linearGradient>
+        <linearGradient id="hillFar" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#94a3b8" />
+          <stop offset="100%" stopColor="#64748b" />
+        </linearGradient>
+        <linearGradient id="hillMid" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#65a30d" />
+          <stop offset="100%" stopColor="#4d7c0f" />
+        </linearGradient>
+        <linearGradient id="hillNear" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#84cc16" />
+          <stop offset="100%" stopColor="#3f6212" />
+        </linearGradient>
+      </defs>
+
+      {/* Clear Blue Sky */}
+      <rect width="400" height="250" fill="url(#skyGrad)" />
+
+      {/* Editorial Soft Clouds */}
+      <path d="M40 70 Q60 50 90 65 Q120 50 150 70 Q160 85 140 90 Q80 95 40 70 Z" fill="#ffffff" opacity="0.65" />
+      <path d="M260 55 Q280 40 310 50 Q340 35 370 55 Q380 70 360 75 Q300 80 260 55 Z" fill="#ffffff" opacity="0.55" />
+
+      {/* Far Mountains */}
+      <path d="M0 160 Q80 120 180 150 Q280 110 400 145 L400 250 L0 250 Z" fill="url(#hillFar)" opacity="0.38" />
+
+      {/* Mid Hills */}
+      <path d="M0 175 Q120 140 240 170 Q320 150 400 165 L400 250 L0 250 Z" fill="url(#hillMid)" opacity="0.85" />
+
+      {/* Foreground Hills */}
+      <path d="M0 205 Q140 170 280 195 Q340 185 400 200 L400 250 L0 250 Z" fill="url(#hillNear)" />
+
+      {/* Wind Turbine 1 (Main Foreground Center-Right matching Image 2) */}
+      <g transform="translate(260, 48)">
+        <line x1="0" y1="125" x2="0" y2="0" stroke="#f8fafc" strokeWidth="3" strokeLinecap="round" />
+        <circle cx="0" cy="0" r="3.5" fill="#f8fafc" />
+        <line x1="0" y1="0" x2="0" y2="-45" stroke="#f8fafc" strokeWidth="2.5" strokeLinecap="round" />
+        <line x1="0" y1="0" x2="39" y2="22.5" stroke="#f8fafc" strokeWidth="2.5" strokeLinecap="round" />
+        <line x1="0" y1="0" x2="-39" y2="22.5" stroke="#f8fafc" strokeWidth="2.5" strokeLinecap="round" />
+      </g>
+
+      {/* Wind Turbine 2 (Mid-ground Left) */}
+      <g transform="translate(160, 95)">
+        <line x1="0" y1="80" x2="0" y2="0" stroke="#f8fafc" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="0" cy="0" r="2.5" fill="#f8fafc" />
+        <line x1="0" y1="0" x2="0" y2="-30" stroke="#f8fafc" strokeWidth="1.8" strokeLinecap="round" />
+        <line x1="0" y1="0" x2="26" y2="15" stroke="#f8fafc" strokeWidth="1.8" strokeLinecap="round" />
+        <line x1="0" y1="0" x2="-26" y2="15" stroke="#f8fafc" strokeWidth="1.8" strokeLinecap="round" />
+      </g>
+
+      {/* Wind Turbine 3 (Far background Right) */}
+      <g transform="translate(340, 105)">
+        <line x1="0" y1="70" x2="0" y2="0" stroke="#f8fafc" strokeWidth="1.6" strokeLinecap="round" />
+        <circle cx="0" cy="0" r="2" fill="#f8fafc" />
+        <line x1="0" y1="0" x2="0" y2="-22" stroke="#f8fafc" strokeWidth="1.4" strokeLinecap="round" />
+        <line x1="0" y1="0" x2="19" y2="11" stroke="#f8fafc" strokeWidth="1.4" strokeLinecap="round" />
+        <line x1="0" y1="0" x2="-19" y2="11" stroke="#f8fafc" strokeWidth="1.4" strokeLinecap="round" />
+      </g>
+
+      {/* Wind Turbine 4 (Far Left) */}
+      <g transform="translate(75, 120)">
+        <line x1="0" y1="65" x2="0" y2="0" stroke="#f8fafc" strokeWidth="1.5" strokeLinecap="round" />
+        <circle cx="0" cy="0" r="1.8" fill="#f8fafc" />
+        <line x1="0" y1="0" x2="0" y2="-18" stroke="#f8fafc" strokeWidth="1.2" strokeLinecap="round" />
+        <line x1="0" y1="0" x2="15" y2="9" stroke="#f8fafc" strokeWidth="1.2" strokeLinecap="round" />
+        <line x1="0" y1="0" x2="-15" y2="9" stroke="#f8fafc" strokeWidth="1.2" strokeLinecap="round" />
+      </g>
+    </svg>
+  </div>
+)
+
+function getCategoryColor(catSlug: string): { text: string; bg: string; border: string } {
+  switch (catSlug) {
+    case 'ai-ml':
+      return { text: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-200' }
+    case 'software-engineering':
+      return { text: 'text-indigo-600', bg: 'bg-indigo-50', border: 'border-indigo-200' }
+    case 'data-cloud':
+      return { text: 'text-sky-600', bg: 'bg-sky-50', border: 'border-sky-200' }
+    case 'security':
+      return { text: 'text-emerald-700', bg: 'bg-emerald-50', border: 'border-emerald-200' }
+    case 'career-industry':
+      return { text: 'text-rose-600', bg: 'bg-rose-50', border: 'border-rose-200' }
+    default:
+      return { text: 'text-purple-600', bg: 'bg-purple-50', border: 'border-purple-200' }
+  }
+}
+
 interface NewsItem {
   id: string
   category: string
@@ -135,122 +230,70 @@ interface NewsItem {
   description: string
   source: string
   sourceUrl: string
-  whyItMatters: string
+  whyItMatters: string | null
+  confidence?: 'high' | 'medium' | 'low'
   skills: string[]
   thumbnail: React.ComponentType
   isWeeklySummary?: boolean
+  relatedSources?: { name: string; url: string; articleId?: string }[]
+  scores?: {
+    composite: number
+    recency: number
+    significance: number
+    careerRelevance: number
+    sourceAuthority: number
+  }
 }
 
-const mockHeadlines: NewsItem[] = [
-  {
-    id: 'openai-gpt-51',
-    category: 'AI & Machine Learning',
-    categorySlug: 'ai-ml',
-    subTag: 'Research',
-    timestamp: '2h ago',
-    title: 'OpenAI introduces GPT-5.1 with improved reasoning and coding capabilities',
-    description:
-      'The latest model shows significant improvements in reasoning, tool use, and coding performance, with strong results on benchmark tests.',
-    source: 'OpenAI Blog',
-    sourceUrl: 'https://openai.com/blog',
-    whyItMatters:
-      'This development could accelerate AI-assisted development tools, which are relevant to your target role in AI engineering.',
-    skills: ['LLM', 'Reasoning', 'Coding'],
-    thumbnail: AIBrainThumbnail,
-  },
-  {
-    id: 'github-copilot-workspace',
-    category: 'Software Engineering',
-    categorySlug: 'software-engineering',
-    subTag: 'Tools',
-    timestamp: '5h ago',
-    title: 'Microsoft releases GitHub Copilot Workspace for end-to-end coding',
-    description:
-      'The new tool expands Copilot\'s capabilities from code completion to full project workflows, including planning, editing and testing.',
-    source: 'Microsoft News',
-    sourceUrl: 'https://news.microsoft.com',
-    whyItMatters:
-      'Highlights the growing role of AI agents in software engineering workflows, a key skill for future roles.',
-    skills: ['AI Agents', 'Dev Tools', 'Workflow'],
-    thumbnail: CodeEditorThumbnail,
-  },
-  {
-    id: 'aws-aurora-dsql',
-    category: 'Data & Cloud',
-    categorySlug: 'data-cloud',
-    subTag: 'Infrastructure',
-    timestamp: '7h ago',
-    title: 'AWS releases new Aurora DSQL for global, multi-region applications',
-    description:
-      'The new database service offers higher availability and simpler management for distributed applications.',
-    source: 'AWS News',
-    sourceUrl: 'https://aws.amazon.com/blogs/aws',
-    whyItMatters:
-      'Cloud and distributed systems skills remain in high demand, especially for scalable application development.',
-    skills: ['Distributed Systems', 'Cloud', 'Databases'],
-    thumbnail: CloudDatabaseThumbnail,
-  },
-  {
-    id: 'critical-vulnerability-library',
-    category: 'Cybersecurity',
-    categorySlug: 'cybersecurity',
-    subTag: 'Vulnerability',
-    timestamp: '10h ago',
-    title: 'Critical vulnerability found in popular open-source library',
-    description:
-      'A high-severity vulnerability (CVE-2026-1234) affects multiple applications using a widely adopted library. Developers are urged to update immediately.',
-    source: 'NIST',
-    sourceUrl: 'https://nvd.nist.gov',
-    whyItMatters:
-      'Security awareness and vulnerability management are essential skills for all technical roles.',
-    skills: ['Security', 'Monitoring', 'Incident Response'],
-    thumbnail: CyberShieldThumbnail,
-  },
-  {
-    id: 'quantum-hybrid-sdk',
-    category: 'Systems & Emerging Tech',
-    categorySlug: 'systems-emerging',
-    subTag: 'Hardware',
-    timestamp: '1d ago',
-    title: 'Next-Gen Quantum SDK allows hybrid classical-quantum cloud pipelines',
-    description:
-      'Developers can now test quantum algorithms alongside standard Python workflows in commercial cloud environments.',
-    source: 'Qiskit Foundation',
-    sourceUrl: 'https://qiskit.org',
-    whyItMatters:
-      'Understanding hybrid computational architectures will be a differentiator as classical compute hits scaling limits.',
-    skills: ['Quantum Computing', 'Hybrid Systems', 'Python'],
-    thumbnail: SystemsThumbnail,
-    isWeeklySummary: true,
-  },
-  {
-    id: 'tech-hiring-ai-orchestration',
-    category: 'Industry & Careers',
-    categorySlug: 'industry-careers',
-    subTag: 'Market Trends',
-    timestamp: '2d ago',
-    title: 'Tech Hiring Shift: Agentic orchestration and system architecture lead demand in 2026',
-    description:
-      'Annual engineering compensation and headcount survey indicates a 140% surge in requirements for autonomous agent engineers.',
-    source: 'TechCareers Index',
-    sourceUrl: 'https://techcareers.org',
-    whyItMatters:
-      'Validates your career transit trajectory toward AI Engineering and autonomous system design.',
-    skills: ['System Design', 'Career Strategy', 'AI Orchestration'],
-    thumbnail: CareerTrendThumbnail,
-    isWeeklySummary: true,
-  },
-]
+function formatRelativeTime(isoString: string): string {
+  try {
+    const diffMs = Date.now() - new Date(isoString).getTime()
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60))
+    if (diffHours < 1) return 'Just now'
+    if (diffHours < 24) return `${diffHours}h ago`
+    const diffDays = Math.floor(diffHours / 24)
+    if (diffDays === 1) return 'Yesterday'
+    return `${diffDays}d ago`
+  } catch {
+    return 'Recent'
+  }
+}
 
-const topicFilters = [
-  { id: 'all', label: 'All Topics', count: 48, dotColor: 'bg-slate-950' },
-  { id: 'ai-ml', label: 'AI & ML', count: 12, dotColor: 'bg-blue-500' },
-  { id: 'software-engineering', label: 'Software Engineering', count: 10, dotColor: 'bg-sky-500' },
-  { id: 'data-cloud', label: 'Data & Cloud', count: 8, dotColor: 'bg-slate-700' },
-  { id: 'cybersecurity', label: 'Cybersecurity', count: 7, dotColor: 'bg-indigo-500' },
-  { id: 'systems-emerging', label: 'Systems & Emerging Tech', count: 6, dotColor: 'bg-purple-500' },
-  { id: 'industry-careers', label: 'Industry & Careers', count: 5, dotColor: 'bg-rose-500' },
-]
+function getCategoryThumbnail(catSlug: string): React.ComponentType {
+  switch (catSlug) {
+    case 'ai-ml':
+      return AIBrainThumbnail
+    case 'software-engineering':
+      return CodeEditorThumbnail
+    case 'data-cloud':
+      return CloudDatabaseThumbnail
+    case 'security':
+      return CyberShieldThumbnail
+    case 'career-industry':
+      return CareerTrendThumbnail
+    default:
+      return SystemsThumbnail
+  }
+}
+
+const CATEGORY_NAMES: Record<string, string> = {
+  'ai-ml': 'AI & Machine Learning',
+  'software-engineering': 'Software Engineering',
+  'data-cloud': 'Data & Cloud',
+  'security': 'Cybersecurity',
+  'career-industry': 'Industry & Careers',
+  'general-tech': 'General Tech',
+}
+
+const CURRENT_DATE_STR = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+}).format(new Date())
+
+const CURRENT_DAY_OF_WEEK = new Intl.DateTimeFormat('en-US', {
+  weekday: 'long',
+}).format(new Date())
 
 export const CatchupTab: React.FC<CatchupTabProps> = ({
   currentUser,
@@ -259,10 +302,36 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
   const [viewMode, setViewMode] = useState<'today' | 'weekly'>('today')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedTopic, setSelectedTopic] = useState('all')
-  const [sortBy, setSortBy] = useState<'latest' | 'relevant' | 'impact'>('latest')
+  const [sortBy, setSortBy] = useState<'latest' | 'relevant' | 'impact'>('relevant')
   const [bookmarkedIds, setBookmarkedIds] = useState<Set<string>>(new Set(['openai-gpt-51']))
   const [activeArticleModal, setActiveArticleModal] = useState<NewsItem | null>(null)
   const [savedSkillAlert, setSavedSkillAlert] = useState<string | null>(null)
+  const [displayCount, setDisplayCount] = useState(5)
+
+  // Live feed hook with multi-signal ranking, deduplication, and topic filtering
+  const {
+    articles: liveArticles,
+    categoryCounts,
+    allArticlesCount,
+  } = useDailyNews({
+    category: selectedTopic,
+    searchQuery,
+    sortBy,
+  })
+
+  // Dynamic topic filters with live counts
+  const topicFilters = useMemo(
+    () => [
+      { id: 'all', label: 'All Topics', count: allArticlesCount, dotColor: 'bg-slate-950' },
+      { id: 'ai-ml', label: 'AI & ML', count: categoryCounts['ai-ml'] || 0, dotColor: 'bg-blue-500' },
+      { id: 'software-engineering', label: 'Software Engineering', count: categoryCounts['software-engineering'] || 0, dotColor: 'bg-sky-500' },
+      { id: 'data-cloud', label: 'Data & Cloud', count: categoryCounts['data-cloud'] || 0, dotColor: 'bg-slate-700' },
+      { id: 'security', label: 'Cybersecurity', count: categoryCounts['security'] || 0, dotColor: 'bg-indigo-500' },
+      { id: 'career-industry', label: 'Industry & Careers', count: categoryCounts['career-industry'] || 0, dotColor: 'bg-rose-500' },
+      { id: 'general-tech', label: 'General Tech', count: categoryCounts['general-tech'] || 0, dotColor: 'bg-purple-500' },
+    ],
+    [allArticlesCount, categoryCounts]
+  )
 
   const toggleBookmark = (id: string, e: React.MouseEvent) => {
     e.stopPropagation()
@@ -277,30 +346,41 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
     })
   }
 
-  // Filter headlines based on viewMode, topic filter, and search query
+  // Convert live feed articles to NewsItem interface
+  const liveHeadlines: NewsItem[] = useMemo(() => {
+    return liveArticles.map((art) => ({
+      id: art.id,
+      category: CATEGORY_NAMES[art.category] || 'General Tech',
+      categorySlug: art.category,
+      subTag: art.subTags?.[0] || 'Tech',
+      timestamp: formatRelativeTime(art.publishedAt),
+      title: art.cleanedTitle || art.title,
+      description: art.description,
+      source: art.sourceName,
+      sourceUrl: art.link,
+      whyItMatters: art.enrichment?.whyItMatters || null,
+      confidence: art.enrichment?.confidence,
+      skills: art.enrichment?.extractedSkills?.length ? art.enrichment.extractedSkills : art.subTags,
+      thumbnail: getCategoryThumbnail(art.category),
+      relatedSources: (art.relatedSources || []).map((r) => ({
+        name: r.sourceName,
+        url: r.link,
+        articleId: r.articleId,
+      })),
+      scores: art.scores,
+    }))
+  }, [liveArticles])
+
+  // Filter headlines based on live articles and active topic
   const filteredHeadlines = useMemo(() => {
-    return mockHeadlines.filter((item) => {
-      // If today mode, only show non-exclusive weekly items or all if matching topic
-      if (viewMode === 'today' && item.isWeeklySummary && selectedTopic === 'all') {
-        return false
-      }
-      // Topic filter
-      if (selectedTopic !== 'all' && item.categorySlug !== selectedTopic) {
-        return false
-      }
-      // Search query
-      if (searchQuery.trim()) {
-        const query = searchQuery.toLowerCase()
-        const matchTitle = item.title.toLowerCase().includes(query)
-        const matchDesc = item.description.toLowerCase().includes(query)
-        const matchCategory = item.category.toLowerCase().includes(query)
-        const matchWhy = item.whyItMatters.toLowerCase().includes(query)
-        const matchSkill = item.skills.some((s) => s.toLowerCase().includes(query))
-        return matchTitle || matchDesc || matchCategory || matchWhy || matchSkill
-      }
-      return true
-    })
-  }, [viewMode, selectedTopic, searchQuery])
+    if (selectedTopic === 'all') return liveHeadlines
+    return liveHeadlines.filter((item) => item.categorySlug === selectedTopic)
+  }, [liveHeadlines, selectedTopic])
+
+  // Reset pagination count whenever topic or search query changes
+  useEffect(() => {
+    setDisplayCount(5)
+  }, [selectedTopic, searchQuery])
 
   const handleSkillClick = (skill: string, e: React.MouseEvent) => {
     e.stopPropagation()
@@ -312,367 +392,474 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
 
   return (
     <div className="w-full space-y-6 animate-in fade-in duration-300">
-        
-        {/* VIEW SWITCHER PILLS (Today's News vs Weekly Summary) */}
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={() => setViewMode('today')}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer select-none shadow-sm ${
-              viewMode === 'today'
-                ? 'bg-slate-950 text-white shadow-slate-950/25 shadow-md border border-slate-900 scale-[1.02]'
-                : 'bg-white/50 hover:bg-white/75 text-slate-700 hover:text-slate-950 backdrop-blur-xl border border-white/75 shadow-xs'
+
+      {/* VIEW SWITCHER PILLS (Today's News vs Weekly Summary) */}
+      <div className="flex items-center gap-3">
+        <button
+          type="button"
+          onClick={() => setViewMode('today')}
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer select-none shadow-sm ${viewMode === 'today'
+              ? 'bg-slate-950 text-white shadow-slate-950/25 shadow-md border border-slate-900 scale-[1.02]'
+              : 'bg-white/50 hover:bg-white/75 text-slate-700 hover:text-slate-950 backdrop-blur-xl border border-white/75 shadow-xs'
             }`}
-          >
-            <Newspaper className="w-4 h-4" />
-            <span>Today's News</span>
-          </button>
+        >
+          <Newspaper className="w-4 h-4" />
+          <span>Today's News</span>
+        </button>
 
-          <button
-            type="button"
-            onClick={() => setViewMode('weekly')}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer select-none shadow-sm ${
-              viewMode === 'weekly'
-                ? 'bg-slate-950 text-white shadow-slate-950/25 shadow-md border border-slate-900 scale-[1.02]'
-                : 'bg-white/50 hover:bg-white/75 text-slate-700 hover:text-slate-950 backdrop-blur-xl border border-white/75 shadow-xs'
+        <button
+          type="button"
+          onClick={() => setViewMode('weekly')}
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer select-none shadow-sm ${viewMode === 'weekly'
+              ? 'bg-slate-950 text-white shadow-slate-950/25 shadow-md border border-slate-900 scale-[1.02]'
+              : 'bg-white/50 hover:bg-white/75 text-slate-700 hover:text-slate-950 backdrop-blur-xl border border-white/75 shadow-xs'
             }`}
-          >
-            <BarChart3 className="w-4 h-4" />
-            <span>Weekly Summary</span>
-          </button>
-        </div>
+        >
+          <BarChart3 className="w-4 h-4" />
+          <span>Weekly Summary</span>
+          <span className="text-[10px] font-black px-1.5 py-0.5 rounded-md bg-amber-400 text-slate-950 shadow-2xs">
+            5-Min Flash
+          </span>
+        </button>
+      </div>
 
-        {viewMode === 'today' ? (
-          <>
-            {/* SEARCH BAR (Full-width rounded pill input with frosted glass) */}
-            <div className="relative flex items-center">
-          <Search className="w-4 h-4 text-slate-500 absolute left-4 pointer-events-none" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search technologies, topics, or companies..."
-            className="w-full h-12 pl-11 pr-10 rounded-full bg-white/55 focus:bg-white/80 backdrop-blur-2xl border border-white/85 text-sm font-medium text-slate-950 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-950/20 shadow-[0_4px_20px_rgba(15,23,42,0.04),inset_0_1px_1px_rgba(255,255,255,0.85)] transition-all"
-          />
-          {searchQuery && (
-            <button
-              type="button"
-              onClick={() => setSearchQuery('')}
-              className="absolute right-4 text-slate-400 hover:text-slate-600 cursor-pointer p-1"
-              aria-label="Clear search"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          )}
-        </div>
-
-        {/* 2-COLUMN MAIN CONTENT GRID (Left: Headlines List, Right: Sidebar Widgets) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          
-          {/* LEFT COLUMN: Headlines List (8 cols) */}
-          <div className="lg:col-span-8 space-y-4">
-            
-            {/* Sub-header: Today's Headlines + Sort By */}
-            <div className="flex items-center justify-between px-1">
-              <h2 className="font-hero text-lg sm:text-xl font-bold tracking-tight text-slate-950">
-                {viewMode === 'today' ? "Today's Headlines" : "Weekly Executive Syntheses"}
-                <span className="ml-2 text-xs font-normal text-slate-500">
-                  ({filteredHeadlines.length} {filteredHeadlines.length === 1 ? 'brief' : 'briefs'})
-                </span>
-              </h2>
-
-              {/* Sort By Dropdown */}
-              <div className="relative flex items-center gap-1.5 text-xs font-semibold text-slate-600">
-                <span>Sort by:</span>
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as 'latest' | 'relevant' | 'impact')}
-                  className="bg-white/60 hover:bg-white/80 border border-white/80 rounded-xl px-2.5 py-1 text-slate-900 font-bold focus:outline-none focus:ring-1 focus:ring-slate-950 cursor-pointer shadow-xs backdrop-blur-xl"
-                >
-                  <option value="latest">Latest</option>
-                  <option value="relevant">Most Relevant</option>
-                  <option value="impact">Highest Impact</option>
-                </select>
-                <ChevronDown className="w-3.5 h-3.5 text-slate-500 -ml-1 pointer-events-none" />
-              </div>
-            </div>
-
-            {/* List of News Headline Cards */}
-            {filteredHeadlines.length === 0 ? (
-              <div className="rounded-3xl bg-white/60 backdrop-blur-2xl p-12 text-center space-y-3 border border-white/80 shadow-[0_10px_35px_-5px_rgba(15,23,42,0.05),inset_0_1px_1px_rgba(255,255,255,0.95)]">
-                <Search className="w-8 h-8 text-slate-400 mx-auto" />
-                <h3 className="font-hero text-base font-bold text-slate-800">
-                  No matching headlines found
-                </h3>
-                <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                  Try adjusting your search terms or select another category like "All Topics".
-                </p>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSearchQuery('')
-                    setSelectedTopic('all')
-                  }}
-                  className="px-4 py-2 rounded-full bg-slate-950 text-white text-xs font-semibold shadow-sm hover:bg-slate-900 cursor-pointer"
-                >
-                  Reset filters
-                </button>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {filteredHeadlines.map((item) => {
-                  const ThumbnailComponent = item.thumbnail
-                  const isBookmarked = bookmarkedIds.has(item.id)
-
-                  return (
-                    <article
-                      key={item.id}
-                      onClick={() => setActiveArticleModal(item)}
-                      className="group relative rounded-3xl bg-white/60 hover:bg-white/75 backdrop-blur-2xl p-5 sm:p-6 border border-white/80 shadow-[0_12px_35px_-5px_rgba(15,23,42,0.05),inset_0_1px_1px_rgba(255,255,255,0.95)] hover:shadow-[0_20px_50px_rgba(15,23,42,0.12)] transition-all cursor-pointer"
-                    >
-                      {/* Flex layout: Thumbnail + Content + 'Why It Matters' partition */}
-                      <div className="flex flex-col md:flex-row gap-5 items-start">
-                        
-                        {/* Left: Thumbnail Icon */}
-                        <div className="shrink-0">
-                          <ThumbnailComponent />
-                        </div>
-
-                        {/* Center: Metadata, Title, Description, Source */}
-                        <div className="flex-1 min-w-0 space-y-2">
-                          {/* Tags row */}
-                          <div className="flex flex-wrap items-center gap-2">
-                            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50/70 text-indigo-700 border border-indigo-200/50 shadow-2xs backdrop-blur-sm">
-                              {item.category}
-                            </span>
-                            <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-white/60 text-slate-700 border border-white/80 backdrop-blur-sm">
-                              {item.subTag}
-                            </span>
-                            <span className="text-[11px] text-slate-600 flex items-center gap-1 font-medium">
-                              <Clock className="w-3 h-3 text-slate-500" />
-                              {item.timestamp}
-                            </span>
-                          </div>
-
-                          {/* Headline Title */}
-                          <h3 className="font-hero text-sm sm:text-base font-bold text-slate-950 group-hover:text-slate-900 transition-colors leading-snug">
-                            {item.title}
-                          </h3>
-
-                          {/* Summary Paragraph */}
-                          <p className="text-xs text-slate-700 font-normal leading-relaxed">
-                            {item.description}
-                          </p>
-
-                          {/* Source Link */}
-                          <div className="pt-1 flex items-center gap-1.5 text-[11px] font-medium text-slate-600">
-                            <span>Source ·</span>
-                            <a
-                              href={item.sourceUrl}
-                              target="_blank"
-                              rel="noreferrer"
-                              onClick={(e) => e.stopPropagation()}
-                              className="text-slate-800 hover:text-slate-950 hover:underline flex items-center gap-1 font-semibold"
-                            >
-                              <span>{item.source}</span>
-                              <ExternalLink className="w-3 h-3" />
-                            </a>
-                          </div>
-                        </div>
-
-                        {/* Right: 'Why it matters' box & Bookmarking */}
-                        <div className="w-full md:w-56 shrink-0 md:border-l md:border-white/50 md:pl-5 space-y-2 pt-3 md:pt-0 border-t md:border-t-0 border-white/40 bg-white/40 hover:bg-white/55 p-3.5 rounded-2xl border backdrop-blur-md shadow-[inset_0_1px_1px_rgba(255,255,255,0.8)] transition-all">
-                          
-                          {/* Top row inside box: Label + Bookmark Button */}
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs font-bold text-slate-950 flex items-center gap-1.5">
-                              <Sparkles className="w-3.5 h-3.5 text-slate-800" />
-                              Why it matters
-                            </span>
-
-                            <button
-                              type="button"
-                              onClick={(e) => toggleBookmark(item.id, e)}
-                              className={`p-1.5 rounded-full transition-colors cursor-pointer border ${
-                                isBookmarked
-                                  ? 'text-slate-950 bg-slate-950/10 border-slate-300 backdrop-blur-sm'
-                                  : 'text-slate-500 hover:text-slate-800 bg-white/40 hover:bg-white/70 border-white/60 backdrop-blur-sm'
-                              }`}
-                              title={isBookmarked ? 'Remove bookmark' : 'Save for later'}
-                              aria-label="Bookmark headline"
-                            >
-                              {isBookmarked ? (
-                                <BookmarkCheck className="w-4 h-4 fill-slate-950 text-slate-950" />
-                              ) : (
-                                <Bookmark className="w-4 h-4" />
-                              )}
-                            </button>
-                          </div>
-
-                          {/* Impact text */}
-                          <p className="text-[11px] text-slate-700 leading-snug">
-                            {item.whyItMatters}
-                          </p>
-
-                          {/* Skill Tags */}
-                          <div className="flex flex-wrap gap-1 pt-1">
-                            {item.skills.map((skill) => (
-                              <button
-                                key={skill}
-                                type="button"
-                                onClick={(e) => handleSkillClick(skill, e)}
-                                className="px-2.5 py-0.5 rounded-md text-[10px] font-semibold bg-white/80 hover:bg-slate-950 hover:text-white text-slate-900 border border-slate-300/80 transition-all shadow-2xs backdrop-blur-sm cursor-pointer"
-                                title="Click to track in your transit route"
-                              >
-                                {skill}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-
-                      </div>
-                    </article>
-                  )
-                })}
-              </div>
+      {viewMode === 'today' ? (
+        <>
+          {/* SEARCH BAR (Clean, modern rounded input) */}
+          <div className="relative flex items-center">
+            <Search className="w-4 h-4 text-slate-400 absolute left-4 pointer-events-none" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search technologies, topics, or companies..."
+              className="w-full h-11 pl-11 pr-10 rounded-xl bg-white border border-slate-200/90 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900/10 shadow-xs transition-all"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3.5 text-slate-400 hover:text-slate-600 cursor-pointer p-1"
+                aria-label="Clear search"
+              >
+                <X className="w-4 h-4" />
+              </button>
             )}
           </div>
 
-          {/* RIGHT COLUMN: Sidebar Widgets (4 cols) */}
-          <div className="lg:col-span-4 space-y-6 sticky top-28">
-            
-            {/* WIDGET 1: Filter by Category (with Counts) */}
-            <div className="rounded-3xl bg-white/60 hover:bg-white/70 backdrop-blur-2xl p-5 sm:p-6 border border-white/80 shadow-[0_12px_35px_-5px_rgba(15,23,42,0.05),inset_0_1px_1px_rgba(255,255,255,0.95)] space-y-4 transition-all">
-              <div className="flex items-center gap-2 pb-1 border-b border-white/60">
-                <SlidersHorizontal className="w-4 h-4 text-slate-700" />
-                <h3 className="font-hero text-sm font-bold text-slate-950">
-                  Filter by Category
-                </h3>
-              </div>
+          {/* AUTHENTIC NEWSPAPER BROADSHEET LAYOUT (Matching Image 2) */}
+          <div className="relative w-full max-w-5xl mx-auto my-3">
+            {/* Stacked Paper Shadow Layer 3 (Background paper sheet tilt) */}
+            <div className="absolute inset-0 bg-[#ebe7dc] rounded-2xl sm:rounded-3xl rotate-[-0.6deg] translate-y-3.5 translate-x-[-3px] border border-stone-300/80 shadow-sm pointer-events-none" />
+            {/* Stacked Paper Shadow Layer 2 (Middle paper sheet tilt) */}
+            <div className="absolute inset-0 bg-[#f4f1e8] rounded-2xl sm:rounded-3xl rotate-[0.4deg] translate-y-1.5 translate-x-[2px] border border-stone-300/90 shadow-md pointer-events-none" />
 
-              <div className="space-y-1.5">
-                {topicFilters.map((topic) => {
-                  const isSelected = selectedTopic === topic.id
-                  return (
-                    <button
-                      key={topic.id}
-                      type="button"
-                      onClick={() => setSelectedTopic(topic.id)}
-                      className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-                        isSelected
-                          ? 'bg-slate-950 text-white border border-slate-900 backdrop-blur-md font-bold shadow-sm'
-                          : 'text-slate-700 hover:text-slate-950 hover:bg-white/45 border border-transparent'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <span className={`w-2 h-2 rounded-full ${isSelected ? 'bg-white' : topic.dotColor}`} />
-                        <span>{topic.label}</span>
+            {/* Main Front Broadsheet Page */}
+            <div className="relative bg-[#faf8f4] border border-stone-300/90 rounded-2xl sm:rounded-3xl shadow-xl p-5 sm:p-9 md:p-12 space-y-7 text-stone-900 overflow-hidden">
+              
+              {/* TOP MASTHEAD (Matching Image 2: "THE DAILY BRIEF", Date on top right, "TODAY'S NEWS" kicker) */}
+              <div className="space-y-3">
+                {/* Top Bar: Kicker + Date */}
+                <div className="flex items-start justify-between border-b border-stone-200/80 pb-2">
+                  <div className="text-[11px] sm:text-xs font-bold text-stone-500 uppercase tracking-widest">
+                    Today's News
+                  </div>
+                  <div className="text-right text-[11px] sm:text-xs font-serif font-medium text-stone-600 leading-tight">
+                    <div>{CURRENT_DATE_STR}</div>
+                    <div className="text-stone-400 font-sans text-[10px] sm:text-[11px]">{CURRENT_DAY_OF_WEEK}</div>
+                  </div>
+                </div>
+
+                {/* Main Newspaper Masthead Title Banner */}
+                <div className="text-center pt-1 pb-1">
+                  <h1 className="font-newspaper-masthead text-3xl sm:text-5xl md:text-6xl font-black text-stone-900 tracking-wider uppercase drop-shadow-2xs">
+                    The Daily Brief
+                  </h1>
+                  <div className="flex items-center justify-center gap-2 pt-1.5">
+                    <span className="font-hero text-xs sm:text-sm font-bold text-stone-800 uppercase tracking-wider">
+                      {viewMode === 'today' ? "Today's Headlines" : "Weekly Executive Syntheses"}
+                    </span>
+                    <span className="text-xs sm:text-sm font-normal text-stone-500">
+                      ({filteredHeadlines.length} {filteredHeadlines.length === 1 ? 'brief' : 'briefs'})
+                    </span>
+                  </div>
+                </div>
+
+                {/* Double Horizontal Rule (Classic Broadsheet divider) */}
+                <div className="border-t-2 border-b border-stone-800/80 my-3 py-2">
+                  {/* Category Navigation Bar & Sort Dropdown */}
+                  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+                    <div className="flex flex-wrap items-center gap-x-3 sm:gap-x-4 gap-y-2 text-xs uppercase tracking-wider font-semibold">
+                      {topicFilters.map((topic, idx) => {
+                        const isSelected = selectedTopic === topic.id
+                        return (
+                          <React.Fragment key={topic.id}>
+                            {idx > 0 && <span className="text-stone-300 font-normal select-none">·</span>}
+                            <button
+                              type="button"
+                              onClick={() => setSelectedTopic(topic.id)}
+                              className={`transition-colors cursor-pointer inline-flex items-center gap-1.5 pb-0.5 shrink-0 ${
+                                isSelected
+                                  ? 'font-bold text-blue-700 underline underline-offset-4 decoration-2'
+                                  : 'font-medium text-stone-600 hover:text-stone-950'
+                              }`}
+                            >
+                              <span>{topic.label}</span>
+                              <span
+                                className={`text-[11px] font-bold px-1.5 py-0.5 rounded-md min-w-[20px] text-center ${
+                                  isSelected
+                                    ? 'bg-blue-100 text-blue-700'
+                                    : 'bg-stone-200/80 text-stone-600'
+                                }`}
+                              >
+                                {topic.count}
+                              </span>
+                            </button>
+                          </React.Fragment>
+                        )
+                      })}
+                    </div>
+
+                    {/* Sort By Dropdown */}
+                    <div className="relative inline-flex items-center gap-1.5 text-xs font-medium text-stone-500 shrink-0 self-end lg:self-auto">
+                      <span>Sort by:</span>
+                      <div className="relative inline-flex items-center">
+                        <select
+                          value={sortBy}
+                          onChange={(e) => setSortBy(e.target.value as 'latest' | 'relevant' | 'impact')}
+                          className="appearance-none bg-stone-100 hover:bg-stone-200 border border-stone-300 rounded-md pl-2 pr-6 py-1 text-xs font-semibold text-stone-800 cursor-pointer focus:outline-none focus:ring-1 focus:ring-stone-900 transition-colors"
+                        >
+                          <option value="latest">Latest</option>
+                          <option value="relevant">Most Relevant</option>
+                          <option value="impact">Highest Impact</option>
+                        </select>
+                        <ChevronDown className="w-3.5 h-3.5 text-stone-500 absolute right-1.5 pointer-events-none" />
                       </div>
-                      <span className={`text-[11px] font-medium ${isSelected ? 'text-slate-300' : 'text-slate-500'}`}>
-                        {topic.count}
-                      </span>
-                    </button>
-                  )
-                })}
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
 
-            {/* WIDGET 2: Career Relevance Target Station */}
-            <div className="rounded-3xl bg-white/60 hover:bg-white/70 backdrop-blur-2xl p-5 sm:p-6 border border-white/80 shadow-[0_12px_35px_-5px_rgba(15,23,42,0.05),inset_0_1px_1px_rgba(255,255,255,0.95)] space-y-4 transition-all">
-              <div className="flex items-center gap-2 pb-0.5">
-                <Target className="w-4 h-4 text-slate-950" />
-                <div>
-                  <h3 className="font-hero text-sm font-bold text-slate-950 leading-tight">
-                    Career Relevance
+              {/* ARTICLES CONTENT SECTION */}
+              {filteredHeadlines.length === 0 ? (
+                <div className="rounded-2xl bg-stone-100/70 p-12 text-center space-y-3 border border-stone-200">
+                  <Search className="w-8 h-8 text-stone-400 mx-auto" />
+                  <h3 className="font-hero text-base font-bold text-stone-800">
+                    No matching headlines found
                   </h3>
-                  <p className="text-[11px] text-slate-500 font-medium">
-                    Personalized for {currentUser?.name || 'Explorer'}&apos;s target route
+                  <p className="text-xs text-stone-500 max-w-sm mx-auto">
+                    Try adjusting your search terms or select another category like "All Topics".
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSearchQuery('')
+                      setSelectedTopic('all')
+                    }}
+                    className="px-4 py-2 rounded-full bg-stone-900 text-white text-xs font-semibold shadow-sm hover:bg-stone-800 cursor-pointer"
+                  >
+                    Reset filters
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-6">
+
+                  {/* 1. LEAD STORY (Featured top story in Blue-bordered box matching Image 2) */}
+                  {filteredHeadlines[0] && (() => {
+                    const lead = filteredHeadlines[0]
+                    const isBookmarked = bookmarkedIds.has(lead.id)
+                    return (
+                      <div className="border border-blue-300/80 rounded-2xl bg-blue-50/25 p-5 sm:p-7 relative transition-all group shadow-2xs">
+                        <div className="flex flex-col md:flex-row gap-6 items-start justify-between">
+                          
+                          {/* Left: Lead Story Text */}
+                          <div className="flex-1 space-y-3">
+                            {/* Category Kicker */}
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
+                                {lead.categorySlug.toUpperCase().replace('-', ' ')}
+                              </span>
+                            </div>
+
+                            {/* Headline Title Link */}
+                            <div className="flex items-start justify-between gap-3">
+                              <a
+                                href={lead.sourceUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="font-newspaper-headline text-xl sm:text-2xl font-black text-slate-900 hover:text-blue-700 transition-colors leading-tight group/link flex items-start gap-1.5"
+                                title="Open verified original article in new tab"
+                              >
+                                <span>{lead.title}</span>
+                                <ExternalLink className="w-4 h-4 text-slate-400 group-hover/link:text-blue-700 transition-colors shrink-0 mt-1" />
+                              </a>
+                            </div>
+
+                            {/* Description Summary */}
+                            <p
+                              onClick={() => setActiveArticleModal(lead)}
+                              className="text-xs sm:text-sm text-slate-700 leading-relaxed font-normal cursor-pointer"
+                            >
+                              {lead.description}
+                            </p>
+
+                            {/* Why It Matters Callout (Evidence-Gated) */}
+                            {lead.whyItMatters && (
+                              <div className="p-3.5 rounded-lg border-l-4 border-blue-600 bg-white/70 space-y-1.5 shadow-2xs">
+                                <div className="flex items-center justify-between">
+                                  <div className="flex items-center gap-1.5 text-xs font-bold text-blue-700">
+                                    <Sparkles className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                                    <span>Why it matters</span>
+                                    {lead.confidence === 'medium' && (
+                                      <span className="text-[10px] text-slate-400 font-normal ml-1">
+                                        (based on available text)
+                                      </span>
+                                    )}
+                                  </div>
+                                  <button
+                                    type="button"
+                                    onClick={(e) => toggleBookmark(lead.id, e)}
+                                    className={`p-1.5 rounded-full transition-colors cursor-pointer ${
+                                      isBookmarked
+                                        ? 'text-blue-700 bg-blue-100/70 hover:bg-blue-200/70'
+                                        : 'text-slate-400 hover:text-slate-700 hover:bg-slate-200/50'
+                                    }`}
+                                    title={isBookmarked ? 'Remove bookmark' : 'Save for later'}
+                                  >
+                                    {isBookmarked ? (
+                                      <BookmarkCheck className="w-4 h-4 fill-blue-600 text-blue-600" />
+                                    ) : (
+                                      <Bookmark className="w-4 h-4" />
+                                    )}
+                                  </button>
+                                </div>
+                                <p className="text-xs text-slate-700 leading-relaxed font-normal">
+                                  {lead.whyItMatters}
+                                </p>
+                                {/* Skills Tags */}
+                                {lead.skills && lead.skills.length > 0 && (
+                                  <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                                    {lead.skills.map((skill) => (
+                                      <button
+                                        key={skill}
+                                        type="button"
+                                        onClick={(e) => handleSkillClick(skill, e)}
+                                        className="px-2 py-0.5 rounded text-[10px] font-semibold bg-white hover:bg-slate-900 hover:text-white text-slate-700 border border-slate-200 shadow-2xs transition-all cursor-pointer"
+                                      >
+                                        {skill}
+                                      </button>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            )}
+
+                            {/* Metadata Row */}
+                            <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 pt-1">
+                              <span className="font-medium text-slate-600">Source ·</span>
+                              <a
+                                href={lead.sourceUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-slate-700 hover:text-blue-600 hover:underline font-medium inline-flex items-center gap-0.5"
+                              >
+                                <span>{lead.source}</span>
+                                <ExternalLink className="w-3 h-3 text-slate-400" />
+                              </a>
+                              <span>·</span>
+                              <span className="inline-flex items-center gap-1 text-slate-500">
+                                <Clock className="w-3 h-3" />
+                                {lead.timestamp}
+                              </span>
+                              <span>·</span>
+                              <button
+                                type="button"
+                                onClick={() => setActiveArticleModal(lead)}
+                                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-blue-100/80 hover:bg-blue-200/80 text-blue-800 cursor-pointer shadow-2xs transition-colors"
+                              >
+                                <Sparkles className="w-3 h-3 text-blue-600" />
+                                <span>AI Brief</span>
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Right: Landscape Hero Artwork + Circular Action Button matching Image 2 */}
+                          <div className="flex flex-col items-end gap-3 self-center md:self-stretch justify-between w-full md:w-auto">
+                            <HeroStoryArtwork />
+                            <button
+                              type="button"
+                              onClick={() => setActiveArticleModal(lead)}
+                              className="w-9 h-9 rounded-full bg-white border border-slate-200 hover:border-slate-900 hover:bg-slate-900 text-slate-700 hover:text-white shadow-sm flex items-center justify-center transition-all cursor-pointer self-end shrink-0"
+                              title="View Briefing & Career Transit Details"
+                              aria-label="View Briefing"
+                            >
+                              <ChevronRight className="w-4 h-4" />
+                            </button>
+                          </div>
+
+                        </div>
+                      </div>
+                    )
+                  })()}
+
+                  {/* 2. SECONDARY STORIES (2-COLUMN GRID matching Image 2 layout) */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-1">
+                    {filteredHeadlines.slice(1, displayCount).map((item) => {
+                      const isBookmarked = bookmarkedIds.has(item.id)
+                      const ThumbnailComponent = item.thumbnail
+                      const catColor = getCategoryColor(item.categorySlug)
+
+                      return (
+                        <article
+                          key={item.id}
+                          className="p-5 rounded-2xl border border-stone-200/90 bg-white/70 hover:bg-white hover:shadow-md transition-all flex flex-col justify-between group relative"
+                        >
+                          <div className="space-y-3">
+                            {/* Top Row: Category Kicker */}
+                            <div className="flex items-center justify-between">
+                              <span className={`text-[11px] font-bold uppercase tracking-wider ${catColor.text}`}>
+                                {item.categorySlug.toUpperCase().replace('-', ' ')}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={(e) => toggleBookmark(item.id, e)}
+                                className={`p-1 rounded-full transition-colors cursor-pointer ${
+                                  isBookmarked
+                                    ? 'text-blue-700 bg-blue-100/70 hover:bg-blue-200/70'
+                                    : 'text-slate-400 hover:text-slate-700 hover:bg-slate-100'
+                                }`}
+                                title={isBookmarked ? 'Remove bookmark' : 'Save for later'}
+                              >
+                                {isBookmarked ? (
+                                  <BookmarkCheck className="w-3.5 h-3.5 fill-blue-600 text-blue-600" />
+                                ) : (
+                                  <Bookmark className="w-3.5 h-3.5" />
+                                )}
+                              </button>
+                            </div>
+
+                            {/* Headline Title & Square Thumbnail Row */}
+                            <div className="flex items-start justify-between gap-3">
+                              <a
+                                href={item.sourceUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="font-newspaper-headline text-base sm:text-[17px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug line-clamp-3 group/link flex items-start gap-1"
+                                title="Open verified original article in new tab"
+                              >
+                                <span>{item.title}</span>
+                                <ExternalLink className="w-3 h-3 text-slate-400 group-hover/link:text-blue-600 shrink-0 mt-1" />
+                              </a>
+                              {/* Visual Thumbnail Artwork */}
+                              <div className="shrink-0 cursor-pointer" onClick={() => setActiveArticleModal(item)}>
+                                <ThumbnailComponent />
+                              </div>
+                            </div>
+
+                            {/* Description Paragraph */}
+                            <p
+                              onClick={() => setActiveArticleModal(item)}
+                              className="text-xs sm:text-[13px] text-slate-600 line-clamp-3 leading-relaxed font-normal cursor-pointer"
+                            >
+                              {item.description}
+                            </p>
+
+                            {/* Evidence-Gated Why It Matters (if present) */}
+                            {item.whyItMatters && (
+                              <div className="p-2.5 rounded-lg border-l-2 border-blue-500 bg-slate-50/80 space-y-1">
+                                <div className="flex items-center gap-1 text-[11px] font-bold text-blue-700">
+                                  <Sparkles className="w-3 h-3 text-blue-600 shrink-0" />
+                                  <span>Why it matters</span>
+                                </div>
+                                <p className="text-[11px] text-slate-700 leading-normal line-clamp-2">
+                                  {item.whyItMatters}
+                                </p>
+                              </div>
+                            )}
+
+                            {/* Skill Badges */}
+                            {item.skills && item.skills.length > 0 && (
+                              <div className="flex flex-wrap items-center gap-1">
+                                {item.skills.slice(0, 3).map((skill) => (
+                                  <button
+                                    key={skill}
+                                    type="button"
+                                    onClick={(e) => handleSkillClick(skill, e)}
+                                    className="px-2 py-0.5 rounded text-[10px] font-medium bg-stone-100 hover:bg-slate-900 hover:text-white text-stone-700 border border-stone-200 transition-colors cursor-pointer"
+                                  >
+                                    {skill}
+                                  </button>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Card Footer: Metadata on Left, Circular Button on Right matching Image 2 */}
+                          <div className="flex items-center justify-between pt-4 mt-3 border-t border-stone-100">
+                            <div className="flex items-center gap-2 text-[11px] text-slate-500 font-medium">
+                              <span className="text-slate-400">Source ·</span>
+                              <a
+                                href={item.sourceUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-slate-700 hover:text-blue-600 hover:underline max-w-[100px] truncate"
+                              >
+                                {item.source}
+                              </a>
+                              <span>·</span>
+                              <span>{item.timestamp}</span>
+                            </div>
+
+                            <button
+                              type="button"
+                              onClick={() => setActiveArticleModal(item)}
+                              className="w-8 h-8 rounded-full bg-white border border-slate-200 text-slate-700 shadow-2xs flex items-center justify-center group-hover:bg-slate-900 group-hover:text-white group-hover:border-slate-900 transition-colors cursor-pointer shrink-0"
+                              title="View AI Brief"
+                              aria-label="View AI Brief"
+                            >
+                              <ChevronRight className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </article>
+                      )
+                    })}
+                  </div>
+
+                  {/* Load More Button if more briefs exist */}
+                  {filteredHeadlines.length > displayCount && (
+                    <div className="text-center pt-2">
+                      <button
+                        type="button"
+                        onClick={() => setDisplayCount((prev) => prev + 6)}
+                        className="px-6 py-2.5 rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs font-semibold shadow-sm transition-all cursor-pointer inline-flex items-center gap-2"
+                      >
+                        <span>Showing {displayCount} of {filteredHeadlines.length} briefs — Load More Headlines</span>
+                        <ChevronDown className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  )}
+
+                </div>
+              )}
+
+              {/* DOUBLE RULE & BOTTOM FOOTER (Matching Image 2: "STAY INFORMED  ·  STAY AHEAD") */}
+              <div className="pt-4 border-t border-stone-300">
+                <div className="border-t-2 border-stone-800/80 pt-4 text-center">
+                  <p className="text-xs sm:text-sm font-newspaper-masthead font-black tracking-[0.25em] text-stone-700 uppercase">
+                    STAY INFORMED &nbsp;·&nbsp; STAY AHEAD
                   </p>
                 </div>
               </div>
 
-              {/* Transit Station Role Transition Box */}
-              <div className="p-3 rounded-2xl bg-white/50 border border-white/75 backdrop-blur-md shadow-2xs flex items-center justify-between gap-2">
-                <div className="space-y-0.5">
-                  <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400">
-                    Current
-                  </span>
-                  <div className="text-xs font-bold text-slate-800 leading-tight">
-                    Software Engineering Student
-                  </div>
-                </div>
-
-                <div className="text-slate-400 font-bold">→</div>
-
-                <div className="space-y-0.5 text-right">
-                  <span className="text-[9px] font-bold uppercase tracking-wider text-slate-600">
-                    Target
-                  </span>
-                  <div className="text-xs font-bold text-white bg-slate-950 border border-slate-900 backdrop-blur-sm px-2.5 py-1 rounded-lg shadow-2xs">
-                    AI Engineer
-                  </div>
-                </div>
-              </div>
-
-              {/* Top relevant skills list */}
-              <div className="space-y-2 pt-1">
-                <div className="text-xs font-bold text-slate-700">
-                  Top relevant skills from today's news
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {[
-                    'LLM Integration',
-                    'AI Agents',
-                    'Cloud Infrastructure',
-                    'Security Best Practices',
-                  ].map((skill) => (
-                    <button
-                      key={skill}
-                      type="button"
-                      onClick={(e) => handleSkillClick(skill, e)}
-                      className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-white/65 hover:bg-slate-950 text-slate-800 hover:text-white border border-white/85 hover:border-slate-900 backdrop-blur-sm transition-all cursor-pointer shadow-2xs"
-                    >
-                      {skill}
-                    </button>
-                  ))}
-                </div>
-              </div>
             </div>
-
-            {/* WIDGET 3: Stay informed, stay ahead Prompt Card */}
-            <div className="rounded-3xl bg-white/60 hover:bg-white/70 backdrop-blur-2xl p-5 sm:p-6 border border-white/80 shadow-[0_12px_35px_-5px_rgba(15,23,42,0.05),inset_0_1px_1px_rgba(255,255,255,0.95)] flex items-start justify-between gap-3 relative overflow-hidden group transition-all">
-              <div className="space-y-1.5">
-                <div className="w-8 h-8 rounded-full bg-slate-950/10 text-slate-950 flex items-center justify-center">
-                  <Lightbulb className="w-4 h-4" />
-                </div>
-                <h4 className="font-hero text-sm font-bold text-slate-950">
-                  Stay informed, stay ahead.
-                </h4>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  The tech industry moves fast. Use these insights to build your skills and plan your next station.
-                </p>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => onSelectTab('transit')}
-                className="mt-auto p-2.5 rounded-full bg-white/80 text-slate-900 group-hover:bg-slate-950 group-hover:text-white border border-white/90 shadow-sm backdrop-blur-md transition-all duration-300 cursor-pointer shrink-0"
-                title="Explore Transit Route"
-                aria-label="Explore Transit Route"
-              >
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-
           </div>
-
-        </div>
-      </>
+        </>
       ) : (
         <WeeklySummaryReport
           currentUser={currentUser}
           onSelectTab={onSelectTab}
           onSkillClick={handleSkillClick}
+          liveArticles={liveHeadlines}
         />
       )}
 
@@ -740,16 +927,23 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
               </p>
             </div>
 
-            {/* Why It Matters Callout Card */}
-            <div className="p-4 rounded-2xl bg-white/55 border border-white/80 backdrop-blur-md shadow-2xs space-y-1.5">
-              <div className="text-xs font-bold text-slate-950 flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-slate-800" />
-                Career Route Impact
+            {/* Why It Matters Callout Card (Evidence-Gated) */}
+            {activeArticleModal.whyItMatters && (
+              <div className="p-4 rounded-2xl bg-white/55 border border-white/80 backdrop-blur-md shadow-2xs space-y-1.5">
+                <div className="text-xs font-bold text-slate-950 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-slate-800" />
+                  Career Route Impact
+                  {activeArticleModal.confidence === 'medium' && (
+                    <span className="text-[10px] text-slate-400 font-normal">
+                      (based on available text)
+                    </span>
+                  )}
+                </div>
+                <p className="text-xs text-slate-700 leading-relaxed">
+                  {activeArticleModal.whyItMatters}
+                </p>
               </div>
-              <p className="text-xs text-slate-700 leading-relaxed">
-                {activeArticleModal.whyItMatters}
-              </p>
-            </div>
+            )}
 
             {/* Associated transit skills */}
             <div className="space-y-2">
