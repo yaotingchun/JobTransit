@@ -51,6 +51,4 @@ Thumbs.db
 .oxlint-cache
 
 credentials*
-firebase.json
-
-.replit
+firebase.json
