@@ -27,8 +27,9 @@ import {
   type SkillTrendItem
 } from './trendData'
 import { RoleForecastingChart } from './RoleForecastingChart'
+import { FutureScenarioLab } from './FutureScenarioLab'
 
-type ViewMode = 'roles' | 'ai-exposure' | 'entry-level' | 'skills'
+type ViewMode = 'roles' | 'ai-exposure' | 'entry-level' | 'skills' | 'scenario-lab'
 type CategoryFilter = 'all' | 'AI & Machine Learning' | 'Data Engineering' | 'Software Engineering' | 'Cloud & Infrastructure' | 'Quality & Security'
 type SortOption = 'growth' | 'velocity24h' | 'velocity7d' | 'openings2026' | 'openings2025' | 'aiExposure' | 'entryLevel'
 
@@ -392,10 +393,25 @@ export const TrendView: React.FC = () => {
             >
               [04] SKILLS RADAR (LIVE)
             </button>
+            <button
+              ref={(el) => {
+                subNavTabRefs.current['scenario-lab'] = el
+              }}
+              type="button"
+              onClick={() => setViewMode('scenario-lab')}
+              className={`relative z-10 px-4 py-2 rounded-xl text-xs font-mono-board tracking-wider transition-colors duration-200 cursor-pointer ${
+                viewMode === 'scenario-lab'
+                  ? 'text-stone-950 font-black'
+                  : 'text-stone-300 hover:text-white hover:bg-white/10 font-bold'
+              }`}
+            >
+              [05] FUTURE SCENARIO LAB
+            </button>
           </div>
         </div>
 
         {/* Filter & Search Bar */}
+        {viewMode !== 'scenario-lab' && (
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-1">
           {/* Search Box */}
           <div className="relative flex-1 max-w-md">
@@ -448,6 +464,7 @@ export const TrendView: React.FC = () => {
             </select>
           </div>
         </div>
+        )}
       </div>
 
       {/* ── 4. VIEW 1: OPEN JOB POSITIONS & LIVE HIRING VELOCITY ── */}
@@ -1173,6 +1190,17 @@ export const TrendView: React.FC = () => {
               )
             })}
           </div>
+        </section>
+      )}
+
+      {/* ── 5. VIEW 5: FUTURE SCENARIO LAB (MIROFISH MULTI-AGENT SIMULATION) ── */}
+      {viewMode === 'scenario-lab' && (
+        <section className="space-y-4">
+          <FutureScenarioLab
+            onNavigateToTransit={(stationId) => {
+              window.location.hash = `#pathway-${stationId}`
+            }}
+          />
         </section>
       )}
 

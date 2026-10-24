@@ -10,6 +10,7 @@ import {
   DAILY_SCRAPE_INTERVAL_MS,
 } from './server/linkedinScraper.ts'
 import { generateAIChatReply } from './server/aiChatService.ts'
+import { handleSimulationRoutes } from './server/scenarioLabRouter.ts'
 
 function createApiMiddleware() {
   return async (req: any, res: any, next: any) => {
@@ -19,6 +20,12 @@ function createApiMiddleware() {
       parsedUrl = new URL(fullUrl)
     } catch {
       return next()
+    }
+
+    // Endpoint 0: Future Scenario Lab & MiroFish Integration
+    if (parsedUrl.pathname.startsWith('/api/simulations')) {
+      const handled = await handleSimulationRoutes(req, res, parsedUrl)
+      if (handled) return
     }
 
     // Endpoint 1: Scrape all target role trends & skills from LinkedIn (Daily cached by default, or forced)
