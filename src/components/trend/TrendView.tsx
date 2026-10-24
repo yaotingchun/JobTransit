@@ -455,7 +455,7 @@ export const TrendView: React.FC = () => {
               return (
                 <div
                   key={role.id}
-                  className="rounded-[24px] bg-[#FAF7F0] hover:bg-white border-2 border-stone-200 hover:border-amber-500/70 p-5 sm:p-6 transition-all shadow-xs cursor-pointer flex flex-col justify-between space-y-4 group"
+                  className="rounded-[24px] bg-[#EEF0F3] hover:bg-white border-2 border-stone-300 hover:border-stone-400 p-5 sm:p-6 transition-all shadow-xs cursor-pointer flex flex-col justify-between space-y-4 group"
                   onClick={() => setSelectedRoleForModal(role)}
                 >
                   {/* Top Bar: Title, Domain Code & Live 24h Velocity Badge */}
@@ -474,8 +474,8 @@ export const TrendView: React.FC = () => {
                       </h4>
                     </div>
 
-                    <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono-board font-black shrink-0 bg-amber-400 text-stone-950 shadow-xs">
-                      <Flame className="w-3.5 h-3.5 text-stone-950" />
+                    <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono-board font-black shrink-0 bg-stone-900 text-stone-100 shadow-xs border border-stone-700">
+                      <Flame className="w-3.5 h-3.5 text-amber-400" />
                       <span>+{role.velocityRate24h ?? 40}% 24H</span>
                     </div>
                   </div>
@@ -526,14 +526,14 @@ export const TrendView: React.FC = () => {
                         target="_blank"
                         rel="noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="p-2 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-950 text-center transition-all shadow-2xs group/link"
+                        className="p-2 rounded-xl bg-white hover:bg-stone-100 border border-stone-300 text-stone-900 text-center transition-all shadow-2xs group/link"
                         title="View Postings from Past 24 Hours on LinkedIn"
                       >
-                        <div className="text-[9px] uppercase font-bold text-amber-800 flex items-center justify-center gap-0.5">
+                        <div className="text-[9px] uppercase font-bold text-stone-500 flex items-center justify-center gap-0.5">
                           <span>Past 24 Hours</span>
                           <ExternalLink className="w-2.5 h-2.5 opacity-60 group-hover/link:opacity-100" />
                         </div>
-                        <div className="font-signage text-base font-black text-amber-900 mt-0.5">
+                        <div className="font-signage text-base font-black text-stone-900 mt-0.5">
                           {role.past24hCountStr || '17,000+'}
                         </div>
                       </a>
@@ -580,7 +580,7 @@ export const TrendView: React.FC = () => {
                       <div className="flex items-center justify-between text-xs font-mono-board">
                         <span className="font-black text-stone-900 flex items-center gap-1.5">
                           <span>Past 24h Surge:</span>
-                          <span className="px-1.5 py-0.2 rounded text-[9.5px] font-black bg-amber-400 text-stone-950 animate-pulse">&f_TPR=r86400</span>
+                          <span className="px-1.5 py-0.2 rounded text-[9.5px] font-black bg-stone-900 text-white animate-pulse">&f_TPR=r86400</span>
                         </span>
                         <span className="font-black text-emerald-700">
                           {role.past24hCountStr || '17,000+'} (+{role.velocityRate24h ?? 40}%)
@@ -634,13 +634,13 @@ export const TrendView: React.FC = () => {
                     <div className="flex flex-wrap items-center gap-1 text-[10px] font-mono-board">
                       <span className="text-stone-500 font-bold mr-1">SURGING:</span>
                       {role.skillsNeededMoreNow.slice(0, 3).map((skill) => (
-                        <span key={skill} className="px-2 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300 font-bold text-[9.5px]">
+                        <span key={skill} className="px-2 py-0.5 rounded bg-white text-stone-800 border border-stone-300 font-bold text-[9.5px]">
                           {skill}
                         </span>
                       ))}
                     </div>
 
-                    <div className="font-mono-board text-xs font-black text-amber-700 group-hover:text-amber-800 flex items-center gap-0.5">
+                    <div className="font-mono-board text-xs font-black text-stone-800 group-hover:text-stone-950 flex items-center gap-0.5">
                       <span>Dossier</span>
                       <ChevronRight className="w-3.5 h-3.5" />
                     </div>
@@ -691,7 +691,7 @@ export const TrendView: React.FC = () => {
           </div>
 
           {/* Active Role Exposure Card */}
-          <div className="rounded-2xl p-5 sm:p-6 bg-[#FAF7F0] border-2 border-stone-200 shadow-xs space-y-6">
+          <div className="rounded-2xl p-5 sm:p-6 bg-[#EEF0F3] border-2 border-stone-300 shadow-xs space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="space-y-1">
                 <div className="text-xs font-mono-board font-bold text-purple-800 uppercase tracking-wider flex items-center gap-1.5">
@@ -843,7 +843,7 @@ export const TrendView: React.FC = () => {
             {filteredRoles.map((role) => (
               <div
                 key={role.id}
-                className="p-5 rounded-2xl bg-[#FAF7F0] hover:bg-white border-2 border-stone-200 hover:border-amber-500/60 shadow-xs space-y-3.5 transition-all"
+                className="p-5 rounded-2xl bg-[#EEF0F3] hover:bg-white border-2 border-stone-300 hover:border-stone-400 shadow-xs space-y-3.5 transition-all"
               >
                 <div className="flex items-center justify-between">
                   <div>
@@ -1035,7 +1035,7 @@ export const TrendView: React.FC = () => {
                   key={skill.id}
                   className={`p-5 rounded-2xl border-2 transition-all space-y-3.5 flex flex-col justify-between shadow-xs ${
                     isSurging
-                      ? 'bg-[#FAF7F0] hover:bg-white border-stone-200 hover:border-amber-400'
+                      ? 'bg-[#EEF0F3] hover:bg-white border-stone-300 hover:border-stone-400'
                       : 'bg-stone-50/80 hover:bg-white border-stone-200 hover:border-stone-400'
                   }`}
                 >
@@ -1160,7 +1160,7 @@ export const TrendView: React.FC = () => {
       {/* ── 9. ROLE DETAILS MODAL / DOSSIER (CARTOGRAPHIC LIGHT TRANSIT STYLE) ── */}
       {selectedRoleForModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/70 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-3xl max-h-[90vh] bg-[#FAF7F0] rounded-3xl shadow-2xl border-2 border-stone-300 overflow-y-auto p-6 sm:p-8 space-y-6 custom-scrollbar">
+          <div className="relative w-full max-w-3xl max-h-[90vh] bg-[#EEF0F3] rounded-3xl shadow-2xl border-2 border-stone-300 overflow-y-auto p-6 sm:p-8 space-y-6 custom-scrollbar">
             {/* Modal Close Button */}
             <button
               type="button"
@@ -1214,7 +1214,7 @@ export const TrendView: React.FC = () => {
 
                 <div className="space-y-2">
                   {selectedRoleForModal.recentPostings.map((p, idx) => (
-                    <div key={idx} className="p-3 rounded-xl bg-[#FAF7F0] border border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:border-amber-400 transition-colors">
+                    <div key={idx} className="p-3 rounded-xl bg-white border border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:border-stone-400 transition-colors">
                       <div className="space-y-0.5 min-w-0">
                         <div className="font-bold text-xs text-stone-900 truncate">{p.title}</div>
                         <div className="flex items-center gap-2 text-[11px] text-stone-500">
