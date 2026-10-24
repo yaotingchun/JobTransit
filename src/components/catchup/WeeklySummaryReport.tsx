@@ -335,158 +335,156 @@ export const WeeklySummaryReport: React.FC<WeeklySummaryReportProps> = ({
       />
 
       {/* =========================================================================
-          MODE 1: STORIES / REELS 45s EXPRESS VIEWER (Enamel Cabin Frame)
+          MODE 1: STORIES / REELS 45s EXPRESS VIEWER (White / Cream Transit Board)
           ========================================================================= */}
       {viewStyle === 'stories' && activeArticle && (
-        <section className="map-frame rounded-[30px] p-2.5 shadow-2xl">
-          <div className="rounded-[22px] board-panel text-white p-6 sm:p-10 relative overflow-hidden border border-stone-800">
-            {/* Subtle Ambient Background Gradient */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-orange-600/10 rounded-full blur-3xl pointer-events-none" />
+        <section className="relative overflow-hidden rounded-[28px] sm:rounded-[32px] bg-white/95 backdrop-blur-md text-stone-900 border border-stone-300/90 shadow-[0_16px_36px_rgba(28,25,23,0.06)] p-6 sm:p-10 transition-all font-sans">
+          {/* Subtle Ambient Background Glow */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-amber-400/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-orange-400/5 rounded-full blur-3xl pointer-events-none" />
 
-            {/* 1. Multi-Segment Progress Bars (Top 5 Stories) */}
-            <div className="grid grid-cols-5 gap-2 pb-6 relative z-10">
-              {topArticles.map((art, idx) => {
-                let pct = 0
-                if (idx < activeStoryIdx) pct = 100
-                else if (idx === activeStoryIdx) pct = storyProgress
-                else pct = 0
+          {/* 1. Multi-Segment Progress Bars (Top 5 Stories) */}
+          <div className="grid grid-cols-5 gap-2 pb-6 relative z-10">
+            {topArticles.map((art, idx) => {
+              let pct = 0
+              if (idx < activeStoryIdx) pct = 100
+              else if (idx === activeStoryIdx) pct = storyProgress
+              else pct = 0
 
-                return (
-                  <button
-                    key={art.id}
-                    type="button"
-                    onClick={() => {
-                      setActiveStoryIdx(idx)
-                      setStoryProgress(0)
-                    }}
-                    className="h-1.5 rounded-full bg-stone-800 overflow-hidden cursor-pointer group hover:h-2 transition-all relative"
-                    title={`Jump to Story ${idx + 1}`}
-                  >
-                    <div
-                      className="h-full bg-amber-400 transition-all duration-100 rounded-full"
-                      style={{ width: `${pct}%` }}
-                    />
-                  </button>
-                )
-              })}
+              return (
+                <button
+                  key={art.id}
+                  type="button"
+                  onClick={() => {
+                    setActiveStoryIdx(idx)
+                    setStoryProgress(0)
+                  }}
+                  className="h-2 rounded-full bg-stone-200 overflow-hidden cursor-pointer group hover:h-2.5 transition-all relative"
+                  title={`Jump to Story ${idx + 1}`}
+                >
+                  <div
+                    className="h-full bg-amber-400 transition-all duration-100 rounded-full"
+                    style={{ width: `${pct}%` }}
+                  />
+                </button>
+              )
+            })}
+          </div>
+
+          {/* 2. Story Header Row: Category Badge + Counter + Play/Pause Control */}
+          <div className="flex items-center justify-between pb-5 border-b border-stone-200 relative z-10">
+            <div className="flex items-center gap-2.5">
+              <span className="px-3 py-1 rounded-full text-xs font-mono-board font-black uppercase tracking-wider bg-amber-50 text-amber-900 border border-amber-300 shadow-2xs">
+                ⚡ Flash #{activeArticle.number} · {activeArticle.categoryLabel}
+              </span>
+              <span className="text-xs font-mono-board text-stone-500 font-semibold">
+                Story {activeStoryIdx + 1} of {topArticles.length}
+              </span>
             </div>
 
-            {/* 2. Story Header Row: Category Badge + Counter + Play/Pause Control */}
-            <div className="flex items-center justify-between pb-5 border-b border-stone-800/80 relative z-10">
-              <div className="flex items-center gap-2.5">
-                <span className="px-3 py-1 rounded-full text-xs font-mono-board font-black uppercase tracking-wider bg-amber-400/20 text-amber-300 border border-amber-400/40 shadow-xs">
-                  ⚡ Flash #{activeArticle.number} · {activeArticle.categoryLabel}
-                </span>
-                <span className="text-xs font-mono-board text-stone-400 font-semibold">
-                  Story {activeStoryIdx + 1} of {topArticles.length}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-2 font-mono-board">
-                <button
-                  type="button"
-                  onClick={() => setIsPlaying(!isPlaying)}
-                  className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-stone-900 hover:bg-stone-800 text-stone-300 border border-stone-700 cursor-pointer transition-all shadow-2xs"
-                  title={isPlaying ? 'Pause Auto-Play' : 'Resume Auto-Play'}
-                >
-                  {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 fill-current" />}
-                  <span>{isPlaying ? 'Pause' : 'Play'}</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setSwapModalSlot(activeStoryIdx)}
-                  className="flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-stone-900 hover:bg-amber-400 hover:text-stone-950 text-amber-300 border border-amber-500/40 cursor-pointer transition-all shadow-2xs"
-                  title="Swap with an alternative story from this week's candidate pool"
-                >
-                  <RefreshCw className="w-3 h-3" />
-                  <span>Swap</span>
-                </button>
-              </div>
-            </div>
-
-            {/* 3. Main Story Content */}
-            <div className="py-7 space-y-6 relative z-10">
-              {/* Title with Source Link */}
-              <div className="space-y-2">
-                <a
-                  href={activeArticle.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-signage text-3xl sm:text-5xl font-black text-white hover:text-amber-300 transition-colors leading-tight inline-flex items-start gap-2 group/link tracking-wide uppercase"
-                >
-                  <span>{activeArticle.title}</span>
-                  <ExternalLink className="w-6 h-6 text-stone-500 group-hover/link:text-amber-300 shrink-0 mt-1 transition-colors" />
-                </a>
-                <div className="text-xs font-mono-board text-stone-400 font-medium flex items-center gap-2">
-                  <span>Source: {activeArticle.sourceName}</span>
-                  <span>·</span>
-                  <span>Weekly Impact Score: {activeArticle.weeklyScore}</span>
-                  <span>·</span>
-                  <span>⏱️ ~45s read</span>
-                </div>
-              </div>
-
-              {/* 🎯 CORE VERDICT CALLOUT (One-Sentence Summary) */}
-              <div className="p-5 rounded-2xl bg-amber-500/10 border-l-4 border-amber-400 border border-amber-500/20 space-y-2">
-                <div className="flex items-center gap-2 text-xs font-mono-board font-black uppercase tracking-wider text-amber-300">
-                  <Target className="w-4 h-4 text-amber-400" />
-                  <span>🎯 Core Takeaway (What Happened)</span>
-                </div>
-                <p className="text-sm sm:text-base text-stone-100 font-medium leading-relaxed">
-                  {activeArticle.coreVerdict}
-                </p>
-              </div>
-
-              {/* 💡 WHY IT MATTERS */}
-              <div className="p-5 rounded-2xl bg-stone-900/90 border border-stone-800 space-y-2">
-                <div className="flex items-center gap-2 text-xs font-mono-board font-black uppercase tracking-wider text-amber-400">
-                  <Sparkles className="w-4 h-4 text-amber-400" />
-                  <span>💡 Why It Matters (Industry & Career Impact)</span>
-                </div>
-                <p className="text-xs sm:text-sm text-stone-300 leading-relaxed font-normal">
-                  {activeArticle.whyItMatters}
-                </p>
-              </div>
-
-              {/* NEXT TRANSIT */}
-              <div className="pt-2 flex items-center justify-end gap-4 border-t border-stone-800/80">
-                <button
-                  type="button"
-                  onClick={() => onSelectTab('transit')}
-                  className="px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-stone-950 font-mono-board font-black text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-md active:scale-95"
-                >
-                  <span>Explore Transit</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-stone-950" />
-                </button>
-              </div>
-            </div>
-
-            {/* 4. Stories Bottom Navigation Controls */}
-            <div className="flex items-center justify-between pt-4 border-t border-stone-800/80 relative z-10 font-mono-board">
+            <div className="flex items-center gap-2 font-mono-board">
               <button
                 type="button"
-                onClick={handlePrevStory}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-stone-900 hover:bg-stone-800 text-stone-300 text-xs font-bold border border-stone-800 cursor-pointer transition-all active:scale-95 shadow-2xs"
+                onClick={() => setIsPlaying(!isPlaying)}
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#FAF7F0] hover:bg-stone-100 text-stone-800 border-2 border-stone-200 cursor-pointer transition-all shadow-2xs active:scale-95"
+                title={isPlaying ? 'Pause Auto-Play' : 'Resume Auto-Play'}
               >
-                <ChevronLeft className="w-4 h-4" />
-                <span>Previous</span>
+                {isPlaying ? <Pause className="w-3.5 h-3.5 text-stone-700" /> : <Play className="w-3.5 h-3.5 fill-current text-stone-700" />}
+                <span>{isPlaying ? 'Pause' : 'Play'}</span>
               </button>
-
-              <div className="text-xs text-stone-500 hidden sm:block">
-                [Keyboard: ← / → to navigate · Space to pause]
-              </div>
 
               <button
                 type="button"
-                onClick={handleNextStory}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-stone-900 hover:bg-stone-800 text-amber-300 text-xs font-bold border border-stone-800 cursor-pointer transition-all active:scale-95 shadow-2xs"
+                onClick={() => setSwapModalSlot(activeStoryIdx)}
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-stone-900 hover:bg-black text-amber-300 border border-stone-900 cursor-pointer transition-all shadow-2xs active:scale-95"
+                title="Swap with an alternative story from this week's candidate pool"
               >
-                <span>Next</span>
-                <ChevronRight className="w-4 h-4" />
+                <RefreshCw className="w-3 h-3 text-amber-400" />
+                <span>Swap</span>
               </button>
             </div>
+          </div>
+
+          {/* 3. Main Story Content */}
+          <div className="py-7 space-y-6 relative z-10">
+            {/* Title with Source Link */}
+            <div className="space-y-2">
+              <a
+                href={activeArticle.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-signage text-3xl sm:text-5xl font-black text-stone-900 hover:text-amber-600 transition-colors leading-tight inline-flex items-start gap-2 group/link tracking-wide uppercase"
+              >
+                <span>{activeArticle.title}</span>
+                <ExternalLink className="w-6 h-6 text-stone-400 group-hover/link:text-amber-600 shrink-0 mt-1 transition-colors" />
+              </a>
+              <div className="text-xs font-mono-board text-stone-500 font-medium flex items-center gap-2">
+                <span>Source: {activeArticle.sourceName}</span>
+                <span>·</span>
+                <span>Weekly Impact Score: {activeArticle.weeklyScore}</span>
+                <span>·</span>
+                <span>⏱️ ~45s read</span>
+              </div>
+            </div>
+
+            {/* 🎯 CORE VERDICT CALLOUT (One-Sentence Summary) */}
+            <div className="p-5 sm:p-6 rounded-2xl bg-[#FAF7F0] border-l-4 border-amber-500 border border-stone-200/90 space-y-2 shadow-xs">
+              <div className="flex items-center gap-2 text-xs font-mono-board font-black uppercase tracking-wider text-amber-900">
+                <Target className="w-4 h-4 text-amber-600" />
+                <span>🎯 Core Takeaway (What Happened)</span>
+              </div>
+              <p className="text-sm sm:text-base text-stone-800 font-medium leading-relaxed">
+                {activeArticle.coreVerdict}
+              </p>
+            </div>
+
+            {/* 💡 WHY IT MATTERS */}
+            <div className="p-5 sm:p-6 rounded-2xl bg-white border-2 border-stone-200 space-y-2 shadow-2xs">
+              <div className="flex items-center gap-2 text-xs font-mono-board font-black uppercase tracking-wider text-amber-900">
+                <Sparkles className="w-4 h-4 text-amber-600" />
+                <span>💡 Why It Matters (Industry & Career Impact)</span>
+              </div>
+              <p className="text-xs sm:text-sm text-stone-700 leading-relaxed font-normal">
+                {activeArticle.whyItMatters}
+              </p>
+            </div>
+
+            {/* NEXT TRANSIT */}
+            <div className="pt-2 flex items-center justify-end gap-4 border-t border-stone-200">
+              <button
+                type="button"
+                onClick={() => onSelectTab('transit')}
+                className="px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-stone-950 font-mono-board font-black text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-xs active:scale-95"
+              >
+                <span>Explore Transit</span>
+                <ArrowRight className="w-3.5 h-3.5 text-stone-950" />
+              </button>
+            </div>
+          </div>
+
+          {/* 4. Stories Bottom Navigation Controls */}
+          <div className="flex items-center justify-between pt-5 border-t border-stone-200 relative z-10 font-mono-board">
+            <button
+              type="button"
+              onClick={handlePrevStory}
+              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#FAF7F0] hover:bg-stone-100 text-stone-800 text-xs font-bold border-2 border-stone-200 cursor-pointer transition-all active:scale-95 shadow-2xs"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              <span>Previous</span>
+            </button>
+
+            <div className="text-xs text-stone-500 hidden sm:block">
+              [Keyboard: ← / → to navigate · Space to pause]
+            </div>
+
+            <button
+              type="button"
+              onClick={handleNextStory}
+              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-stone-900 hover:bg-black text-amber-300 text-xs font-bold border border-stone-900 cursor-pointer transition-all active:scale-95 shadow-2xs"
+            >
+              <span>Next</span>
+              <ChevronRight className="w-4 h-4 text-amber-400" />
+            </button>
           </div>
         </section>
       )}
