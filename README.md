@@ -24,6 +24,8 @@
 | Live Demo         | [https://jobtransit.replit.app](https://jobtransit.replit.app)             |
 | Slide Deck        | [https://example.com/jobtransit-slides](https://example.com/jobtransit-slides) *(Replace with pitch deck link)* |
 | Demo Video        | [https://example.com/jobtransit-video](https://example.com/jobtransit-video) *(Replace with video link)* |
+| Documentation     | [https://example.com/jobtransit-video](https://example.com/jobtransit-video) *(Replace with video link)* |
+
 ---
 
 ## Overview
@@ -182,25 +184,6 @@ npm run dev
 # 5. Open the app
 # Navigate to http://localhost:5173 in your browser
 ```
-
-### Run Tests
-
-Execute the automated test suite powered by Vitest:
-
-```bash
-npm test
-```
-
-To test the RunPod serverless handler locally:
-
-```bash
-cd runpod
-python -m venv venv
-source venv/bin/activate       # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
-python handler.py
-```
-
 ---
 
 ## How We Use Replit *(Required)*
@@ -233,6 +216,51 @@ Our team utilized Replit as our central collaborative development, staging, and 
 
 ---
 
+## Social Impact & SDG Alignment
+
+JobTransit was created to directly address one of the most pressing socio-economic challenges of the fourth industrial revolution: **the displacement and uncertainty caused by rapid AI automation in the modern workforce**. By transforming ambiguous career anxiety into explainable, structured transit routes, JobTransit advances multiple United Nations Sustainable Development Goals (SDGs) and national economic agendas.
+
+### 1. United Nations Sustainable Development Goals (SDGs)
+
+| Goal / Target | Focus Area | How JobTransit Delivers Impact |
+| ------------- | ---------- | ------------------------------ |
+| **SDG 8: Decent Work & Economic Growth**<br>*(Target 8.5)* | **Full & Productive Employment for All** | Facilitates frictionless transitions from vulnerable, automated tech roles (e.g. entry-level data processing, legacy maintenance) to high-demand, high-wage roles (Agentic AI, RAG, and Cloud Infrastructure) with transparent salary benchmarks and skill bridges. |
+| **SDG 8: Decent Work & Economic Growth**<br>*(Target 8.6)* | **Youth Employment & NEET Reduction** | Reduces youth underemployment by turning university degrees into verified competency profiles, mapping fresh graduates directly to actionable learning milestones and project capstones vetted by real-world job demand. |
+| **SDG 4: Quality Education**<br>*(Target 4.4)* | **Accessible Skills for Decent Work** | Democratizes technical training by curating high-quality free and open-source materials, hands-on portfolio deliverables, and verified government-subsidized programs (**HRD Corp Claimable**), removing cost barriers for learners. |
+
+---
+
+### 2. Core Socio-Economic Challenges Addressed
+
+1. **The "AI Displacement Anxiety" Gap**  
+   Developers and career starters are overwhelmed by the speed of GenAI automation, creating widespread paralysis and fear of skill obsolescence. JobTransit replaces existential panic with an engaging, structured metaphor—the **Career Metro**—giving users concrete, progressive checkpoints to reach career resilience.
+
+2. **The "Entry-Level Paradox" for Graduates**  
+   Fresh graduates encounter entry-level postings demanding 2–3 years of hands-on experience with modern AI stacks. JobTransit resolves this through **Checkpoint Capstones**—practical projects designed with tangible deliverables (e.g. building LangGraph state machines or evaluating hallucination rates with TruLens) that serve as verifiable proof of competency.
+
+3. **Democratizing High-Cost Tech Education**  
+   Commercial coding bootcamps frequently charge between RM 8,000 and RM 25,000, excluding low-income and rural talent. JobTransit prioritizes verified free/low-cost learning resources alongside accredited national upskilling funding (**HRD Corp**), ensuring financial constraints never bar career advancement.
+
+4. **Information Asymmetry in the Labor Market**  
+   Job seekers often waste months studying outdated libraries or deprecated tools. JobTransit's real-time **Market Intelligence Radar** and LinkedIn scraping engine surface live hiring volumes and skill momentum deltas, aligning learning effort directly with active enterprise vacancies.
+
+---
+
+### 3. Target Beneficiaries & User Personas
+
+```
+┌─────────────────────────────────┐   ┌─────────────────────────────────┐   ┌─────────────────────────────────┐
+│     Fresh STEM Graduates        │   │    Mid-Career Tech Workers      │   │   Self-Taught / Career Changers │
+├─────────────────────────────────┤   ├─────────────────────────────────┤   ├─────────────────────────────────┤
+│ • Facing graduate underemployment│   │ • Legacy software / QA engineers│   │ • Non-CS background seeking entry│
+│ • Unsure how to bridge academic │   │ • High risk of GenAI task shift │   │ • Cannot afford private bootcamps│
+│   theory to enterprise AI tools │   │ • Need flexible part-time plans │   │ • Need transparent prerequisites│
+│ ➔ Value: Curated project roadmaps│   │ ➔ Value: Modular skill bridge   │   │ ➔ Value: Free curated pathways  │
+└─────────────────────────────────┘   └─────────────────────────────────┘   └─────────────────────────────────┘
+```
+
+---
+
 ## Future Improvements
 
 - [ ] **Apple Wallet & Google Wallet Integration** — Export the 3D JobTransit pass directly as a `.pkpass` / Google Wallet card with dynamic NFC updates when milestones are achieved.
@@ -244,13 +272,13 @@ Our team utilized Replit as our central collaborative development, staging, and 
 
 ## Team
 
-| Name               | Role                                                 | GitHub                                                   |
-| ------------------ | ---------------------------------------------------- | -------------------------------------------------------- |
-| **Evelyn Ang**     | Team Leader / UI/UX Design & Reskilling Architecture | [@evelyn](https://github.com/evelyn)                     |
-| **Yao Ting Chun**  | Full-Stack & AI Pipeline                             | [@yaotingchun](https://github.com/yaotingchun)           |
-| **Toh Shee Thong** | Frontend Lead / 3D Card Engine & Auth                | [@tsthong4](https://github.com/tsthong4)                 |
-| **Angela**         | Frontend / Trend Radar & Market Intelligence         | [@angela](https://github.com/angela)                     |
-| **Teoh Xin Yee**        | Frontend / Weekly Summary & UI Experience            | [@xinyee](https://github.com/xinyee)                     |
+| Name               | Role                                                 |
+| ------------------ | ---------------------------------------------------- |
+| **Evelyn Ang**     | Team Leader / UI/UX Design & Reskilling Architecture |
+| **Yao Ting Chun**  | Full-Stack & AI Pipeline                             |
+| **Toh Shee Thong** | Frontend Lead / 3D Card Engine & Auth                |
+| **Angela**         | Frontend / Trend Radar & Market Intelligence         |
+| **Teoh Xin Yee**   | Frontend / Weekly Summary & UI Experience            |
 
 ---
 
