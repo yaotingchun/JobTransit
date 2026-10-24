@@ -110,36 +110,9 @@ JobTransit/
 └── vite.config.ts                           # Vite configuration with embedded LinkedIn scraper
 ```
 
-### Architecture
+### System Architecture Diagram
 
-```
-                                  ┌──────────────────────────────────────────────┐
-                                  │                  User Browser                │
-                                  │    React 19 + TypeScript + 3D Glassmorphism  │
-                                  └───────┬───────────────────────────────▲──────┘
-                                          │                               │
-                      1. Upload Resume /  │                               │ 6. Render Metro Lines,
-                         Query Market     │                               │    Pass & Reskilling Plans
-                                          ▼                               │
-┌─────────────────────────────────────────────────────────────────────────┴───────────────────────┐
-│                                  Replit Application Server                                      │
-│                                                                                                 │
-│   ┌─────────────────────────────────────────┐     ┌─────────────────────────────────────────┐   │
-│   │         Client-Side Parsers             │     │      Vite Dev & API Middleware          │   │
-│   │   - Tesseract.js (WASM OCR)             │     │   - LinkedIn Crawler (24h Cache)        │   │
-│   │   - PDF.js / Mammoth (DOCX)             │     │   - Market Demand & Skill Scoring       │   │
-│   └───────────────────┬─────────────────────┘     └────────────────────▲────────────────────┘   │
-└───────────────────────┼────────────────────────────────────────────────┼────────────────────────┘
-                        │ 2. Multimodal Parsing & Adaptive Q&A           │ 5. Verified Data Sync
-                        │    Structured JSON Schemas                     │    & Enriched Feeds
-                        ▼                                                │
-       ┌─────────────────────────────────┐              ┌────────────────┴────────────────┐
-       │     Google Gemini GenAI API     │              │       Firebase Cloud Services   │
-       │   - Structured Resume Extraction│              │   - Firebase Auth (User Identity│
-       │   - Dynamic Question Generation │              │   - Cloud Firestore (NoSQL Sync)│
-       │   - News "Why It Matters" Digest│              │   - Cloud Functions v2 (Cron)   │
-       └─────────────────────────────────┘              └─────────────────────────────────┘
-```
+![JobTransit System Architecture](src/assets/SystemArchitectureDiagram.png)
 
 ---
 
