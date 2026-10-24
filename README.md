@@ -47,6 +47,10 @@ Rapid advancements in Generative AI and automated agent workflows are transformi
 - **Catchup Hub & Daily AI News Digest** — Serverless ingestion pipeline running on Firebase Functions v2 that pulls top tech news, deduplicates articles, and uses Google Gemini to generate role-relevant "Why It Matters" digests.
 - **Interactive Career Onboarding & Skills Terminal** — An intuitive retro-futuristic transit machine questionnaire that dynamically verifies ambiguous candidate skills before boarding.
 
+### Scope & Limitation
+
+> **Hackathon Limitation**: Due to time constraints, JobTransit currently focuses exclusively on **Computer Science (CS) & Tech roles** (e.g. Software Engineering, AI/ML, Cloud, Data). Expanding to non-CS professions will be implemented in future phases.
+
 ### Tech Stack
 
 | Layer         | Technology                                                                                                    |
@@ -254,6 +258,7 @@ JobTransit was created to directly address one of the most pressing socio-econom
 
 ## Future Improvements
 
+- [ ] **Multi-Domain Expansion Beyond CS** — Scale metro lines, skill graphs, and real-time vacancy crawlers beyond Computer Science to adjacent engineering fields, digital business, and creative industries.
 - [ ] **Apple Wallet & Google Wallet Integration** — Export the 3D JobTransit pass directly as a `.pkpass` / Google Wallet card with dynamic NFC updates when milestones are achieved.
 - [ ] **Direct Employer Transit Stations** — Enable verified partner companies to sponsor transit stations with direct interview fast-track boarding passes for candidates who complete specific pathway checkpoints.
 - [ ] **Interactive Voice & AI Coding Simulator** — Deploy fine-tuned interview simulation agents on RunPod to conduct live technical mock interviews for target stations.
