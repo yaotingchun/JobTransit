@@ -8,7 +8,7 @@
 
 | Field                  | Details                                                                 |
 | ---------------------- | ----------------------------------------------------------------------- |
-| **Team Name**          | We Need New Laptops                                                     |
+| **Team Name**          | We Need New Laptops                                                              |
 | **Team Domain**        | Domain 1 — AI, Smart Society & Future of Work                           |
 | **SDG Track (1–17)**   | **SDG 4 — Quality Education** *(Target 4.4)*                            |
 |                        | **SDG 8 — Decent Work and Economic Growth** *(Target 8.6)*              |
@@ -147,13 +147,61 @@ JobTransit/
 
 ### Option 1 — Run on Replit (Recommended)
 
-1. Open the Replit Project via your dashboard, or import this repository via **Create Repl → Import from GitHub** (`https://github.com/yaotingchun/JobTransit`).
-2. Open the **Secrets** tab (🔒) in Replit and provide the following environment variables (refer to [`.env.example`](.env.example)):
+1. **Open the Replit project.** Visit [Replit](https://replit.com) and open your existing project, or import the repository via **Create Repl → Import from GitHub**: [JobTransit Repository](https://github.com/yaotingchun/JobTransit).
+
+2. **Configure environment variables.** Open **Tools → Secrets** (🔒) in Replit and add the required environment variables. Refer to the [`.env.example`](https://github.com/yaotingchun/JobTransit/blob/master/.env.example) file for the expected configuration.
+
+   **Firebase configuration (frontend):**
    - `VITE_FIREBASE_API_KEY`
    - `VITE_FIREBASE_AUTH_DOMAIN`
    - `VITE_FIREBASE_PROJECT_ID`
-3. Click the green **Run** button. Replit executes the workflow specified in [`.replit`](.replit) (`npm run dev -- --host 0.0.0.0 --port 5000`).
-4. The Webview panel opens automatically showing the interactive JobTransit application.
+   - `VITE_FIREBASE_STORAGE_BUCKET`
+   - `VITE_FIREBASE_MESSAGING_SENDER_ID`
+   - `VITE_FIREBASE_APP_ID`
+
+   **AI services (backend):**
+   - `GOOGLE_APPLICATION_CREDENTIALS_JSON` — Full Google Cloud service account JSON content for Vertex AI access.
+   - `GEMINI_API_KEY` — Google AI Studio API key for Gemini API access and fallback functionality.
+
+   **Application configuration:**
+   - `VITE_APP_URL` — Public URL of your deployed JobTransit application.
+
+3. **Install dependencies.** Open the Replit Shell and run:
+
+   ```bash
+   npm install
+   ```
+
+   Alternatively, run `npm ci` if the repository contains a compatible lockfile and you want a reproducible dependency installation.
+
+4. **Start the development server.** Click the green **Run** button or execute the following command in the Shell:
+
+   ```bash
+   npm run dev
+   ```
+
+   The Vite development server starts on port `5173`, according to the current development configuration. Open the Replit Webview to access and test JobTransit.
+
+5. **Deploy the application.** When the application is ready for production, open **Deployments** (🚀) in Replit and create or redeploy an Autoscale deployment.
+
+   The deployment uses the following configuration:
+
+   - **Build command:** `npm run build`
+   - **Run command:** `npm start`
+   - **Production start script:** `vite preview --host 0.0.0.0 --port 5173`
+   - **Port mapping:** Local port `5173` → external port `80`
+
+   Confirm that the deployment has the required environment variables configured in its own settings. Verify the live application after deployment.
+
+6. **Update the application from GitHub.** To retrieve the latest changes, open the Replit Shell and run:
+
+   ```bash
+   git pull origin master
+   npm install
+   ```
+
+   Then open **Deployments → Redeploy** to publish the updated version. Once deployment completes, hard-refresh the browser using `Ctrl + Shift + R` on Windows or Linux, or `Cmd + Shift + R` on macOS.
+
 
 ### Option 2 — Run Locally
 
@@ -282,6 +330,20 @@ JobTransit was created to directly address one of the most pressing socio-econom
 | **Angela Ngu Xin Yi** | Frontend Lead / 3D Card Engine & Auth             |
 | **Teoh Xin Yee**         | Frontend / Trend Radar & Market Intelligence   |
 | **Toh Shee Thong**   | Frontend / Weekly Summary & UI Experience          |
+
+---
+## Submission Checklist
+
+- [ ] Team name (`JobTransit`), domain (`Domain 1`), and SDG track (`SDG 4` & `SDG 8`) filled in.
+- [ ] Slide deck link added and public access verified.
+- [ ] Demo video link added and playback verified.
+- [ ] Replit used, with proof of use document (`submission/SDC2026_JobTransit_Replit_POU.pdf`) included in `submission/`.
+- [ ] RunPod verified as not required (workload handled via Gemini API and Firebase).
+- [ ] Preliminary submission completed (`submission/SDC2026_JobTransit_Preliminary.pdf`).
+- [ ] Technology declaration completed (`submission/SDC2026_JobTransit_TechDeclaration.pdf`).
+- [ ] All submission files renamed with the team name (`JobTransit`) replacing `TeamName`.
+- [ ] "How to Run" steps verified locally and on Replit (`npm run build` passing).
+- [ ] No API keys or secrets committed to the repository (`.env` ignored in `.gitignore`).
 
 ---
 
