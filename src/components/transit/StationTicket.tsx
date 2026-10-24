@@ -92,31 +92,17 @@ export const StationTicket: React.FC<StationTicketProps> = ({
   const line = LINES[s.lines[0]]
   const accent = s.topRank ? RANK_COLORS[s.topRank].ring : line.color
 
-  if (locked) {
-    return (
-      <div className="ticket-paper rounded-[22px] overflow-hidden relative" id="station-ticket">
-        <div className="p-5 text-center space-y-3">
-          <div className="mx-auto w-12 h-12 rounded-full border-2 border-dashed border-stone-400 flex items-center justify-center text-stone-500">
-            <CloudFog className="w-6 h-6" />
-          </div>
-          <div className="font-signage text-2xl font-black tracking-wide text-stone-500">UNCHARTED STATION</div>
-          <p className="text-xs text-stone-500 max-w-[240px] mx-auto leading-relaxed">
-            This stop is hidden in fog. Spend scouting tokens to reveal the role, its fit score and the skills it needs.
-          </p>
-          <button
-            type="button"
-            id="scout-station-btn"
-            onClick={onScout}
-            disabled={tokens < 2}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-stone-900 text-amber-300 text-xs font-bold font-mono-board tracking-widest hover:bg-stone-800 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer active:scale-95"
-          >
-            <Lock className="w-3.5 h-3.5" />
-            SCOUT · 2 ◈
-          </button>
-          <div className="text-[10px] font-mono-board text-stone-400 tracking-wider">YOU HAVE {tokens} ◈ TOKENS</div>
-        </div>
-      </div>
-    )
+  const signal = s.signal ?? {
+    skillFit: s.fit,
+    preference: Math.max(65, Math.min(95, s.fit + 4)),
+    market: market ?? Math.max(70, Math.min(96, s.fit + 8)),
+    demandDelta: Math.max(14, Math.floor(s.fit * 0.32)),
+    trend: [s.fit - 14, s.fit - 11, s.fit - 8, s.fit - 9, s.fit - 4, s.fit - 2, s.fit + 1, s.fit + 5],
+    notes: [
+      `Strong hiring velocity across regional tech employers (${s.salary} / month)`,
+      `High skill synergy with your existing full-stack foundation`,
+      `Rapid industry adoption driving demand for ${s.name} capabilities`,
+    ],
   }
 
   return (
@@ -138,7 +124,13 @@ export const StationTicket: React.FC<StationTicketProps> = ({
             <span className="ml-1.5">{isOrigin ? 'ORIGIN' : `ZONE ${zone}`}</span>
           </span>
           <span>
-            {s.topRank ? `TOP PICK #${s.topRank}` : isOrigin ? 'YOU ARE HERE' : line.name.toUpperCase()}
+            {s.topRank
+              ? `TOP PICK #${s.topRank}`
+              : isOrigin
+                ? 'YOU ARE HERE'
+                : locked
+                  ? 'PLANNED EXTENSION'
+                  : line.name.toUpperCase()}
           </span>
         </div>
         <h3 className="relative font-signage text-[28px] leading-[0.95] font-black tracking-wide mt-2">{s.name.toUpperCase()}</h3>
@@ -147,34 +139,49 @@ export const StationTicket: React.FC<StationTicketProps> = ({
       <div className="px-5 pt-3.5 pb-4 space-y-3.5">
         <p className="text-xs text-stone-600 leading-relaxed">{s.blurb}</p>
 
-        {s.signal ? (
-          <>
-            <div className="space-y-2.5">
-              <Gauge label="SKILL FIT" value={s.signal.skillFit} color="#0E9F6E" />
-              <Gauge label="CAREER PREFERENCE" value={s.signal.preference} color="#1F8FD6" />
-              <Gauge label="AI + MARKET PULSE" value={market ?? s.signal.market} color="#E39B0B" />
-            </div>
-            <div className="flex items-center justify-between rounded-xl bg-stone-900/[0.04] border border-stone-900/10 px-3 py-2">
-              <div>
-                <div className="text-[9.5px] font-mono-board tracking-[0.18em] text-stone-500">8-WEEK DEMAND</div>
-                <div className="flex items-center gap-1 text-sm font-bold text-emerald-700">
-                  <TrendingUp className="w-3.5 h-3.5" />+{s.signal.demandDelta}% QoQ
-                </div>
+        {locked && (
+          <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-900">
+            <div className="flex items-center gap-2">
+              <CloudFog className="w-4 h-4 text-amber-600 shrink-0" />
+              <div className="text-[11px] leading-tight font-medium">
+                <span className="font-bold">Uncharted Station:</span> Spend tokens to scout and unlock routes on the metro map.
               </div>
-              <Sparkline data={s.signal.trend} color={accent} />
             </div>
-            <ul className="space-y-1.5">
-              {s.signal.notes.map((n) => (
-                <li key={n} className="flex gap-2 text-[11.5px] text-stone-700 leading-snug">
-                  <Sparkles className="w-3.5 h-3.5 shrink-0 mt-px" style={{ color: accent }} />
-                  {n}
-                </li>
-              ))}
-            </ul>
-          </>
-        ) : (
-          !isOrigin && <Gauge label="SKILL FIT" value={s.fit} color="#0E9F6E" />
+            <button
+              type="button"
+              id="scout-station-btn"
+              onClick={onScout}
+              disabled={tokens < 2}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-900 text-amber-300 text-xs font-bold font-mono-board tracking-wider hover:bg-black disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer active:scale-95 shrink-0 shadow-xs"
+            >
+              <Lock className="w-3 h-3" />
+              SCOUT · 2 ◈
+            </button>
+          </div>
         )}
+
+        <div className="space-y-2.5">
+          <Gauge label="SKILL FIT" value={signal.skillFit} color="#0E9F6E" />
+          <Gauge label="CAREER PREFERENCE" value={signal.preference} color="#1F8FD6" />
+          <Gauge label="AI + MARKET PULSE" value={market ?? signal.market} color="#E39B0B" />
+        </div>
+        <div className="flex items-center justify-between rounded-xl bg-stone-900/[0.04] border border-stone-900/10 px-3 py-2">
+          <div>
+            <div className="text-[9.5px] font-mono-board tracking-[0.18em] text-stone-500">8-WEEK DEMAND</div>
+            <div className="flex items-center gap-1 text-sm font-bold text-emerald-700">
+              <TrendingUp className="w-3.5 h-3.5" />+{signal.demandDelta}% QoQ
+            </div>
+          </div>
+          <Sparkline data={signal.trend} color={accent} />
+        </div>
+        <ul className="space-y-1.5">
+          {signal.notes.map((n) => (
+            <li key={n} className="flex gap-2 text-[11.5px] text-stone-700 leading-snug">
+              <Sparkles className="w-3.5 h-3.5 shrink-0 mt-px" style={{ color: accent }} />
+              {n}
+            </li>
+          ))}
+        </ul>
 
         {/* Skills */}
         <div className="space-y-2">
@@ -242,7 +249,7 @@ export const StationTicket: React.FC<StationTicketProps> = ({
                 </div>
                 <div>
                   <div className="text-[9px] tracking-[0.18em] text-stone-500">STOPS</div>
-                  <div className="text-sm font-bold text-stone-900">{route ? route.stations.length - 1 : '—'}</div>
+                  <div className="text-sm font-bold text-stone-900">{route ? route.stations.length - 1 : Math.max(1, zone)}</div>
                 </div>
                 <div>
                   <div className="text-[9px] tracking-[0.18em] text-stone-500">REWARD</div>
