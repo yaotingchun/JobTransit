@@ -1,0 +1,2761 @@
+{
+  "lastScrapedAt": "2026-10-24T13:25:50.830Z",
+  "nextScrapeDueAt": "2026-10-25T13:25:50.830Z",
+  "data": {
+    "success": true,
+    "scrapedAt": "2026-10-24T13:25:50.830Z",
+    "source": "LinkedIn Live Job Search Engine (Scraped via Guest Endpoints)",
+    "logs": [
+      "[2026-10-24T13:25:50.830Z] Starting live scraping from linkedin.com/jobs/search endpoints...",
+      "GET https://www.linkedin.com/jobs/search?keywords=Agentic%20AI&location=Worldwide...",
+      "→ HTTP 200 for \"Agentic AI\". Scraped 274833 bytes of raw HTML from LinkedIn.",
+      "✓ LinkedIn Count: \"35,000+\" | 24h Velocity: \"15,000+\" | 7d Influx: \"33,005+\" | Parsed 10 live job listings.",
+      "GET https://www.linkedin.com/jobs/search?keywords=Data%20Engineer&location=Worldwide...",
+      "→ HTTP 429 for \"Data Engineer\". Scraped 24633 bytes of raw HTML from LinkedIn.",
+      "✓ LinkedIn Count: \"Search Active\" | 24h Velocity: \"14,008+\" | 7d Influx: \"28,000+\" | Parsed 10 live job listings.",
+      "GET https://www.linkedin.com/jobs/search?keywords=AI%20Evaluation%20Engineer&location=Worldwide...",
+      "→ HTTP 200 for \"AI Evaluation Engineer\". Scraped 276572 bytes of raw HTML from LinkedIn.",
+      "✓ LinkedIn Count: \"32,000+\" | 24h Velocity: \"12,224+\" | 7d Influx: \"24,000+\" | Parsed 10 live job listings.",
+      "GET https://www.linkedin.com/jobs/search?keywords=Full%20Stack%20Engineer&location=Worldwide...",
+      "→ HTTP 200 for \"Full Stack Engineer\". Scraped 287511 bytes of raw HTML from LinkedIn.",
+      "✓ LinkedIn Count: \"35,000+\" | 24h Velocity: \"10,000+\" | 7d Influx: \"29,000+\" | Parsed 10 live job listings.",
+      "GET https://www.linkedin.com/jobs/search?keywords=Kubernetes%20Platform%20Architect&location=Worldwide...",
+      "→ HTTP 200 for \"Kubernetes Platform Architect\". Scraped 274347 bytes of raw HTML from LinkedIn.",
+      "✓ LinkedIn Count: \"32,000+\" | 24h Velocity: \"6,000+\" | 7d Influx: \"23,000+\" | Parsed 10 live job listings.",
+      "GET https://www.linkedin.com/jobs/search?keywords=QA%20Automation%20Engineer&location=Worldwide...",
+      "→ HTTP 200 for \"QA Automation Engineer\". Scraped 279191 bytes of raw HTML from LinkedIn.",
+      "✓ LinkedIn Count: \"28,000+\" | 24h Velocity: \"5,000+\" | 7d Influx: \"15,000+\" | Parsed 10 live job listings.",
+      "GET https://www.linkedin.com/jobs/search?keywords=AI%20Security%20Red%20Team&location=Worldwide...",
+      "→ HTTP 200 for \"AI Security Red Team\". Scraped 279784 bytes of raw HTML from LinkedIn.",
+      "✓ LinkedIn Count: \"17,000+\" | 24h Velocity: \"3,000+\" | 7d Influx: \"11,000+\" | Parsed 10 live job listings.",
+      "GET https://www.linkedin.com/jobs/search?keywords=LLMOps%20Engineer&location=Worldwide...",
+      "→ HTTP 200 for \"LLMOps Engineer\". Scraped 279384 bytes of raw HTML from LinkedIn.",
+      "✓ LinkedIn Count: \"35,000+\" | 24h Velocity: \"17,000+\" | 7d Influx: \"33,000+\" | Parsed 10 live job listings.",
+      "GET https://www.linkedin.com/jobs/search?keywords=Model%20Context%20Protocol&location=Worldwide...",
+      "✓ Skill Search: \"Model Context Protocol\" → Total: \"26,000+\" | 24h: \"21,000+\" (80.8% velocity → SURGING [Crucial in 2026])",
+      "GET https://www.linkedin.com/jobs/search?keywords=LangGraph&location=Worldwide...",
+      "✓ Skill Search: \"LangGraph\" → Total: \"34,000+\" | 24h: \"17,000+\" (50% velocity → SURGING [Rapidly Accelerating])",
+      "GET https://www.linkedin.com/jobs/search?keywords=vLLM&location=Worldwide...",
+      "✓ Skill Search: \"vLLM\" → Total: \"24,000+\" | 24h: \"25,000+\" (104.2% velocity → SURGING [Crucial in 2026])",
+      "GET https://www.linkedin.com/jobs/search?keywords=Kubernetes&location=Worldwide...",
+      "✓ Skill Search: \"Kubernetes\" → Total: \"34,000+\" | 24h: \"15,000+\" (44.1% velocity → DEPRECATING [At Risk])",
+      "GET https://www.linkedin.com/jobs/search?keywords=Vector%20Database&location=Worldwide...",
+      "✓ Skill Search: \"Vector Database\" → Total: \"25,000+\" | 24h: \"16,000+\" (64% velocity → SURGING [Rapidly Accelerating])",
+      "GET https://www.linkedin.com/jobs/search?keywords=Selenium&location=Worldwide...",
+      "✓ Skill Search: \"Selenium\" → Total: \"28,000+\" | 24h: \"12,992+\" (46.4% velocity → DEPRECATING [At Risk])",
+      "GET https://www.linkedin.com/jobs/search?keywords=jQuery&location=Worldwide...",
+      "✓ Skill Search: \"jQuery\" → Total: \"21,000+\" | 24h: \"8,000+\" (38.1% velocity → DEPRECATING [Legacy Sunset])",
+      "GET https://www.linkedin.com/jobs/search?keywords=Hadoop&location=Worldwide...",
+      "✓ Skill Search: \"Hadoop\" → Total: \"Search Active\" | 24h: \"19,000+\" (76% velocity → SURGING [Crucial in 2026])",
+      "✓ Complete LinkedIn market scrape finished at 9:26:34 pm. 8 roles, 8 skills, and live postings indexed."
+    ],
+    "marketSummary": {
+      "totalAnalyzedPostings2025": 228160,
+      "totalAnalyzedPostings2026": 248000,
+      "totalNewPostings24h": 82232,
+      "totalNewPostings7d": 196005,
+      "averageVelocityRate24h": 31.7,
+      "topRole2025": {
+        "title": "Full-Stack Software Engineer",
+        "openings": 35000,
+        "liveScrapedCount": "35,000+",
+        "share": "17.6% market share in 2025 (Contracting to 16.7% in 2026)",
+        "narrative": "In 2025, companies primarily recruited generalist full-stack developers for standard web applications. Today it remains heavily populated (35,000+ listings), but is shifting into AI-augmented engineering.",
+        "scrapedUrl": "https://www.linkedin.com/jobs/search?keywords=Full%20Stack%20Engineer&location=Worldwide",
+        "htmlBytes": 28319,
+        "recentPostings": [
+          {
+            "title": "Full-Stack Web Developer",
+            "company": "Bolder Apps - AI Native AgentCy",
+            "id": "4482771744",
+            "url": "https://uz.linkedin.com/jobs/view/full-stack-web-developer-at-bolder-apps-ai-native-agentcy-4482771744"
+          },
+          {
+            "title": "Fullstack Developer",
+            "company": "Propelius Technologies",
+            "id": "4306112554",
+            "url": "https://in.linkedin.com/jobs/view/fullstack-developer-at-propelius-technologies-4306112554"
+          },
+          {
+            "title": "Full Stack Engineer – React + Node.js — Mid / Senior",
+            "company": "Flyte Solutions Ltd.",
+            "id": "4475520196",
+            "url": "https://bd.linkedin.com/jobs/view/full-stack-engineer-%E2%80%93-react-%2B-node-js-%E2%80%94-mid-senior-at-flyte-solutions-ltd-4475520196"
+          }
+        ],
+        "extractedSkills": [
+          "React / Next.js",
+          "REST APIs",
+          "Node.js",
+          "Vue.js / Symfony",
+          "SQL / PostgreSQL"
+        ]
+      },
+      "topRole2026": {
+        "title": "Agentic AI Engineer",
+        "openings": 35000,
+        "liveScrapedCount": "35,000+",
+        "share": "14.1% market recruitment center (#1 Live Velocity: 15,000+ 24h influx)",
+        "narrative": "In 2026, the market recruitment center pivoted to autonomous multi-agent systems, tool integration (MCP), and AI workflow orchestration, clocking 15,000+ new jobs posted in the past 24 hours (+42.9% velocity index).",
+        "scrapedUrl": "https://www.linkedin.com/jobs/search?keywords=Agentic%20AI&location=Worldwide",
+        "htmlBytes": 29701,
+        "recentPostings": [
+          {
+            "title": "Senior AI Engineer",
+            "company": "UXBERT Labs",
+            "id": "4443357475",
+            "url": "https://sa.linkedin.com/jobs/view/senior-ai-engineer-at-uxbert-labs-4443357475"
+          },
+          {
+            "title": "Lead AI Agent Developer",
+            "company": "EPAM Systems",
+            "id": "4471924149",
+            "url": "https://kz.linkedin.com/jobs/view/lead-ai-agent-developer-at-epam-systems-4471924149"
+          },
+          {
+            "title": "AI Developer",
+            "company": "Eli Lilly and Company",
+            "id": "4467980463",
+            "url": "https://in.linkedin.com/jobs/view/ai-developer-at-eli-lilly-and-company-4467980463"
+          }
+        ],
+        "extractedSkills": [
+          "Model Context Protocol (MCP)",
+          "Autonomous Agent Loops",
+          "LangGraph / Statecharts",
+          "Vector Retrieval",
+          "AI Security Sandboxing"
+        ]
+      },
+      "averageAIExposure": 54,
+      "skillsVelocityRate": "+42.9% live 24-hour job posting velocity scraped on LinkedIn",
+      "rawProofHtmlSnippet": "<div class=\"base-search-card\" data-entity-urn=\"urn:li:jobPosting:4443357475\">\n  <h3 class=\"base-search-card__title\">Senior AI Engineer</h3>\n  <h4 class=\"base-search-card__subtitle\">UXBERT Labs</h4>\n</div>"
+    },
+    "roles": [
+      {
+        "id": "agentic-ai-engineer",
+        "title": "Agentic AI Engineer",
+        "category": "AI & Machine Learning",
+        "rank2025": 1,
+        "rank2026": 1,
+        "openings2025": 31500,
+        "openings2026": 35000,
+        "growthYoY": 42.9,
+        "status": "growing",
+        "marketRecruitmentShare2025": 4.9,
+        "marketRecruitmentShare2026": 14.1,
+        "past24hCountStr": "15,000+",
+        "past24hNum": 15000,
+        "past7dCountStr": "33,005+",
+        "past7dNum": 33005,
+        "velocityRate24h": 42.9,
+        "velocityRate7d": 94.3,
+        "velocityLabel": "High Velocity 🚀",
+        "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=Agentic%20AI&location=Worldwide&f_TPR=r86400",
+        "linkedinSearch7dUrl": "https://www.linkedin.com/jobs/search?keywords=Agentic%20AI&location=Worldwide&f_TPR=r604800",
+        "minedSkills": [
+          {
+            "name": "Python",
+            "category": "Language",
+            "countStr": "34,300+ jobs",
+            "occurrencePct": 98,
+            "sampleMentions": 10,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Agentic%20AI%20Python&location=Worldwide"
+          },
+          {
+            "name": "AI Agents / Multi-Agent",
+            "category": "AI & Frameworks",
+            "countStr": "33,950+ jobs",
+            "occurrencePct": 97,
+            "sampleMentions": 10,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Agentic%20AI%20Agents&location=Worldwide"
+          },
+          {
+            "name": "LangGraph / LangChain",
+            "category": "AI & Frameworks",
+            "countStr": "32,900+ jobs",
+            "occurrencePct": 94,
+            "sampleMentions": 9,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Agentic%20AI%20LangGraph&location=Worldwide"
+          },
+          {
+            "name": "PyTorch",
+            "category": "AI & Frameworks",
+            "countStr": "28,000+ jobs",
+            "occurrencePct": 80,
+            "sampleMentions": 8,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Agentic%20AI%20PyTorch&location=Worldwide"
+          },
+          {
+            "name": "Vector DB / RAG",
+            "category": "Data & Lakehouse",
+            "countStr": "26,950+ jobs",
+            "occurrencePct": 77,
+            "sampleMentions": 8,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Agentic%20AI%20Vector&location=Worldwide"
+          },
+          {
+            "name": "Model Context Protocol (MCP)",
+            "category": "AI & Frameworks",
+            "countStr": "25,900+ jobs",
+            "occurrencePct": 74,
+            "sampleMentions": 7,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Agentic%20AI%20Model%20Context%20Protocol&location=Worldwide"
+          },
+          {
+            "name": "Docker / Sandboxing",
+            "category": "Cloud & Infra",
+            "countStr": "24,150+ jobs",
+            "occurrencePct": 69,
+            "sampleMentions": 7,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Agentic%20AI%20Docker&location=Worldwide"
+          },
+          {
+            "name": "vLLM / Inference Serving",
+            "category": "AI & Frameworks",
+            "countStr": "18,900+ jobs",
+            "occurrencePct": 54,
+            "sampleMentions": 5,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Agentic%20AI%20vLLM&location=Worldwide"
+          }
+        ],
+        "entryLevelAccess": {
+          "score": 29,
+          "levelLabel": "Moderate Barrier (1-3 yrs)",
+          "breakdown": {
+            "entryLevel": 12,
+            "midLevel": 38,
+            "seniorLead": 50
+          },
+          "insight": "Junior accessibility is 12%: Enterprises demand demonstrated knowledge of autonomous agent loops and MCP. Juniors need public portfolio agent projects to stand out."
+        },
+        "aiExposure": {
+          "overallPercentage": 45,
+          "automationRisk": "Medium",
+          "augmentationPotential": "Extremely High",
+          "summary": "Dynamically derived from 8 live mined skill requirements: AI tooling & codegen frequency averages 79%, while core systems architecture requirements stand at 84%.",
+          "aiToolingFrequency": 79,
+          "manualCoreFrequency": 84,
+          "tasks": [
+            {
+              "task": "Agentic AI Engineer Routine Scaffolding & Code Generation",
+              "category": "automated",
+              "description": "AI code assistants draft boilerplates, configuration schemas, and initial queries based on live requirements.",
+              "efficiencyGain": "80% time reduction"
+            },
+            {
+              "task": "Tool Integration & Schema Interoperability",
+              "category": "assisted",
+              "description": "Co-pilots generate client wrappers, API contracts, and unit tests with engineer verification in sandbox.",
+              "efficiencyGain": "60% faster integration"
+            },
+            {
+              "task": "System Architecture, Failure Recovery & Edge-Case Governance",
+              "category": "human_core",
+              "description": "Critical human architectural judgment, boundary enforcement, and multi-system resilience.",
+              "efficiencyGain": "Human strategic design"
+            },
+            {
+              "task": "Production Verification, Benchmarking & Safety Audits",
+              "category": "human_core",
+              "description": "Ensuring determinism, regulatory compliance, latency SLAs, and enterprise security policies.",
+              "efficiencyGain": "Non-automatable governance"
+            }
+          ]
+        },
+        "skillsNeededMoreNow": [
+          "Model Context Protocol (MCP)",
+          "LangGraph / Agent Orchestration",
+          "Vector Search / RAG",
+          "EvalOps & Red-Teaming"
+        ],
+        "skillsNoLongerNeeded": [
+          "Static Prompt Guessing",
+          "Pure Rule-Based Chatbots",
+          "Manual Text Parsing"
+        ],
+        "whyItMatters": "Live scraped from LinkedIn with 35,000+ active global listings (15,000+ posted in last 24h, 42.9% velocity).",
+        "searchKeyword": "Agentic AI",
+        "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Agentic%20AI&location=Worldwide",
+        "scrapedCountString": "35,000+",
+        "scrapedSampleSize": 10,
+        "recentPostings": [
+          {
+            "title": "Senior AI Engineer",
+            "company": "UXBERT Labs",
+            "location": "Riyadh, Riyadh, Saudi Arabia",
+            "url": "https://sa.linkedin.com/jobs/view/senior-ai-engineer-at-uxbert-labs-4443357475",
+            "jobId": "4443357475"
+          },
+          {
+            "title": "Lead AI Agent Developer",
+            "company": "EPAM Systems",
+            "location": "Kazakhstan",
+            "url": "https://kz.linkedin.com/jobs/view/lead-ai-agent-developer-at-epam-systems-4471924149",
+            "jobId": "4471924149"
+          },
+          {
+            "title": "AI Developer",
+            "company": "Eli Lilly and Company",
+            "location": "Bengaluru East, Karnataka, India",
+            "url": "https://in.linkedin.com/jobs/view/ai-developer-at-eli-lilly-and-company-4467980463",
+            "jobId": "4467980463"
+          },
+          {
+            "title": "AI Engineer, Innovation",
+            "company": "MNP",
+            "location": "Calgary, Alberta, Canada",
+            "url": "https://ca.linkedin.com/jobs/view/ai-engineer-innovation-at-mnp-4462658727",
+            "jobId": "4462658727"
+          },
+          {
+            "title": "Senior AI Engineer - AI Systems",
+            "company": "Mindera",
+            "location": "Morocco",
+            "url": "https://ma.linkedin.com/jobs/view/senior-ai-engineer-ai-systems-at-mindera-4465055210",
+            "jobId": "4465055210"
+          },
+          {
+            "title": "Lead AI Agent Developer",
+            "company": "EPAM Systems",
+            "location": "Kyrgyzstan",
+            "url": "https://kg.linkedin.com/jobs/view/lead-ai-agent-developer-at-epam-systems-4471919408",
+            "jobId": "4471919408"
+          },
+          {
+            "title": "Software Development Engineer III",
+            "company": "Capital Group",
+            "location": "London, England, United Kingdom",
+            "url": "https://uk.linkedin.com/jobs/view/software-development-engineer-iii-at-capital-group-4444590628",
+            "jobId": "4444590628"
+          },
+          {
+            "title": "Senior AI Agent Engineer",
+            "company": "EPAM Systems",
+            "location": "Kazakhstan",
+            "url": "https://kz.linkedin.com/jobs/view/senior-ai-agent-engineer-at-epam-systems-4472523695",
+            "jobId": "4472523695"
+          },
+          {
+            "title": "AI Engineer - 4 Day Week + Remote",
+            "company": "Shape Construction",
+            "location": "Portugal",
+            "url": "https://pt.linkedin.com/jobs/view/ai-engineer-4-day-week-%2B-remote-at-shape-construction-4471584541",
+            "jobId": "4471584541"
+          },
+          {
+            "title": "Senior Engineer, Digital Innovation",
+            "company": "Celanese",
+            "location": "Hyderabad, Telangana, India",
+            "url": "https://in.linkedin.com/jobs/view/senior-engineer-digital-innovation-at-celanese-4471722128",
+            "jobId": "4471722128"
+          }
+        ],
+        "entryLevelStats": {
+          "entryCountStr": "12% of sample",
+          "midSeniorCountStr": "50% Senior",
+          "entryRatio": 12
+        }
+      },
+      {
+        "id": "data-engineer",
+        "title": "Data Engineer",
+        "category": "Data Engineering",
+        "rank2025": 2,
+        "rank2026": 2,
+        "openings2025": 30600,
+        "openings2026": 34000,
+        "growthYoY": 41.2,
+        "status": "growing",
+        "marketRecruitmentShare2025": 17.1,
+        "marketRecruitmentShare2026": 13.7,
+        "past24hCountStr": "14,008+",
+        "past24hNum": 14008,
+        "past7dCountStr": "28,000+",
+        "past7dNum": 28000,
+        "velocityRate24h": 41.2,
+        "velocityRate7d": 82.4,
+        "velocityLabel": "High Velocity 🚀",
+        "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=Data%20Engineer&location=Worldwide&f_TPR=r86400",
+        "linkedinSearch7dUrl": "https://www.linkedin.com/jobs/search?keywords=Data%20Engineer&location=Worldwide&f_TPR=r604800",
+        "minedSkills": [
+          {
+            "name": "SQL",
+            "category": "Language",
+            "countStr": "34,000+ jobs",
+            "occurrencePct": 100,
+            "sampleMentions": 10,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Data%20Engineer%20SQL&location=Worldwide"
+          },
+          {
+            "name": "Python",
+            "category": "Language",
+            "countStr": "32,980+ jobs",
+            "occurrencePct": 97,
+            "sampleMentions": 10,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Data%20Engineer%20Python&location=Worldwide"
+          },
+          {
+            "name": "Kafka",
+            "category": "Data & Lakehouse",
+            "countStr": "31,960+ jobs",
+            "occurrencePct": 94,
+            "sampleMentions": 9,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Data%20Engineer%20Kafka&location=Worldwide"
+          },
+          {
+            "name": "AWS",
+            "category": "Cloud & Infra",
+            "countStr": "29,920+ jobs",
+            "occurrencePct": 88,
+            "sampleMentions": 9,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Data%20Engineer%20AWS&location=Worldwide"
+          },
+          {
+            "name": "Databricks",
+            "category": "Data & Lakehouse",
+            "countStr": "29,920+ jobs",
+            "occurrencePct": 88,
+            "sampleMentions": 9,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Data%20Engineer%20Databricks&location=Worldwide"
+          },
+          {
+            "name": "Snowflake",
+            "category": "Data & Lakehouse",
+            "countStr": "25,160+ jobs",
+            "occurrencePct": 74,
+            "sampleMentions": 7,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Data%20Engineer%20Snowflake&location=Worldwide"
+          },
+          {
+            "name": "dbt",
+            "category": "Data & Lakehouse",
+            "countStr": "23,120+ jobs",
+            "occurrencePct": 68,
+            "sampleMentions": 7,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Data%20Engineer%20dbt&location=Worldwide"
+          },
+          {
+            "name": "Apache Spark",
+            "category": "Data & Lakehouse",
+            "countStr": "22,100+ jobs",
+            "occurrencePct": 65,
+            "sampleMentions": 7,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Data%20Engineer%20Spark&location=Worldwide"
+          }
+        ],
+        "entryLevelAccess": {
+          "score": 50,
+          "levelLabel": "Accessible (Junior Friendly)",
+          "breakdown": {
+            "entryLevel": 24,
+            "midLevel": 46,
+            "seniorLead": 30
+          },
+          "insight": "Junior accessibility is 24%: 46% of openings target mid-level pipeline builders, with entry roles focusing on dbt models and SQL transformations."
+        },
+        "aiExposure": {
+          "overallPercentage": 48,
+          "automationRisk": "Medium",
+          "augmentationPotential": "Extremely High",
+          "summary": "Dynamically derived from 8 live mined skill requirements: AI tooling & codegen frequency averages 84%, while core systems architecture requirements stand at 84%.",
+          "aiToolingFrequency": 84,
+          "manualCoreFrequency": 84,
+          "tasks": [
+            {
+              "task": "Data Engineer Routine Scaffolding & Code Generation",
+              "category": "automated",
+              "description": "AI code assistants draft boilerplates, configuration schemas, and initial queries based on live requirements.",
+              "efficiencyGain": "80% time reduction"
+            },
+            {
+              "task": "Tool Integration & Schema Interoperability",
+              "category": "assisted",
+              "description": "Co-pilots generate client wrappers, API contracts, and unit tests with engineer verification in sandbox.",
+              "efficiencyGain": "60% faster integration"
+            },
+            {
+              "task": "System Architecture, Failure Recovery & Edge-Case Governance",
+              "category": "human_core",
+              "description": "Critical human architectural judgment, boundary enforcement, and multi-system resilience.",
+              "efficiencyGain": "Human strategic design"
+            },
+            {
+              "task": "Production Verification, Benchmarking & Safety Audits",
+              "category": "human_core",
+              "description": "Ensuring determinism, regulatory compliance, latency SLAs, and enterprise security policies.",
+              "efficiencyGain": "Non-automatable governance"
+            }
+          ]
+        },
+        "skillsNeededMoreNow": [
+          "Hybrid Vector Search (pgvector, Qdrant)",
+          "Apache Iceberg / Lakehouse",
+          "dbt + AI Semantic Layers"
+        ],
+        "skillsNoLongerNeeded": [
+          "Manual SQL Scripting",
+          "Legacy Hadoop / MapReduce",
+          "Custom Cron ETL Scripts"
+        ],
+        "whyItMatters": "Live scraped from LinkedIn with Search Active active global listings (14,008+ posted in last 24h, 41.2% velocity).",
+        "searchKeyword": "Data Engineer",
+        "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Data%20Engineer&location=Worldwide",
+        "scrapedCountString": "Search Active",
+        "scrapedSampleSize": 10,
+        "recentPostings": [
+          {
+            "title": "Databricks Data Engineer (Apache Spark) - Remote work | REF#305827",
+            "company": "BairesDev",
+            "location": "Chile",
+            "url": "https://cl.linkedin.com/jobs/view/databricks-data-engineer-apache-spark-remote-work-ref%23305827-at-bairesdev-4479222247",
+            "jobId": "4479222247"
+          },
+          {
+            "title": "ENGENHEIRO DE DADOS Sênior",
+            "company": "Avvale",
+            "location": "Nova Lima, Minas Gerais, Brazil",
+            "url": "https://br.linkedin.com/jobs/view/engenheiro-de-dados-s%C3%AAnior-at-avvale-4377986912",
+            "jobId": "4377986912"
+          },
+          {
+            "title": "Senior Data Engineer 2 - Remote Work | REF#297237",
+            "company": "BairesDev",
+            "location": "Greater Rio de Janeiro",
+            "url": "https://br.linkedin.com/jobs/view/senior-data-engineer-2-remote-work-ref%23297237-at-bairesdev-4462084124",
+            "jobId": "4462084124"
+          },
+          {
+            "title": "[IB] Engenheiro de Dados Sênior",
+            "company": "iblue",
+            "location": "Greater Rio de Janeiro",
+            "url": "https://br.linkedin.com/jobs/view/ib-engenheiro-de-dados-s%C3%AAnior-at-iblue-4444652016",
+            "jobId": "4444652016"
+          },
+          {
+            "title": "Engenheiro de Dados",
+            "company": "4DF Connect",
+            "location": "São Paulo, São Paulo, Brazil",
+            "url": "https://br.linkedin.com/jobs/view/engenheiro-de-dados-at-4df-connect-4482738279",
+            "jobId": "4482738279"
+          },
+          {
+            "title": "Engenheiro(a) de Dados Databricks | Pleno/Sênior (Remoto)",
+            "company": "SAUTER",
+            "location": "São Paulo, São Paulo, Brazil",
+            "url": "https://br.linkedin.com/jobs/view/engenheiro-a-de-dados-databricks-pleno-s%C3%AAnior-remoto-at-sauter-4482760709",
+            "jobId": "4482760709"
+          },
+          {
+            "title": "Engenheiro de Dados",
+            "company": "IQVIA",
+            "location": "São Paulo, São Paulo, Brazil",
+            "url": "https://br.linkedin.com/jobs/view/engenheiro-de-dados-at-iqvia-4479631948",
+            "jobId": "4479631948"
+          },
+          {
+            "title": "Engenheiro de Dados Pleno",
+            "company": "Reply",
+            "location": "Greater São Paulo Area",
+            "url": "https://br.linkedin.com/jobs/view/engenheiro-de-dados-pleno-at-reply-4471980380",
+            "jobId": "4471980380"
+          },
+          {
+            "title": "Engenheiro (a) de Dados Cloud Sr",
+            "company": "EY",
+            "location": "Goiânia, Goiás, Brazil",
+            "url": "https://br.linkedin.com/jobs/view/engenheiro-a-de-dados-cloud-sr-at-ey-4463914441",
+            "jobId": "4463914441"
+          },
+          {
+            "title": "Engenheiro de Dados",
+            "company": "ROIT",
+            "location": "São Paulo, São Paulo, Brazil",
+            "url": "https://br.linkedin.com/jobs/view/engenheiro-de-dados-at-roit-4481215131",
+            "jobId": "4481215131"
+          }
+        ],
+        "entryLevelStats": {
+          "entryCountStr": "24% of sample",
+          "midSeniorCountStr": "30% Senior",
+          "entryRatio": 24
+        }
+      },
+      {
+        "id": "ai-systems-eval-engineer",
+        "title": "AI Systems & Evaluation Engineer",
+        "category": "AI & Machine Learning",
+        "rank2025": 3,
+        "rank2026": 3,
+        "openings2025": 28800,
+        "openings2026": 32000,
+        "growthYoY": 38.2,
+        "status": "growing",
+        "marketRecruitmentShare2025": 4.5,
+        "marketRecruitmentShare2026": 12.9,
+        "past24hCountStr": "12,224+",
+        "past24hNum": 12224,
+        "past7dCountStr": "24,000+",
+        "past7dNum": 24000,
+        "velocityRate24h": 38.2,
+        "velocityRate7d": 75,
+        "velocityLabel": "High Velocity 🚀",
+        "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Evaluation%20Engineer&location=Worldwide&f_TPR=r86400",
+        "linkedinSearch7dUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Evaluation%20Engineer&location=Worldwide&f_TPR=r604800",
+        "minedSkills": [
+          {
+            "name": "Python",
+            "category": "Language",
+            "countStr": "31,360+ jobs",
+            "occurrencePct": 98,
+            "sampleMentions": 10,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Evaluation%20Engineer%20Python&location=Worldwide"
+          },
+          {
+            "name": "EvalOps / Benchmarking",
+            "category": "AI & Frameworks",
+            "countStr": "30,080+ jobs",
+            "occurrencePct": 94,
+            "sampleMentions": 9,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Evaluation%20Engineer%20Evaluation&location=Worldwide"
+          },
+          {
+            "name": "Ragas / RAG Triad",
+            "category": "AI & Frameworks",
+            "countStr": "27,520+ jobs",
+            "occurrencePct": 86,
+            "sampleMentions": 9,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Evaluation%20Engineer%20RAG&location=Worldwide"
+          },
+          {
+            "name": "PyTorch / Hugging Face",
+            "category": "AI & Frameworks",
+            "countStr": "26,240+ jobs",
+            "occurrencePct": 82,
+            "sampleMentions": 8,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Evaluation%20Engineer%20PyTorch&location=Worldwide"
+          },
+          {
+            "name": "Docker / Sandboxing",
+            "category": "Cloud & Infra",
+            "countStr": "23,680+ jobs",
+            "occurrencePct": 74,
+            "sampleMentions": 7,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Evaluation%20Engineer%20Docker&location=Worldwide"
+          },
+          {
+            "name": "SQL / Metrics Storage",
+            "category": "Data & Lakehouse",
+            "countStr": "22,400+ jobs",
+            "occurrencePct": 70,
+            "sampleMentions": 7,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Evaluation%20Engineer%20SQL&location=Worldwide"
+          }
+        ],
+        "entryLevelAccess": {
+          "score": 29,
+          "levelLabel": "Moderate Barrier (1-3 yrs)",
+          "breakdown": {
+            "entryLevel": 12,
+            "midLevel": 38,
+            "seniorLead": 50
+          },
+          "insight": "Junior accessibility is 12%: Enterprises demand demonstrated knowledge of autonomous agent loops and MCP. Juniors need public portfolio agent projects to stand out."
+        },
+        "aiExposure": {
+          "overallPercentage": 44,
+          "automationRisk": "Low",
+          "augmentationPotential": "Extremely High",
+          "summary": "Dynamically derived from 6 live mined skill requirements: AI tooling & codegen frequency averages 87%, while core systems architecture requirements stand at 81%.",
+          "aiToolingFrequency": 87,
+          "manualCoreFrequency": 81,
+          "tasks": [
+            {
+              "task": "AI Systems & Evaluation Engineer Routine Scaffolding & Code Generation",
+              "category": "automated",
+              "description": "AI code assistants draft boilerplates, configuration schemas, and initial queries based on live requirements.",
+              "efficiencyGain": "80% time reduction"
+            },
+            {
+              "task": "Tool Integration & Schema Interoperability",
+              "category": "assisted",
+              "description": "Co-pilots generate client wrappers, API contracts, and unit tests with engineer verification in sandbox.",
+              "efficiencyGain": "60% faster integration"
+            },
+            {
+              "task": "System Architecture, Failure Recovery & Edge-Case Governance",
+              "category": "human_core",
+              "description": "Critical human architectural judgment, boundary enforcement, and multi-system resilience.",
+              "efficiencyGain": "Human strategic design"
+            },
+            {
+              "task": "Production Verification, Benchmarking & Safety Audits",
+              "category": "human_core",
+              "description": "Ensuring determinism, regulatory compliance, latency SLAs, and enterprise security policies.",
+              "efficiencyGain": "Non-automatable governance"
+            }
+          ]
+        },
+        "skillsNeededMoreNow": [
+          "Model Context Protocol (MCP)",
+          "LangGraph / Agent Orchestration",
+          "Vector Search / RAG",
+          "EvalOps & Red-Teaming"
+        ],
+        "skillsNoLongerNeeded": [
+          "Static Prompt Guessing",
+          "Pure Rule-Based Chatbots",
+          "Manual Text Parsing"
+        ],
+        "whyItMatters": "Live scraped from LinkedIn with 32,000+ active global listings (12,224+ posted in last 24h, 38.2% velocity).",
+        "searchKeyword": "AI Evaluation Engineer",
+        "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Evaluation%20Engineer&location=Worldwide",
+        "scrapedCountString": "32,000+",
+        "scrapedSampleSize": 10,
+        "recentPostings": [
+          {
+            "title": "Agent Algorithm Evaluation Engineer",
+            "company": "Shopee",
+            "location": "Singapore, Singapore",
+            "url": "https://sg.linkedin.com/jobs/view/agent-algorithm-evaluation-engineer-at-shopee-4465713239",
+            "jobId": "4465713239"
+          },
+          {
+            "title": "Research Engineer I (AI Evaluation, Trust Technologies)",
+            "company": "Nanyang Technological University Singapore",
+            "location": "Singapore, Singapore",
+            "url": "https://sg.linkedin.com/jobs/view/research-engineer-i-ai-evaluation-trust-technologies-at-nanyang-technological-university-singapore-4475562287",
+            "jobId": "4475562287"
+          },
+          {
+            "title": "Senior AI Evaluation Engineer",
+            "company": "Incubator for Artificial Intelligence",
+            "location": "Greater Bristol Area, United Kingdom",
+            "url": "https://uk.linkedin.com/jobs/view/senior-ai-evaluation-engineer-at-incubator-for-artificial-intelligence-4480458823",
+            "jobId": "4480458823"
+          },
+          {
+            "title": "Senior AI Evaluation Engineer",
+            "company": "Incubator for Artificial Intelligence",
+            "location": "London Area, United Kingdom",
+            "url": "https://uk.linkedin.com/jobs/view/senior-ai-evaluation-engineer-at-incubator-for-artificial-intelligence-4480479057",
+            "jobId": "4480479057"
+          },
+          {
+            "title": "Senior ML / Evaluation Engineer",
+            "company": "EPAM Systems",
+            "location": "Kyrgyzstan",
+            "url": "https://kg.linkedin.com/jobs/view/senior-ml-evaluation-engineer-at-epam-systems-4471907816",
+            "jobId": "4471907816"
+          },
+          {
+            "title": "Agent Evaluation Engineer",
+            "company": "Manus AI",
+            "location": "Singapore, Singapore",
+            "url": "https://sg.linkedin.com/jobs/view/agent-evaluation-engineer-at-manus-ai-4480898815",
+            "jobId": "4480898815"
+          },
+          {
+            "title": "Member of Technical Staff, North Modelling (Evals)",
+            "company": "Cohere",
+            "location": "London, England, United Kingdom",
+            "url": "https://uk.linkedin.com/jobs/view/member-of-technical-staff-north-modelling-evals-at-cohere-4454992608",
+            "jobId": "4454992608"
+          },
+          {
+            "title": "Member of Technical Staff, North Modelling (Evals)",
+            "company": "Cohere",
+            "location": "Toronto, Ontario, Canada",
+            "url": "https://ca.linkedin.com/jobs/view/member-of-technical-staff-north-modelling-evals-at-cohere-4454982766",
+            "jobId": "4454982766"
+          },
+          {
+            "title": "AI Engineer (Harness)",
+            "company": "Valarian",
+            "location": "London, England, United Kingdom",
+            "url": "https://uk.linkedin.com/jobs/view/ai-engineer-harness-at-valarian-4468245184",
+            "jobId": "4468245184"
+          },
+          {
+            "title": "豆包大模型场景评测算法工程师（Agent/Coding） - 火山方舟",
+            "company": "ByteDance",
+            "location": "Beijing, Beijing, China",
+            "url": "https://cn.linkedin.com/jobs/view/%E8%B1%86%E5%8C%85%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9C%BA%E6%99%AF%E8%AF%84%E6%B5%8B%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%EF%BC%88agent-coding%EF%BC%89-%E7%81%AB%E5%B1%B1%E6%96%B9%E8%88%9F-at-bytedance-4449713351",
+            "jobId": "4449713351"
+          }
+        ],
+        "entryLevelStats": {
+          "entryCountStr": "12% of sample",
+          "midSeniorCountStr": "50% Senior",
+          "entryRatio": 12
+        }
+      },
+      {
+        "id": "fullstack-engineer",
+        "title": "Full-Stack Software Engineer",
+        "category": "Software Engineering",
+        "rank2025": 4,
+        "rank2026": 4,
+        "openings2025": 31500,
+        "openings2026": 35000,
+        "growthYoY": 28.6,
+        "status": "declining",
+        "marketRecruitmentShare2025": 17.6,
+        "marketRecruitmentShare2026": 14.1,
+        "past24hCountStr": "10,000+",
+        "past24hNum": 10000,
+        "past7dCountStr": "29,000+",
+        "past7dNum": 29000,
+        "velocityRate24h": 28.6,
+        "velocityRate7d": 82.9,
+        "velocityLabel": "Moderate Velocity 📈",
+        "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=Full%20Stack%20Engineer&location=Worldwide&f_TPR=r86400",
+        "linkedinSearch7dUrl": "https://www.linkedin.com/jobs/search?keywords=Full%20Stack%20Engineer&location=Worldwide&f_TPR=r604800",
+        "minedSkills": [
+          {
+            "name": "TypeScript / JavaScript",
+            "category": "Language",
+            "countStr": "34,300+ jobs",
+            "occurrencePct": 98,
+            "sampleMentions": 10,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Full%20Stack%20Engineer%20TypeScript&location=Worldwide"
+          },
+          {
+            "name": "React / Next.js",
+            "category": "AI & Frameworks",
+            "countStr": "32,900+ jobs",
+            "occurrencePct": 94,
+            "sampleMentions": 9,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Full%20Stack%20Engineer%20React&location=Worldwide"
+          },
+          {
+            "name": "Node.js",
+            "category": "Language",
+            "countStr": "31,150+ jobs",
+            "occurrencePct": 89,
+            "sampleMentions": 9,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Full%20Stack%20Engineer%20Node&location=Worldwide"
+          },
+          {
+            "name": "SQL / PostgreSQL",
+            "category": "Data & Lakehouse",
+            "countStr": "29,050+ jobs",
+            "occurrencePct": 83,
+            "sampleMentions": 8,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Full%20Stack%20Engineer%20PostgreSQL&location=Worldwide"
+          },
+          {
+            "name": "REST & GraphQL APIs",
+            "category": "DevOps & Tooling",
+            "countStr": "28,000+ jobs",
+            "occurrencePct": 80,
+            "sampleMentions": 8,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Full%20Stack%20Engineer%20API&location=Worldwide"
+          },
+          {
+            "name": "Docker",
+            "category": "Cloud & Infra",
+            "countStr": "24,150+ jobs",
+            "occurrencePct": 69,
+            "sampleMentions": 7,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Full%20Stack%20Engineer%20Docker&location=Worldwide"
+          },
+          {
+            "name": "AWS / Cloud",
+            "category": "Cloud & Infra",
+            "countStr": "23,100+ jobs",
+            "occurrencePct": 66,
+            "sampleMentions": 7,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Full%20Stack%20Engineer%20AWS&location=Worldwide"
+          },
+          {
+            "name": "Tailwind CSS",
+            "category": "AI & Frameworks",
+            "countStr": "17,850+ jobs",
+            "occurrencePct": 51,
+            "sampleMentions": 5,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Full%20Stack%20Engineer%20Tailwind&location=Worldwide"
+          }
+        ],
+        "entryLevelAccess": {
+          "score": 55,
+          "levelLabel": "Accessible (Junior Friendly)",
+          "breakdown": {
+            "entryLevel": 28,
+            "midLevel": 44,
+            "seniorLead": 28
+          },
+          "insight": "Junior accessibility is 28%: Entry developers are actively recruited when paired with modern TypeScript, Next.js, and AI-assisted workflows."
+        },
+        "aiExposure": {
+          "overallPercentage": 56,
+          "automationRisk": "Medium",
+          "augmentationPotential": "Extremely High",
+          "summary": "Dynamically derived from 8 live mined skill requirements: AI tooling & codegen frequency averages 77%, while core systems architecture requirements stand at 81%.",
+          "aiToolingFrequency": 77,
+          "manualCoreFrequency": 81,
+          "tasks": [
+            {
+              "task": "Full-Stack Software Engineer Routine Scaffolding & Code Generation",
+              "category": "automated",
+              "description": "AI code assistants draft boilerplates, configuration schemas, and initial queries based on live requirements.",
+              "efficiencyGain": "80% time reduction"
+            },
+            {
+              "task": "Tool Integration & Schema Interoperability",
+              "category": "assisted",
+              "description": "Co-pilots generate client wrappers, API contracts, and unit tests with engineer verification in sandbox.",
+              "efficiencyGain": "60% faster integration"
+            },
+            {
+              "task": "System Architecture, Failure Recovery & Edge-Case Governance",
+              "category": "human_core",
+              "description": "Critical human architectural judgment, boundary enforcement, and multi-system resilience.",
+              "efficiencyGain": "Human strategic design"
+            },
+            {
+              "task": "Production Verification, Benchmarking & Safety Audits",
+              "category": "human_core",
+              "description": "Ensuring determinism, regulatory compliance, latency SLAs, and enterprise security policies.",
+              "efficiencyGain": "Non-automatable governance"
+            }
+          ]
+        },
+        "skillsNeededMoreNow": [
+          "AI-Augmented Workflows",
+          "TypeScript Strict Mode",
+          "Next.js Server Components",
+          "Security Sandboxing"
+        ],
+        "skillsNoLongerNeeded": [
+          "Manual Selenium QA",
+          "jQuery / Legacy DOM Manipulation",
+          "Basic boilerplate CRUD"
+        ],
+        "whyItMatters": "Live scraped from LinkedIn with 35,000+ active global listings (10,000+ posted in last 24h, 28.6% velocity).",
+        "searchKeyword": "Full Stack Engineer",
+        "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Full%20Stack%20Engineer&location=Worldwide",
+        "scrapedCountString": "35,000+",
+        "scrapedSampleSize": 10,
+        "recentPostings": [
+          {
+            "title": "Full-Stack Web Developer",
+            "company": "Bolder Apps - AI Native AgentCy",
+            "location": "Tashkent, Tashkent, Uzbekistan",
+            "url": "https://uz.linkedin.com/jobs/view/full-stack-web-developer-at-bolder-apps-ai-native-agentcy-4482771744",
+            "jobId": "4482771744"
+          },
+          {
+            "title": "Fullstack Developer",
+            "company": "Propelius Technologies",
+            "location": "Indore, Madhya Pradesh, India",
+            "url": "https://in.linkedin.com/jobs/view/fullstack-developer-at-propelius-technologies-4306112554",
+            "jobId": "4306112554"
+          },
+          {
+            "title": "Full Stack Engineer – React + Node.js — Mid / Senior",
+            "company": "Flyte Solutions Ltd.",
+            "location": "Dhaka, Dhaka, Bangladesh",
+            "url": "https://bd.linkedin.com/jobs/view/full-stack-engineer-%E2%80%93-react-%2B-node-js-%E2%80%94-mid-senior-at-flyte-solutions-ltd-4475520196",
+            "jobId": "4475520196"
+          },
+          {
+            "title": "Desarrollador/a Fullstack Senior (MERN Stack) - ANDALUCIA",
+            "company": "AD4 Octógono",
+            "location": "Seville, Andalusia, Spain",
+            "url": "https://es.linkedin.com/jobs/view/desarrollador-a-fullstack-senior-mern-stack-andalucia-at-ad4-oct%C3%B3gono-4439946631",
+            "jobId": "4439946631"
+          },
+          {
+            "title": "PHP Full-Stack Engineer - Remote Work | REF#305846",
+            "company": "BairesDev",
+            "location": "Cajamarca, Peru",
+            "url": "https://pe.linkedin.com/jobs/view/php-full-stack-engineer-remote-work-ref%23305846-at-bairesdev-4479220385",
+            "jobId": "4479220385"
+          },
+          {
+            "title": "Fullstack Software Engineer — React | Remote",
+            "company": "Alumark",
+            "location": "Colombo, Western Province, Sri Lanka",
+            "url": "https://lk.linkedin.com/jobs/view/fullstack-software-engineer-%E2%80%94-react-remote-at-alumark-4463126127",
+            "jobId": "4463126127"
+          },
+          {
+            "title": "Ingénieur Full Stack / Ingénieure Full Stack Angular / NestJS",
+            "company": "DM Geosoftware",
+            "location": "Casablanca Metropolitan Area",
+            "url": "https://ma.linkedin.com/jobs/view/ing%C3%A9nieur-full-stack-ing%C3%A9nieure-full-stack-angular-nestjs-at-dm-geosoftware-4467973626",
+            "jobId": "4467973626"
+          },
+          {
+            "title": "Full Stack Developer Laravel",
+            "company": "Vascomm",
+            "location": "Sidoarjo, East Java, Indonesia",
+            "url": "https://id.linkedin.com/jobs/view/full-stack-developer-laravel-at-vascomm-4356202996",
+            "jobId": "4356202996"
+          },
+          {
+            "title": "Développeur Full Stack – Expert JobRouter (H/F)",
+            "company": "Confidential",
+            "location": "Casablanca Metropolitan Area",
+            "url": "https://ua.linkedin.com/jobs/view/senior-full-stack-web-developer-platform-solutions-at-readdle-4482087533",
+            "jobId": "4478394770"
+          },
+          {
+            "title": "Senior Full Stack Web Developer - Platform Solutions",
+            "company": "Readdle",
+            "location": "Kyiv, Kyiv City, Ukraine",
+            "url": "https://eg.linkedin.com/jobs/view/senior-full-stack-software-engineer-at-nowlun-com-4408816685",
+            "jobId": "4482087533"
+          }
+        ],
+        "entryLevelStats": {
+          "entryCountStr": "28% of sample",
+          "midSeniorCountStr": "28% Senior",
+          "entryRatio": 28
+        }
+      },
+      {
+        "id": "cloud-infrastructure-architect",
+        "title": "Cloud & Kubernetes Platform Architect",
+        "category": "Cloud & Infrastructure",
+        "rank2025": 5,
+        "rank2026": 5,
+        "openings2025": 28800,
+        "openings2026": 32000,
+        "growthYoY": 18.8,
+        "status": "growing",
+        "marketRecruitmentShare2025": 16.1,
+        "marketRecruitmentShare2026": 12.9,
+        "past24hCountStr": "6,000+",
+        "past24hNum": 6000,
+        "past7dCountStr": "23,000+",
+        "past7dNum": 23000,
+        "velocityRate24h": 18.8,
+        "velocityRate7d": 71.9,
+        "velocityLabel": "Steady Influx ⚖️",
+        "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=Kubernetes%20Platform%20Architect&location=Worldwide&f_TPR=r86400",
+        "linkedinSearch7dUrl": "https://www.linkedin.com/jobs/search?keywords=Kubernetes%20Platform%20Architect&location=Worldwide&f_TPR=r604800",
+        "minedSkills": [
+          {
+            "name": "Kubernetes / K8s",
+            "category": "Cloud & Infra",
+            "countStr": "31,040+ jobs",
+            "occurrencePct": 97,
+            "sampleMentions": 10,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Kubernetes%20Platform%20Architect%20Kubernetes&location=Worldwide"
+          },
+          {
+            "name": "Terraform / IaC",
+            "category": "Cloud & Infra",
+            "countStr": "29,120+ jobs",
+            "occurrencePct": 91,
+            "sampleMentions": 9,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Kubernetes%20Platform%20Architect%20Terraform&location=Worldwide"
+          },
+          {
+            "name": "AWS",
+            "category": "Cloud & Infra",
+            "countStr": "30,080+ jobs",
+            "occurrencePct": 94,
+            "sampleMentions": 9,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Kubernetes%20Platform%20Architect%20AWS&location=Worldwide"
+          },
+          {
+            "name": "Azure",
+            "category": "Cloud & Infra",
+            "countStr": "27,520+ jobs",
+            "occurrencePct": 86,
+            "sampleMentions": 9,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Kubernetes%20Platform%20Architect%20Azure&location=Worldwide"
+          },
+          {
+            "name": "Docker / Containers",
+            "category": "Cloud & Infra",
+            "countStr": "28,480+ jobs",
+            "occurrencePct": 89,
+            "sampleMentions": 9,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Kubernetes%20Platform%20Architect%20Docker&location=Worldwide"
+          },
+          {
+            "name": "CI/CD Pipelines",
+            "category": "DevOps & Tooling",
+            "countStr": "25,600+ jobs",
+            "occurrencePct": 80,
+            "sampleMentions": 8,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Kubernetes%20Platform%20Architect%20CI%20CD&location=Worldwide"
+          },
+          {
+            "name": "Prometheus / Grafana",
+            "category": "DevOps & Tooling",
+            "countStr": "22,080+ jobs",
+            "occurrencePct": 69,
+            "sampleMentions": 7,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Kubernetes%20Platform%20Architect%20Prometheus&location=Worldwide"
+          },
+          {
+            "name": "Linux / Networking",
+            "category": "Cloud & Infra",
+            "countStr": "24,640+ jobs",
+            "occurrencePct": 77,
+            "sampleMentions": 8,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Kubernetes%20Platform%20Architect%20Linux&location=Worldwide"
+          }
+        ],
+        "entryLevelAccess": {
+          "score": 16,
+          "levelLabel": "High Barrier (Senior Only)",
+          "breakdown": {
+            "entryLevel": 6,
+            "midLevel": 24,
+            "seniorLead": 70
+          },
+          "insight": "LinkedIn postings show 66% Senior/Lead requirements due to high downtime blast radius. Junior entry (8%) is largely accessed via Cloud Support or DevOps Associate paths."
+        },
+        "aiExposure": {
+          "overallPercentage": 34,
+          "automationRisk": "Low",
+          "augmentationPotential": "High",
+          "summary": "Dynamically derived from 8 live mined skill requirements: AI tooling & codegen frequency averages 0%, while core systems architecture requirements stand at 85%.",
+          "aiToolingFrequency": 0,
+          "manualCoreFrequency": 85,
+          "tasks": [
+            {
+              "task": "Cloud & Kubernetes Platform Architect Routine Scaffolding & Code Generation",
+              "category": "automated",
+              "description": "AI code assistants draft boilerplates, configuration schemas, and initial queries based on live requirements.",
+              "efficiencyGain": "80% time reduction"
+            },
+            {
+              "task": "Tool Integration & Schema Interoperability",
+              "category": "assisted",
+              "description": "Co-pilots generate client wrappers, API contracts, and unit tests with engineer verification in sandbox.",
+              "efficiencyGain": "60% faster integration"
+            },
+            {
+              "task": "System Architecture, Failure Recovery & Edge-Case Governance",
+              "category": "human_core",
+              "description": "Critical human architectural judgment, boundary enforcement, and multi-system resilience.",
+              "efficiencyGain": "Human strategic design"
+            },
+            {
+              "task": "Production Verification, Benchmarking & Safety Audits",
+              "category": "human_core",
+              "description": "Ensuring determinism, regulatory compliance, latency SLAs, and enterprise security policies.",
+              "efficiencyGain": "Non-automatable governance"
+            }
+          ]
+        },
+        "skillsNeededMoreNow": [
+          "AI-Augmented Workflows",
+          "TypeScript Strict Mode",
+          "Next.js Server Components",
+          "Security Sandboxing"
+        ],
+        "skillsNoLongerNeeded": [
+          "Manual Selenium QA",
+          "jQuery / Legacy DOM Manipulation",
+          "Basic boilerplate CRUD"
+        ],
+        "whyItMatters": "Live scraped from LinkedIn with 32,000+ active global listings (6,000+ posted in last 24h, 18.8% velocity).",
+        "searchKeyword": "Kubernetes Platform Architect",
+        "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Kubernetes%20Platform%20Architect&location=Worldwide",
+        "scrapedCountString": "32,000+",
+        "scrapedSampleSize": 10,
+        "recentPostings": [
+          {
+            "title": "Principal Architect - Cloud Native Platforms (Kubernetes)",
+            "company": "Akamai Technologies",
+            "location": "London, England, United Kingdom",
+            "url": "https://uk.linkedin.com/jobs/view/principal-architect-cloud-native-platforms-kubernetes-at-akamai-technologies-4476744317",
+            "jobId": "4476744317"
+          },
+          {
+            "title": "Lead IT &amp; Cloud Architect für Souveräne Cloud-Plattformen (m/w/d)",
+            "company": "T-Systems International",
+            "location": "Hamburg, Hamburg, Germany",
+            "url": "https://de.linkedin.com/jobs/view/lead-it-cloud-architect-f%C3%BCr-souver%C3%A4ne-cloud-plattformen-m-w-d-at-t-systems-international-4469818606",
+            "jobId": "4469818606"
+          },
+          {
+            "title": "Lead IT &amp; Cloud Architect für Souveräne Cloud-Plattformen (m/w/d)",
+            "company": "T-Systems International",
+            "location": "Leinfelden-Echterdingen, Baden-Württemberg, Germany",
+            "url": "https://de.linkedin.com/jobs/view/lead-it-cloud-architect-f%C3%BCr-souver%C3%A4ne-cloud-plattformen-m-w-d-at-t-systems-international-4469818605",
+            "jobId": "4469818605"
+          },
+          {
+            "title": "Principal Cloud Kubernetes Engineer",
+            "company": "InterSystems",
+            "location": "Boston, MA",
+            "url": "https://www.linkedin.com/jobs/view/principal-cloud-kubernetes-engineer-at-intersystems-4424796686",
+            "jobId": "4424796686"
+          },
+          {
+            "title": "Technical Architect - k3s/k8s",
+            "company": "Quest Global",
+            "location": "Thiruvananthapuram, Kerala, India",
+            "url": "https://in.linkedin.com/jobs/view/technical-architect-k3s-k8s-at-quest-global-4459788434",
+            "jobId": "4459788434"
+          },
+          {
+            "title": "Senior Principal Chief Architect -Enterprise Platform/Distributed AI Infrastructure &amp; Kubernetes/PyTorch",
+            "company": "Red Hat",
+            "location": "Singapore, Singapore",
+            "url": "https://sg.linkedin.com/jobs/view/senior-principal-chief-architect-enterprise-platform-distributed-ai-infrastructure-kubernetes-pytorch-at-red-hat-4439875113",
+            "jobId": "4439875113"
+          },
+          {
+            "title": "Lead Solution Architect with affinity with Red Hat &amp; Kubernetes",
+            "company": "Devoteam",
+            "location": "Machelen, Flemish Region, Belgium",
+            "url": "https://be.linkedin.com/jobs/view/lead-solution-architect-with-affinity-with-red-hat-kubernetes-at-devoteam-4330931262",
+            "jobId": "4330931262"
+          },
+          {
+            "title": "Architecte Kubernetes - Aeroline - Toulouse",
+            "company": "Sopra Steria",
+            "location": "Colomiers, Occitanie, France",
+            "url": "https://fr.linkedin.com/jobs/view/architecte-kubernetes-aeroline-toulouse-at-sopra-steria-4429961641",
+            "jobId": "4429961641"
+          },
+          {
+            "title": "Senior Software Infra Architect",
+            "company": "NVIDIA",
+            "location": "Tel Aviv-Yafo, Tel Aviv District, Israel",
+            "url": "https://il.linkedin.com/jobs/view/senior-software-infra-architect-at-nvidia-4442257191",
+            "jobId": "4442257191"
+          },
+          {
+            "title": "Principal Software Engineer, Cloud Product Engineering",
+            "company": "Aerospike",
+            "location": "Mountain View, CA",
+            "url": "https://www.linkedin.com/jobs/view/principal-software-engineer-cloud-product-engineering-at-aerospike-4482404087",
+            "jobId": "4482404087"
+          }
+        ],
+        "entryLevelStats": {
+          "entryCountStr": "6% of sample",
+          "midSeniorCountStr": "70% Senior",
+          "entryRatio": 6
+        }
+      },
+      {
+        "id": "qa-automation-specialist",
+        "title": "QA & Test Automation Specialist",
+        "category": "Quality & Security",
+        "rank2025": 6,
+        "rank2026": 6,
+        "openings2025": 25200,
+        "openings2026": 28000,
+        "growthYoY": 17.9,
+        "status": "declining",
+        "marketRecruitmentShare2025": 14.1,
+        "marketRecruitmentShare2026": 11.3,
+        "past24hCountStr": "5,000+",
+        "past24hNum": 5000,
+        "past7dCountStr": "15,000+",
+        "past7dNum": 15000,
+        "velocityRate24h": 17.9,
+        "velocityRate7d": 53.6,
+        "velocityLabel": "Steady Influx ⚖️",
+        "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=QA%20Automation%20Engineer&location=Worldwide&f_TPR=r86400",
+        "linkedinSearch7dUrl": "https://www.linkedin.com/jobs/search?keywords=QA%20Automation%20Engineer&location=Worldwide&f_TPR=r604800",
+        "minedSkills": [
+          {
+            "name": "Playwright",
+            "category": "DevOps & Tooling",
+            "countStr": "24,080+ jobs",
+            "occurrencePct": 86,
+            "sampleMentions": 9,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=QA%20Automation%20Engineer%20Playwright&location=Worldwide"
+          },
+          {
+            "name": "Selenium",
+            "category": "DevOps & Tooling",
+            "countStr": "26,600+ jobs",
+            "occurrencePct": 95,
+            "sampleMentions": 10,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=QA%20Automation%20Engineer%20Selenium&location=Worldwide"
+          },
+          {
+            "name": "Python",
+            "category": "Language",
+            "countStr": "24,920+ jobs",
+            "occurrencePct": 89,
+            "sampleMentions": 9,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=QA%20Automation%20Engineer%20Python&location=Worldwide"
+          },
+          {
+            "name": "CI/CD / GitHub Actions",
+            "category": "DevOps & Tooling",
+            "countStr": "22,120+ jobs",
+            "occurrencePct": 79,
+            "sampleMentions": 8,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=QA%20Automation%20Engineer%20CI%20CD&location=Worldwide"
+          },
+          {
+            "name": "API Testing (Postman/REST)",
+            "category": "DevOps & Tooling",
+            "countStr": "21,000+ jobs",
+            "occurrencePct": 75,
+            "sampleMentions": 8,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=QA%20Automation%20Engineer%20API&location=Worldwide"
+          },
+          {
+            "name": "TypeScript / JavaScript",
+            "category": "Language",
+            "countStr": "19,880+ jobs",
+            "occurrencePct": 71,
+            "sampleMentions": 7,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=QA%20Automation%20Engineer%20TypeScript&location=Worldwide"
+          },
+          {
+            "name": "Cypress",
+            "category": "DevOps & Tooling",
+            "countStr": "17,920+ jobs",
+            "occurrencePct": 64,
+            "sampleMentions": 6,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=QA%20Automation%20Engineer%20Cypress&location=Worldwide"
+          },
+          {
+            "name": "Docker",
+            "category": "Cloud & Infra",
+            "countStr": "15,960+ jobs",
+            "occurrencePct": 57,
+            "sampleMentions": 6,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=QA%20Automation%20Engineer%20Docker&location=Worldwide"
+          }
+        ],
+        "entryLevelAccess": {
+          "score": 44,
+          "levelLabel": "Moderate Barrier (1-3 yrs)",
+          "breakdown": {
+            "entryLevel": 20,
+            "midLevel": 46,
+            "seniorLead": 34
+          },
+          "insight": "Junior accessibility is 22%: Teams recruit juniors who can transition manual test cases into Playwright or AI-augmented exploration scripts."
+        },
+        "aiExposure": {
+          "overallPercentage": 67,
+          "automationRisk": "High",
+          "augmentationPotential": "Extremely High",
+          "summary": "Dynamically derived from 8 live mined skill requirements: AI tooling & codegen frequency averages 80%, while core systems architecture requirements stand at 74%.",
+          "aiToolingFrequency": 80,
+          "manualCoreFrequency": 74,
+          "tasks": [
+            {
+              "task": "QA & Test Automation Specialist Routine Scaffolding & Code Generation",
+              "category": "automated",
+              "description": "AI code assistants draft boilerplates, configuration schemas, and initial queries based on live requirements.",
+              "efficiencyGain": "80% time reduction"
+            },
+            {
+              "task": "Tool Integration & Schema Interoperability",
+              "category": "assisted",
+              "description": "Co-pilots generate client wrappers, API contracts, and unit tests with engineer verification in sandbox.",
+              "efficiencyGain": "60% faster integration"
+            },
+            {
+              "task": "System Architecture, Failure Recovery & Edge-Case Governance",
+              "category": "human_core",
+              "description": "Critical human architectural judgment, boundary enforcement, and multi-system resilience.",
+              "efficiencyGain": "Human strategic design"
+            },
+            {
+              "task": "Production Verification, Benchmarking & Safety Audits",
+              "category": "human_core",
+              "description": "Ensuring determinism, regulatory compliance, latency SLAs, and enterprise security policies.",
+              "efficiencyGain": "Non-automatable governance"
+            }
+          ]
+        },
+        "skillsNeededMoreNow": [
+          "AI-Augmented Workflows",
+          "TypeScript Strict Mode",
+          "Next.js Server Components",
+          "Security Sandboxing"
+        ],
+        "skillsNoLongerNeeded": [
+          "Manual Selenium QA",
+          "jQuery / Legacy DOM Manipulation",
+          "Basic boilerplate CRUD"
+        ],
+        "whyItMatters": "Live scraped from LinkedIn with 28,000+ active global listings (5,000+ posted in last 24h, 17.9% velocity).",
+        "searchKeyword": "QA Automation Engineer",
+        "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=QA%20Automation%20Engineer&location=Worldwide",
+        "scrapedCountString": "28,000+",
+        "scrapedSampleSize": 10,
+        "recentPostings": [
+          {
+            "title": "Sr. Automation QE",
+            "company": "Tata Consultancy Services",
+            "location": "Toronto, Ontario, Canada",
+            "url": "https://ca.linkedin.com/jobs/view/sr-automation-qe-at-tata-consultancy-services-4470071225",
+            "jobId": "4470071225"
+          },
+          {
+            "title": "QE Automation Engineer",
+            "company": "Tata Consultancy Services",
+            "location": "New York, NY",
+            "url": "https://www.linkedin.com/jobs/view/qe-automation-engineer-at-tata-consultancy-services-4459449143",
+            "jobId": "4459449143"
+          },
+          {
+            "title": "QA Automation Engineer",
+            "company": "Travel Counsellors",
+            "location": "Manchester, England, United Kingdom",
+            "url": "https://uk.linkedin.com/jobs/view/qa-automation-engineer-at-travel-counsellors-4475440105",
+            "jobId": "4475440105"
+          },
+          {
+            "title": "Senior QA Automation Engineer",
+            "company": "Manchester Digital",
+            "location": "Manchester, England, United Kingdom",
+            "url": "https://uk.linkedin.com/jobs/view/senior-qa-automation-engineer-at-manchester-digital-4479343938",
+            "jobId": "4479343938"
+          },
+          {
+            "title": "Senior Automation QA Engineer",
+            "company": "Ticketek Entertainment Group (TEG)",
+            "location": "Sydney, New South Wales, Australia",
+            "url": "https://au.linkedin.com/jobs/view/senior-automation-qa-engineer-at-ticketek-entertainment-group-teg-4476502121",
+            "jobId": "4476502121"
+          },
+          {
+            "title": "QA Automation Engineer- Global Payments Engineering",
+            "company": "Scotiabank",
+            "location": "Toronto, Ontario, Canada",
+            "url": "https://ca.linkedin.com/jobs/view/qa-automation-engineer-global-payments-engineering-at-scotiabank-4428081961",
+            "jobId": "4428081961"
+          },
+          {
+            "title": "Senior QA Automation Engineer - Playwright &amp; Selenium",
+            "company": "Cognizant",
+            "location": "Dallas, TX",
+            "url": "https://www.linkedin.com/jobs/view/senior-qa-automation-engineer-playwright-selenium-at-cognizant-4479176007",
+            "jobId": "4479176007"
+          },
+          {
+            "title": "Senior Quality Assurance Engineer",
+            "company": "Searchability®",
+            "location": "Newcastle Upon Tyne, England, United Kingdom",
+            "url": "https://uk.linkedin.com/jobs/view/senior-quality-assurance-engineer-at-searchability%C2%AE-4480376869",
+            "jobId": "4480376869"
+          },
+          {
+            "title": "Quality Assurance Analyst Senior (Sr. SDET) - Automation (C# and .NET)",
+            "company": "Global Payments Inc.",
+            "location": "Atlanta, GA",
+            "url": "https://www.linkedin.com/jobs/view/quality-assurance-analyst-senior-sr-sdet-automation-c%23-and-net-at-global-payments-inc-4473589142",
+            "jobId": "4473589142"
+          },
+          {
+            "title": "Senior QA Automation Engineer",
+            "company": "CGI",
+            "location": "Huntsville, AL",
+            "url": "https://www.linkedin.com/jobs/view/senior-qa-automation-engineer-at-cgi-4473592338",
+            "jobId": "4473592338"
+          }
+        ],
+        "entryLevelStats": {
+          "entryCountStr": "20% of sample",
+          "midSeniorCountStr": "34% Senior",
+          "entryRatio": 20
+        }
+      },
+      {
+        "id": "ai-security-red-teamer",
+        "title": "Cybersecurity & AI Red Teamer",
+        "category": "Quality & Security",
+        "rank2025": 7,
+        "rank2026": 7,
+        "openings2025": 15300,
+        "openings2026": 17000,
+        "growthYoY": 17.6,
+        "status": "growing",
+        "marketRecruitmentShare2025": 8.6,
+        "marketRecruitmentShare2026": 6.9,
+        "past24hCountStr": "3,000+",
+        "past24hNum": 3000,
+        "past7dCountStr": "11,000+",
+        "past7dNum": 11000,
+        "velocityRate24h": 17.6,
+        "velocityRate7d": 64.7,
+        "velocityLabel": "Steady Influx ⚖️",
+        "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Security%20Red%20Team&location=Worldwide&f_TPR=r86400",
+        "linkedinSearch7dUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Security%20Red%20Team&location=Worldwide&f_TPR=r604800",
+        "minedSkills": [
+          {
+            "name": "Adversarial Prompt Injection",
+            "category": "Quality & Security",
+            "countStr": "16,150+ jobs",
+            "occurrencePct": 95,
+            "sampleMentions": 10,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Security%20Red%20Team%20Prompt%20Injection&location=Worldwide"
+          },
+          {
+            "name": "Python / Exploit Scripting",
+            "category": "Language",
+            "countStr": "15,640+ jobs",
+            "occurrencePct": 92,
+            "sampleMentions": 9,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Security%20Red%20Team%20Python&location=Worldwide"
+          },
+          {
+            "name": "OWASP LLM Top 10",
+            "category": "Quality & Security",
+            "countStr": "14,960+ jobs",
+            "occurrencePct": 88,
+            "sampleMentions": 9,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Security%20Red%20Team%20OWASP&location=Worldwide"
+          },
+          {
+            "name": "Model Jailbreak Automation",
+            "category": "Quality & Security",
+            "countStr": "14,280+ jobs",
+            "occurrencePct": 84,
+            "sampleMentions": 8,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Security%20Red%20Team%20Jailbreak&location=Worldwide"
+          },
+          {
+            "name": "Docker / Sandbox Isolation",
+            "category": "Cloud & Infra",
+            "countStr": "13,260+ jobs",
+            "occurrencePct": 78,
+            "sampleMentions": 8,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Security%20Red%20Team%20Docker&location=Worldwide"
+          },
+          {
+            "name": "SIEM & Audit Logging",
+            "category": "DevOps & Tooling",
+            "countStr": "12,240+ jobs",
+            "occurrencePct": 72,
+            "sampleMentions": 7,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Security%20Red%20Team%20SIEM&location=Worldwide"
+          }
+        ],
+        "entryLevelAccess": {
+          "score": 37,
+          "levelLabel": "Moderate Barrier (1-3 yrs)",
+          "breakdown": {
+            "entryLevel": 16,
+            "midLevel": 44,
+            "seniorLead": 40
+          },
+          "insight": "Junior accessibility is 16%: Security positions lean mid-senior (40% Senior, 44% Mid) requiring hands-on vulnerability triage or threat modeling experience."
+        },
+        "aiExposure": {
+          "overallPercentage": 45,
+          "automationRisk": "Medium",
+          "augmentationPotential": "Extremely High",
+          "summary": "Dynamically derived from 6 live mined skill requirements: AI tooling & codegen frequency averages 0%, while core systems architecture requirements stand at 85%.",
+          "aiToolingFrequency": 0,
+          "manualCoreFrequency": 85,
+          "tasks": [
+            {
+              "task": "Cybersecurity & AI Red Teamer Routine Scaffolding & Code Generation",
+              "category": "automated",
+              "description": "AI code assistants draft boilerplates, configuration schemas, and initial queries based on live requirements.",
+              "efficiencyGain": "80% time reduction"
+            },
+            {
+              "task": "Tool Integration & Schema Interoperability",
+              "category": "assisted",
+              "description": "Co-pilots generate client wrappers, API contracts, and unit tests with engineer verification in sandbox.",
+              "efficiencyGain": "60% faster integration"
+            },
+            {
+              "task": "System Architecture, Failure Recovery & Edge-Case Governance",
+              "category": "human_core",
+              "description": "Critical human architectural judgment, boundary enforcement, and multi-system resilience.",
+              "efficiencyGain": "Human strategic design"
+            },
+            {
+              "task": "Production Verification, Benchmarking & Safety Audits",
+              "category": "human_core",
+              "description": "Ensuring determinism, regulatory compliance, latency SLAs, and enterprise security policies.",
+              "efficiencyGain": "Non-automatable governance"
+            }
+          ]
+        },
+        "skillsNeededMoreNow": [
+          "AI-Augmented Workflows",
+          "TypeScript Strict Mode",
+          "Next.js Server Components",
+          "Security Sandboxing"
+        ],
+        "skillsNoLongerNeeded": [
+          "Manual Selenium QA",
+          "jQuery / Legacy DOM Manipulation",
+          "Basic boilerplate CRUD"
+        ],
+        "whyItMatters": "Live scraped from LinkedIn with 17,000+ active global listings (3,000+ posted in last 24h, 17.6% velocity).",
+        "searchKeyword": "AI Security Red Team",
+        "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Security%20Red%20Team&location=Worldwide",
+        "scrapedCountString": "17,000+",
+        "scrapedSampleSize": 10,
+        "recentPostings": [
+          {
+            "title": "AI Red Teamer – Sécurité Offensive IA &amp; Pentest LLM – H/F",
+            "company": "STORM GROUP",
+            "location": "Paris, Île-de-France, France",
+            "url": "https://fr.linkedin.com/jobs/view/ai-red-teamer-%E2%80%93-s%C3%A9curit%C3%A9-offensive-ia-pentest-llm-%E2%80%93-h-f-at-storm-group-4461087413",
+            "jobId": "4461087413"
+          },
+          {
+            "title": "AI Pentester/Red Teamer",
+            "company": "AGAPI",
+            "location": "Dubai, United Arab Emirates",
+            "url": "https://ae.linkedin.com/jobs/view/ai-pentester-red-teamer-at-agapi-4481686388",
+            "jobId": "4481686388"
+          },
+          {
+            "title": "Red Team Lead – AI-Enabled Offensive Security | SEB, Solna",
+            "company": "SEB",
+            "location": "Solna, Stockholm County, Sweden",
+            "url": "https://se.linkedin.com/jobs/view/red-team-lead-%E2%80%93-ai-enabled-offensive-security-seb-solna-at-seb-4478786154",
+            "jobId": "4478786154"
+          },
+          {
+            "title": "AI Red Teamer, Cyber",
+            "company": "10a Labs",
+            "location": "San Francisco, CA",
+            "url": "https://www.linkedin.com/jobs/view/ai-red-teamer-cyber-at-10a-labs-4478639029",
+            "jobId": "4478639029"
+          },
+          {
+            "title": "AI Red Team Lead Engineer",
+            "company": "U.S. Bank",
+            "location": "Gresham, OR",
+            "url": "https://www.linkedin.com/jobs/view/ai-red-team-lead-engineer-at-u-s-bank-4477849657",
+            "jobId": "4477849657"
+          },
+          {
+            "title": "AI Red Team Lead Engineer",
+            "company": "U.S. Bank",
+            "location": "New York, NY",
+            "url": "https://www.linkedin.com/jobs/view/ai-red-team-lead-engineer-at-u-s-bank-4477849656",
+            "jobId": "4477849656"
+          },
+          {
+            "title": "AI Red Teamer, Cyber",
+            "company": "10a Labs",
+            "location": "Chicago, IL",
+            "url": "https://www.linkedin.com/jobs/view/ai-red-teamer-cyber-at-10a-labs-4418777035",
+            "jobId": "4418777035"
+          },
+          {
+            "title": "AI-Focused Red Team Operator",
+            "company": "Millennium",
+            "location": "Washington, DC",
+            "url": "https://www.linkedin.com/jobs/view/ai-focused-red-team-operator-at-millennium-4448240333",
+            "jobId": "4448240333"
+          },
+          {
+            "title": "Sr. Red Team - Security Researcher",
+            "company": "F5",
+            "location": "Warsaw, Mazowieckie, Poland",
+            "url": "https://pl.linkedin.com/jobs/view/sr-red-team-security-researcher-at-f5-4456336501",
+            "jobId": "4456336501"
+          },
+          {
+            "title": "Red Team - Security Researcher III",
+            "company": "F5",
+            "location": "Warsaw, Mazowieckie, Poland",
+            "url": "https://pl.linkedin.com/jobs/view/red-team-security-researcher-iii-at-f5-4418983245",
+            "jobId": "4418983245"
+          }
+        ],
+        "entryLevelStats": {
+          "entryCountStr": "16% of sample",
+          "midSeniorCountStr": "40% Senior",
+          "entryRatio": 16
+        }
+      },
+      {
+        "id": "mlops-llmops-engineer",
+        "title": "MLOps & LLMOps Engineer",
+        "category": "AI & Machine Learning",
+        "rank2025": 8,
+        "rank2026": 8,
+        "openings2025": 31500,
+        "openings2026": 35000,
+        "growthYoY": 48.6,
+        "status": "surging",
+        "marketRecruitmentShare2025": 4.9,
+        "marketRecruitmentShare2026": 14.1,
+        "past24hCountStr": "17,000+",
+        "past24hNum": 17000,
+        "past7dCountStr": "33,000+",
+        "past7dNum": 33000,
+        "velocityRate24h": 48.6,
+        "velocityRate7d": 94.3,
+        "velocityLabel": "Surging Influx 🔥",
+        "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=LLMOps%20Engineer&location=Worldwide&f_TPR=r86400",
+        "linkedinSearch7dUrl": "https://www.linkedin.com/jobs/search?keywords=LLMOps%20Engineer&location=Worldwide&f_TPR=r604800",
+        "minedSkills": [
+          {
+            "name": "Kubernetes / Ray",
+            "category": "Cloud & Infra",
+            "countStr": "33,600+ jobs",
+            "occurrencePct": 96,
+            "sampleMentions": 10,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=LLMOps%20Engineer%20Kubernetes&location=Worldwide"
+          },
+          {
+            "name": "Python",
+            "category": "Language",
+            "countStr": "33,250+ jobs",
+            "occurrencePct": 95,
+            "sampleMentions": 10,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=LLMOps%20Engineer%20Python&location=Worldwide"
+          },
+          {
+            "name": "MLflow / Weights & Biases",
+            "category": "AI & Frameworks",
+            "countStr": "30,800+ jobs",
+            "occurrencePct": 88,
+            "sampleMentions": 9,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=LLMOps%20Engineer%20MLflow&location=Worldwide"
+          },
+          {
+            "name": "Docker / Triton Inference",
+            "category": "Cloud & Infra",
+            "countStr": "29,750+ jobs",
+            "occurrencePct": 85,
+            "sampleMentions": 9,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=LLMOps%20Engineer%20Docker&location=Worldwide"
+          },
+          {
+            "name": "vLLM / TensorRT-LLM",
+            "category": "AI & Frameworks",
+            "countStr": "27,300+ jobs",
+            "occurrencePct": 78,
+            "sampleMentions": 8,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=LLMOps%20Engineer%20vLLM&location=Worldwide"
+          },
+          {
+            "name": "CI/CD Model Registry",
+            "category": "DevOps & Tooling",
+            "countStr": "25,200+ jobs",
+            "occurrencePct": 72,
+            "sampleMentions": 7,
+            "sampleTotal": 10,
+            "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=LLMOps%20Engineer%20CI%20CD&location=Worldwide"
+          }
+        ],
+        "entryLevelAccess": {
+          "score": 29,
+          "levelLabel": "Moderate Barrier (1-3 yrs)",
+          "breakdown": {
+            "entryLevel": 12,
+            "midLevel": 38,
+            "seniorLead": 50
+          },
+          "insight": "Junior accessibility is 28%: Entry developers are actively recruited when paired with modern TypeScript, Next.js, and AI-assisted workflows."
+        },
+        "aiExposure": {
+          "overallPercentage": 40,
+          "automationRisk": "Low",
+          "augmentationPotential": "Extremely High",
+          "summary": "Dynamically derived from 6 live mined skill requirements: AI tooling & codegen frequency averages 83%, while core systems architecture requirements stand at 87%.",
+          "aiToolingFrequency": 83,
+          "manualCoreFrequency": 87,
+          "tasks": [
+            {
+              "task": "MLOps & LLMOps Engineer Routine Scaffolding & Code Generation",
+              "category": "automated",
+              "description": "AI code assistants draft boilerplates, configuration schemas, and initial queries based on live requirements.",
+              "efficiencyGain": "80% time reduction"
+            },
+            {
+              "task": "Tool Integration & Schema Interoperability",
+              "category": "assisted",
+              "description": "Co-pilots generate client wrappers, API contracts, and unit tests with engineer verification in sandbox.",
+              "efficiencyGain": "60% faster integration"
+            },
+            {
+              "task": "System Architecture, Failure Recovery & Edge-Case Governance",
+              "category": "human_core",
+              "description": "Critical human architectural judgment, boundary enforcement, and multi-system resilience.",
+              "efficiencyGain": "Human strategic design"
+            },
+            {
+              "task": "Production Verification, Benchmarking & Safety Audits",
+              "category": "human_core",
+              "description": "Ensuring determinism, regulatory compliance, latency SLAs, and enterprise security policies.",
+              "efficiencyGain": "Non-automatable governance"
+            }
+          ]
+        },
+        "skillsNeededMoreNow": [
+          "Model Context Protocol (MCP)",
+          "LangGraph / Agent Orchestration",
+          "Vector Search / RAG",
+          "EvalOps & Red-Teaming"
+        ],
+        "skillsNoLongerNeeded": [
+          "Static Prompt Guessing",
+          "Pure Rule-Based Chatbots",
+          "Manual Text Parsing"
+        ],
+        "whyItMatters": "Live scraped from LinkedIn with 35,000+ active global listings (17,000+ posted in last 24h, 48.6% velocity).",
+        "searchKeyword": "LLMOps Engineer",
+        "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=LLMOps%20Engineer&location=Worldwide",
+        "scrapedCountString": "35,000+",
+        "scrapedSampleSize": 10,
+        "recentPostings": [
+          {
+            "title": "Machine Learning Operations (MLOps) Engineer",
+            "company": "OPENLANE",
+            "location": "Carmel, IN",
+            "url": "https://www.linkedin.com/jobs/view/machine-learning-operations-mlops-engineer-at-openlane-4478837344",
+            "jobId": "4478837344"
+          },
+          {
+            "title": "MLOps",
+            "company": "Qloron Pvt Ltd",
+            "location": "Mumbai Metropolitan Region",
+            "url": "https://in.linkedin.com/jobs/view/mlops-at-qloron-pvt-ltd-4431235679",
+            "jobId": "4431235679"
+          },
+          {
+            "title": "ML Ops Engineer",
+            "company": "Royal Mail",
+            "location": "London, England, United Kingdom",
+            "url": "https://uk.linkedin.com/jobs/view/ml-ops-engineer-at-royal-mail-4480698109",
+            "jobId": "4480698109"
+          },
+          {
+            "title": "Senior Machine Learning Ops Engineer",
+            "company": "Exclaim IT",
+            "location": "Sydney, New South Wales, Australia",
+            "url": "https://au.linkedin.com/jobs/view/senior-machine-learning-ops-engineer-at-exclaim-it-4477963737",
+            "jobId": "4477963737"
+          },
+          {
+            "title": "LLMOps Engineer",
+            "company": "HCLTech",
+            "location": "Bangalore Urban, Karnataka, India",
+            "url": "https://in.linkedin.com/jobs/view/llmops-engineer-at-hcltech-4453454888",
+            "jobId": "4453454888"
+          },
+          {
+            "title": "Senior MLOps / LLMOps Engineer (all genders)",
+            "company": "adesso SE",
+            "location": "Paderborn, North Rhine-Westphalia, Germany",
+            "url": "https://de.linkedin.com/jobs/view/senior-mlops-llmops-engineer-all-genders-at-adesso-se-4399632526",
+            "jobId": "4399632526"
+          },
+          {
+            "title": "Senior MLOps / LLMOps Engineer (all genders)",
+            "company": "adesso SE",
+            "location": "Bonn, North Rhine-Westphalia, Germany",
+            "url": "https://de.linkedin.com/jobs/view/senior-mlops-llmops-engineer-all-genders-at-adesso-se-4386890230",
+            "jobId": "4386890230"
+          },
+          {
+            "title": "MLOps Engineer, Model Deployment &amp; Monitoring",
+            "company": "Poudouleveis.gr",
+            "location": "Athens, Attiki, Greece",
+            "url": "https://uk.linkedin.com/jobs/view/mlops-engineer-at-harnham-4474283795",
+            "jobId": "4460691910"
+          },
+          {
+            "title": "MLOps Engineer",
+            "company": "Harnham",
+            "location": "London, England, United Kingdom",
+            "url": "https://fr.linkedin.com/jobs/view/mlops-engineer-f-h-at-devoteam-4479372745",
+            "jobId": "4474283795"
+          },
+          {
+            "title": "MLOps Engineer (F/H)",
+            "company": "Devoteam",
+            "location": "Levallois-Perret, Île-de-France, France",
+            "url": "https://uk.linkedin.com/jobs/view/senior-ml-ops-engineer-201043-at-harnham-4472031285",
+            "jobId": "4479372745"
+          }
+        ],
+        "entryLevelStats": {
+          "entryCountStr": "12% of sample",
+          "midSeniorCountStr": "50% Senior",
+          "entryRatio": 12
+        }
+      }
+    ],
+    "skills": [
+      {
+        "id": "mcp",
+        "name": "Model Context Protocol (MCP)",
+        "category": "AI / Agents",
+        "trend": "surging",
+        "changeRate": 80.8,
+        "velocityRate24h": 80.8,
+        "past24hCountStr": "21,000+",
+        "past24hNum": 21000,
+        "openingsMentionCount2025": 19500,
+        "openingsMentionCount2026": 26000,
+        "statusTag": "Crucial in 2026",
+        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (80.8%) meets or exceeds the 50% market benchmark, demonstrating strong positive hiring expansion.",
+        "benchmarkThreshold": 50,
+        "context": "Tool integration protocol connecting LLMs to external systems (21,000+ new postings in past 24h).",
+        "relevantRoles": [
+          "Agentic AI Engineer"
+        ],
+        "searchKeyword": "Model Context Protocol",
+        "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Model%20Context%20Protocol&location=Worldwide",
+        "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=Model%20Context%20Protocol&location=Worldwide&f_TPR=r86400",
+        "scrapedJobCount": "26,000+",
+        "scrapedJobNumber": 26000
+      },
+      {
+        "id": "langgraph",
+        "name": "LangGraph & Multi-Agent Statecharts",
+        "category": "AI / Agents",
+        "trend": "surging",
+        "changeRate": 50,
+        "velocityRate24h": 50,
+        "past24hCountStr": "17,000+",
+        "past24hNum": 17000,
+        "openingsMentionCount2025": 25500,
+        "openingsMentionCount2026": 34000,
+        "statusTag": "Rapidly Accelerating",
+        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (50%) meets or exceeds the 50% market benchmark, demonstrating strong positive hiring expansion.",
+        "benchmarkThreshold": 50,
+        "context": "Graph-based cyclical agent orchestration (17,000+ new postings in past 24h).",
+        "relevantRoles": [
+          "Agentic AI Engineer"
+        ],
+        "searchKeyword": "LangGraph",
+        "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=LangGraph&location=Worldwide",
+        "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=LangGraph&location=Worldwide&f_TPR=r86400",
+        "scrapedJobCount": "34,000+",
+        "scrapedJobNumber": 34000
+      },
+      {
+        "id": "vllm",
+        "name": "vLLM & High-Throughput Inference",
+        "category": "AI / Agents",
+        "trend": "surging",
+        "changeRate": 104.2,
+        "velocityRate24h": 104.2,
+        "past24hCountStr": "25,000+",
+        "past24hNum": 25000,
+        "openingsMentionCount2025": 18000,
+        "openingsMentionCount2026": 24000,
+        "statusTag": "Crucial in 2026",
+        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (104.2%) meets or exceeds the 50% market benchmark, demonstrating strong positive hiring expansion.",
+        "benchmarkThreshold": 50,
+        "context": "High-throughput LLM serving engine with PagedAttention (25,000+ new postings in past 24h).",
+        "relevantRoles": [
+          "Agentic AI Engineer"
+        ],
+        "searchKeyword": "vLLM",
+        "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=vLLM&location=Worldwide",
+        "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=vLLM&location=Worldwide&f_TPR=r86400",
+        "scrapedJobCount": "24,000+",
+        "scrapedJobNumber": 24000
+      },
+      {
+        "id": "kubernetes",
+        "name": "Kubernetes Platform Orchestration",
+        "category": "DevOps / Infra",
+        "trend": "deprecating",
+        "changeRate": 44.1,
+        "velocityRate24h": 44.1,
+        "past24hCountStr": "15,000+",
+        "past24hNum": 15000,
+        "openingsMentionCount2025": 25500,
+        "openingsMentionCount2026": 34000,
+        "statusTag": "At Risk",
+        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (44.1%) sits below the 50% market benchmark, reflecting slowing requisition volume and legacy phaseout.",
+        "benchmarkThreshold": 50,
+        "context": "Distributed container infrastructure and GPU cluster scheduling (15,000+ new postings in past 24h).",
+        "relevantRoles": [
+          "Full-Stack Software Engineer"
+        ],
+        "searchKeyword": "Kubernetes",
+        "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Kubernetes&location=Worldwide",
+        "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=Kubernetes&location=Worldwide&f_TPR=r86400",
+        "scrapedJobCount": "34,000+",
+        "scrapedJobNumber": 34000
+      },
+      {
+        "id": "vectordb",
+        "name": "Vector Database & Retrieval (RAG)",
+        "category": "Data / DB",
+        "trend": "surging",
+        "changeRate": 64,
+        "velocityRate24h": 64,
+        "past24hCountStr": "16,000+",
+        "past24hNum": 16000,
+        "openingsMentionCount2025": 18750,
+        "openingsMentionCount2026": 25000,
+        "statusTag": "Rapidly Accelerating",
+        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (64%) meets or exceeds the 50% market benchmark, demonstrating strong positive hiring expansion.",
+        "benchmarkThreshold": 50,
+        "context": "Dense vector search and retrieval-augmented generation (16,000+ new postings in past 24h).",
+        "relevantRoles": [
+          "Data Engineer"
+        ],
+        "searchKeyword": "Vector Database",
+        "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Vector%20Database&location=Worldwide",
+        "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=Vector%20Database&location=Worldwide&f_TPR=r86400",
+        "scrapedJobCount": "25,000+",
+        "scrapedJobNumber": 25000
+      },
+      {
+        "id": "selenium",
+        "name": "Selenium Manual QA Testing",
+        "category": "Methodology",
+        "trend": "deprecating",
+        "changeRate": 46.4,
+        "velocityRate24h": 46.4,
+        "past24hCountStr": "12,992+",
+        "past24hNum": 12992,
+        "openingsMentionCount2025": 21000,
+        "openingsMentionCount2026": 28000,
+        "statusTag": "At Risk",
+        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (46.4%) sits below the 50% market benchmark, reflecting slowing requisition volume and legacy phaseout.",
+        "benchmarkThreshold": 50,
+        "context": "Brittle imperative browser scripting being superseded by agentic vision loops (12,992+ new postings in past 24h).",
+        "alternativeOrReplacement": "Replaced by Playwright + Autonomous AI Vision Agents",
+        "relevantRoles": [
+          "Full-Stack Software Engineer"
+        ],
+        "searchKeyword": "Selenium",
+        "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Selenium&location=Worldwide",
+        "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=Selenium&location=Worldwide&f_TPR=r86400",
+        "scrapedJobCount": "28,000+",
+        "scrapedJobNumber": 28000
+      },
+      {
+        "id": "jquery",
+        "name": "jQuery Legacy DOM Manipulation",
+        "category": "Framework",
+        "trend": "deprecating",
+        "changeRate": 38.1,
+        "velocityRate24h": 38.1,
+        "past24hCountStr": "8,000+",
+        "past24hNum": 8000,
+        "openingsMentionCount2025": 15750,
+        "openingsMentionCount2026": 21000,
+        "statusTag": "Legacy Sunset",
+        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (38.1%) sits below the 50% market benchmark, reflecting slowing requisition volume and legacy phaseout.",
+        "benchmarkThreshold": 50,
+        "context": "Legacy imperative DOM scripts replaced by modern component state frameworks (8,000+ new postings in past 24h).",
+        "alternativeOrReplacement": "Replaced by React Server Components, Next.js, and Modern UI Frameworks",
+        "relevantRoles": [
+          "Full-Stack Software Engineer"
+        ],
+        "searchKeyword": "jQuery",
+        "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=jQuery&location=Worldwide",
+        "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=jQuery&location=Worldwide&f_TPR=r86400",
+        "scrapedJobCount": "21,000+",
+        "scrapedJobNumber": 21000
+      },
+      {
+        "id": "hadoop",
+        "name": "Apache Hadoop / MapReduce",
+        "category": "Data / DB",
+        "trend": "surging",
+        "changeRate": 76,
+        "velocityRate24h": 76,
+        "past24hCountStr": "19,000+",
+        "past24hNum": 19000,
+        "openingsMentionCount2025": 18750,
+        "openingsMentionCount2026": 25000,
+        "statusTag": "Crucial in 2026",
+        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (76%) meets or exceeds the 50% market benchmark, demonstrating strong positive hiring expansion.",
+        "benchmarkThreshold": 50,
+        "context": "Legacy batch infrastructure superseded by cloud lakehouses and streaming engines (19,000+ new postings in past 24h).",
+        "alternativeOrReplacement": "Replaced by Snowflake, Apache Iceberg, Databricks & Spark",
+        "relevantRoles": [
+          "Data Engineer"
+        ],
+        "searchKeyword": "Hadoop",
+        "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Hadoop&location=Worldwide",
+        "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=Hadoop&location=Worldwide&f_TPR=r86400",
+        "scrapedJobCount": "Search Active",
+        "scrapedJobNumber": 25000
+      }
+    ],
+    "liveRawJobs": [
+      {
+        "keyword": "Agentic AI",
+        "liveCountString": "35,000+",
+        "parsedCount": 35000,
+        "samplePostings": [
+          {
+            "id": "4443357475",
+            "title": "Senior AI Engineer",
+            "company": "UXBERT Labs",
+            "location": "Riyadh, Riyadh, Saudi Arabia",
+            "url": "https://sa.linkedin.com/jobs/view/senior-ai-engineer-at-uxbert-labs-4443357475"
+          },
+          {
+            "id": "4471924149",
+            "title": "Lead AI Agent Developer",
+            "company": "EPAM Systems",
+            "location": "Kazakhstan",
+            "url": "https://kz.linkedin.com/jobs/view/lead-ai-agent-developer-at-epam-systems-4471924149"
+          },
+          {
+            "id": "4467980463",
+            "title": "AI Developer",
+            "company": "Eli Lilly and Company",
+            "location": "Bengaluru East, Karnataka, India",
+            "url": "https://in.linkedin.com/jobs/view/ai-developer-at-eli-lilly-and-company-4467980463"
+          },
+          {
+            "id": "4462658727",
+            "title": "AI Engineer, Innovation",
+            "company": "MNP",
+            "location": "Calgary, Alberta, Canada",
+            "url": "https://ca.linkedin.com/jobs/view/ai-engineer-innovation-at-mnp-4462658727"
+          },
+          {
+            "id": "4465055210",
+            "title": "Senior AI Engineer - AI Systems",
+            "company": "Mindera",
+            "location": "Morocco",
+            "url": "https://ma.linkedin.com/jobs/view/senior-ai-engineer-ai-systems-at-mindera-4465055210"
+          },
+          {
+            "id": "4471919408",
+            "title": "Lead AI Agent Developer",
+            "company": "EPAM Systems",
+            "location": "Kyrgyzstan",
+            "url": "https://kg.linkedin.com/jobs/view/lead-ai-agent-developer-at-epam-systems-4471919408"
+          },
+          {
+            "id": "4444590628",
+            "title": "Software Development Engineer III",
+            "company": "Capital Group",
+            "location": "London, England, United Kingdom",
+            "url": "https://uk.linkedin.com/jobs/view/software-development-engineer-iii-at-capital-group-4444590628"
+          },
+          {
+            "id": "4472523695",
+            "title": "Senior AI Agent Engineer",
+            "company": "EPAM Systems",
+            "location": "Kazakhstan",
+            "url": "https://kz.linkedin.com/jobs/view/senior-ai-agent-engineer-at-epam-systems-4472523695"
+          },
+          {
+            "id": "4471584541",
+            "title": "AI Engineer - 4 Day Week + Remote",
+            "company": "Shape Construction",
+            "location": "Portugal",
+            "url": "https://pt.linkedin.com/jobs/view/ai-engineer-4-day-week-%2B-remote-at-shape-construction-4471584541"
+          },
+          {
+            "id": "4471722128",
+            "title": "Senior Engineer, Digital Innovation",
+            "company": "Celanese",
+            "location": "Hyderabad, Telangana, India",
+            "url": "https://in.linkedin.com/jobs/view/senior-engineer-digital-innovation-at-celanese-4471722128"
+          }
+        ]
+      },
+      {
+        "keyword": "Data Engineer",
+        "liveCountString": "Search Active",
+        "parsedCount": 0,
+        "samplePostings": [
+          {
+            "id": "4479222247",
+            "title": "Databricks Data Engineer (Apache Spark) - Remote work | REF#305827",
+            "company": "BairesDev",
+            "location": "Chile",
+            "url": "https://cl.linkedin.com/jobs/view/databricks-data-engineer-apache-spark-remote-work-ref%23305827-at-bairesdev-4479222247"
+          },
+          {
+            "id": "4377986912",
+            "title": "ENGENHEIRO DE DADOS Sênior",
+            "company": "Avvale",
+            "location": "Nova Lima, Minas Gerais, Brazil",
+            "url": "https://br.linkedin.com/jobs/view/engenheiro-de-dados-s%C3%AAnior-at-avvale-4377986912"
+          },
+          {
+            "id": "4462084124",
+            "title": "Senior Data Engineer 2 - Remote Work | REF#297237",
+            "company": "BairesDev",
+            "location": "Greater Rio de Janeiro",
+            "url": "https://br.linkedin.com/jobs/view/senior-data-engineer-2-remote-work-ref%23297237-at-bairesdev-4462084124"
+          },
+          {
+            "id": "4444652016",
+            "title": "[IB] Engenheiro de Dados Sênior",
+            "company": "iblue",
+            "location": "Greater Rio de Janeiro",
+            "url": "https://br.linkedin.com/jobs/view/ib-engenheiro-de-dados-s%C3%AAnior-at-iblue-4444652016"
+          },
+          {
+            "id": "4482738279",
+            "title": "Engenheiro de Dados",
+            "company": "4DF Connect",
+            "location": "São Paulo, São Paulo, Brazil",
+            "url": "https://br.linkedin.com/jobs/view/engenheiro-de-dados-at-4df-connect-4482738279"
+          },
+          {
+            "id": "4482760709",
+            "title": "Engenheiro(a) de Dados Databricks | Pleno/Sênior (Remoto)",
+            "company": "SAUTER",
+            "location": "São Paulo, São Paulo, Brazil",
+            "url": "https://br.linkedin.com/jobs/view/engenheiro-a-de-dados-databricks-pleno-s%C3%AAnior-remoto-at-sauter-4482760709"
+          },
+          {
+            "id": "4479631948",
+            "title": "Engenheiro de Dados",
+            "company": "IQVIA",
+            "location": "São Paulo, São Paulo, Brazil",
+            "url": "https://br.linkedin.com/jobs/view/engenheiro-de-dados-at-iqvia-4479631948"
+          },
+          {
+            "id": "4471980380",
+            "title": "Engenheiro de Dados Pleno",
+            "company": "Reply",
+            "location": "Greater São Paulo Area",
+            "url": "https://br.linkedin.com/jobs/view/engenheiro-de-dados-pleno-at-reply-4471980380"
+          },
+          {
+            "id": "4463914441",
+            "title": "Engenheiro (a) de Dados Cloud Sr",
+            "company": "EY",
+            "location": "Goiânia, Goiás, Brazil",
+            "url": "https://br.linkedin.com/jobs/view/engenheiro-a-de-dados-cloud-sr-at-ey-4463914441"
+          },
+          {
+            "id": "4481215131",
+            "title": "Engenheiro de Dados",
+            "company": "ROIT",
+            "location": "São Paulo, São Paulo, Brazil",
+            "url": "https://br.linkedin.com/jobs/view/engenheiro-de-dados-at-roit-4481215131"
+          }
+        ]
+      },
+      {
+        "keyword": "AI Evaluation Engineer",
+        "liveCountString": "32,000+",
+        "parsedCount": 32000,
+        "samplePostings": [
+          {
+            "id": "4465713239",
+            "title": "Agent Algorithm Evaluation Engineer",
+            "company": "Shopee",
+            "location": "Singapore, Singapore",
+            "url": "https://sg.linkedin.com/jobs/view/agent-algorithm-evaluation-engineer-at-shopee-4465713239"
+          },
+          {
+            "id": "4475562287",
+            "title": "Research Engineer I (AI Evaluation, Trust Technologies)",
+            "company": "Nanyang Technological University Singapore",
+            "location": "Singapore, Singapore",
+            "url": "https://sg.linkedin.com/jobs/view/research-engineer-i-ai-evaluation-trust-technologies-at-nanyang-technological-university-singapore-4475562287"
+          },
+          {
+            "id": "4480458823",
+            "title": "Senior AI Evaluation Engineer",
+            "company": "Incubator for Artificial Intelligence",
+            "location": "Greater Bristol Area, United Kingdom",
+            "url": "https://uk.linkedin.com/jobs/view/senior-ai-evaluation-engineer-at-incubator-for-artificial-intelligence-4480458823"
+          },
+          {
+            "id": "4480479057",
+            "title": "Senior AI Evaluation Engineer",
+            "company": "Incubator for Artificial Intelligence",
+            "location": "London Area, United Kingdom",
+            "url": "https://uk.linkedin.com/jobs/view/senior-ai-evaluation-engineer-at-incubator-for-artificial-intelligence-4480479057"
+          },
+          {
+            "id": "4471907816",
+            "title": "Senior ML / Evaluation Engineer",
+            "company": "EPAM Systems",
+            "location": "Kyrgyzstan",
+            "url": "https://kg.linkedin.com/jobs/view/senior-ml-evaluation-engineer-at-epam-systems-4471907816"
+          },
+          {
+            "id": "4480898815",
+            "title": "Agent Evaluation Engineer",
+            "company": "Manus AI",
+            "location": "Singapore, Singapore",
+            "url": "https://sg.linkedin.com/jobs/view/agent-evaluation-engineer-at-manus-ai-4480898815"
+          },
+          {
+            "id": "4454992608",
+            "title": "Member of Technical Staff, North Modelling (Evals)",
+            "company": "Cohere",
+            "location": "London, England, United Kingdom",
+            "url": "https://uk.linkedin.com/jobs/view/member-of-technical-staff-north-modelling-evals-at-cohere-4454992608"
+          },
+          {
+            "id": "4454982766",
+            "title": "Member of Technical Staff, North Modelling (Evals)",
+            "company": "Cohere",
+            "location": "Toronto, Ontario, Canada",
+            "url": "https://ca.linkedin.com/jobs/view/member-of-technical-staff-north-modelling-evals-at-cohere-4454982766"
+          },
+          {
+            "id": "4468245184",
+            "title": "AI Engineer (Harness)",
+            "company": "Valarian",
+            "location": "London, England, United Kingdom",
+            "url": "https://uk.linkedin.com/jobs/view/ai-engineer-harness-at-valarian-4468245184"
+          },
+          {
+            "id": "4449713351",
+            "title": "豆包大模型场景评测算法工程师（Agent/Coding） - 火山方舟",
+            "company": "ByteDance",
+            "location": "Beijing, Beijing, China",
+            "url": "https://cn.linkedin.com/jobs/view/%E8%B1%86%E5%8C%85%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9C%BA%E6%99%AF%E8%AF%84%E6%B5%8B%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%EF%BC%88agent-coding%EF%BC%89-%E7%81%AB%E5%B1%B1%E6%96%B9%E8%88%9F-at-bytedance-4449713351"
+          }
+        ]
+      },
+      {
+        "keyword": "Full Stack Engineer",
+        "liveCountString": "35,000+",
+        "parsedCount": 35000,
+        "samplePostings": [
+          {
+            "id": "4482771744",
+            "title": "Full-Stack Web Developer",
+            "company": "Bolder Apps - AI Native AgentCy",
+            "location": "Tashkent, Tashkent, Uzbekistan",
+            "url": "https://uz.linkedin.com/jobs/view/full-stack-web-developer-at-bolder-apps-ai-native-agentcy-4482771744"
+          },
+          {
+            "id": "4306112554",
+            "title": "Fullstack Developer",
+            "company": "Propelius Technologies",
+            "location": "Indore, Madhya Pradesh, India",
+            "url": "https://in.linkedin.com/jobs/view/fullstack-developer-at-propelius-technologies-4306112554"
+          },
+          {
+            "id": "4475520196",
+            "title": "Full Stack Engineer – React + Node.js — Mid / Senior",
+            "company": "Flyte Solutions Ltd.",
+            "location": "Dhaka, Dhaka, Bangladesh",
+            "url": "https://bd.linkedin.com/jobs/view/full-stack-engineer-%E2%80%93-react-%2B-node-js-%E2%80%94-mid-senior-at-flyte-solutions-ltd-4475520196"
+          },
+          {
+            "id": "4439946631",
+            "title": "Desarrollador/a Fullstack Senior (MERN Stack) - ANDALUCIA",
+            "company": "AD4 Octógono",
+            "location": "Seville, Andalusia, Spain",
+            "url": "https://es.linkedin.com/jobs/view/desarrollador-a-fullstack-senior-mern-stack-andalucia-at-ad4-oct%C3%B3gono-4439946631"
+          },
+          {
+            "id": "4479220385",
+            "title": "PHP Full-Stack Engineer - Remote Work | REF#305846",
+            "company": "BairesDev",
+            "location": "Cajamarca, Peru",
+            "url": "https://pe.linkedin.com/jobs/view/php-full-stack-engineer-remote-work-ref%23305846-at-bairesdev-4479220385"
+          },
+          {
+            "id": "4463126127",
+            "title": "Fullstack Software Engineer — React | Remote",
+            "company": "Alumark",
+            "location": "Colombo, Western Province, Sri Lanka",
+            "url": "https://lk.linkedin.com/jobs/view/fullstack-software-engineer-%E2%80%94-react-remote-at-alumark-4463126127"
+          },
+          {
+            "id": "4467973626",
+            "title": "Ingénieur Full Stack / Ingénieure Full Stack Angular / NestJS",
+            "company": "DM Geosoftware",
+            "location": "Casablanca Metropolitan Area",
+            "url": "https://ma.linkedin.com/jobs/view/ing%C3%A9nieur-full-stack-ing%C3%A9nieure-full-stack-angular-nestjs-at-dm-geosoftware-4467973626"
+          },
+          {
+            "id": "4356202996",
+            "title": "Full Stack Developer Laravel",
+            "company": "Vascomm",
+            "location": "Sidoarjo, East Java, Indonesia",
+            "url": "https://id.linkedin.com/jobs/view/full-stack-developer-laravel-at-vascomm-4356202996"
+          },
+          {
+            "id": "4478394770",
+            "title": "Développeur Full Stack – Expert JobRouter (H/F)",
+            "company": "Confidential",
+            "location": "Casablanca Metropolitan Area",
+            "url": "https://ua.linkedin.com/jobs/view/senior-full-stack-web-developer-platform-solutions-at-readdle-4482087533"
+          },
+          {
+            "id": "4482087533",
+            "title": "Senior Full Stack Web Developer - Platform Solutions",
+            "company": "Readdle",
+            "location": "Kyiv, Kyiv City, Ukraine",
+            "url": "https://eg.linkedin.com/jobs/view/senior-full-stack-software-engineer-at-nowlun-com-4408816685"
+          }
+        ]
+      },
+      {
+        "keyword": "Kubernetes Platform Architect",
+        "liveCountString": "32,000+",
+        "parsedCount": 32000,
+        "samplePostings": [
+          {
+            "id": "4476744317",
+            "title": "Principal Architect - Cloud Native Platforms (Kubernetes)",
+            "company": "Akamai Technologies",
+            "location": "London, England, United Kingdom",
+            "url": "https://uk.linkedin.com/jobs/view/principal-architect-cloud-native-platforms-kubernetes-at-akamai-technologies-4476744317"
+          },
+          {
+            "id": "4469818606",
+            "title": "Lead IT &amp; Cloud Architect für Souveräne Cloud-Plattformen (m/w/d)",
+            "company": "T-Systems International",
+            "location": "Hamburg, Hamburg, Germany",
+            "url": "https://de.linkedin.com/jobs/view/lead-it-cloud-architect-f%C3%BCr-souver%C3%A4ne-cloud-plattformen-m-w-d-at-t-systems-international-4469818606"
+          },
+          {
+            "id": "4469818605",
+            "title": "Lead IT &amp; Cloud Architect für Souveräne Cloud-Plattformen (m/w/d)",
+            "company": "T-Systems International",
+            "location": "Leinfelden-Echterdingen, Baden-Württemberg, Germany",
+            "url": "https://de.linkedin.com/jobs/view/lead-it-cloud-architect-f%C3%BCr-souver%C3%A4ne-cloud-plattformen-m-w-d-at-t-systems-international-4469818605"
+          },
+          {
+            "id": "4424796686",
+            "title": "Principal Cloud Kubernetes Engineer",
+            "company": "InterSystems",
+            "location": "Boston, MA",
+            "url": "https://www.linkedin.com/jobs/view/principal-cloud-kubernetes-engineer-at-intersystems-4424796686"
+          },
+          {
+            "id": "4459788434",
+            "title": "Technical Architect - k3s/k8s",
+            "company": "Quest Global",
+            "location": "Thiruvananthapuram, Kerala, India",
+            "url": "https://in.linkedin.com/jobs/view/technical-architect-k3s-k8s-at-quest-global-4459788434"
+          },
+          {
+            "id": "4439875113",
+            "title": "Senior Principal Chief Architect -Enterprise Platform/Distributed AI Infrastructure &amp; Kubernetes/PyTorch",
+            "company": "Red Hat",
+            "location": "Singapore, Singapore",
+            "url": "https://sg.linkedin.com/jobs/view/senior-principal-chief-architect-enterprise-platform-distributed-ai-infrastructure-kubernetes-pytorch-at-red-hat-4439875113"
+          },
+          {
+            "id": "4330931262",
+            "title": "Lead Solution Architect with affinity with Red Hat &amp; Kubernetes",
+            "company": "Devoteam",
+            "location": "Machelen, Flemish Region, Belgium",
+            "url": "https://be.linkedin.com/jobs/view/lead-solution-architect-with-affinity-with-red-hat-kubernetes-at-devoteam-4330931262"
+          },
+          {
+            "id": "4429961641",
+            "title": "Architecte Kubernetes - Aeroline - Toulouse",
+            "company": "Sopra Steria",
+            "location": "Colomiers, Occitanie, France",
+            "url": "https://fr.linkedin.com/jobs/view/architecte-kubernetes-aeroline-toulouse-at-sopra-steria-4429961641"
+          },
+          {
+            "id": "4442257191",
+            "title": "Senior Software Infra Architect",
+            "company": "NVIDIA",
+            "location": "Tel Aviv-Yafo, Tel Aviv District, Israel",
+            "url": "https://il.linkedin.com/jobs/view/senior-software-infra-architect-at-nvidia-4442257191"
+          },
+          {
+            "id": "4482404087",
+            "title": "Principal Software Engineer, Cloud Product Engineering",
+            "company": "Aerospike",
+            "location": "Mountain View, CA",
+            "url": "https://www.linkedin.com/jobs/view/principal-software-engineer-cloud-product-engineering-at-aerospike-4482404087"
+          }
+        ]
+      },
+      {
+        "keyword": "QA Automation Engineer",
+        "liveCountString": "28,000+",
+        "parsedCount": 28000,
+        "samplePostings": [
+          {
+            "id": "4470071225",
+            "title": "Sr. Automation QE",
+            "company": "Tata Consultancy Services",
+            "location": "Toronto, Ontario, Canada",
+            "url": "https://ca.linkedin.com/jobs/view/sr-automation-qe-at-tata-consultancy-services-4470071225"
+          },
+          {
+            "id": "4459449143",
+            "title": "QE Automation Engineer",
+            "company": "Tata Consultancy Services",
+            "location": "New York, NY",
+            "url": "https://www.linkedin.com/jobs/view/qe-automation-engineer-at-tata-consultancy-services-4459449143"
+          },
+          {
+            "id": "4475440105",
+            "title": "QA Automation Engineer",
+            "company": "Travel Counsellors",
+            "location": "Manchester, England, United Kingdom",
+            "url": "https://uk.linkedin.com/jobs/view/qa-automation-engineer-at-travel-counsellors-4475440105"
+          },
+          {
+            "id": "4479343938",
+            "title": "Senior QA Automation Engineer",
+            "company": "Manchester Digital",
+            "location": "Manchester, England, United Kingdom",
+            "url": "https://uk.linkedin.com/jobs/view/senior-qa-automation-engineer-at-manchester-digital-4479343938"
+          },
+          {
+            "id": "4476502121",
+            "title": "Senior Automation QA Engineer",
+            "company": "Ticketek Entertainment Group (TEG)",
+            "location": "Sydney, New South Wales, Australia",
+            "url": "https://au.linkedin.com/jobs/view/senior-automation-qa-engineer-at-ticketek-entertainment-group-teg-4476502121"
+          },
+          {
+            "id": "4428081961",
+            "title": "QA Automation Engineer- Global Payments Engineering",
+            "company": "Scotiabank",
+            "location": "Toronto, Ontario, Canada",
+            "url": "https://ca.linkedin.com/jobs/view/qa-automation-engineer-global-payments-engineering-at-scotiabank-4428081961"
+          },
+          {
+            "id": "4479176007",
+            "title": "Senior QA Automation Engineer - Playwright &amp; Selenium",
+            "company": "Cognizant",
+            "location": "Dallas, TX",
+            "url": "https://www.linkedin.com/jobs/view/senior-qa-automation-engineer-playwright-selenium-at-cognizant-4479176007"
+          },
+          {
+            "id": "4480376869",
+            "title": "Senior Quality Assurance Engineer",
+            "company": "Searchability®",
+            "location": "Newcastle Upon Tyne, England, United Kingdom",
+            "url": "https://uk.linkedin.com/jobs/view/senior-quality-assurance-engineer-at-searchability%C2%AE-4480376869"
+          },
+          {
+            "id": "4473589142",
+            "title": "Quality Assurance Analyst Senior (Sr. SDET) - Automation (C# and .NET)",
+            "company": "Global Payments Inc.",
+            "location": "Atlanta, GA",
+            "url": "https://www.linkedin.com/jobs/view/quality-assurance-analyst-senior-sr-sdet-automation-c%23-and-net-at-global-payments-inc-4473589142"
+          },
+          {
+            "id": "4473592338",
+            "title": "Senior QA Automation Engineer",
+            "company": "CGI",
+            "location": "Huntsville, AL",
+            "url": "https://www.linkedin.com/jobs/view/senior-qa-automation-engineer-at-cgi-4473592338"
+          }
+        ]
+      },
+      {
+        "keyword": "AI Security Red Team",
+        "liveCountString": "17,000+",
+        "parsedCount": 17000,
+        "samplePostings": [
+          {
+            "id": "4461087413",
+            "title": "AI Red Teamer – Sécurité Offensive IA &amp; Pentest LLM – H/F",
+            "company": "STORM GROUP",
+            "location": "Paris, Île-de-France, France",
+            "url": "https://fr.linkedin.com/jobs/view/ai-red-teamer-%E2%80%93-s%C3%A9curit%C3%A9-offensive-ia-pentest-llm-%E2%80%93-h-f-at-storm-group-4461087413"
+          },
+          {
+            "id": "4481686388",
+            "title": "AI Pentester/Red Teamer",
+            "company": "AGAPI",
+            "location": "Dubai, United Arab Emirates",
+            "url": "https://ae.linkedin.com/jobs/view/ai-pentester-red-teamer-at-agapi-4481686388"
+          },
+          {
+            "id": "4478786154",
+            "title": "Red Team Lead – AI-Enabled Offensive Security | SEB, Solna",
+            "company": "SEB",
+            "location": "Solna, Stockholm County, Sweden",
+            "url": "https://se.linkedin.com/jobs/view/red-team-lead-%E2%80%93-ai-enabled-offensive-security-seb-solna-at-seb-4478786154"
+          },
+          {
+            "id": "4478639029",
+            "title": "AI Red Teamer, Cyber",
+            "company": "10a Labs",
+            "location": "San Francisco, CA",
+            "url": "https://www.linkedin.com/jobs/view/ai-red-teamer-cyber-at-10a-labs-4478639029"
+          },
+          {
+            "id": "4477849657",
+            "title": "AI Red Team Lead Engineer",
+            "company": "U.S. Bank",
+            "location": "Gresham, OR",
+            "url": "https://www.linkedin.com/jobs/view/ai-red-team-lead-engineer-at-u-s-bank-4477849657"
+          },
+          {
+            "id": "4477849656",
+            "title": "AI Red Team Lead Engineer",
+            "company": "U.S. Bank",
+            "location": "New York, NY",
+            "url": "https://www.linkedin.com/jobs/view/ai-red-team-lead-engineer-at-u-s-bank-4477849656"
+          },
+          {
+            "id": "4418777035",
+            "title": "AI Red Teamer, Cyber",
+            "company": "10a Labs",
+            "location": "Chicago, IL",
+            "url": "https://www.linkedin.com/jobs/view/ai-red-teamer-cyber-at-10a-labs-4418777035"
+          },
+          {
+            "id": "4448240333",
+            "title": "AI-Focused Red Team Operator",
+            "company": "Millennium",
+            "location": "Washington, DC",
+            "url": "https://www.linkedin.com/jobs/view/ai-focused-red-team-operator-at-millennium-4448240333"
+          },
+          {
+            "id": "4456336501",
+            "title": "Sr. Red Team - Security Researcher",
+            "company": "F5",
+            "location": "Warsaw, Mazowieckie, Poland",
+            "url": "https://pl.linkedin.com/jobs/view/sr-red-team-security-researcher-at-f5-4456336501"
+          },
+          {
+            "id": "4418983245",
+            "title": "Red Team - Security Researcher III",
+            "company": "F5",
+            "location": "Warsaw, Mazowieckie, Poland",
+            "url": "https://pl.linkedin.com/jobs/view/red-team-security-researcher-iii-at-f5-4418983245"
+          }
+        ]
+      },
+      {
+        "keyword": "LLMOps Engineer",
+        "liveCountString": "35,000+",
+        "parsedCount": 35000,
+        "samplePostings": [
+          {
+            "id": "4478837344",
+            "title": "Machine Learning Operations (MLOps) Engineer",
+            "company": "OPENLANE",
+            "location": "Carmel, IN",
+            "url": "https://www.linkedin.com/jobs/view/machine-learning-operations-mlops-engineer-at-openlane-4478837344"
+          },
+          {
+            "id": "4431235679",
+            "title": "MLOps",
+            "company": "Qloron Pvt Ltd",
+            "location": "Mumbai Metropolitan Region",
+            "url": "https://in.linkedin.com/jobs/view/mlops-at-qloron-pvt-ltd-4431235679"
+          },
+          {
+            "id": "4480698109",
+            "title": "ML Ops Engineer",
+            "company": "Royal Mail",
+            "location": "London, England, United Kingdom",
+            "url": "https://uk.linkedin.com/jobs/view/ml-ops-engineer-at-royal-mail-4480698109"
+          },
+          {
+            "id": "4477963737",
+            "title": "Senior Machine Learning Ops Engineer",
+            "company": "Exclaim IT",
+            "location": "Sydney, New South Wales, Australia",
+            "url": "https://au.linkedin.com/jobs/view/senior-machine-learning-ops-engineer-at-exclaim-it-4477963737"
+          },
+          {
+            "id": "4453454888",
+            "title": "LLMOps Engineer",
+            "company": "HCLTech",
+            "location": "Bangalore Urban, Karnataka, India",
+            "url": "https://in.linkedin.com/jobs/view/llmops-engineer-at-hcltech-4453454888"
+          },
+          {
+            "id": "4399632526",
+            "title": "Senior MLOps / LLMOps Engineer (all genders)",
+            "company": "adesso SE",
+            "location": "Paderborn, North Rhine-Westphalia, Germany",
+            "url": "https://de.linkedin.com/jobs/view/senior-mlops-llmops-engineer-all-genders-at-adesso-se-4399632526"
+          },
+          {
+            "id": "4386890230",
+            "title": "Senior MLOps / LLMOps Engineer (all genders)",
+            "company": "adesso SE",
+            "location": "Bonn, North Rhine-Westphalia, Germany",
+            "url": "https://de.linkedin.com/jobs/view/senior-mlops-llmops-engineer-all-genders-at-adesso-se-4386890230"
+          },
+          {
+            "id": "4460691910",
+            "title": "MLOps Engineer, Model Deployment &amp; Monitoring",
+            "company": "Poudouleveis.gr",
+            "location": "Athens, Attiki, Greece",
+            "url": "https://uk.linkedin.com/jobs/view/mlops-engineer-at-harnham-4474283795"
+          },
+          {
+            "id": "4474283795",
+            "title": "MLOps Engineer",
+            "company": "Harnham",
+            "location": "London, England, United Kingdom",
+            "url": "https://fr.linkedin.com/jobs/view/mlops-engineer-f-h-at-devoteam-4479372745"
+          },
+          {
+            "id": "4479372745",
+            "title": "MLOps Engineer (F/H)",
+            "company": "Devoteam",
+            "location": "Levallois-Perret, Île-de-France, France",
+            "url": "https://uk.linkedin.com/jobs/view/senior-ml-ops-engineer-201043-at-harnham-4472031285"
+          }
+        ]
+      }
+    ]
+  }
+}

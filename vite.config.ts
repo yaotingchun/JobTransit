@@ -2,16 +2,54 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig, type Plugin } from 'vite'
 import {
-  scrapeLinkedInTrends,
   fetchLinkedInHtml,
   parseLinkedInJobCount,
   parseLinkedInJobCards,
+  getOrUpdateDailyScrape,
+  readDailyScrapeCache,
+  DAILY_SCRAPE_INTERVAL_MS,
 } from './server/linkedinScraper.ts'
 
 function linkedInScraperPlugin(): Plugin {
   return {
     name: 'linkedin-scraper-plugin',
     configureServer(server) {
+      // 1. Initial daily autoscrape check on server start (if cache is missing or older than 24h)
+      setTimeout(async () => {
+        try {
+          const cached = readDailyScrapeCache()
+          const isExpired = !cached || (Date.now() - new Date(cached.lastScrapedAt).getTime() >= DAILY_SCRAPE_INTERVAL_MS)
+          if (isExpired) {
+            console.log('[LinkedIn Scraper] Cache expired or not found. Running initial 24h daily autoscrape in background...')
+            await getOrUpdateDailyScrape()
+            console.log('[LinkedIn Scraper] Initial daily autoscrape finished and cached.')
+          } else {
+            console.log(`[LinkedIn Scraper] Daily cache active (scraped: ${new Date(cached.lastScrapedAt).toLocaleTimeString()}, next run: ${new Date(cached.nextScrapeDueAt).toLocaleTimeString()}).`)
+          }
+        } catch (err) {
+          console.warn('[LinkedIn Scraper] Initial daily autoscrape warning:', err)
+        }
+      }, 2500)
+
+      // 2. Daily recurring scheduler: checks periodically and triggers once per 24 hours
+      const dailyTimer = setInterval(async () => {
+        try {
+          const cached = readDailyScrapeCache()
+          const isExpired = !cached || (Date.now() - new Date(cached.lastScrapedAt).getTime() >= DAILY_SCRAPE_INTERVAL_MS)
+          if (isExpired) {
+            console.log('[LinkedIn Scraper] 24 hours elapsed since last run. Executing scheduled daily autoscrape...')
+            await getOrUpdateDailyScrape()
+            console.log('[LinkedIn Scraper] Scheduled daily autoscrape complete.')
+          }
+        } catch (err) {
+          console.error('[LinkedIn Scraper] Scheduled daily autoscrape error:', err)
+        }
+      }, 60 * 60 * 1000) // Hourly heartbeat check
+
+      server.httpServer?.on('close', () => {
+        clearInterval(dailyTimer)
+      })
+
       server.middlewares.use(async (req, res, next) => {
         const fullUrl = `http://${req.headers.host || 'localhost'}${req.url || ''}`
         let parsedUrl: URL
@@ -21,17 +59,41 @@ function linkedInScraperPlugin(): Plugin {
           return next()
         }
 
-        // Endpoint 1: Scrape all target role trends & skills from LinkedIn
+        // Endpoint 1: Scrape all target role trends & skills from LinkedIn (Daily cached by default, or forced)
         if (parsedUrl.pathname === '/api/scrape/linkedin-trends') {
           res.setHeader('Content-Type', 'application/json')
           res.setHeader('Access-Control-Allow-Origin', '*')
+          const force = parsedUrl.searchParams.get('force') === 'true'
           try {
-            const data = await scrapeLinkedInTrends()
-            res.end(JSON.stringify(data))
+            const result = await getOrUpdateDailyScrape({ force })
+            res.end(JSON.stringify({
+              ...result.data,
+              fromCache: result.fromCache,
+              lastScrapedAt: result.lastScrapedAt,
+              nextScrapeDueAt: result.nextScrapeDueAt,
+              schedule: 'daily_24h',
+            }))
           } catch (err) {
             res.statusCode = 500
             res.end(JSON.stringify({ success: false, error: String(err) }))
           }
+          return
+        }
+
+        // Endpoint 1b: Daily Schedule Status
+        if (parsedUrl.pathname === '/api/scrape/status') {
+          res.setHeader('Content-Type', 'application/json')
+          res.setHeader('Access-Control-Allow-Origin', '*')
+          const cached = readDailyScrapeCache()
+          const now = Date.now()
+          const isExpired = !cached || (now - new Date(cached.lastScrapedAt).getTime() >= DAILY_SCRAPE_INTERVAL_MS)
+          res.end(JSON.stringify({
+            schedule: '1 time per day (24 hours)',
+            hasCache: Boolean(cached),
+            lastScrapedAt: cached?.lastScrapedAt || null,
+            nextScrapeDueAt: cached?.nextScrapeDueAt || null,
+            isExpired,
+          }))
           return
         }
 
@@ -74,13 +136,13 @@ export default defineConfig({
   plugins: [react(), tailwindcss(), linkedInScraperPlugin()],
   server: {
     host: '0.0.0.0',
-    port: 5000,
-    strictPort: true,
+    port: Number(process.env.PORT) || 5173,
+    strictPort: false,
     allowedHosts: true,
   },
   preview: {
     host: '0.0.0.0',
-    port: 5173,
+    port: 4173,
   },
   optimizeDeps: {
     // Exclude pdfjs-dist from pre-bundling so the worker URL resolves correctly
