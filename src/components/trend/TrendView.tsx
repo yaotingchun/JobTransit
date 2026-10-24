@@ -4,7 +4,6 @@ import {
   Zap,
   Users,
   Search,
-  ArrowUpRight,
   Flame,
   Snowflake,
   ChevronRight,
@@ -16,7 +15,8 @@ import {
   Building2,
   MapPin,
   Cpu,
-  Info
+  Info,
+  TrendingUp,
 } from 'lucide-react'
 import {
   ROLE_TRENDS,
@@ -128,7 +128,7 @@ export const TrendView: React.FC = () => {
     }
   }, [])
 
-  // Auto-load daily scrape snapshot on mount (served instantly from daily cache or scraped once per day)
+  // Auto-load daily scrape snapshot on mount
   useEffect(() => {
     let isMounted = true
     const loadDailyScrape = async () => {
@@ -154,8 +154,6 @@ export const TrendView: React.FC = () => {
       isMounted = false
     }
   }, [])
-
-  // Uses instant verified baseline dataset on load; manual refresh available on button click
 
   // Filter and sort roles
   const filteredRoles = useMemo(() => {
@@ -192,97 +190,121 @@ export const TrendView: React.FC = () => {
   }, [skillsData, skillFilter, searchQuery])
 
   return (
-    <div className="space-y-10 pb-16">
-      {/* 1. Header Banner & Data Source Badge */}
-      <div className="relative rounded-3xl glass-card-ambient p-6 sm:p-10 shadow-lg overflow-hidden border border-slate-200/80 space-y-8">
-        {/* Ambient Subtle Gradients */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-blue-200/40 via-sky-100/30 to-transparent rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-gradient-to-tr from-purple-100/30 via-indigo-100/20 to-transparent rounded-full blur-3xl pointer-events-none" />
-
-        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="space-y-4 max-w-4xl">
-            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight font-hero leading-tight text-slate-950">
-              Job Market Trends & <br className="hidden sm:inline" />
-              <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                LinkedIn Live Disruption Radar
-              </span>
-            </h1>
-
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-              Every data point, hiring count, and skill velocity metric is verified from LinkedIn search endpoints. Track how open positions shifted between 2025 and 2026, which roles dominate recruitment, entry-level barriers, and tasks automated by AI.
-            </p>
+    <div className="space-y-8 pb-16 transit-root">
+      {/* ── 1. HEADER + TELEMETRY DISRUPTION RADAR MASTHEAD ── */}
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-stone-900 text-amber-300 text-[10px] font-mono-board tracking-[0.25em] shadow-xs">
+            <TrendingUp className="w-3.5 h-3.5 text-amber-400" />
+            MARKET RADAR · LIVE DISRUPTION TELEMETRY
           </div>
+
+          <h1 className="font-signage text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-stone-900 leading-[0.9] mt-3">
+            JOB MARKET<span className="text-transparent [-webkit-text-stroke:2px_#1C1917]"> RADAR</span>
+          </h1>
+
+          <p className="text-sm sm:text-base text-stone-700 mt-2.5 max-w-2xl font-medium leading-relaxed">
+            Real-time hiring velocity, empirical AI task exposure, and verified LinkedIn recruitment metrics.
+            Track which stations on the career metro are experiencing exponential hiring surges and which skills are sunsetting.
+          </p>
         </div>
 
-        {/* KPI Summary Tiles */}
-        <div className="relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pt-6 border-t border-slate-200/80">
-          <div className="p-4 sm:p-5 rounded-2xl bg-white/90 border border-slate-200/90 shadow-2xs backdrop-blur-sm space-y-1 hover:border-slate-300 transition-all">
-            <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
-              <span>24-Hour Hiring Velocity</span>
-              <Activity className="w-4 h-4 text-emerald-600" />
-            </div>
-            <div className="text-xl sm:text-2xl font-extrabold font-hero text-slate-950">
-              +{marketSummaryData.averageVelocityRate24h || 38.6}%
-            </div>
-            <div className="text-[11px] text-emerald-700 font-semibold">
-              {(marketSummaryData.totalNewPostings24h || 108000).toLocaleString()}+ fresh jobs in 24h
-            </div>
-          </div>
-
-          <div className="p-4 sm:p-5 rounded-2xl bg-white/90 border border-slate-200/90 shadow-2xs backdrop-blur-sm space-y-1 hover:border-slate-300 transition-all">
-            <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
-              <span>Highest Hiring Velocity</span>
-              <Flame className="w-4 h-4 text-amber-500" />
-            </div>
-            <div className="text-base sm:text-lg font-extrabold font-hero text-slate-950 truncate">
-              {marketSummaryData.topRole2026.title}
-            </div>
-            <div className="text-[11px] text-emerald-700 font-semibold flex items-center gap-1">
-              <ArrowUpRight className="w-3.5 h-3.5" />
-              17,000+ new today (+48.6%)
-            </div>
-          </div>
-
-          <div className="p-4 sm:p-5 rounded-2xl bg-white/90 border border-slate-200/90 shadow-2xs backdrop-blur-sm space-y-1 hover:border-slate-300 transition-all">
-            <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
-              <span>Avg. AI Task Exposure</span>
-              <Bot className="w-4 h-4 text-purple-600" />
-            </div>
-            <div className="text-xl sm:text-2xl font-extrabold font-hero text-purple-700">
-              {marketSummaryData.averageAIExposure}%
-            </div>
-            <div className="text-[11px] text-slate-500">
-              Across tracked engineering roles
-            </div>
-          </div>
-
-          <div className="p-4 sm:p-5 rounded-2xl bg-white/90 border border-slate-200/90 shadow-2xs backdrop-blur-sm space-y-1 hover:border-slate-300 transition-all">
-            <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
-              <span>#1 New Tech Requirement</span>
-              <Zap className="w-4 h-4 text-blue-600" />
-            </div>
-            <div className="text-base sm:text-lg font-extrabold font-hero text-slate-950 truncate">
-              {skillsData[0]?.name || 'Model Context Protocol'}
-            </div>
-            <div className="text-[11px] text-blue-700 font-semibold flex items-center gap-1">
-              <ArrowUpRight className="w-3.5 h-3.5" />
-              {skillsData[0]?.scrapedJobCount || '26,000+'} verified listings
-            </div>
+        {/* Provenance Badge */}
+        <div className="p-3.5 px-4 rounded-2xl bg-white/90 backdrop-blur-md border border-stone-200/90 text-stone-900 shadow-xs flex items-center gap-3 shrink-0 self-start lg:self-auto font-mono-board text-xs">
+          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+          <div>
+            <div className="text-[10px] text-stone-500 font-bold uppercase tracking-wider">NETWORK RADAR SYNC</div>
+            <div className="text-stone-900 font-bold">{lastScrapedAt}</div>
           </div>
         </div>
       </div>
 
-      {/* 2. Navigation View Switcher & Filter Bar */}
+      {/* ── 2. FOUR CARTOGRAPHIC TELEMETRY QUICK-KPI TILES (TRANSIT STYLE) ── */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Tile 1: 24h Hiring Velocity */}
+        <div className="rounded-2xl p-4 bg-white/90 backdrop-blur-md border border-stone-200/90 text-stone-900 flex items-center justify-between shadow-xs">
+          <div className="space-y-1">
+            <div className="text-[10px] font-mono-board tracking-widest text-emerald-700 font-bold flex items-center gap-1.5">
+              <Activity className="w-3.5 h-3.5 text-emerald-600" /> 24H HIRING VELOCITY
+            </div>
+            <div className="font-signage text-2xl sm:text-3xl font-black text-stone-900">
+              +{marketSummaryData.averageVelocityRate24h || 38.6}%
+            </div>
+            <div className="text-[11px] font-mono-board text-stone-500">
+              {(marketSummaryData.totalNewPostings24h || 108000).toLocaleString()}+ fresh openings in 24h
+            </div>
+          </div>
+          <span className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center justify-center font-mono-board text-sm font-black">
+            ⚡
+          </span>
+        </div>
+
+        {/* Tile 2: Highest Velocity Hub */}
+        <div className="rounded-2xl p-4 bg-white/90 backdrop-blur-md border border-stone-200/90 text-stone-900 flex items-center justify-between shadow-xs">
+          <div className="space-y-1 min-w-0 pr-2">
+            <div className="text-[10px] font-mono-board tracking-widest text-amber-700 font-bold flex items-center gap-1.5">
+              <Flame className="w-3.5 h-3.5 text-amber-600" /> HIGHEST INFLUX ROLE
+            </div>
+            <div className="font-signage text-xl sm:text-2xl font-black text-stone-900 truncate">
+              {marketSummaryData.topRole2026.title.toUpperCase()}
+            </div>
+            <div className="text-[11px] font-mono-board text-emerald-700 font-bold">
+              17,000+ new today (+48.6%)
+            </div>
+          </div>
+          <span className="w-9 h-9 rounded-xl bg-amber-100 text-amber-800 border border-amber-200 flex items-center justify-center font-mono-board text-xs font-black shrink-0">
+            #1
+          </span>
+        </div>
+
+        {/* Tile 3: Avg AI Exposure */}
+        <div className="rounded-2xl p-4 bg-white/90 backdrop-blur-md border border-stone-200/90 text-stone-900 flex items-center justify-between shadow-xs">
+          <div className="space-y-1">
+            <div className="text-[10px] font-mono-board tracking-widest text-purple-700 font-bold flex items-center gap-1.5">
+              <Bot className="w-3.5 h-3.5 text-purple-600" /> AVG AI EXPOSURE
+            </div>
+            <div className="font-signage text-2xl sm:text-3xl font-black text-purple-700">
+              {marketSummaryData.averageAIExposure}%
+            </div>
+            <div className="text-[11px] font-mono-board text-stone-500">
+              Across tracked tech lines
+            </div>
+          </div>
+          <span className="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 border border-purple-200 flex items-center justify-center font-signage text-base font-black">
+            AI
+          </span>
+        </div>
+
+        {/* Tile 4: #1 New Tech Requirement */}
+        <div className="rounded-2xl p-4 bg-white/90 backdrop-blur-md border border-stone-200/90 text-stone-900 flex items-center justify-between shadow-xs">
+          <div className="space-y-1 min-w-0 pr-2">
+            <div className="text-[10px] font-mono-board tracking-widest text-sky-700 font-bold flex items-center gap-1.5">
+              <Zap className="w-3.5 h-3.5 text-sky-600" /> #1 SURGING SKILL
+            </div>
+            <div className="font-signage text-xl sm:text-2xl font-black text-stone-900 truncate">
+              {(skillsData[0]?.name || 'MCP').toUpperCase()}
+            </div>
+            <div className="text-[11px] font-mono-board text-sky-700 font-bold">
+              {skillsData[0]?.scrapedJobCount || '26,000+'} verified jobs
+            </div>
+          </div>
+          <span className="w-9 h-9 rounded-xl bg-sky-100 text-sky-700 border border-sky-200 flex items-center justify-center font-mono-board text-xs font-bold shrink-0">
+            NEW
+          </span>
+        </div>
+      </div>
+
+      {/* ── 3. TRANSIT CONTROL STRIP & FILTER SWITCHERS ── */}
       <div className="space-y-4">
-        {/* View Switcher Pills */}
+        {/* Transit Control Switcher Dock */}
         <div className="flex justify-center w-full">
           <div
             ref={subNavDockRef}
-            className="flex flex-wrap items-center justify-center gap-2 p-1.5 rounded-2xl bg-slate-200/70 backdrop-blur-md max-w-fit shadow-xs relative"
+            className="flex flex-wrap items-center justify-center gap-1.5 p-1.5 rounded-2xl bg-stone-900/95 border border-stone-800 shadow-md relative"
           >
             {/* Sliding Active Pill Background */}
             <div
-              className={`absolute top-0 left-0 rounded-xl bg-white shadow-sm pointer-events-none transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+              className={`absolute top-0 left-0 rounded-xl bg-amber-400 shadow-xs pointer-events-none transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] ${
                 subIndicatorStyle.ready ? 'opacity-100' : 'opacity-0'
               }`}
               style={{
@@ -298,13 +320,13 @@ export const TrendView: React.FC = () => {
               }}
               type="button"
               onClick={() => setViewMode('roles')}
-              className={`relative z-10 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer ${
+              className={`relative z-10 px-4 py-2 rounded-xl text-xs font-mono-board tracking-wider transition-colors duration-200 cursor-pointer ${
                 viewMode === 'roles'
-                  ? 'text-slate-950 font-bold'
-                  : 'text-slate-600 hover:text-slate-950 hover:bg-white/25'
+                  ? 'text-stone-950 font-black'
+                  : 'text-stone-300 hover:text-white hover:bg-white/10 font-bold'
               }`}
             >
-              Open Job Volume (2025 vs 2026)
+              [01] HIRING VELOCITY & VOLUME
             </button>
             <button
               ref={(el) => {
@@ -312,13 +334,13 @@ export const TrendView: React.FC = () => {
               }}
               type="button"
               onClick={() => setViewMode('ai-exposure')}
-              className={`relative z-10 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer ${
+              className={`relative z-10 px-4 py-2 rounded-xl text-xs font-mono-board tracking-wider transition-colors duration-200 cursor-pointer ${
                 viewMode === 'ai-exposure'
-                  ? 'text-slate-950 font-bold'
-                  : 'text-slate-600 hover:text-slate-950 hover:bg-white/25'
+                  ? 'text-stone-950 font-black'
+                  : 'text-stone-300 hover:text-white hover:bg-white/10 font-bold'
               }`}
             >
-              AI Exposure & Tasks
+              [02] AI EXPOSURE & TASKS
             </button>
             <button
               ref={(el) => {
@@ -326,13 +348,13 @@ export const TrendView: React.FC = () => {
               }}
               type="button"
               onClick={() => setViewMode('entry-level')}
-              className={`relative z-10 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer ${
+              className={`relative z-10 px-4 py-2 rounded-xl text-xs font-mono-board tracking-wider transition-colors duration-200 cursor-pointer ${
                 viewMode === 'entry-level'
-                  ? 'text-slate-950 font-bold'
-                  : 'text-slate-600 hover:text-slate-950 hover:bg-white/25'
+                  ? 'text-stone-950 font-black'
+                  : 'text-stone-300 hover:text-white hover:bg-white/10 font-bold'
               }`}
             >
-              Entry-Level Access Radar
+              [03] ENTRY CLEARANCE RADAR
             </button>
             <button
               ref={(el) => {
@@ -340,13 +362,13 @@ export const TrendView: React.FC = () => {
               }}
               type="button"
               onClick={() => setViewMode('skills')}
-              className={`relative z-10 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer ${
+              className={`relative z-10 px-4 py-2 rounded-xl text-xs font-mono-board tracking-wider transition-colors duration-200 cursor-pointer ${
                 viewMode === 'skills'
-                  ? 'text-slate-950 font-bold'
-                  : 'text-slate-600 hover:text-slate-950 hover:bg-white/25'
+                  ? 'text-stone-950 font-black'
+                  : 'text-stone-300 hover:text-white hover:bg-white/10 font-bold'
               }`}
             >
-              LinkedIn Skills Radar
+              [04] SKILLS RADAR (LIVE)
             </button>
           </div>
         </div>
@@ -355,34 +377,34 @@ export const TrendView: React.FC = () => {
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-1">
           {/* Search Box */}
           <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-500" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search roles (e.g. Data Engineer, Agentic AI) or skills..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-white/80 border border-slate-200 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-xs"
+              placeholder="Search station roles or bridge skills..."
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/90 border-2 border-stone-200 text-xs sm:text-sm font-mono-board text-stone-900 placeholder:text-stone-400 focus:outline-none focus:border-amber-500 shadow-xs transition-all"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
             )}
           </div>
 
-          {/* Controls: Category Filter & Sort */}
-          <div className="flex flex-wrap items-center gap-2">
+          {/* Controls: Domain Filter & Sort */}
+          <div className="flex flex-wrap items-center gap-2 font-mono-board text-xs">
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value as CategoryFilter)}
               aria-label="Filter roles by category"
-              className="px-3 py-2 rounded-xl bg-white/80 border border-slate-200 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer shadow-xs"
+              className="px-3 py-2 rounded-xl bg-white/90 border-2 border-stone-200 font-bold text-stone-800 focus:outline-none focus:border-amber-500 cursor-pointer shadow-xs"
             >
-              <option value="all">All Domains</option>
+              <option value="all">ALL DOMAINS</option>
               <option value="AI & Machine Learning">AI & Machine Learning</option>
               <option value="Data Engineering">Data Engineering</option>
               <option value="Software Engineering">Software Engineering</option>
@@ -394,31 +416,31 @@ export const TrendView: React.FC = () => {
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortOption)}
               aria-label="Sort roles by metric"
-              className="px-3 py-2 rounded-xl bg-white/80 border border-slate-200 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer shadow-xs"
+              className="px-3 py-2 rounded-xl bg-white/90 border-2 border-stone-200 font-bold text-stone-800 focus:outline-none focus:border-amber-500 cursor-pointer shadow-xs"
             >
-              <option value="growth">Sort by 24h Hiring Velocity %</option>
-              <option value="velocity7d">Sort by 7-Day Influx %</option>
-              <option value="openings2026">Sort by Total Active Volume</option>
-              <option value="aiExposure">Sort by AI Exposure %</option>
-              <option value="entryLevel">Sort by Entry Accessibility</option>
+              <option value="growth">SORT: 24h Hiring Velocity %</option>
+              <option value="velocity7d">SORT: 7-Day Influx %</option>
+              <option value="openings2026">SORT: Total Active Volume</option>
+              <option value="aiExposure">SORT: AI Task Exposure %</option>
+              <option value="entryLevel">SORT: Entry Clearance</option>
             </select>
           </div>
         </div>
       </div>
 
-      {/* 4. MAIN VIEW: OPEN JOB POSITIONS & LIVE HIRING VELOCITY */}
+      {/* ── 4. VIEW 1: OPEN JOB POSITIONS & LIVE HIRING VELOCITY ── */}
       {viewMode === 'roles' && (
-        <section className="space-y-6">
-          <div className="flex items-center justify-between">
+        <section className="space-y-4">
+          <div className="flex items-center justify-between pb-1">
             <div className="space-y-0.5">
-              <h3 className="text-lg sm:text-xl font-bold text-slate-950 font-hero">
-                LinkedIn Open Job Postings: Live Hiring Velocity (24h & 7-Day Influx)
+              <h3 className="font-signage text-2xl font-black text-stone-900 tracking-wide">
+                ACTIVE RECRUITMENT DEPARTURES: 24H & 7D INFLUX
               </h3>
-              <p className="text-xs text-slate-600">
-                Verified live from LinkedIn using &f_TPR=r86400 (Past 24 Hours) and &f_TPR=r604800 (Past 7 Days). Tracks real-time hiring acceleration across tech domains.
+              <p className="text-xs font-mono-board text-stone-500">
+                Verified live via LinkedIn search endpoints (&f_TPR=r86400 / past 24h &amp; &f_TPR=r604800 / past 7d)
               </p>
             </div>
-            <span className="text-xs font-semibold text-slate-500">
+            <span className="font-mono-board text-xs text-stone-500 font-bold">
               Showing {filteredRoles.length} roles
             </span>
           </div>
@@ -433,51 +455,51 @@ export const TrendView: React.FC = () => {
               return (
                 <div
                   key={role.id}
-                  className="glass-card-ambient rounded-3xl p-5 sm:p-6 space-y-4 hover:border-blue-300 transition-all cursor-pointer relative group flex flex-col justify-between"
+                  className="rounded-[24px] bg-[#FAF7F0] hover:bg-white border-2 border-stone-200 hover:border-amber-500/70 p-5 sm:p-6 transition-all shadow-xs cursor-pointer flex flex-col justify-between space-y-4 group"
                   onClick={() => setSelectedRoleForModal(role)}
                 >
-                  {/* Top Bar: Title, Category & Live 24h Velocity Badge */}
+                  {/* Top Bar: Title, Domain Code & Live 24h Velocity Badge */}
                   <div className="flex items-start justify-between gap-3">
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-slate-700 border border-slate-200">
+                    <div className="space-y-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="px-2 py-0.5 rounded font-mono-board text-[10px] font-black uppercase tracking-wider bg-stone-900 text-amber-300 shadow-xs">
                           {role.category}
                         </span>
-                        <span className="text-[11px] font-semibold text-slate-500">
-                          {role.velocityLabel || 'High Velocity 🚀'}
+                        <span className="font-mono-board text-xs text-stone-500 font-bold">
+                          RANK #{role.rank2026}
                         </span>
                       </div>
-                      <h4 className="text-base sm:text-lg font-bold text-slate-950 font-hero group-hover:text-blue-600 transition-colors">
-                        {role.title}
+                      <h4 className="font-signage text-xl sm:text-2xl font-black text-stone-900 tracking-wide group-hover:text-amber-600 transition-colors truncate">
+                        {role.title.toUpperCase()}
                       </h4>
                     </div>
 
-                    <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold shrink-0 bg-amber-50 text-amber-900 border border-amber-300 shadow-2xs">
-                      <Flame className="w-3.5 h-3.5 text-amber-600" />
-                      <span>+{role.velocityRate24h ?? 40}% 24h Velocity</span>
+                    <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono-board font-black shrink-0 bg-amber-400 text-stone-950 shadow-xs">
+                      <Flame className="w-3.5 h-3.5 text-stone-950" />
+                      <span>+{role.velocityRate24h ?? 40}% 24H</span>
                     </div>
                   </div>
 
-                  {/* 3 Live LinkedIn Query Verification Pill Links */}
+                  {/* 3 Live LinkedIn Query Verification Station Badges */}
                   <div className="space-y-1.5">
-                    <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500 flex items-center justify-between">
-                      <span>Verified Live LinkedIn Queries:</span>
-                      <span className="text-emerald-700 font-semibold font-mono text-[10px]">Verified Live</span>
+                    <div className="text-[10px] font-mono-board font-bold uppercase tracking-wider text-stone-500 flex items-center justify-between">
+                      <span>VERIFIED SEARCH QUERIES:</span>
+                      <span className="text-emerald-700 font-bold">LIVE TELEMETRY</span>
                     </div>
-                    <div className="grid grid-cols-3 gap-1.5">
+                    <div className="grid grid-cols-3 gap-1.5 font-mono-board">
                       <a
                         href={role.linkedinSearchUrl || `https://www.linkedin.com/jobs/search?keywords=${encodeURIComponent(role.searchKeyword || role.title)}&location=Worldwide`}
                         target="_blank"
                         rel="noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="p-2 rounded-xl bg-blue-50/80 hover:bg-blue-100 border border-blue-200/60 text-blue-900 text-center transition-colors group/link shadow-2xs"
+                        className="p-2 rounded-xl bg-white hover:bg-stone-100 border border-stone-300 text-stone-900 text-center transition-all shadow-2xs group/link"
                         title="View All Active Postings on LinkedIn"
                       >
-                        <div className="text-[9px] uppercase font-bold text-blue-700 flex items-center justify-center gap-0.5">
+                        <div className="text-[9px] uppercase font-bold text-stone-500 flex items-center justify-center gap-0.5">
                           <span>Total Active</span>
                           <ExternalLink className="w-2.5 h-2.5 opacity-60 group-hover/link:opacity-100" />
                         </div>
-                        <div className="font-extrabold text-xs text-slate-900 mt-0.5">
+                        <div className="font-signage text-base font-black text-stone-900 mt-0.5">
                           {role.scrapedCountString || '35,000+'}
                         </div>
                       </a>
@@ -487,14 +509,14 @@ export const TrendView: React.FC = () => {
                         target="_blank"
                         rel="noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="p-2 rounded-xl bg-indigo-50/80 hover:bg-indigo-100 border border-indigo-200/60 text-indigo-900 text-center transition-colors group/link shadow-2xs"
+                        className="p-2 rounded-xl bg-white hover:bg-stone-100 border border-stone-300 text-stone-900 text-center transition-all shadow-2xs group/link"
                         title="View Postings from Past 7 Days on LinkedIn"
                       >
-                        <div className="text-[9px] uppercase font-bold text-indigo-700 flex items-center justify-center gap-0.5">
+                        <div className="text-[9px] uppercase font-bold text-stone-500 flex items-center justify-center gap-0.5">
                           <span>Past 7 Days</span>
                           <ExternalLink className="w-2.5 h-2.5 opacity-60 group-hover/link:opacity-100" />
                         </div>
-                        <div className="font-extrabold text-xs text-indigo-950 mt-0.5">
+                        <div className="font-signage text-base font-black text-purple-800 mt-0.5">
                           {role.past7dCountStr || '30,000+'}
                         </div>
                       </a>
@@ -504,31 +526,31 @@ export const TrendView: React.FC = () => {
                         target="_blank"
                         rel="noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="p-2 rounded-xl bg-amber-50/90 hover:bg-amber-100 border border-amber-300 text-amber-950 text-center transition-colors group/link shadow-2xs"
+                        className="p-2 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-950 text-center transition-all shadow-2xs group/link"
                         title="View Postings from Past 24 Hours on LinkedIn"
                       >
                         <div className="text-[9px] uppercase font-bold text-amber-800 flex items-center justify-center gap-0.5">
                           <span>Past 24 Hours</span>
                           <ExternalLink className="w-2.5 h-2.5 opacity-60 group-hover/link:opacity-100" />
                         </div>
-                        <div className="font-extrabold text-xs text-amber-900 mt-0.5">
+                        <div className="font-signage text-base font-black text-amber-900 mt-0.5">
                           {role.past24hCountStr || '17,000+'}
                         </div>
                       </a>
                     </div>
                   </div>
 
-                  {/* 3-Tier Live Velocity Comparative Bars */}
-                  <div className="space-y-3 p-3.5 rounded-2xl bg-slate-50/80 border border-slate-200/60">
+                  {/* 3-Tier Live Velocity Comparative Meter Bars */}
+                  <div className="space-y-3 p-3.5 rounded-2xl bg-white/90 border border-stone-200">
                     {/* Bar 1: Total Active Pool */}
                     <div className="space-y-1">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="font-semibold text-slate-600">Total Active Postings:</span>
-                        <span className="font-bold text-slate-900">{role.openings2026.toLocaleString()} positions</span>
+                      <div className="flex items-center justify-between text-xs font-mono-board">
+                        <span className="text-stone-600 font-bold">Total Active Requisitions:</span>
+                        <span className="font-black text-stone-900">{role.openings2026.toLocaleString()} positions</span>
                       </div>
-                      <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
+                      <div className="h-2 w-full bg-stone-200 rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-slate-400 rounded-full transition-all duration-500"
+                          className="h-full bg-stone-500 rounded-full transition-all duration-500"
                           style={{ width: `${widthTotal}%` }}
                         />
                       </div>
@@ -536,18 +558,18 @@ export const TrendView: React.FC = () => {
 
                     {/* Bar 2: Past 7-Day Influx */}
                     <div className="space-y-1">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="font-semibold text-indigo-900 flex items-center gap-1.5">
+                      <div className="flex items-center justify-between text-xs font-mono-board">
+                        <span className="font-bold text-purple-900 flex items-center gap-1.5">
                           <span>Past 7-Day Influx:</span>
-                          <span className="px-1.5 py-0.2 rounded text-[10px] font-bold bg-indigo-100 text-indigo-700">&f_TPR=r604800</span>
+                          <span className="px-1.5 py-0.2 rounded text-[9.5px] font-black bg-purple-100 text-purple-800">&f_TPR=r604800</span>
                         </span>
-                        <span className="font-bold text-xs text-indigo-950">
+                        <span className="font-black text-purple-950">
                           {role.past7dCountStr || '30,000+'} ({role.velocityRate7d ?? 85}%)
                         </span>
                       </div>
-                      <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
+                      <div className="h-2 w-full bg-stone-200 rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-indigo-500 rounded-full transition-all duration-500"
+                          className="h-full bg-purple-600 rounded-full transition-all duration-500"
                           style={{ width: `${width7d}%` }}
                         />
                       </div>
@@ -555,92 +577,72 @@ export const TrendView: React.FC = () => {
 
                     {/* Bar 3: Past 24-Hour Velocity */}
                     <div className="space-y-1">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="font-bold text-slate-900 flex items-center gap-1.5">
-                          <span>Past 24h Velocity:</span>
-                          <span className="px-1.5 py-0.2 rounded text-[10px] font-extrabold bg-amber-100 text-amber-800 animate-pulse">&f_TPR=r86400</span>
+                      <div className="flex items-center justify-between text-xs font-mono-board">
+                        <span className="font-black text-stone-900 flex items-center gap-1.5">
+                          <span>Past 24h Surge:</span>
+                          <span className="px-1.5 py-0.2 rounded text-[9.5px] font-black bg-amber-400 text-stone-950 animate-pulse">&f_TPR=r86400</span>
                         </span>
-                        <span className="font-extrabold text-sm text-emerald-700">
+                        <span className="font-black text-emerald-700">
                           {role.past24hCountStr || '17,000+'} (+{role.velocityRate24h ?? 40}%)
                         </span>
                       </div>
-                      <div className="h-2.5 w-full bg-slate-200 rounded-full overflow-hidden">
+                      <div className="h-2.5 w-full bg-stone-200 rounded-full overflow-hidden">
                         <div
-                          className="h-full rounded-full transition-all duration-500 bg-gradient-to-r from-amber-500 via-orange-500 to-emerald-500"
+                          className="h-full rounded-full transition-all duration-500 bg-gradient-to-r from-amber-400 via-orange-500 to-emerald-500"
                           style={{ width: `${width24h}%` }}
                         />
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1 border-t border-slate-200/60">
-                      <span>Velocity Label: <strong className="text-slate-900">{role.velocityLabel || 'High Velocity 🚀'}</strong></span>
-                      <span>Recruitment Share: <strong className="text-slate-900">{role.marketRecruitmentShare2026}%</strong></span>
+                    <div className="flex items-center justify-between text-[11px] font-mono-board text-stone-500 pt-1 border-t border-stone-200">
+                      <span>Status: <strong className="text-stone-900">{role.velocityLabel || 'High Velocity 🚀'}</strong></span>
+                      <span>Market Share: <strong className="text-stone-900">{role.marketRecruitmentShare2026}%</strong></span>
                     </div>
                   </div>
 
-                  {/* Real Scraped Postings Ticker Preview */}
-                  {role.recentPostings && role.recentPostings.length > 0 && (
-                    <div className="p-2.5 rounded-xl bg-white border border-slate-200 text-xs space-y-1">
-                      <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500 flex items-center justify-between">
-                        <span>Live Companies Hiring on LinkedIn:</span>
-                        <span className="text-emerald-700 font-semibold">{role.recentPostings.length} parsed</span>
-                      </div>
-                      <div className="flex flex-wrap gap-1.5">
-                        {role.recentPostings.slice(0, 3).map((p, idx) => (
-                          <span key={idx} className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-800 text-[11px] font-medium border border-slate-200">
-                            {p.company || 'Enterprise'} ({p.location?.split(',')[0] || 'Remote'})
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
                   {/* Dual Metric Badges: Entry-Level Access & AI Exposure */}
-                  <div className="grid grid-cols-2 gap-2 pt-1">
-                    <div className="p-2.5 rounded-xl bg-white/70 border border-slate-200/60">
-                      <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1">
-                        <Users className="w-3 h-3 text-indigo-500" />
-                        Entry-Level Access
+                  <div className="grid grid-cols-2 gap-2 pt-1 font-mono-board">
+                    <div className="p-2.5 rounded-xl bg-white border border-stone-200">
+                      <div className="text-[10px] font-bold uppercase tracking-wider text-stone-500 flex items-center gap-1">
+                        <Users className="w-3 h-3 text-stone-700" />
+                        ENTRY CLEARANCE
                       </div>
-                      <div className="text-xs font-bold text-slate-900 mt-1">
-                        {role.entryLevelAccess.score}/100 • {role.entryLevelAccess.breakdown.entryLevel}% Junior Friendly
+                      <div className="text-xs font-black text-stone-900 mt-1">
+                        {role.entryLevelAccess.score}/100 • {role.entryLevelAccess.breakdown.entryLevel}% Junior
                       </div>
-                      <div className="text-[10px] text-slate-500 truncate">
+                      <div className="text-[10px] text-stone-500 truncate">
                         {role.entryLevelAccess.levelLabel}
                       </div>
                     </div>
 
-                    <div className="p-2.5 rounded-xl bg-white/70 border border-slate-200/60">
-                      <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1">
-                        <Bot className="w-3 h-3 text-purple-500" />
-                        AI Task Exposure
+                    <div className="p-2.5 rounded-xl bg-white border border-stone-200">
+                      <div className="text-[10px] font-bold uppercase tracking-wider text-stone-500 flex items-center gap-1">
+                        <Bot className="w-3 h-3 text-purple-600" />
+                        AI TASK EXPOSURE
                       </div>
-                      <div className="text-xs font-bold text-slate-900 mt-1">
-                        {role.aiExposure.overallPercentage}% workflows
+                      <div className="text-xs font-black text-stone-900 mt-1">
+                        {role.aiExposure.overallPercentage}% Workflows
                       </div>
-                      <div className="text-[10px] text-slate-500 truncate">
-                        Risk: <span className="font-semibold text-slate-800">{role.aiExposure.automationRisk}</span> | Boost: <span className="font-semibold text-slate-800">{role.aiExposure.augmentationPotential}</span>
+                      <div className="text-[10px] text-stone-500 truncate">
+                        Risk: <span className="font-bold text-stone-800">{role.aiExposure.automationRisk}</span> | Boost: <span className="font-bold text-stone-800">{role.aiExposure.augmentationPotential}</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Skills Snapshot */}
-                  <div className="pt-2 border-t border-slate-200/60 space-y-1.5">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-[11px] font-bold text-slate-700 flex items-center gap-1">
-                        <Flame className="w-3 h-3 text-amber-500" />
-                        Surging in 2026:
-                      </span>
-                      <span className="text-[11px] font-semibold text-blue-600 group-hover:translate-x-0.5 transition-transform flex items-center">
-                        Deep Dive <ChevronRight className="w-3.5 h-3.5" />
-                      </span>
-                    </div>
-                    <div className="flex flex-wrap gap-1">
+                  <div className="pt-2 border-t border-stone-200 flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex flex-wrap items-center gap-1 text-[10px] font-mono-board">
+                      <span className="text-stone-500 font-bold mr-1">SURGING:</span>
                       {role.skillsNeededMoreNow.slice(0, 3).map((skill) => (
-                        <span key={skill} className="px-2 py-0.5 rounded-md text-[10px] font-medium bg-amber-50 text-amber-900 border border-amber-200">
+                        <span key={skill} className="px-2 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300 font-bold text-[9.5px]">
                           {skill}
                         </span>
                       ))}
+                    </div>
+
+                    <div className="font-mono-board text-xs font-black text-amber-700 group-hover:text-amber-800 flex items-center gap-0.5">
+                      <span>Dossier</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
                     </div>
                   </div>
                 </div>
@@ -650,26 +652,26 @@ export const TrendView: React.FC = () => {
         </section>
       )}
 
-      {/* 5. AI EXPOSURE & TASK AUTOMATION ANALYSIS */}
+      {/* ── 5. VIEW 2: AI EXPOSURE & TASK AUTOMATION ANALYSIS ── */}
       {viewMode === 'ai-exposure' && (
-        <section className="glass-card-ambient rounded-3xl p-6 sm:p-8 space-y-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200/60 pb-5">
+        <section className="rounded-[28px] bg-white/90 backdrop-blur-md border border-stone-300/80 p-6 sm:p-8 shadow-[0_16px_36px_rgba(28,25,23,0.06)] space-y-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-stone-200 pb-5">
             <div className="space-y-1">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-900 border border-purple-200">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono-board font-black bg-purple-100 text-purple-900 border border-purple-200">
                 <Bot className="w-3.5 h-3.5 text-purple-600" />
-                AI Exposure & Technology Requirements Analysis
+                AI EXPOSURE & TECHNOLOGY ANALYSIS
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-slate-950 font-hero">
-                Dynamic AI Exposure & Technology Requirements Analysis
+              <h3 className="font-signage text-3xl sm:text-4xl font-black text-stone-900 tracking-wide">
+                AI AUTOMATION & AUGMENTATION RADAR
               </h3>
-              <p className="text-xs sm:text-sm text-slate-600">
-                Live exposure score computed dynamically from the frequency of AI-tooling requirements (Agents, MCP, Codegen, RAG) versus manual engineering requirements across active LinkedIn job requisitions.
+              <p className="text-xs sm:text-sm text-stone-600 font-medium">
+                Live exposure index computed dynamically from AI tooling frequency (Autonomous Agents, MCP, Codegen, RAG) versus manual core engineering requisitions.
               </p>
             </div>
 
             {/* Role Picker for Deep Dive Exposure */}
-            <div className="shrink-0 flex items-center gap-2">
-              <span className="text-xs font-bold text-slate-700">Analyze Role:</span>
+            <div className="shrink-0 flex items-center gap-2 font-mono-board text-xs">
+              <span className="font-bold text-stone-700">TARGET STATION:</span>
               <select
                 value={activeExposureRole.id}
                 onChange={(e) => {
@@ -677,7 +679,7 @@ export const TrendView: React.FC = () => {
                   if (found) setActiveExposureRole(found)
                 }}
                 aria-label="Select role for AI exposure analysis"
-                className="px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-purple-500/20 shadow-xs cursor-pointer"
+                className="px-3 py-2 rounded-xl bg-white border-2 border-stone-200 text-xs font-bold text-stone-900 focus:outline-none focus:border-amber-500 shadow-xs cursor-pointer"
               >
                 {rolesData.map((r) => (
                   <option key={r.id} value={r.id}>
@@ -689,59 +691,59 @@ export const TrendView: React.FC = () => {
           </div>
 
           {/* Active Role Exposure Card */}
-          <div className="rounded-2xl p-5 sm:p-6 bg-gradient-to-br from-purple-50/70 via-white/80 to-indigo-50/60 border border-purple-200/70 shadow-xs space-y-6">
+          <div className="rounded-2xl p-5 sm:p-6 bg-[#FAF7F0] border-2 border-stone-200 shadow-xs space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="space-y-1">
-                <div className="text-xs font-semibold text-purple-700 uppercase tracking-wider flex items-center gap-1.5">
-                  <span>Active Role Profile • Dynamically Derived from Live Mined Skills</span>
+                <div className="text-xs font-mono-board font-bold text-purple-800 uppercase tracking-wider flex items-center gap-1.5">
+                  <span>TELEMETRY DERIVED FROM LINKEDIN JOB CARDS</span>
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 </div>
-                <h4 className="text-xl sm:text-2xl font-extrabold text-slate-950 font-hero">
-                  {activeExposureRole.title}
+                <h4 className="font-signage text-3xl font-black text-stone-900 tracking-wide">
+                  {activeExposureRole.title.toUpperCase()}
                 </h4>
-                <p className="text-xs sm:text-sm text-slate-600 max-w-2xl">
+                <p className="text-xs sm:text-sm text-stone-600 max-w-2xl leading-relaxed">
                   {activeExposureRole.aiExposure.summary}
                 </p>
               </div>
 
-              {/* Gauge Meter Tile */}
-              <div className="p-4 rounded-2xl bg-white border border-purple-200/80 shadow-xs flex items-center gap-4 shrink-0">
+              {/* Gauge Meter Tile (HUD style) */}
+              <div className="p-4 rounded-2xl bg-stone-900 border border-stone-800 text-white shadow-xs flex items-center gap-4 shrink-0 font-mono-board">
                 <div className="text-center">
-                  <div className="text-2xl sm:text-3xl font-extrabold font-hero text-purple-700">
+                  <div className="font-signage text-3xl font-black text-amber-400 leading-none">
                     {activeExposureRole.aiExposure.overallPercentage}%
                   </div>
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                  <div className="text-[9px] font-bold uppercase tracking-wider text-stone-400 mt-1">
                     AI Exposure Index
                   </div>
                 </div>
-                <div className="text-xs border-l border-slate-200 pl-4 space-y-1">
-                  <div>Risk: <span className="font-bold text-slate-900">{activeExposureRole.aiExposure.automationRisk}</span></div>
-                  <div>Augmentation: <span className="font-bold text-purple-700">{activeExposureRole.aiExposure.augmentationPotential}</span></div>
+                <div className="text-xs border-l border-stone-700 pl-4 space-y-1">
+                  <div>Risk: <span className="font-bold text-rose-300">{activeExposureRole.aiExposure.automationRisk}</span></div>
+                  <div>Boost: <span className="font-bold text-emerald-400">{activeExposureRole.aiExposure.augmentationPotential}</span></div>
                   {activeExposureRole.aiExposure.aiToolingFrequency && (
-                    <div className="text-[10px] text-slate-500 pt-1 border-t border-slate-100 flex items-center gap-1.5">
-                      <span>AI Tooling: <strong className="text-purple-700 font-bold">{activeExposureRole.aiExposure.aiToolingFrequency}%</strong></span>
-                      <span className="text-slate-300">|</span>
-                      <span>Manual Core: <strong className="text-slate-800 font-bold">{activeExposureRole.aiExposure.manualCoreFrequency}%</strong></span>
+                    <div className="text-[10px] text-stone-400 pt-1 border-t border-stone-700 flex items-center gap-1.5">
+                      <span>AI Tooling: <strong className="text-amber-300 font-bold">{activeExposureRole.aiExposure.aiToolingFrequency}%</strong></span>
+                      <span className="text-stone-500">|</span>
+                      <span>Manual Core: <strong className="text-white font-bold">{activeExposureRole.aiExposure.manualCoreFrequency}%</strong></span>
                     </div>
                   )}
                 </div>
               </div>
             </div>
 
-            {/* Empirically Mined Technologies Grid from Live Scraped Job Cards */}
+            {/* Mined Technologies Grid from Live Scraped Job Cards */}
             <div className="space-y-3 pt-2">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-purple-200/60 pb-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-200 pb-3">
                 <div className="space-y-0.5">
-                  <div className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-1.5">
-                    <Cpu className="w-3.5 h-3.5 text-indigo-600" />
-                    Key Technology Requirements & Skill Frequency
+                  <div className="text-xs font-mono-board font-black uppercase tracking-wider text-stone-900 flex items-center gap-1.5">
+                    <Cpu className="w-3.5 h-3.5 text-stone-700" />
+                    KEY TECHNOLOGY REQUIREMENTS &amp; OCCURRENCE FREQUENCY
                   </div>
-                  <p className="text-[11px] text-slate-600">
-                    Core technologies and frameworks required across active LinkedIn requisitions for {activeExposureRole.title}.
+                  <p className="text-[11px] font-mono-board text-stone-500">
+                    Core frameworks required across live requisitions for {activeExposureRole.title}.
                   </p>
                 </div>
-                <div className="text-[11px] font-bold text-indigo-800 bg-indigo-50 border border-indigo-200/80 px-2.5 py-1 rounded-full shrink-0">
-                  {activeExposureRole.minedSkills?.length || 0} Key Technologies
+                <div className="text-[11px] font-mono-board font-bold text-stone-900 bg-amber-100 border border-amber-300 px-2.5 py-1 rounded-full shrink-0">
+                  {activeExposureRole.minedSkills?.length || 0} Key Technologies Verified
                 </div>
               </div>
 
@@ -749,40 +751,39 @@ export const TrendView: React.FC = () => {
                 {activeExposureRole.minedSkills?.map((skill) => (
                   <div
                     key={skill.name}
-                    className="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:shadow-xs hover:border-indigo-300 transition-all flex flex-col justify-between gap-2.5"
+                    className="p-3.5 rounded-2xl bg-white border border-stone-200 shadow-2xs hover:border-amber-400 transition-all flex flex-col justify-between gap-2.5"
                   >
                     <div className="space-y-1.5">
                       <div className="flex items-start justify-between gap-2">
-                        <span className="text-xs font-bold text-slate-950 leading-tight">
+                        <span className="font-signage text-base font-black text-stone-900 leading-tight">
                           {skill.name}
                         </span>
                         <span
-                          className={`px-1.5 py-0.5 rounded text-[9px] font-bold shrink-0 ${skill.category === 'Language'
-                              ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                          className={`px-1.5 py-0.5 rounded text-[9px] font-mono-board font-bold shrink-0 ${
+                            skill.category === 'Language'
+                              ? 'bg-amber-50 text-amber-800 border border-amber-200'
                               : skill.category === 'Data & Lakehouse'
-                                ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                                ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
                                 : skill.category === 'Cloud & Infra'
-                                  ? 'bg-cyan-50 text-cyan-700 border border-cyan-200'
+                                  ? 'bg-sky-50 text-sky-800 border border-sky-200'
                                   : skill.category === 'AI & Frameworks'
-                                    ? 'bg-purple-50 text-purple-700 border border-purple-200'
-                                    : skill.category === 'DevOps & Tooling'
-                                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                                      : 'bg-rose-50 text-rose-700 border border-rose-200'
-                            }`}
+                                    ? 'bg-purple-50 text-purple-800 border border-purple-200'
+                                    : 'bg-stone-100 text-stone-800 border border-stone-200'
+                          }`}
                         >
                           {skill.category}
                         </span>
                       </div>
 
                       {/* Progress bar */}
-                      <div className="space-y-1">
+                      <div className="space-y-1 font-mono-board">
                         <div className="flex items-center justify-between text-[11px]">
-                          <span className="font-extrabold text-indigo-700">{skill.occurrencePct}%</span>
-                          <span className="text-slate-500 text-[10px]">{skill.countStr}</span>
+                          <span className="font-black text-amber-700">{skill.occurrencePct}%</span>
+                          <span className="text-stone-500 text-[10px]">{skill.countStr}</span>
                         </div>
-                        <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                        <div className="w-full h-1.5 bg-stone-200 rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full transition-all duration-500"
+                            className="h-full bg-amber-500 rounded-full transition-all duration-500"
                             style={{ width: `${skill.occurrencePct}%` }}
                           />
                         </div>
@@ -794,10 +795,10 @@ export const TrendView: React.FC = () => {
                       href={skill.linkedinSearchUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full inline-flex items-center justify-center gap-1.5 py-1 px-2 rounded-lg text-[10px] font-bold text-sky-700 bg-sky-50/70 hover:bg-sky-100 border border-sky-200/80 transition-colors"
+                      className="w-full inline-flex items-center justify-center gap-1.5 py-1 px-2 rounded-lg text-[10px] font-mono-board font-bold text-stone-900 bg-stone-100 hover:bg-stone-200 border border-stone-300 transition-colors"
                       title={`Verify ${activeExposureRole.title} + ${skill.name} on LinkedIn`}
                     >
-                      <span>Verify on LinkedIn</span>
+                      <span>Verify Live Query</span>
                       <ExternalLink className="w-2.5 h-2.5" />
                     </a>
                   </div>
@@ -808,30 +809,30 @@ export const TrendView: React.FC = () => {
         </section>
       )}
 
-      {/* 6. ENTRY-LEVEL ACCESS RADAR ("HOW EXPERT DO YOU NEED TO BE?") */}
+      {/* ── 6. VIEW 3: ENTRY-LEVEL ACCESS RADAR ── */}
       {viewMode === 'entry-level' && (
-        <section className="glass-card-ambient rounded-3xl p-6 sm:p-8 space-y-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200/60 pb-5">
+        <section className="rounded-[28px] bg-white/90 backdrop-blur-md border border-stone-300/80 p-6 sm:p-8 shadow-[0_16px_36px_rgba(28,25,23,0.06)] space-y-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-stone-200 pb-5">
             <div className="space-y-1">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-900 border border-emerald-200">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono-board font-black bg-emerald-100 text-emerald-900 border border-emerald-200">
                 <Users className="w-3.5 h-3.5 text-emerald-600" />
-                Entry-Level Access & Expertise Barrier
+                ENTRY-LEVEL ACCESS &amp; SENIORITY GATES
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-slate-950 font-hero">
-                How Expert Do You Need to Be to Get Hired in 2026?
+              <h3 className="font-signage text-3xl sm:text-4xl font-black text-stone-900 tracking-wide">
+                EXPERTISE CLEARANCE: HOW EXPERT DO YOU NEED TO BE?
               </h3>
-              <p className="text-xs sm:text-sm text-slate-600">
-                Empirically parsed from seniority qualifications (Lead / Principal / Senior vs. Mid-level vs. Junior) across live scraped LinkedIn job requisitions.
+              <p className="text-xs sm:text-sm text-stone-600 font-medium">
+                Parsed from seniority qualifications (Lead / Staff vs. Mid-level vs. Junior / Associate) across active LinkedIn requisitions.
               </p>
             </div>
-            <div className="shrink-0 self-start md:self-center inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/95 border border-slate-200/90 shadow-2xs text-xs font-medium whitespace-nowrap">
-              <span className="inline-flex items-center gap-1.5 font-semibold text-slate-600">
+            <div className="shrink-0 self-start md:self-center inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-stone-900 text-stone-200 font-mono-board text-xs font-bold shadow-xs whitespace-nowrap">
+              <span className="inline-flex items-center gap-1.5 text-rose-300">
                 <span className="w-2 h-2 rounded-full bg-rose-400" />
                 <span>0 = Senior Only</span>
               </span>
-              <span className="text-slate-300">|</span>
-              <span className="inline-flex items-center gap-1.5 font-semibold text-emerald-700">
-                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+              <span className="text-stone-600">|</span>
+              <span className="inline-flex items-center gap-1.5 text-emerald-300">
+                <span className="w-2 h-2 rounded-full bg-emerald-400" />
                 <span>100 = Entry-Friendly</span>
               </span>
             </div>
@@ -842,85 +843,85 @@ export const TrendView: React.FC = () => {
             {filteredRoles.map((role) => (
               <div
                 key={role.id}
-                className="p-5 rounded-2xl bg-white/80 border border-slate-200/80 shadow-xs space-y-3.5 hover:border-slate-300 transition-all"
+                className="p-5 rounded-2xl bg-[#FAF7F0] hover:bg-white border-2 border-stone-200 hover:border-amber-500/60 shadow-xs space-y-3.5 transition-all"
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <h5 className="font-bold text-sm sm:text-base text-slate-950 font-hero">
-                      {role.title}
+                    <h5 className="font-signage text-xl font-black text-stone-900 tracking-wide">
+                      {role.title.toUpperCase()}
                     </h5>
-                    <div className="text-[11px] font-semibold text-slate-500">
+                    <div className="text-[11px] font-mono-board font-bold text-stone-500">
                       {role.entryLevelAccess.levelLabel}
                     </div>
                   </div>
                   <div className="text-right">
-                    <span className="text-lg font-extrabold font-hero text-slate-900">
+                    <span className="font-signage text-3xl font-black text-stone-900">
                       {role.entryLevelAccess.score}
                     </span>
-                    <span className="text-xs text-slate-500">/100</span>
+                    <span className="font-mono-board text-xs text-stone-500">/100</span>
                   </div>
                 </div>
 
                 {/* Experience Distribution Stacked Bar */}
                 <div className="space-y-1.5">
-                  <div className="h-3.5 w-full bg-slate-100 rounded-full overflow-hidden flex shadow-inner">
+                  <div className="h-3 w-full bg-stone-200 rounded-full overflow-hidden flex shadow-inner">
                     <div
                       className="h-full bg-emerald-500 transition-all duration-500"
                       style={{ width: `${role.entryLevelAccess.breakdown.entryLevel}%` }}
                       title={`Junior (0-2 yrs): ${role.entryLevelAccess.breakdown.entryLevel}%`}
                     />
                     <div
-                      className="h-full bg-blue-500 transition-all duration-500"
+                      className="h-full bg-amber-400 transition-all duration-500"
                       style={{ width: `${role.entryLevelAccess.breakdown.midLevel}%` }}
                       title={`Mid-Level (3-5 yrs): ${role.entryLevelAccess.breakdown.midLevel}%`}
                     />
                     <div
-                      className="h-full bg-slate-800 transition-all duration-500"
+                      className="h-full bg-stone-900 transition-all duration-500"
                       style={{ width: `${role.entryLevelAccess.breakdown.seniorLead}%` }}
                       title={`Senior/Staff (5+ yrs): ${role.entryLevelAccess.breakdown.seniorLead}%`}
                     />
                   </div>
 
                   {/* Legend */}
-                  <div className="flex items-center justify-between text-[11px] text-slate-600 pt-0.5">
+                  <div className="flex items-center justify-between text-[11px] font-mono-board text-stone-600 pt-0.5">
                     <span className="flex items-center gap-1">
                       <span className="w-2 h-2 rounded-full bg-emerald-500" />
                       Junior (0-2y): <strong>{role.entryLevelAccess.breakdown.entryLevel}%</strong>
                     </span>
                     <span className="flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-full bg-blue-500" />
+                      <span className="w-2 h-2 rounded-full bg-amber-400" />
                       Mid (3-5y): <strong>{role.entryLevelAccess.breakdown.midLevel}%</strong>
                     </span>
                     <span className="flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-full bg-slate-800" />
-                      Senior/Lead (5y+): <strong>{role.entryLevelAccess.breakdown.seniorLead}%</strong>
+                      <span className="w-2 h-2 rounded-full bg-stone-900" />
+                      Senior (5y+): <strong>{role.entryLevelAccess.breakdown.seniorLead}%</strong>
                     </span>
                   </div>
                 </div>
 
-                {/* LinkedIn Hiring Insight & Filter Links */}
-                <div className="p-3 rounded-xl bg-slate-50 text-[11px] text-slate-600 leading-relaxed border border-slate-200/60 space-y-2">
+                {/* Insight & Compare Links */}
+                <div className="p-3 rounded-xl bg-white text-[11px] font-mono-board text-stone-600 leading-relaxed border border-stone-200 space-y-2">
                   <div>
-                    <strong className="text-slate-800">Scraped LinkedIn Breakdown:</strong> {role.entryLevelAccess.insight}
+                    <strong className="text-stone-900">TELEMETRY INSIGHT:</strong> {role.entryLevelAccess.insight}
                   </div>
 
-                  <div className="pt-1 flex flex-wrap items-center gap-2 border-t border-slate-200/60">
-                    <span className="text-[10px] font-semibold text-slate-500">Compare on LinkedIn:</span>
+                  <div className="pt-1 flex flex-wrap items-center gap-2 border-t border-stone-200">
+                    <span className="text-[10px] text-stone-500 font-bold">COMPARE:</span>
                     <a
                       href={`https://www.linkedin.com/jobs/search?keywords=${encodeURIComponent('Senior ' + (role.searchKeyword || role.title))}&location=Worldwide`}
                       target="_blank"
                       rel="noreferrer"
-                      className="px-2 py-0.5 rounded bg-slate-200/70 hover:bg-slate-300 text-slate-800 text-[10px] font-bold flex items-center gap-1"
+                      className="px-2 py-0.5 rounded bg-stone-100 hover:bg-stone-200 text-stone-800 text-[10px] font-bold border border-stone-300"
                     >
-                      <span>Check Senior Requisitions ↗</span>
+                      Senior Postings ↗
                     </a>
                     <a
                       href={`https://www.linkedin.com/jobs/search?keywords=${encodeURIComponent('Junior ' + (role.searchKeyword || role.title))}&location=Worldwide`}
                       target="_blank"
                       rel="noreferrer"
-                      className="px-2 py-0.5 rounded bg-blue-100/70 hover:bg-blue-200 text-blue-800 text-[10px] font-bold flex items-center gap-1"
+                      className="px-2 py-0.5 rounded bg-emerald-100 hover:bg-emerald-200 text-emerald-900 text-[10px] font-bold border border-emerald-300"
                     >
-                      <span>Check Junior Requisitions ↗</span>
+                      Junior Postings ↗
                     </a>
                   </div>
                 </div>
@@ -930,33 +931,33 @@ export const TrendView: React.FC = () => {
         </section>
       )}
 
-      {/* 7. LINKEDIN SKILL DETECTOR: NEEDED MORE NOW vs NO LONGER NEEDED */}
+      {/* ── 7. VIEW 4: LINKEDIN SKILL DETECTOR (SURGING VS SUNSET) ── */}
       {viewMode === 'skills' && (
-        <section className="glass-card-ambient rounded-3xl p-6 sm:p-8 space-y-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200/60 pb-5">
+        <section className="rounded-[28px] bg-white/90 backdrop-blur-md border border-stone-300/80 p-6 sm:p-8 shadow-[0_16px_36px_rgba(28,25,23,0.06)] space-y-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-stone-200 pb-5">
             <div className="space-y-1">
               <div className="flex flex-wrap items-center gap-2">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-200">
-                  <Flame className="w-3.5 h-3.5 text-amber-600" />
-                  LinkedIn Skills Radar
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono-board font-black bg-amber-400 text-stone-950 shadow-xs">
+                  <Flame className="w-3.5 h-3.5 text-stone-950" />
+                  LINKEDIN SKILLS RADAR
                 </div>
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-50 text-blue-800 border border-blue-200/80">
-                  <Activity className="w-3 h-3 text-blue-600" />
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono-board font-bold bg-stone-900 text-amber-300">
+                  <Activity className="w-3 h-3 text-amber-400" />
                   50.0% Empirical Velocity Benchmark
                 </div>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-slate-950 font-hero">
-                Skills Needed More Now 🔥 vs. Skills No Longer Needed ❄️
+              <h3 className="font-signage text-3xl sm:text-4xl font-black text-stone-900 tracking-wide">
+                SKILLS NEEDED MORE NOW 🔥 VS. SUNSET SKILLS ❄️
               </h3>
-              <p className="text-xs sm:text-sm text-slate-600">
-                Classification dynamically derived from live 24h replenishment velocity (&f_TPR=r86400) vs. the 50.0% market benchmark: <strong>≥ 50% is Emerging / Needed More</strong>, while <strong>&lt; 50% is Sunset / Deprecating</strong>.
+              <p className="text-xs sm:text-sm text-stone-600 font-medium">
+                Classification dynamically derived from 24h replenishment velocity (&f_TPR=r86400) vs. the 50.0% market benchmark: <strong>≥ 50% is Emerging / Needed More</strong>, while <strong>&lt; 50% is Sunset / Deprecating</strong>.
               </p>
             </div>
 
             {/* Filter Toggle */}
             <div
               ref={skillFilterDockRef}
-              className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-100 border border-slate-200 relative"
+              className="flex items-center gap-1 p-1 rounded-xl bg-stone-900 border border-stone-800 relative font-mono-board text-xs"
             >
               {/* Sliding Active Pill Background */}
               <div
@@ -964,9 +965,9 @@ export const TrendView: React.FC = () => {
                   skillIndicatorStyle.ready ? 'opacity-100' : 'opacity-0'
                 } ${
                   skillFilter === 'surging'
-                    ? 'bg-amber-500 shadow-xs'
+                    ? 'bg-amber-400 shadow-xs'
                     : skillFilter === 'deprecating'
-                    ? 'bg-slate-800 shadow-xs'
+                    ? 'bg-stone-700 shadow-xs'
                     : 'bg-white shadow-xs'
                 }`}
                 style={{
@@ -984,11 +985,11 @@ export const TrendView: React.FC = () => {
                 onClick={() => setSkillFilter('all')}
                 className={`relative z-10 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors duration-200 cursor-pointer select-none ${
                   skillFilter === 'all'
-                    ? 'text-slate-950 font-extrabold'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'text-stone-950 font-black'
+                    : 'text-stone-300 hover:text-white'
                 }`}
               >
-                All Skills
+                ALL SKILLS
               </button>
               <button
                 ref={(el) => {
@@ -998,12 +999,12 @@ export const TrendView: React.FC = () => {
                 onClick={() => setSkillFilter('surging')}
                 className={`relative z-10 flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors duration-200 cursor-pointer select-none ${
                   skillFilter === 'surging'
-                    ? 'text-white font-extrabold'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'text-stone-950 font-black'
+                    : 'text-stone-300 hover:text-white'
                 }`}
               >
-                <Flame className={`w-3 h-3 transition-colors duration-200 ${skillFilter === 'surging' ? 'text-white' : 'text-amber-500'}`} />
-                <span>Needed More</span>
+                <Flame className={`w-3 h-3 ${skillFilter === 'surging' ? 'text-stone-950' : 'text-amber-400'}`} />
+                <span>NEEDED MORE</span>
               </button>
               <button
                 ref={(el) => {
@@ -1013,12 +1014,12 @@ export const TrendView: React.FC = () => {
                 onClick={() => setSkillFilter('deprecating')}
                 className={`relative z-10 flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors duration-200 cursor-pointer select-none ${
                   skillFilter === 'deprecating'
-                    ? 'text-white font-extrabold'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'text-white font-black'
+                    : 'text-stone-300 hover:text-white'
                 }`}
               >
-                <Snowflake className={`w-3 h-3 transition-colors duration-200 ${skillFilter === 'deprecating' ? 'text-white' : 'text-slate-500'}`} />
-                <span>Sunset / Deprecating</span>
+                <Snowflake className={`w-3 h-3 ${skillFilter === 'deprecating' ? 'text-white' : 'text-stone-400'}`} />
+                <span>SUNSET</span>
               </button>
             </div>
           </div>
@@ -1032,98 +1033,91 @@ export const TrendView: React.FC = () => {
               return (
                 <div
                   key={skill.id}
-                  className={`p-5 rounded-2xl border transition-all space-y-3.5 flex flex-col justify-between ${isSurging
-                      ? 'bg-gradient-to-br from-amber-50/40 via-white to-orange-50/30 border-amber-200/80 hover:border-amber-300'
-                      : 'bg-gradient-to-br from-slate-100/60 via-white to-slate-50/50 border-slate-200 hover:border-slate-300'
-                    }`}
+                  className={`p-5 rounded-2xl border-2 transition-all space-y-3.5 flex flex-col justify-between shadow-xs ${
+                    isSurging
+                      ? 'bg-[#FAF7F0] hover:bg-white border-stone-200 hover:border-amber-400'
+                      : 'bg-stone-50/80 hover:bg-white border-stone-200 hover:border-stone-400'
+                  }`}
                 >
                   <div className="space-y-2.5">
                     <div className="flex items-start justify-between gap-3">
                       <div className="space-y-0.5">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-slate-100 text-slate-700">
+                        <div className="flex items-center gap-1.5 font-mono-board">
+                          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-stone-900 text-stone-200">
                             {skill.category}
                           </span>
                           <span
-                            className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md ${isSurging ? 'bg-amber-100 text-amber-900' : 'bg-slate-200 text-slate-800'
-                              }`}
+                            className={`text-[10px] font-black px-2 py-0.5 rounded-md ${
+                              isSurging ? 'bg-amber-400 text-stone-950' : 'bg-stone-200 text-stone-800'
+                            }`}
                           >
                             {skill.statusTag}
                           </span>
                         </div>
-                        <h4 className="text-base font-bold text-slate-950 font-hero pt-1">
+                        <h4 className="font-signage text-xl font-black text-stone-900 tracking-wide pt-1">
                           {skill.name}
                         </h4>
                       </div>
 
                       <div
-                        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-xl text-xs font-extrabold shrink-0 ${isSurging
-                            ? 'bg-amber-50 text-amber-900 border border-amber-300 shadow-2xs'
-                            : 'bg-slate-100 text-slate-700 border border-slate-300'
-                          }`}
+                        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-xl text-xs font-mono-board font-black shrink-0 ${
+                          isSurging
+                            ? 'bg-amber-400 text-stone-950 shadow-xs'
+                            : 'bg-stone-200 text-stone-800 border border-stone-300'
+                        }`}
                       >
-                        <Flame className="w-3.5 h-3.5 text-amber-600" />
-                        <span>+{velocity}% 24h Velocity</span>
+                        <Flame className="w-3.5 h-3.5" />
+                        <span>+{velocity}% 24H</span>
                       </div>
                     </div>
 
-                    <p className="text-xs text-slate-600 leading-relaxed">
+                    <p className="text-xs text-stone-600 leading-relaxed font-medium">
                       {skill.context}
                     </p>
 
                     {/* 24h Velocity Progress bar */}
-                    <div className="space-y-1 pt-1">
+                    <div className="space-y-1 pt-1 font-mono-board">
                       <div className="flex items-center justify-between text-[11px]">
-                        <span className="text-slate-600 font-medium">Past 24 Hours Hiring Velocity:</span>
-                        <span className="font-extrabold text-slate-900">
+                        <span className="text-stone-600 font-bold">Past 24h Replenishment:</span>
+                        <span className="font-black text-stone-900">
                           {skill.past24hCountStr || `${skill.openingsMentionCount2026.toLocaleString()}+`} <span className="text-amber-700">({velocity}%)</span>
                         </span>
                       </div>
-                      <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div className="w-full h-2 bg-stone-200 rounded-full overflow-hidden">
                         <div
-                          className={`h-full rounded-full transition-all duration-500 ${isSurging
-                              ? 'bg-gradient-to-r from-amber-500 to-orange-500'
-                              : 'bg-gradient-to-r from-slate-400 to-slate-500'
-                            }`}
+                          className={`h-full rounded-full transition-all duration-500 ${
+                            isSurging
+                              ? 'bg-gradient-to-r from-amber-400 to-orange-500'
+                              : 'bg-stone-400'
+                          }`}
                           style={{ width: `${Math.min(100, velocity)}%` }}
                         />
                       </div>
                     </div>
 
-                    {/* Dynamic Empirical Benchmark Callout */}
-                    <div className="px-3 py-1.5 rounded-xl bg-slate-50/90 border border-slate-200/70 text-[11px] text-slate-600 flex flex-wrap items-center justify-between gap-1.5">
-                      <span className="font-semibold text-slate-700 flex items-center gap-1">
-                        <Activity className="w-3 h-3 text-slate-500" />
-                        Empirical Benchmark:
-                      </span>
-                      <span className={`font-mono text-[10px] font-bold px-1.5 py-0.5 rounded border ${isSurging ? 'bg-amber-50 text-amber-900 border-amber-200' : 'bg-slate-100 text-slate-700 border-slate-200'}`}>
-                        {velocity >= 50.0 ? `${velocity}% ≥ 50.0% (Emerging)` : `${velocity}% < 50.0% (Sunset)`}
-                      </span>
-                    </div>
-
                     {/* Alternative or Replacement if deprecating */}
                     {skill.alternativeOrReplacement && (
-                      <div className="p-2.5 rounded-xl bg-slate-100/90 text-[11px] text-slate-800 font-medium flex items-center gap-2 border border-slate-200">
-                        <Target className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-                        <span>{skill.alternativeOrReplacement}</span>
+                      <div className="p-2.5 rounded-xl bg-amber-50/90 text-xs font-mono-board text-stone-900 font-bold flex items-center gap-2 border border-amber-200">
+                        <Target className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                        <span>TRANSIT ALTERNATIVE: {skill.alternativeOrReplacement}</span>
                       </div>
                     )}
                   </div>
 
                   {/* LinkedIn Scraped Count & Direct Verification Links */}
-                  <div className="pt-2 border-t border-slate-200/60 flex flex-wrap items-center justify-between gap-2 text-[11px]">
-                    <div className="text-slate-600">
-                      Total Active: <strong className="text-slate-950">{skill.scrapedJobCount || `${skill.openingsMentionCount2026.toLocaleString()}+`}</strong>
+                  <div className="pt-2 border-t border-stone-200 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono-board">
+                    <div className="text-stone-600">
+                      Total Active: <strong className="text-stone-950 font-black">{skill.scrapedJobCount || `${skill.openingsMentionCount2026.toLocaleString()}+`}</strong>
                     </div>
 
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 font-bold">
                       {skill.linkedinSearch24hUrl && (
                         <a
                           href={skill.linkedinSearch24hUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1 text-amber-700 hover:text-amber-900 font-bold hover:underline"
-                          title={`Verify 24h postings on LinkedIn (&f_TPR=r86400)`}
+                          className="inline-flex items-center gap-1 text-amber-700 hover:text-amber-900"
+                          title="Verify 24h postings on LinkedIn"
                         >
                           <span>24h Influx ({skill.past24hCountStr})</span>
                           <ExternalLink className="w-3 h-3" />
@@ -1134,8 +1128,8 @@ export const TrendView: React.FC = () => {
                           href={skill.linkedinSearchUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 font-bold hover:underline"
-                          title={`View all active postings on LinkedIn`}
+                          className="inline-flex items-center gap-1 text-stone-900 hover:text-amber-600"
+                          title="View all active postings on LinkedIn"
                         >
                           <span>All Active</span>
                           <ExternalLink className="w-3 h-3" />
@@ -1150,87 +1144,87 @@ export const TrendView: React.FC = () => {
         </section>
       )}
 
-      {/* Bottom Source Date Range & Provenance Note */}
-      <div className="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 py-4 px-2 border-t border-slate-200/80 gap-2">
+      {/* ── 8. BOTTOM SOURCE PROVENANCE FOOTNOTE ── */}
+      <div className="flex flex-col sm:flex-row items-center justify-between text-xs font-mono-board text-stone-500 py-4 px-2 border-t border-stone-300 gap-2">
         <div className="flex items-center gap-2">
-          <Info className="w-4 h-4 text-blue-600 shrink-0" />
+          <Info className="w-4 h-4 text-amber-600 shrink-0" />
           <span>
-            <strong>Data Source &amp; Range:</strong> LinkedIn Worldwide Public Postings • {sourceDateFormatted.fullRange} active listings (with rolling 24-hr &amp; 7-day velocity metrics)
+            <strong>TELEMETRY SOURCE:</strong> LinkedIn Worldwide Public Postings • {sourceDateFormatted.fullRange} active listings (rolling 24-hr &amp; 7-day velocity metrics)
           </span>
         </div>
-        <span className="text-slate-400 text-[11px] shrink-0">
+        <span className="text-stone-400 text-[11px] shrink-0 font-bold">
           Last Synced: {lastScrapedAt}
         </span>
       </div>
 
-      {/* 8. ROLE DETAILS MODAL / DRAWER WITH REAL SCRAPED POSTINGS */}
+      {/* ── 9. ROLE DETAILS MODAL / DOSSIER (CARTOGRAPHIC LIGHT TRANSIT STYLE) ── */}
       {selectedRoleForModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-3xl max-h-[90vh] bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-y-auto p-6 sm:p-8 space-y-6 custom-scrollbar">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/70 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="relative w-full max-w-3xl max-h-[90vh] bg-[#FAF7F0] rounded-3xl shadow-2xl border-2 border-stone-300 overflow-y-auto p-6 sm:p-8 space-y-6 custom-scrollbar">
             {/* Modal Close Button */}
             <button
               type="button"
               onClick={() => setSelectedRoleForModal(null)}
-              className="absolute top-5 right-5 p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors cursor-pointer"
+              className="absolute top-5 right-5 p-2 rounded-full bg-stone-200 hover:bg-stone-300 text-stone-800 transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
 
             {/* Header */}
             <div className="space-y-2 pr-8">
-              <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-100 text-blue-800">
+              <div className="flex items-center gap-2 flex-wrap font-mono-board">
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-black uppercase tracking-wider bg-stone-900 text-amber-300">
                   {selectedRoleForModal.category}
                 </span>
-                <span className="text-xs font-semibold text-slate-500">
-                  Rank #{selectedRoleForModal.rank2026} on LinkedIn
+                <span className="text-xs font-bold text-stone-500">
+                  RANK #{selectedRoleForModal.rank2026} ON LINKEDIN
                 </span>
                 {selectedRoleForModal.linkedinSearchUrl && (
                   <a
                     href={selectedRoleForModal.linkedinSearchUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:underline ml-auto"
+                    className="inline-flex items-center gap-1 text-xs font-bold text-amber-700 hover:underline ml-auto"
                   >
                     <span>View Search on LinkedIn</span>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 )}
               </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-950 font-hero">
-                {selectedRoleForModal.title}
+              <h3 className="font-signage text-3xl sm:text-4xl font-black text-stone-900 tracking-wide">
+                {selectedRoleForModal.title.toUpperCase()}
               </h3>
-              <p className="text-sm text-slate-600">
+              <p className="text-sm text-stone-600 font-medium leading-relaxed">
                 {selectedRoleForModal.whyItMatters}
               </p>
             </div>
 
             {/* Real Scraped Job Postings List */}
             {selectedRoleForModal.recentPostings && selectedRoleForModal.recentPostings.length > 0 && (
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
-                <div className="flex items-center justify-between text-xs font-bold text-slate-800">
+              <div className="p-4 rounded-2xl bg-white border border-stone-200 space-y-2.5 font-mono-board">
+                <div className="flex items-center justify-between text-xs font-bold text-stone-900">
                   <span className="flex items-center gap-1.5">
                     <Globe className="w-4 h-4 text-emerald-600" />
-                    Real Postings Scraped Live from LinkedIn
+                    REAL POSTINGS SCRAPED LIVE FROM LINKEDIN
                   </span>
-                  <span className="text-slate-500 font-mono text-[11px]">
-                    Query: "{selectedRoleForModal.searchKeyword}"
+                  <span className="text-stone-500 text-[11px]">
+                    Keyword: "{selectedRoleForModal.searchKeyword}"
                   </span>
                 </div>
 
                 <div className="space-y-2">
                   {selectedRoleForModal.recentPostings.map((p, idx) => (
-                    <div key={idx} className="p-3 rounded-xl bg-white border border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:border-blue-300 transition-colors">
+                    <div key={idx} className="p-3 rounded-xl bg-[#FAF7F0] border border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:border-amber-400 transition-colors">
                       <div className="space-y-0.5 min-w-0">
-                        <div className="font-bold text-xs text-slate-900 truncate">{p.title}</div>
-                        <div className="flex items-center gap-2 text-[11px] text-slate-500">
-                          <span className="flex items-center gap-1 text-slate-700 font-medium">
-                            <Building2 className="w-3 h-3 text-slate-400" />
+                        <div className="font-bold text-xs text-stone-900 truncate">{p.title}</div>
+                        <div className="flex items-center gap-2 text-[11px] text-stone-500">
+                          <span className="flex items-center gap-1 text-stone-700 font-medium">
+                            <Building2 className="w-3 h-3 text-stone-400" />
                             {p.company}
                           </span>
                           <span>•</span>
                           <span className="flex items-center gap-1">
-                            <MapPin className="w-3 h-3 text-slate-400" />
+                            <MapPin className="w-3 h-3 text-stone-400" />
                             {p.location}
                           </span>
                         </div>
@@ -1240,10 +1234,9 @@ export const TrendView: React.FC = () => {
                         href={p.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold flex items-center gap-1 shrink-0 transition-colors"
+                        className="px-3 py-1.5 rounded-lg bg-stone-900 hover:bg-black text-white text-xs font-bold flex items-center gap-1 shrink-0 transition-colors shadow-xs"
                       >
-                        <span>View Job on LinkedIn</span>
-                        <ExternalLink className="w-3 h-3" />
+                        <span>View Job ↗</span>
                       </a>
                     </div>
                   ))}
@@ -1252,191 +1245,63 @@ export const TrendView: React.FC = () => {
             )}
 
             {/* Live LinkedIn Velocity Stats Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-2xl bg-white border border-stone-200 font-mono-board">
               <div>
-                <div className="text-[10px] font-bold uppercase text-slate-500">Total Active</div>
-                <div className="text-lg font-bold text-slate-900 mt-0.5">
+                <div className="text-[10px] font-bold uppercase text-stone-500">Total Active</div>
+                <div className="font-signage text-2xl font-black text-stone-900 mt-0.5">
                   {selectedRoleForModal.openings2026.toLocaleString()}
                 </div>
               </div>
               <div>
-                <div className="text-[10px] font-bold uppercase text-indigo-700">Past 7 Days (7d)</div>
-                <div className="text-lg font-bold text-indigo-950 mt-0.5">
+                <div className="text-[10px] font-bold uppercase text-purple-700">Past 7 Days</div>
+                <div className="font-signage text-2xl font-black text-purple-800 mt-0.5">
                   {selectedRoleForModal.past7dCountStr || '30,000+'}
                 </div>
               </div>
               <div>
-                <div className="text-[10px] font-bold uppercase text-amber-700">24h Velocity Index</div>
-                <div className="text-lg font-extrabold text-emerald-600 mt-0.5">
+                <div className="text-[10px] font-bold uppercase text-amber-700">24h Velocity</div>
+                <div className="font-signage text-2xl font-black text-emerald-700 mt-0.5">
                   +{selectedRoleForModal.velocityRate24h ?? 40}%
                 </div>
               </div>
               <div>
-                <div className="text-[10px] font-bold uppercase text-purple-700">AI Exposure</div>
-                <div className="text-lg font-bold text-purple-700 mt-0.5">
+                <div className="text-[10px] font-bold uppercase text-stone-500">AI Exposure</div>
+                <div className="font-signage text-2xl font-black text-stone-900 mt-0.5">
                   {selectedRoleForModal.aiExposure.overallPercentage}%
                 </div>
               </div>
             </div>
 
-            {/* Direct LinkedIn Query Verification Links */}
-            <div className="p-3.5 rounded-2xl bg-blue-50/70 border border-blue-200/80 space-y-2">
-              <div className="text-[10px] font-bold uppercase tracking-wider text-blue-900 flex items-center justify-between">
-                <span>Direct Live LinkedIn Search Queries:</span>
-                <span className="text-emerald-700 font-semibold font-mono text-[10px]">Verified Live</span>
-              </div>
-              <div className="grid grid-cols-3 gap-2">
-                <a
-                  href={selectedRoleForModal.linkedinSearchUrl || `https://www.linkedin.com/jobs/search?keywords=${encodeURIComponent(selectedRoleForModal.searchKeyword || selectedRoleForModal.title)}&location=Worldwide`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-2.5 py-2 rounded-xl bg-white hover:bg-blue-100 text-blue-900 border border-blue-200 text-center transition-colors shadow-2xs"
-                >
-                  <div className="text-[9px] uppercase font-bold text-blue-700 flex items-center justify-center gap-1">
-                    <span>All Active</span>
-                    <ExternalLink className="w-2.5 h-2.5" />
-                  </div>
-                  <div className="font-extrabold text-xs text-slate-900 mt-0.5">
-                    {selectedRoleForModal.scrapedCountString || '35,000+'}
-                  </div>
-                </a>
-                <a
-                  href={selectedRoleForModal.linkedinSearch7dUrl || `https://www.linkedin.com/jobs/search?keywords=${encodeURIComponent(selectedRoleForModal.searchKeyword || selectedRoleForModal.title)}&location=Worldwide&f_TPR=r604800`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-2.5 py-2 rounded-xl bg-white hover:bg-indigo-100 text-indigo-900 border border-indigo-200 text-center transition-colors shadow-2xs"
-                >
-                  <div className="text-[9px] uppercase font-bold text-indigo-700 flex items-center justify-center gap-1">
-                    <span>Past 7 Days</span>
-                    <ExternalLink className="w-2.5 h-2.5" />
-                  </div>
-                  <div className="font-extrabold text-xs text-indigo-950 mt-0.5">
-                    {selectedRoleForModal.past7dCountStr || '30,000+'}
-                  </div>
-                </a>
-                <a
-                  href={selectedRoleForModal.linkedinSearch24hUrl || `https://www.linkedin.com/jobs/search?keywords=${encodeURIComponent(selectedRoleForModal.searchKeyword || selectedRoleForModal.title)}&location=Worldwide&f_TPR=r86400`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-2.5 py-2 rounded-xl bg-white hover:bg-amber-100 text-amber-950 border border-amber-300 text-center transition-colors shadow-2xs"
-                >
-                  <div className="text-[9px] uppercase font-bold text-amber-800 flex items-center justify-center gap-1">
-                    <span>Past 24 Hours</span>
-                    <ExternalLink className="w-2.5 h-2.5" />
-                  </div>
-                  <div className="font-extrabold text-xs text-amber-900 mt-0.5">
-                    {selectedRoleForModal.past24hCountStr || '17,000+'}
-                  </div>
-                </a>
-              </div>
-            </div>
-
             {/* Entry-Level Accessibility */}
-            <div className="space-y-3">
-              <h5 className="text-sm font-bold uppercase tracking-wider text-slate-900 flex items-center gap-1.5">
+            <div className="space-y-2">
+              <h5 className="font-mono-board text-xs font-black uppercase tracking-wider text-stone-900 flex items-center gap-1.5">
                 <Users className="w-4 h-4 text-emerald-600" />
-                Entry-Level Access & Hiring Barrier
+                ENTRY-LEVEL CLEARANCE &amp; BARRIERS
               </h5>
-              <div className="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-200/70 space-y-2">
-                <div className="flex items-center justify-between text-xs font-bold text-slate-800">
-                  <span>Accessibility Score: {selectedRoleForModal.entryLevelAccess.score}/100</span>
-                  <span className="text-emerald-800 font-extrabold">{selectedRoleForModal.entryLevelAccess.levelLabel}</span>
+              <div className="p-4 rounded-2xl bg-white border border-stone-200 space-y-2 font-mono-board">
+                <div className="flex items-center justify-between text-xs font-bold text-stone-900">
+                  <span>Accessibility Rating: {selectedRoleForModal.entryLevelAccess.score}/100</span>
+                  <span className="text-emerald-800 font-black">{selectedRoleForModal.entryLevelAccess.levelLabel}</span>
                 </div>
-                <p className="text-xs text-slate-700 leading-relaxed">
+                <p className="text-xs text-stone-600 leading-relaxed font-sans font-medium">
                   {selectedRoleForModal.entryLevelAccess.insight}
                 </p>
-                <div className="flex items-center gap-3 text-xs pt-1">
-                  <span>Junior (0-2 yrs): <strong>{selectedRoleForModal.entryLevelAccess.breakdown.entryLevel}%</strong></span>
-                  <span>Mid (3-5 yrs): <strong>{selectedRoleForModal.entryLevelAccess.breakdown.midLevel}%</strong></span>
-                  <span>Senior (5+ yrs): <strong>{selectedRoleForModal.entryLevelAccess.breakdown.seniorLead}%</strong></span>
+                <div className="flex items-center gap-3 text-xs pt-1 border-t border-stone-100">
+                  <span>Junior (0-2y): <strong>{selectedRoleForModal.entryLevelAccess.breakdown.entryLevel}%</strong></span>
+                  <span>Mid (3-5y): <strong>{selectedRoleForModal.entryLevelAccess.breakdown.midLevel}%</strong></span>
+                  <span>Senior (5y+): <strong>{selectedRoleForModal.entryLevelAccess.breakdown.seniorLead}%</strong></span>
                 </div>
               </div>
             </div>
-
-            {/* Key Technology Requirements & Skill Frequency */}
-            <div className="space-y-3">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200/80 pb-2">
-                <div className="space-y-0.5">
-                  <h5 className="text-sm font-bold uppercase tracking-wider text-slate-950 flex items-center gap-1.5">
-                    <Cpu className="w-4 h-4 text-indigo-600" />
-                    Key Technology Requirements & Skill Frequency
-                  </h5>
-                  <p className="text-[11px] text-slate-500">
-                    Key technologies and frameworks across active {selectedRoleForModal.title} requisitions.
-                  </p>
-                </div>
-                <div className="text-[10px] font-bold text-indigo-800 bg-indigo-50 border border-indigo-200 px-2.5 py-1 rounded-full shrink-0">
-                  {selectedRoleForModal.minedSkills?.length || 0} Key Technologies
-                </div>
-              </div>
-
-              {/* Mined Technology Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {selectedRoleForModal.minedSkills?.map((skill) => (
-                  <div
-                    key={skill.name}
-                    className="p-3 rounded-2xl bg-slate-50/80 border border-slate-200 hover:border-indigo-300 transition-all flex flex-col justify-between gap-2"
-                  >
-                    <div className="space-y-1.5">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="text-xs font-bold text-slate-900">{skill.name}</span>
-                        <span
-                          className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${skill.category === 'Language'
-                              ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                              : skill.category === 'Data & Lakehouse'
-                                ? 'bg-amber-50 text-amber-700 border border-amber-200'
-                                : skill.category === 'Cloud & Infra'
-                                  ? 'bg-cyan-50 text-cyan-700 border border-cyan-200'
-                                  : skill.category === 'AI & Frameworks'
-                                    ? 'bg-purple-50 text-purple-700 border border-purple-200'
-                                    : skill.category === 'DevOps & Tooling'
-                                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                                      : 'bg-rose-50 text-rose-700 border border-rose-200'
-                            }`}
-                        >
-                          {skill.category}
-                        </span>
-                      </div>
-
-                      <div className="space-y-1">
-                        <div className="flex items-center justify-between text-[11px]">
-                          <span className="font-extrabold text-indigo-700">{skill.occurrencePct}% occurrence</span>
-                          <span className="text-slate-500 text-[10px]">{skill.countStr}</span>
-                        </div>
-                        <div className="w-full h-1.5 bg-slate-200/80 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full transition-all duration-500"
-                            style={{ width: `${skill.occurrencePct}%` }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <a
-                      href={skill.linkedinSearchUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-between px-2.5 py-1 rounded-lg text-[10px] font-bold text-sky-700 bg-white hover:bg-sky-50 border border-sky-200 transition-colors"
-                      title={`Verify ${selectedRoleForModal.title} + ${skill.name} live on LinkedIn`}
-                    >
-                      <span>Verify {skill.countStr}</span>
-                      <ExternalLink className="w-3 h-3 text-sky-600" />
-                    </a>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-
 
             {/* Footer Action */}
             <div className="pt-2 flex justify-end">
               <button
                 type="button"
                 onClick={() => setSelectedRoleForModal(null)}
-                className="px-6 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all cursor-pointer"
+                className="px-6 py-2.5 rounded-xl bg-stone-900 hover:bg-black text-white font-mono-board text-xs font-black tracking-wider transition-all cursor-pointer shadow-sm"
               >
-                Close Role Dossier
+                Close Station Dossier
               </button>
             </div>
           </div>
