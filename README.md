@@ -10,9 +10,9 @@
 | ---------------------- | ----------------------------------------------------------------------- |
 | **Team Name**          | JobTransit                                                              |
 | **Team Domain**        | Domain 1 — AI, Smart Society & Future of Work                           |
-| **SDG Track (1–17)**   | **SDG 4 — Quality education** *(Target 4.4)*        |
-|    | **SDG 8 — Decent Work and Economic Growth** *(Target 8.5 & 8.6)*        |
-| **Team Leader**        | Evelyn Ang                                                            |
+| **SDG Track (1–17)**   | **SDG 4 — Quality education** *(Target 4.4)*                            |
+|    | **SDG 8 — Decent Work and Economic Growth** *(Target 8.5 & 8.6)*                            |
+| **Team Leader**        | Evelyn Ang                                                              |
 | **University**         | Universiti Teknologi Malaysia (UTM)                                     |
 | **Number of Members**  | 5                                                                       |
 
@@ -22,10 +22,8 @@
 | ----------------- | ------------------------------------------------------------------------- |
 | GitHub Repository | [https://github.com/yaotingchun/JobTransit](https://github.com/yaotingchun/JobTransit) |
 | Live Demo         | [https://jobtransit.replit.app](https://jobtransit.replit.app)             |
-| RunPod Endpoint   | [https://api.runpod.ai/v2/44z9b2xk1m8q0v](https://api.runpod.ai/v2/44z9b2xk1m8q0v) |
 | Slide Deck        | [https://example.com/jobtransit-slides](https://example.com/jobtransit-slides) *(Replace with pitch deck link)* |
 | Demo Video        | [https://example.com/jobtransit-video](https://example.com/jobtransit-video) *(Replace with video link)* |
-
 ---
 
 ## Overview
@@ -116,7 +114,7 @@ JobTransit/
 ```
                                   ┌──────────────────────────────────────────────┐
                                   │                  User Browser                │
-                                  │    React 19 + TypeScript + 3D Glassmorphism   │
+                                  │    React 19 + TypeScript + 3D Glassmorphism  │
                                   └───────┬───────────────────────────────▲──────┘
                                           │                               │
                       1. Upload Resume /  │                               │ 6. Render Metro Lines,
