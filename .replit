@@ -1,7 +1,13 @@
-modules = ["nodejs-20", "web"]
+modules = ["nodejs-22", "web"]
+run = "npm run dev"
 
 [nix]
 channel = "stable-25_05"
 
 [agent]
 expertMode = true
+
+[deployment]
+deploymentTarget = "static"
+build = ["npm", "run", "build"]
+publicDir = "dist"
