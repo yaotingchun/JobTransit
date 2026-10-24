@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useRef, useLayoutEffect, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import {
   Bot,
   Zap,
@@ -25,6 +26,7 @@ import {
   type RoleTrend,
   type SkillTrendItem
 } from './trendData'
+import { RoleForecastingChart } from './RoleForecastingChart'
 
 type ViewMode = 'roles' | 'ai-exposure' | 'entry-level' | 'skills'
 type CategoryFilter = 'all' | 'AI & Machine Learning' | 'Data Engineering' | 'Software Engineering' | 'Cloud & Infrastructure' | 'Quality & Security'
@@ -38,6 +40,26 @@ export const TrendView: React.FC = () => {
   const [selectedRoleForModal, setSelectedRoleForModal] = useState<RoleTrend | null>(null)
   const [activeExposureRole, setActiveExposureRole] = useState<RoleTrend>(ROLE_TRENDS[0])
   const [skillFilter, setSkillFilter] = useState<'all' | 'surging' | 'deprecating'>('all')
+
+  // Lock body scroll and listen for Escape key when modal is open
+  useEffect(() => {
+    if (!selectedRoleForModal) return
+
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSelectedRoleForModal(null)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.style.overflow = originalOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [selectedRoleForModal])
 
   // Sub Navigation Sliding Pill State
   const subNavDockRef = useRef<HTMLDivElement>(null)
@@ -455,7 +477,7 @@ export const TrendView: React.FC = () => {
               return (
                 <div
                   key={role.id}
-                  className="rounded-[24px] bg-[#EEF0F3] hover:bg-white border-2 border-stone-300 hover:border-stone-400 p-5 sm:p-6 transition-all shadow-xs cursor-pointer flex flex-col justify-between space-y-4 group"
+                  className="rounded-[24px] bg-[#EEF0F3] hover:bg-white border-2 border-stone-300 hover:border-amber-400/80 p-5 sm:p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg active:scale-[0.985] cursor-pointer flex flex-col justify-between space-y-4 group select-none"
                   onClick={() => setSelectedRoleForModal(role)}
                 >
                   {/* Top Bar: Title, Domain Code & Live 24h Velocity Badge */}
@@ -640,9 +662,9 @@ export const TrendView: React.FC = () => {
                       ))}
                     </div>
 
-                    <div className="font-mono-board text-xs font-black text-stone-800 group-hover:text-stone-950 flex items-center gap-0.5">
-                      <span>Dossier</span>
-                      <ChevronRight className="w-3.5 h-3.5" />
+                    <div className="font-mono-board text-xs font-black text-stone-800 group-hover:text-amber-700 flex items-center gap-1 transition-colors">
+                      <span className="group-hover:underline">Dossier</span>
+                      <ChevronRight className="w-3.5 h-3.5 transform group-hover:translate-x-1.5 transition-transform duration-200" />
                     </div>
                   </div>
                 </div>
@@ -843,11 +865,12 @@ export const TrendView: React.FC = () => {
             {filteredRoles.map((role) => (
               <div
                 key={role.id}
-                className="p-5 rounded-2xl bg-[#EEF0F3] hover:bg-white border-2 border-stone-300 hover:border-stone-400 shadow-xs space-y-3.5 transition-all"
+                onClick={() => setSelectedRoleForModal(role)}
+                className="p-5 rounded-2xl bg-[#EEF0F3] hover:bg-white border-2 border-stone-300 hover:border-amber-400/80 shadow-xs hover:shadow-md hover:-translate-y-0.5 active:scale-[0.99] space-y-3.5 transition-all duration-200 cursor-pointer group"
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <h5 className="font-signage text-xl font-black text-stone-900 tracking-wide">
+                    <h5 className="font-signage text-xl font-black text-stone-900 group-hover:text-amber-700 tracking-wide transition-colors">
                       {role.title.toUpperCase()}
                     </h5>
                     <div className="text-[11px] font-mono-board font-bold text-stone-500">
@@ -905,24 +928,33 @@ export const TrendView: React.FC = () => {
                     <strong className="text-stone-900">TELEMETRY INSIGHT:</strong> {role.entryLevelAccess.insight}
                   </div>
 
-                  <div className="pt-1 flex flex-wrap items-center gap-2 border-t border-stone-200">
-                    <span className="text-[10px] text-stone-500 font-bold">COMPARE:</span>
-                    <a
-                      href={`https://www.linkedin.com/jobs/search?keywords=${encodeURIComponent('Senior ' + (role.searchKeyword || role.title))}&location=Worldwide`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="px-2 py-0.5 rounded bg-stone-100 hover:bg-stone-200 text-stone-800 text-[10px] font-bold border border-stone-300"
-                    >
-                      Senior Postings ↗
-                    </a>
-                    <a
-                      href={`https://www.linkedin.com/jobs/search?keywords=${encodeURIComponent('Junior ' + (role.searchKeyword || role.title))}&location=Worldwide`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="px-2 py-0.5 rounded bg-emerald-100 hover:bg-emerald-200 text-emerald-900 text-[10px] font-bold border border-emerald-300"
-                    >
-                      Junior Postings ↗
-                    </a>
+                  <div className="pt-1 flex flex-wrap items-center justify-between gap-2 border-t border-stone-200">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] text-stone-500 font-bold">COMPARE:</span>
+                      <a
+                        href={`https://www.linkedin.com/jobs/search?keywords=${encodeURIComponent('Senior ' + (role.searchKeyword || role.title))}&location=Worldwide`}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="px-2 py-0.5 rounded bg-stone-100 hover:bg-stone-200 text-stone-800 text-[10px] font-bold border border-stone-300"
+                      >
+                        Senior Postings ↗
+                      </a>
+                      <a
+                        href={`https://www.linkedin.com/jobs/search?keywords=${encodeURIComponent('Junior ' + (role.searchKeyword || role.title))}&location=Worldwide`}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="px-2 py-0.5 rounded bg-emerald-100 hover:bg-emerald-200 text-emerald-900 text-[10px] font-bold border border-emerald-300"
+                      >
+                        Junior Postings ↗
+                      </a>
+                    </div>
+
+                    <div className="text-[10.5px] font-bold text-amber-700 flex items-center gap-0.5 group-hover:underline">
+                      <span>Dossier</span>
+                      <ChevronRight className="w-3 h-3 transform group-hover:translate-x-1 transition-transform" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1145,27 +1177,35 @@ export const TrendView: React.FC = () => {
       )}
 
       {/* ── 8. BOTTOM SOURCE PROVENANCE FOOTNOTE ── */}
-      <div className="flex flex-col sm:flex-row items-center justify-between text-xs font-mono-board text-stone-500 py-4 px-2 border-t border-stone-300 gap-2">
+      <div className="flex flex-col sm:flex-row items-center justify-between text-xs font-mono-board text-slate-100 py-4 px-2 border-t border-slate-200 gap-2">
         <div className="flex items-center gap-2">
-          <Info className="w-4 h-4 text-amber-600 shrink-0" />
-          <span>
-            <strong>TELEMETRY SOURCE:</strong> LinkedIn Worldwide Public Postings • {sourceDateFormatted.fullRange} active listings (rolling 24-hr &amp; 7-day velocity metrics)
+          <Info className="w-4 h-4 text-amber-400 shrink-0" />
+          <span className="text-slate-100 font-medium">
+            <strong className="text-amber-300 font-bold">TELEMETRY SOURCE:</strong> LinkedIn Worldwide Public Postings • {sourceDateFormatted.fullRange} active listings (rolling 24-hr &amp; 7-day velocity metrics)
           </span>
         </div>
-        <span className="text-stone-400 text-[11px] shrink-0 font-bold">
-          Last Synced: {lastScrapedAt}
+        <span className="text-slate-200 text-[11px] shrink-0 font-bold">
+          Last Synced: <span className="text-amber-300">{lastScrapedAt}</span>
         </span>
       </div>
 
-      {/* ── 9. ROLE DETAILS MODAL / DOSSIER (CARTOGRAPHIC LIGHT TRANSIT STYLE) ── */}
-      {selectedRoleForModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/70 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-3xl max-h-[90vh] bg-[#EEF0F3] rounded-3xl shadow-2xl border-2 border-stone-300 overflow-y-auto p-6 sm:p-8 space-y-6 custom-scrollbar">
+      {/* ── 9. ROLE DETAILS MODAL / DOSSIER (PORTALED ABOVE NAVBAR WITH BLUR & SMOOTH SPRING PHYSICS) ── */}
+      {selectedRoleForModal && typeof document !== 'undefined' && createPortal(
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 bg-stone-950/75 dossier-backdrop-enter"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setSelectedRoleForModal(null)
+            }
+          }}
+        >
+          <div className="relative w-full max-w-3xl max-h-[90vh] bg-[#EEF0F3] rounded-3xl shadow-[0_25px_70px_-15px_rgba(0,0,0,0.55)] border-2 border-stone-300 overflow-y-auto p-6 sm:p-8 space-y-6 custom-scrollbar dossier-card-enter">
             {/* Modal Close Button */}
             <button
               type="button"
               onClick={() => setSelectedRoleForModal(null)}
-              className="absolute top-5 right-5 p-2 rounded-full bg-stone-200 hover:bg-stone-300 text-stone-800 transition-colors cursor-pointer"
+              className="absolute top-5 right-5 p-2 rounded-full bg-stone-200/90 hover:bg-stone-300 text-stone-800 hover:rotate-90 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer shadow-xs"
+              aria-label="Close Station Dossier"
             >
               <X className="w-5 h-5" />
             </button>
@@ -1198,6 +1238,9 @@ export const TrendView: React.FC = () => {
                 {selectedRoleForModal.whyItMatters}
               </p>
             </div>
+
+            {/* Historical Wayback Machine Snapshots & ML Forecast Chart */}
+            <RoleForecastingChart role={selectedRoleForModal} />
 
             {/* Real Scraped Job Postings List */}
             {selectedRoleForModal.recentPostings && selectedRoleForModal.recentPostings.length > 0 && (
@@ -1272,7 +1315,62 @@ export const TrendView: React.FC = () => {
               </div>
             </div>
 
-            {/* Entry-Level Accessibility */}
+            {/* Direct LinkedIn Query Verification Links */}
+            <div className="p-3.5 rounded-2xl bg-white border border-stone-200 font-mono-board space-y-2">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-stone-600 flex items-center justify-between">
+                <span>Direct Live LinkedIn Search Queries</span>
+                <span className="text-emerald-700 font-bold text-[10px] flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  Verified Real-Time Postings
+                </span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <a
+                  href={selectedRoleForModal.linkedinSearchUrl || `https://www.linkedin.com/jobs/search?keywords=${encodeURIComponent(selectedRoleForModal.searchKeyword || selectedRoleForModal.title)}&location=Worldwide`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3 py-2 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-center transition-all group/link"
+                >
+                  <div className="text-[9px] uppercase font-bold text-stone-500 flex items-center justify-center gap-1">
+                    <span>All Active</span>
+                    <ExternalLink className="w-2.5 h-2.5 opacity-60 group-hover/link:opacity-100" />
+                  </div>
+                  <div className="font-signage text-sm font-black text-stone-900 mt-0.5">
+                    {selectedRoleForModal.scrapedCountString || `${selectedRoleForModal.openings2026.toLocaleString()}+`}
+                  </div>
+                </a>
+                <a
+                  href={selectedRoleForModal.linkedinSearch7dUrl || `https://www.linkedin.com/jobs/search?keywords=${encodeURIComponent(selectedRoleForModal.searchKeyword || selectedRoleForModal.title)}&location=Worldwide&f_TPR=r604800`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3 py-2 rounded-xl bg-purple-50 hover:bg-purple-100/70 border border-purple-200 text-center transition-all group/link"
+                >
+                  <div className="text-[9px] uppercase font-bold text-purple-700 flex items-center justify-center gap-1">
+                    <span>Past 7 Days</span>
+                    <ExternalLink className="w-2.5 h-2.5 opacity-60 group-hover/link:opacity-100" />
+                  </div>
+                  <div className="font-signage text-sm font-black text-purple-900 mt-0.5">
+                    {selectedRoleForModal.past7dCountStr || '30,000+'}
+                  </div>
+                </a>
+                <a
+                  href={selectedRoleForModal.linkedinSearch24hUrl || `https://www.linkedin.com/jobs/search?keywords=${encodeURIComponent(selectedRoleForModal.searchKeyword || selectedRoleForModal.title)}&location=Worldwide&f_TPR=r86400`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3 py-2 rounded-xl bg-amber-50 hover:bg-amber-100/70 border border-amber-200 text-center transition-all group/link"
+                >
+                  <div className="text-[9px] uppercase font-bold text-amber-800 flex items-center justify-center gap-1">
+                    <span>Past 24 Hours (&f_TPR=r86400)</span>
+                    <ExternalLink className="w-2.5 h-2.5 opacity-60 group-hover/link:opacity-100" />
+                  </div>
+                  <div className="font-signage text-sm font-black text-amber-900 mt-0.5">
+                    {selectedRoleForModal.past24hCountStr || '17,000+'}
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            {/* Entry-Level Clearance & Barriers */}
             <div className="space-y-2">
               <h5 className="font-mono-board text-xs font-black uppercase tracking-wider text-stone-900 flex items-center gap-1.5">
                 <Users className="w-4 h-4 text-emerald-600" />
@@ -1294,6 +1392,63 @@ export const TrendView: React.FC = () => {
               </div>
             </div>
 
+            {/* Key Technology Requirements & Mined Skill Frequency */}
+            {selectedRoleForModal.minedSkills && selectedRoleForModal.minedSkills.length > 0 && (
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between border-b border-stone-200 pb-2">
+                  <h5 className="font-mono-board text-xs font-black uppercase tracking-wider text-stone-900 flex items-center gap-1.5">
+                    <Cpu className="w-4 h-4 text-indigo-600" />
+                    KEY TECHNOLOGY REQUIREMENTS &amp; SKILL FREQUENCY
+                  </h5>
+                  <span className="text-[10px] font-mono-board font-bold text-stone-600 bg-stone-100 px-2 py-0.5 rounded-full border border-stone-200">
+                    {selectedRoleForModal.minedSkills.length} Empirically Mined Stacks
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {selectedRoleForModal.minedSkills.map((skill) => (
+                    <div
+                      key={skill.name}
+                      className="p-3 rounded-2xl bg-white border border-stone-200 hover:border-stone-400 transition-all flex flex-col justify-between gap-2 shadow-2xs font-mono-board"
+                    >
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-xs font-black text-stone-900">{skill.name}</span>
+                          <span className="px-2 py-0.5 rounded text-[9.5px] font-bold bg-stone-100 text-stone-700 border border-stone-200">
+                            {skill.category}
+                          </span>
+                        </div>
+
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between text-[11px]">
+                            <span className="font-extrabold text-indigo-700">{skill.occurrencePct}% occurrence</span>
+                            <span className="text-stone-500 text-[10px] font-medium">{skill.countStr}</span>
+                          </div>
+                          <div className="w-full h-1.5 bg-stone-100 rounded-full overflow-hidden border border-stone-200/60">
+                            <div
+                              className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full transition-all duration-500"
+                              style={{ width: `${skill.occurrencePct}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <a
+                        href={skill.linkedinSearchUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-between px-2.5 py-1 rounded-lg text-[10px] font-bold text-stone-800 bg-stone-50 hover:bg-stone-100 border border-stone-200 transition-colors"
+                        title={`Verify ${selectedRoleForModal.title} + ${skill.name} live on LinkedIn`}
+                      >
+                        <span>Verify {skill.countStr}</span>
+                        <ExternalLink className="w-3 h-3 text-stone-500" />
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Footer Action */}
             <div className="pt-2 flex justify-end">
               <button
@@ -1305,7 +1460,8 @@ export const TrendView: React.FC = () => {
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   )

@@ -514,4 +514,134 @@ body,
     0 0 0 1px rgba(15, 23, 42, 0.08);
 }
 
+/* Station Dossier Modal Smooth Entrance Animations */
+@keyframes dossierBackdropIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+}
+
+@keyframes dossierCardEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.93) translateY(28px);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(1.008) translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.dossier-backdrop-enter {
+  animation: dossierBackdropIn 280ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.dossier-card-enter {
+  animation: dossierCardEntrance 360ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+/* Telemetry Chart Synchronized Sweep & Unfurl Animations */
+@keyframes chartTelemetrySweep {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    clip-path: inset(0 0% 0 0);
+  }
+}
+
+@keyframes chartForecastSweep {
+  0% {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0 0% 0 0);
+  }
+}
+
+@keyframes beaconRadarWave {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(3.5);
+    opacity: 0;
+  }
+}
+
+.chart-sweep-enter {
+  animation: chartTelemetrySweep 750ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: clip-path;
+}
+
+/* Forecast appears LAST: 700ms delay on initial entrance so historical timeline finishes first */
+.chart-forecast-delayed {
+  animation: chartForecastSweep 450ms cubic-bezier(0.16, 1, 0.3, 1) 700ms both;
+  will-change: clip-path, opacity;
+}
+
+/* Instant smooth sweep when toggling +4W, +8W, +12W horizons */
+.chart-forecast-immediate {
+  animation: chartForecastSweep 380ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: clip-path, opacity;
+}
+
+@keyframes terminalNodePop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.4);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.chart-terminal-node {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: terminalNodePop 350ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes labelFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chart-label-delayed {
+  animation: labelFadeIn 350ms cubic-bezier(0.16, 1, 0.3, 1) 750ms both;
+}
+
+.chart-beacon-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: beaconRadarWave 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  pointer-events: none;
+}
+
 

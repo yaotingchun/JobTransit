@@ -106,64 +106,116 @@ export function parseLinkedInJobCards(html: string): Array<{ id: string; title: 
   return cards
 }
 
-export function analyzeSeniorityFromJobCards(cards: Array<{ title: string; company: string }>, roleId?: string): {
+export async function scrapeSeniorityAndExperienceFromPostings(
+  cards: Array<{ id: string; title: string; company: string }>,
+  _roleId?: string
+): Promise<{
   seniorPct: number
   midPct: number
   juniorPct: number
   score: number
   levelLabel: 'High Barrier (Senior Only)' | 'Moderate Barrier (1-3 yrs)' | 'Accessible (Junior Friendly)'
   insight: string
-} {
-  let seniorTitleCount = 0
-  for (const c of cards) {
-    const lower = c.title.toLowerCase()
-    if (lower.match(/\b(senior|sr\.?|lead|principal|architect|staff|director|head|l3|manager|expert)\b/)) {
-      seniorTitleCount++
+  avgExperienceYears: number | null
+}> {
+  // Sample up to 5 real job postings from scraped cards to parse detailed criteria and experience requirements
+  const sampleCards = cards.filter((c) => c.id && !c.id.startsWith('job-')).slice(0, 5)
+
+  let juniorCount = 0
+  let midCount = 0
+  let seniorCount = 0
+  const parsedYears: number[] = []
+
+  if (sampleCards.length > 0) {
+    const detailResults = await Promise.allSettled(
+      sampleCards.map(async (card) => {
+        const res = await fetchLinkedInHtml(`/jobs-guest/jobs/api/jobPosting/${card.id}`)
+        return { card, html: res.status === 200 ? res.body : '' }
+      })
+    )
+
+    for (const r of detailResults) {
+      if (r.status !== 'fulfilled' || !r.value.html) continue
+      const html = r.value.html
+      const card = r.value.card
+
+      // 1. Scrape official LinkedIn Seniority Level metadata criteria
+      let seniorityLevel = ''
+      const criteriaMatches = [...html.matchAll(/<li class="description__job-criteria-item">([\s\S]*?)<\/li>/gi)]
+      for (const b of criteriaMatches) {
+        const text = b[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+        if (/Seniority level/i.test(text)) {
+          seniorityLevel = text.replace(/Seniority level/i, '').trim()
+        }
+      }
+
+      // 2. Scrape exact required years of experience from job description text
+      // e.g. "3+ years of experience", "minimum 2 years of relevant experience", "1-3 yrs"
+      const expRegex =
+        /(?:(?:minimum|at\s*least|with|requires?)\s+)?([0-9]{1,2})\s*(?:[-–—to]+\s*([0-9]{1,2}))?\+?\s*(?:years?|yrs?)(?:\s*(?:of)?\s*(?:relevant|hands-on|professional|work|industry|software|engineering)?\s*experience)?/gi
+      const matches = [...html.matchAll(expRegex)]
+      const foundYears: number[] = []
+      for (const m of matches) {
+        const min = parseInt(m[1], 10)
+        // Guard against stray numbers like "100 years company history"
+        if (min >= 0 && min <= 20) foundYears.push(min)
+      }
+
+      if (foundYears.length > 0) {
+        const reqYears = Math.min(...foundYears)
+        parsedYears.push(reqYears)
+        if (reqYears <= 2) {
+          juniorCount++
+        } else if (reqYears <= 5) {
+          midCount++
+        } else {
+          seniorCount++
+        }
+      } else if (seniorityLevel) {
+        // Fallback to official LinkedIn Seniority Level criteria tag
+        if (/entry|internship/i.test(seniorityLevel)) juniorCount++
+        else if (/mid|associate/i.test(seniorityLevel)) midCount++
+        else seniorCount++
+      } else {
+        // Fallback to title keywords for this specific posting
+        const lower = card.title.toLowerCase()
+        if (lower.match(/\b(senior|sr\.?|lead|principal|architect|staff|director|head|manager|expert)\b/)) {
+          seniorCount++
+        } else if (lower.match(/\b(junior|jr\.?|associate|intern|entry|grad|trainee)\b/)) {
+          juniorCount++
+        } else {
+          midCount++
+        }
+      }
     }
   }
 
-  const seniorTitleRatio = cards.length > 0 ? seniorTitleCount / cards.length : 0.5
-
-  // Domain-calibrated baseline distributions (companies rarely use literal "Junior" in titles, but hire into associate/general titles)
-  let juniorPct: number
-  let midPct: number
-  let seniorPct: number
-
-  if (roleId === 'cloud-infrastructure-architect' || roleId === 'cloud-architect') {
-    juniorPct = 8
-    midPct = 26
-    seniorPct = 66
-  } else if (roleId === 'agentic-ai-engineer' || roleId === 'ai-systems-eval-engineer' || roleId === 'mlops-llmops-engineer') {
-    juniorPct = 12
-    midPct = 38
-    seniorPct = 50
-  } else if (roleId === 'cybersecurity-analyst' || roleId === 'ai-security-red-teamer') {
-    juniorPct = 16
-    midPct = 44
-    seniorPct = 40
-  } else if (roleId === 'qa-automation-specialist') {
-    juniorPct = 22
-    midPct = 48
-    seniorPct = 30
-  } else if (roleId === 'data-engineer') {
-    juniorPct = 24
-    midPct = 46
-    seniorPct = 30
-  } else {
-    // Software engineering / Full-stack
-    juniorPct = 28
-    midPct = 44
-    seniorPct = 28
+  // If no job details could be retrieved (e.g. rate limit), evaluate cards from search card titles directly
+  if (juniorCount + midCount + seniorCount === 0) {
+    for (const card of cards) {
+      const lower = card.title.toLowerCase()
+      if (lower.match(/\b(senior|sr\.?|lead|principal|architect|staff|director|head|manager|expert)\b/)) {
+        seniorCount++
+      } else if (lower.match(/\b(junior|jr\.?|associate|intern|entry|grad|trainee)\b/)) {
+        juniorCount++
+      } else {
+        midCount++
+      }
+    }
   }
 
-  // Modulate slightly based on real scraped title senior density
-  if (seniorTitleRatio >= 0.7) {
-    seniorPct = Math.min(75, seniorPct + 4)
-    juniorPct = Math.max(6, juniorPct - 2)
-    midPct = 100 - seniorPct - juniorPct
+  const total = juniorCount + midCount + seniorCount || 1
+  let juniorPct = Math.round((juniorCount / total) * 100)
+  let midPct = Math.round((midCount / total) * 100)
+  let seniorPct = Math.round((seniorCount / total) * 100)
+
+  // Ensure sum equals 100%
+  const sum = juniorPct + midPct + seniorPct
+  if (sum !== 100 && sum > 0) {
+    midPct += 100 - sum
   }
 
-  const score = Math.round(juniorPct * 1.5 + midPct * 0.3)
+  const score = Math.min(100, Math.max(0, Math.round(juniorPct * 1.5 + midPct * 0.3)))
   const levelLabel =
     score < 25
       ? 'High Barrier (Senior Only)'
@@ -171,18 +223,63 @@ export function analyzeSeniorityFromJobCards(cards: Array<{ title: string; compa
       ? 'Moderate Barrier (1-3 yrs)'
       : 'Accessible (Junior Friendly)'
 
+  const avgExperienceYears =
+    parsedYears.length > 0
+      ? parseFloat((parsedYears.reduce((a, b) => a + b, 0) / parsedYears.length).toFixed(1))
+      : null
+
   const insight =
-    roleId === 'cloud-infrastructure-architect' || roleId === 'cloud-architect'
-      ? `LinkedIn postings show 66% Senior/Lead requirements due to high downtime blast radius. Junior entry (8%) is largely accessed via Cloud Support or DevOps Associate paths.`
-      : roleId === 'agentic-ai-engineer' || roleId === 'ai-systems-eval-engineer'
-      ? `Junior accessibility is 12%: Enterprises demand demonstrated knowledge of autonomous agent loops and MCP. Juniors need public portfolio agent projects to stand out.`
-      : roleId === 'cybersecurity-analyst' || roleId === 'ai-security-red-teamer'
-      ? `Junior accessibility is 16%: Security positions lean mid-senior (40% Senior, 44% Mid) requiring hands-on vulnerability triage or threat modeling experience.`
-      : roleId === 'qa-automation-specialist'
-      ? `Junior accessibility is 22%: Teams recruit juniors who can transition manual test cases into Playwright or AI-augmented exploration scripts.`
-      : roleId === 'data-engineer'
-      ? `Junior accessibility is 24%: 46% of openings target mid-level pipeline builders, with entry roles focusing on dbt models and SQL transformations.`
-      : `Junior accessibility is 28%: Entry developers are actively recruited when paired with modern TypeScript, Next.js, and AI-assisted workflows.`
+    avgExperienceYears !== null
+      ? `Live scraped from LinkedIn job postings: Average required experience is ${avgExperienceYears} years. ${juniorPct}% of postings accept 0–2 yrs, ${midPct}% target 3–5 yrs, and ${seniorPct}% mandate 6+ yrs or Senior/Lead.`
+      : `Empirically scraped from live LinkedIn seniority metadata: ${juniorPct}% Entry-level (0–2y), ${midPct}% Mid-Level (3–5y), and ${seniorPct}% Senior/Lead (5y+).`
+
+  return { seniorPct, midPct, juniorPct, score, levelLabel, insight, avgExperienceYears }
+}
+
+// Synchronous wrapper fallback for non-async call sites
+export function analyzeSeniorityFromJobCards(
+  cards: Array<{ id?: string; title: string; company: string }>,
+  _roleId?: string
+): {
+  seniorPct: number
+  midPct: number
+  juniorPct: number
+  score: number
+  levelLabel: 'High Barrier (Senior Only)' | 'Moderate Barrier (1-3 yrs)' | 'Accessible (Junior Friendly)'
+  insight: string
+} {
+  let seniorCount = 0
+  let juniorCount = 0
+  let midCount = 0
+
+  for (const c of cards) {
+    const lower = c.title.toLowerCase()
+    if (lower.match(/\b(senior|sr\.?|lead|principal|architect|staff|director|head|l3|manager|expert)\b/)) {
+      seniorCount++
+    } else if (lower.match(/\b(junior|jr\.?|associate|intern|entry|grad|trainee)\b/)) {
+      juniorCount++
+    } else {
+      midCount++
+    }
+  }
+
+  const total = seniorCount + juniorCount + midCount || 1
+  let juniorPct = Math.round((juniorCount / total) * 100)
+  let midPct = Math.round((midCount / total) * 100)
+  let seniorPct = Math.round((seniorCount / total) * 100)
+
+  const sum = juniorPct + midPct + seniorPct
+  if (sum !== 100 && sum > 0) midPct += 100 - sum
+
+  const score = Math.min(100, Math.max(0, Math.round(juniorPct * 1.5 + midPct * 0.3)))
+  const levelLabel =
+    score < 25
+      ? 'High Barrier (Senior Only)'
+      : score < 50
+      ? 'Moderate Barrier (1-3 yrs)'
+      : 'Accessible (Junior Friendly)'
+
+  const insight = `Empirically parsed from live LinkedIn job titles: ${juniorPct}% Entry-level (0-2 yrs), ${midPct}% Mid-Level (3-5 yrs), ${seniorPct}% Senior/Lead (5+ yrs).`
 
   return { seniorPct, midPct, juniorPct, score, levelLabel, insight }
 }
@@ -546,24 +643,25 @@ export async function scrapeLinkedInTrends(): Promise<ScrapeResult> {
   const totalMarketScraped = scrapedItems.reduce((acc, item) => acc + (item.totalCount.num || 34000), 0)
 
   // Step 3: Build role results calculated purely from LinkedIn data
-  const roleResults: RoleTrend[] = scrapedItems.map((item, index) => {
-    const totalNum = item.totalCount.num > 0 ? item.totalCount.num : 34000
-    const past24hNum = item.past24hCount.num > 0 ? item.past24hCount.num : Math.round(totalNum * 0.4)
-    const past7dNum = item.past7dCount.num > 0 ? item.past7dCount.num : Math.round(totalNum * 0.85)
-    const velocityRate24h = totalNum > 0 ? parseFloat(((past24hNum / totalNum) * 100).toFixed(1)) : 40.0
-    const velocityRate7d = totalNum > 0 ? parseFloat(((past7dNum / totalNum) * 100).toFixed(1)) : 85.0
+  const roleResults: RoleTrend[] = await Promise.all(
+    scrapedItems.map(async (item, index) => {
+      const totalNum = item.totalCount.num > 0 ? item.totalCount.num : 34000
+      const past24hNum = item.past24hCount.num > 0 ? item.past24hCount.num : Math.round(totalNum * 0.4)
+      const past7dNum = item.past7dCount.num > 0 ? item.past7dCount.num : Math.round(totalNum * 0.85)
+      const velocityRate24h = totalNum > 0 ? parseFloat(((past24hNum / totalNum) * 100).toFixed(1)) : 40.0
+      const velocityRate7d = totalNum > 0 ? parseFloat(((past7dNum / totalNum) * 100).toFixed(1)) : 85.0
 
-    const velocityLabel: 'Surging Influx 🔥' | 'High Velocity 🚀' | 'Moderate Velocity 📈' | 'Steady Influx ⚖️' =
-      velocityRate24h >= 45
-        ? 'Surging Influx 🔥'
-        : velocityRate24h >= 35
-        ? 'High Velocity 🚀'
-        : velocityRate24h >= 25
-        ? 'Moderate Velocity 📈'
-        : 'Steady Influx ⚖️'
+      const velocityLabel: 'Surging Influx 🔥' | 'High Velocity 🚀' | 'Moderate Velocity 📈' | 'Steady Influx ⚖️' =
+        velocityRate24h >= 45
+          ? 'Surging Influx 🔥'
+          : velocityRate24h >= 35
+          ? 'High Velocity 🚀'
+          : velocityRate24h >= 25
+          ? 'Moderate Velocity 📈'
+          : 'Steady Influx ⚖️'
 
-    // Empirically analyze seniority directly from scraped job postings
-    const seniority = analyzeSeniorityFromJobCards(item.cards, item.target.id)
+      // Empirically scrape years of experience directly from live LinkedIn job postings
+      const seniority = await scrapeSeniorityAndExperienceFromPostings(item.cards, item.target.id)
 
     // Calculated market recruitment share directly from scraped LinkedIn volume
     const marketShare = parseFloat(((totalNum / totalMarketScraped) * 100).toFixed(1))
@@ -668,7 +766,7 @@ export async function scrapeLinkedInTrends(): Promise<ScrapeResult> {
         entryRatio: seniority.juniorPct,
       },
     }
-  })
+  }))
 
   // Step 4: Scrape Skills directly from LinkedIn
   const skillTargets = [
@@ -829,6 +927,73 @@ export function readDailyScrapeCache(): CachedDailyScrape | null {
   }
 }
 
+export function syncWeeklyTimelineWithLatestScrape(freshRoles: RoleTrend[]) {
+  try {
+    const timelinePath = path.resolve(process.cwd(), 'src', 'data', 'waybackHistoricalTimeline.json')
+    if (!fs.existsSync(timelinePath) || !freshRoles || freshRoles.length === 0) return
+    const raw = fs.readFileSync(timelinePath, 'utf-8')
+    const timeline = JSON.parse(raw)
+    
+    const now = new Date()
+    const year = now.getUTCFullYear()
+    const weekNum = Math.ceil(((now.getTime() - new Date(Date.UTC(year, 0, 1)).getTime()) / 86400000 + 1) / 7)
+    const label = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' })
+    const fullDate = `Week ${weekNum} · ${now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })} (Live Scraped)`
+
+    const lastSnap = timeline.snapshots[timeline.snapshots.length - 1]
+    const isNewWeek = lastSnap && (lastSnap.weekNumber !== weekNum || lastSnap.year !== year)
+
+    const ts = now.toISOString().replace(/[-:T]/g, '').slice(0, 14)
+    const newSnap = {
+      timestamp: ts,
+      weekNumber: weekNum,
+      year,
+      date: fullDate,
+      label,
+      quarter: `Q${Math.floor(now.getUTCMonth() / 3) + 1} ${year}`,
+      archiveUrl: 'https://www.linkedin.com/jobs/search',
+    }
+
+    if (isNewWeek) {
+      timeline.snapshots.push(newSnap)
+    } else if (timeline.snapshots.length > 0) {
+      timeline.snapshots[timeline.snapshots.length - 1] = newSnap
+    }
+
+    freshRoles.forEach((role) => {
+      if (!timeline.roleSeries || !timeline.roleSeries[role.id]) return
+      const series = timeline.roleSeries[role.id]
+      const count = role.openings2026 || role.past7dNum || 0
+      const point = {
+        snapshotTimestamp: ts,
+        date: fullDate,
+        label,
+        quarter: newSnap.quarter,
+        weekNumber: weekNum,
+        year,
+        value: count,
+        archiveUrl: 'https://www.linkedin.com/jobs/search',
+        provenance: 'LinkedIn Live Daily Scraper',
+      }
+      if (isNewWeek) {
+        series.push(point)
+      } else if (series.length > 0) {
+        series[series.length - 1] = point
+      }
+    })
+
+    if (timeline.metadata) {
+      timeline.metadata.lastLiveSyncAt = now.toISOString()
+      timeline.metadata.totalWeeklySnapshots = timeline.snapshots.length
+    }
+
+    fs.writeFileSync(timelinePath, JSON.stringify(timeline, null, 2), 'utf-8')
+    console.log(`[LinkedIn Scraper] Synced live scrape into weekly timeline (${timeline.snapshots.length} total weeks).`)
+  } catch (err) {
+    console.warn('[LinkedIn Scraper] Could not sync to waybackHistoricalTimeline.json:', err)
+  }
+}
+
 export function saveDailyScrapeCache(data: ScrapeResult): CachedDailyScrape {
   try {
     const dir = path.dirname(CACHE_FILE_PATH)
@@ -841,6 +1006,12 @@ export function saveDailyScrapeCache(data: ScrapeResult): CachedDailyScrape {
       data,
     }
     fs.writeFileSync(CACHE_FILE_PATH, JSON.stringify(payload, null, 2), 'utf-8')
+
+    // Automatically update/append current week to historical weekly timeline
+    if (data.roles && data.roles.length > 0) {
+      syncWeeklyTimelineWithLatestScrape(data.roles)
+    }
+
     return payload
   } catch (err) {
     console.error('[LinkedIn Scraper] Failed to write daily cache:', err)

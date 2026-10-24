@@ -1,60 +1,60 @@
 {
-  "lastScrapedAt": "2026-10-24T13:25:50.830Z",
-  "nextScrapeDueAt": "2026-10-25T13:25:50.830Z",
+  "lastScrapedAt": "2026-10-24T17:47:18.733Z",
+  "nextScrapeDueAt": "2026-10-25T17:47:18.733Z",
   "data": {
     "success": true,
-    "scrapedAt": "2026-10-24T13:25:50.830Z",
+    "scrapedAt": "2026-10-24T17:47:18.733Z",
     "source": "LinkedIn Live Job Search Engine (Scraped via Guest Endpoints)",
     "logs": [
-      "[2026-10-24T13:25:50.830Z] Starting live scraping from linkedin.com/jobs/search endpoints...",
+      "[2026-10-24T17:47:18.733Z] Starting live scraping from linkedin.com/jobs/search endpoints...",
       "GET https://www.linkedin.com/jobs/search?keywords=Agentic%20AI&location=Worldwide...",
-      "→ HTTP 200 for \"Agentic AI\". Scraped 274833 bytes of raw HTML from LinkedIn.",
-      "✓ LinkedIn Count: \"35,000+\" | 24h Velocity: \"15,000+\" | 7d Influx: \"33,005+\" | Parsed 10 live job listings.",
+      "→ HTTP 200 for \"Agentic AI\". Scraped 279608 bytes of raw HTML from LinkedIn.",
+      "✓ LinkedIn Count: \"35,000+\" | 24h Velocity: \"12,000+\" | 7d Influx: \"33,000+\" | Parsed 10 live job listings.",
       "GET https://www.linkedin.com/jobs/search?keywords=Data%20Engineer&location=Worldwide...",
-      "→ HTTP 429 for \"Data Engineer\". Scraped 24633 bytes of raw HTML from LinkedIn.",
-      "✓ LinkedIn Count: \"Search Active\" | 24h Velocity: \"14,008+\" | 7d Influx: \"28,000+\" | Parsed 10 live job listings.",
+      "→ HTTP 200 for \"Data Engineer\". Scraped 265923 bytes of raw HTML from LinkedIn.",
+      "✓ LinkedIn Count: \"34,000+\" | 24h Velocity: \"10,000+\" | 7d Influx: \"28,000+\" | Parsed 10 live job listings.",
       "GET https://www.linkedin.com/jobs/search?keywords=AI%20Evaluation%20Engineer&location=Worldwide...",
-      "→ HTTP 200 for \"AI Evaluation Engineer\". Scraped 276572 bytes of raw HTML from LinkedIn.",
-      "✓ LinkedIn Count: \"32,000+\" | 24h Velocity: \"12,224+\" | 7d Influx: \"24,000+\" | Parsed 10 live job listings.",
+      "→ HTTP 200 for \"AI Evaluation Engineer\". Scraped 271049 bytes of raw HTML from LinkedIn.",
+      "✓ LinkedIn Count: \"32,000+\" | 24h Velocity: \"6,000+\" | 7d Influx: \"24,000+\" | Parsed 10 live job listings.",
       "GET https://www.linkedin.com/jobs/search?keywords=Full%20Stack%20Engineer&location=Worldwide...",
-      "→ HTTP 200 for \"Full Stack Engineer\". Scraped 287511 bytes of raw HTML from LinkedIn.",
-      "✓ LinkedIn Count: \"35,000+\" | 24h Velocity: \"10,000+\" | 7d Influx: \"29,000+\" | Parsed 10 live job listings.",
+      "→ HTTP 200 for \"Full Stack Engineer\". Scraped 281101 bytes of raw HTML from LinkedIn.",
+      "✓ LinkedIn Count: \"35,000+\" | 24h Velocity: \"8,000+\" | 7d Influx: \"29,000+\" | Parsed 10 live job listings.",
       "GET https://www.linkedin.com/jobs/search?keywords=Kubernetes%20Platform%20Architect&location=Worldwide...",
-      "→ HTTP 200 for \"Kubernetes Platform Architect\". Scraped 274347 bytes of raw HTML from LinkedIn.",
-      "✓ LinkedIn Count: \"32,000+\" | 24h Velocity: \"6,000+\" | 7d Influx: \"23,000+\" | Parsed 10 live job listings.",
+      "→ HTTP 200 for \"Kubernetes Platform Architect\". Scraped 301356 bytes of raw HTML from LinkedIn.",
+      "✓ LinkedIn Count: \"32,000+\" | 24h Velocity: \"5,000+\" | 7d Influx: \"23,000+\" | Parsed 10 live job listings.",
       "GET https://www.linkedin.com/jobs/search?keywords=QA%20Automation%20Engineer&location=Worldwide...",
-      "→ HTTP 200 for \"QA Automation Engineer\". Scraped 279191 bytes of raw HTML from LinkedIn.",
-      "✓ LinkedIn Count: \"28,000+\" | 24h Velocity: \"5,000+\" | 7d Influx: \"15,000+\" | Parsed 10 live job listings.",
+      "→ HTTP 200 for \"QA Automation Engineer\". Scraped 263295 bytes of raw HTML from LinkedIn.",
+      "✓ LinkedIn Count: \"28,000+\" | 24h Velocity: \"4,000+\" | 7d Influx: \"15,000+\" | Parsed 10 live job listings.",
       "GET https://www.linkedin.com/jobs/search?keywords=AI%20Security%20Red%20Team&location=Worldwide...",
-      "→ HTTP 200 for \"AI Security Red Team\". Scraped 279784 bytes of raw HTML from LinkedIn.",
+      "→ HTTP 200 for \"AI Security Red Team\". Scraped 269612 bytes of raw HTML from LinkedIn.",
       "✓ LinkedIn Count: \"17,000+\" | 24h Velocity: \"3,000+\" | 7d Influx: \"11,000+\" | Parsed 10 live job listings.",
       "GET https://www.linkedin.com/jobs/search?keywords=LLMOps%20Engineer&location=Worldwide...",
-      "→ HTTP 200 for \"LLMOps Engineer\". Scraped 279384 bytes of raw HTML from LinkedIn.",
-      "✓ LinkedIn Count: \"35,000+\" | 24h Velocity: \"17,000+\" | 7d Influx: \"33,000+\" | Parsed 10 live job listings.",
+      "→ HTTP 200 for \"LLMOps Engineer\". Scraped 289777 bytes of raw HTML from LinkedIn.",
+      "✓ LinkedIn Count: \"35,000+\" | 24h Velocity: \"14,000+\" | 7d Influx: \"33,000+\" | Parsed 10 live job listings.",
       "GET https://www.linkedin.com/jobs/search?keywords=Model%20Context%20Protocol&location=Worldwide...",
-      "✓ Skill Search: \"Model Context Protocol\" → Total: \"26,000+\" | 24h: \"21,000+\" (80.8% velocity → SURGING [Crucial in 2026])",
+      "✓ Skill Search: \"Model Context Protocol\" → Total: \"Search Active\" | 24h: \"19,000+\" (76% velocity → SURGING [Crucial in 2026])",
       "GET https://www.linkedin.com/jobs/search?keywords=LangGraph&location=Worldwide...",
-      "✓ Skill Search: \"LangGraph\" → Total: \"34,000+\" | 24h: \"17,000+\" (50% velocity → SURGING [Rapidly Accelerating])",
+      "✓ Skill Search: \"LangGraph\" → Total: \"34,000+\" | 24h: \"14,000+\" (41.2% velocity → DEPRECATING [At Risk])",
       "GET https://www.linkedin.com/jobs/search?keywords=vLLM&location=Worldwide...",
-      "✓ Skill Search: \"vLLM\" → Total: \"24,000+\" | 24h: \"25,000+\" (104.2% velocity → SURGING [Crucial in 2026])",
+      "✓ Skill Search: \"vLLM\" → Total: \"30,000+\" | 24h: \"17,000+\" (56.7% velocity → SURGING [Rapidly Accelerating])",
       "GET https://www.linkedin.com/jobs/search?keywords=Kubernetes&location=Worldwide...",
-      "✓ Skill Search: \"Kubernetes\" → Total: \"34,000+\" | 24h: \"15,000+\" (44.1% velocity → DEPRECATING [At Risk])",
+      "✓ Skill Search: \"Kubernetes\" → Total: \"34,000+\" | 24h: \"12,000+\" (35.3% velocity → DEPRECATING [Legacy Sunset])",
       "GET https://www.linkedin.com/jobs/search?keywords=Vector%20Database&location=Worldwide...",
-      "✓ Skill Search: \"Vector Database\" → Total: \"25,000+\" | 24h: \"16,000+\" (64% velocity → SURGING [Rapidly Accelerating])",
+      "✓ Skill Search: \"Vector Database\" → Total: \"25,000+\" | 24h: \"14,000+\" (56% velocity → SURGING [Rapidly Accelerating])",
       "GET https://www.linkedin.com/jobs/search?keywords=Selenium&location=Worldwide...",
-      "✓ Skill Search: \"Selenium\" → Total: \"28,000+\" | 24h: \"12,992+\" (46.4% velocity → DEPRECATING [At Risk])",
+      "✓ Skill Search: \"Selenium\" → Total: \"28,000+\" | 24h: \"10,000+\" (35.7% velocity → DEPRECATING [Legacy Sunset])",
       "GET https://www.linkedin.com/jobs/search?keywords=jQuery&location=Worldwide...",
-      "✓ Skill Search: \"jQuery\" → Total: \"21,000+\" | 24h: \"8,000+\" (38.1% velocity → DEPRECATING [Legacy Sunset])",
+      "✓ Skill Search: \"jQuery\" → Total: \"21,000+\" | 24h: \"7,000+\" (33.3% velocity → DEPRECATING [Legacy Sunset])",
       "GET https://www.linkedin.com/jobs/search?keywords=Hadoop&location=Worldwide...",
-      "✓ Skill Search: \"Hadoop\" → Total: \"Search Active\" | 24h: \"19,000+\" (76% velocity → SURGING [Crucial in 2026])",
-      "✓ Complete LinkedIn market scrape finished at 9:26:34 pm. 8 roles, 8 skills, and live postings indexed."
+      "✓ Skill Search: \"Hadoop\" → Total: \"33,000+\" | 24h: \"17,000+\" (51.5% velocity → SURGING [Rapidly Accelerating])",
+      "✓ Complete LinkedIn market scrape finished at 1:48:27 am. 8 roles, 8 skills, and live postings indexed."
     ],
     "marketSummary": {
       "totalAnalyzedPostings2025": 228160,
       "totalAnalyzedPostings2026": 248000,
-      "totalNewPostings24h": 82232,
-      "totalNewPostings7d": 196005,
-      "averageVelocityRate24h": 31.7,
+      "totalNewPostings24h": 62000,
+      "totalNewPostings7d": 196000,
+      "averageVelocityRate24h": 24.1,
       "topRole2025": {
         "title": "Full-Stack Software Engineer",
         "openings": 35000,
@@ -95,8 +95,8 @@
         "title": "Agentic AI Engineer",
         "openings": 35000,
         "liveScrapedCount": "35,000+",
-        "share": "14.1% market recruitment center (#1 Live Velocity: 15,000+ 24h influx)",
-        "narrative": "In 2026, the market recruitment center pivoted to autonomous multi-agent systems, tool integration (MCP), and AI workflow orchestration, clocking 15,000+ new jobs posted in the past 24 hours (+42.9% velocity index).",
+        "share": "14.1% market recruitment center (#1 Live Velocity: 12,000+ 24h influx)",
+        "narrative": "In 2026, the market recruitment center pivoted to autonomous multi-agent systems, tool integration (MCP), and AI workflow orchestration, clocking 12,000+ new jobs posted in the past 24 hours (+34.3% velocity index).",
         "scrapedUrl": "https://www.linkedin.com/jobs/search?keywords=Agentic%20AI&location=Worldwide",
         "htmlBytes": 29701,
         "recentPostings": [
@@ -128,7 +128,7 @@
         ]
       },
       "averageAIExposure": 54,
-      "skillsVelocityRate": "+42.9% live 24-hour job posting velocity scraped on LinkedIn",
+      "skillsVelocityRate": "+34.3% live 24-hour job posting velocity scraped on LinkedIn",
       "rawProofHtmlSnippet": "<div class=\"base-search-card\" data-entity-urn=\"urn:li:jobPosting:4443357475\">\n  <h3 class=\"base-search-card__title\">Senior AI Engineer</h3>\n  <h4 class=\"base-search-card__subtitle\">UXBERT Labs</h4>\n</div>"
     },
     "roles": [
@@ -140,17 +140,17 @@
         "rank2026": 1,
         "openings2025": 31500,
         "openings2026": 35000,
-        "growthYoY": 42.9,
+        "growthYoY": 34.3,
         "status": "growing",
         "marketRecruitmentShare2025": 4.9,
         "marketRecruitmentShare2026": 14.1,
-        "past24hCountStr": "15,000+",
-        "past24hNum": 15000,
-        "past7dCountStr": "33,005+",
-        "past7dNum": 33005,
-        "velocityRate24h": 42.9,
+        "past24hCountStr": "12,000+",
+        "past24hNum": 12000,
+        "past7dCountStr": "33,000+",
+        "past7dNum": 33000,
+        "velocityRate24h": 34.3,
         "velocityRate7d": 94.3,
-        "velocityLabel": "High Velocity 🚀",
+        "velocityLabel": "Moderate Velocity 📈",
         "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=Agentic%20AI&location=Worldwide&f_TPR=r86400",
         "linkedinSearch7dUrl": "https://www.linkedin.com/jobs/search?keywords=Agentic%20AI&location=Worldwide&f_TPR=r604800",
         "minedSkills": [
@@ -228,14 +228,14 @@
           }
         ],
         "entryLevelAccess": {
-          "score": 29,
+          "score": 42,
           "levelLabel": "Moderate Barrier (1-3 yrs)",
           "breakdown": {
-            "entryLevel": 12,
-            "midLevel": 38,
-            "seniorLead": 50
+            "entryLevel": 20,
+            "midLevel": 40,
+            "seniorLead": 40
           },
-          "insight": "Junior accessibility is 12%: Enterprises demand demonstrated knowledge of autonomous agent loops and MCP. Juniors need public portfolio agent projects to stand out."
+          "insight": "Live scraped from LinkedIn job postings: Average required experience is 5.5 years. 20% of postings accept 0–2 yrs, 40% target 3–5 yrs, and 40% mandate 6+ yrs or Senior/Lead."
         },
         "aiExposure": {
           "overallPercentage": 45,
@@ -282,7 +282,7 @@
           "Pure Rule-Based Chatbots",
           "Manual Text Parsing"
         ],
-        "whyItMatters": "Live scraped from LinkedIn with 35,000+ active global listings (15,000+ posted in last 24h, 42.9% velocity).",
+        "whyItMatters": "Live scraped from LinkedIn with 35,000+ active global listings (12,000+ posted in last 24h, 34.3% velocity).",
         "searchKeyword": "Agentic AI",
         "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Agentic%20AI&location=Worldwide",
         "scrapedCountString": "35,000+",
@@ -360,9 +360,9 @@
           }
         ],
         "entryLevelStats": {
-          "entryCountStr": "12% of sample",
-          "midSeniorCountStr": "50% Senior",
-          "entryRatio": 12
+          "entryCountStr": "20% of sample",
+          "midSeniorCountStr": "40% Senior",
+          "entryRatio": 20
         }
       },
       {
@@ -373,17 +373,17 @@
         "rank2026": 2,
         "openings2025": 30600,
         "openings2026": 34000,
-        "growthYoY": 41.2,
+        "growthYoY": 29.4,
         "status": "growing",
         "marketRecruitmentShare2025": 17.1,
         "marketRecruitmentShare2026": 13.7,
-        "past24hCountStr": "14,008+",
-        "past24hNum": 14008,
+        "past24hCountStr": "10,000+",
+        "past24hNum": 10000,
         "past7dCountStr": "28,000+",
         "past7dNum": 28000,
-        "velocityRate24h": 41.2,
+        "velocityRate24h": 29.4,
         "velocityRate7d": 82.4,
-        "velocityLabel": "High Velocity 🚀",
+        "velocityLabel": "Moderate Velocity 📈",
         "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=Data%20Engineer&location=Worldwide&f_TPR=r86400",
         "linkedinSearch7dUrl": "https://www.linkedin.com/jobs/search?keywords=Data%20Engineer&location=Worldwide&f_TPR=r604800",
         "minedSkills": [
@@ -461,14 +461,14 @@
           }
         ],
         "entryLevelAccess": {
-          "score": 50,
-          "levelLabel": "Accessible (Junior Friendly)",
+          "score": 30,
+          "levelLabel": "Moderate Barrier (1-3 yrs)",
           "breakdown": {
-            "entryLevel": 24,
-            "midLevel": 46,
-            "seniorLead": 30
+            "entryLevel": 0,
+            "midLevel": 100,
+            "seniorLead": 0
           },
-          "insight": "Junior accessibility is 24%: 46% of openings target mid-level pipeline builders, with entry roles focusing on dbt models and SQL transformations."
+          "insight": "Live scraped from LinkedIn job postings: Average required experience is 4 years. 0% of postings accept 0–2 yrs, 100% target 3–5 yrs, and 0% mandate 6+ yrs or Senior/Lead."
         },
         "aiExposure": {
           "overallPercentage": 48,
@@ -514,10 +514,10 @@
           "Legacy Hadoop / MapReduce",
           "Custom Cron ETL Scripts"
         ],
-        "whyItMatters": "Live scraped from LinkedIn with Search Active active global listings (14,008+ posted in last 24h, 41.2% velocity).",
+        "whyItMatters": "Live scraped from LinkedIn with 34,000+ active global listings (10,000+ posted in last 24h, 29.4% velocity).",
         "searchKeyword": "Data Engineer",
         "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Data%20Engineer&location=Worldwide",
-        "scrapedCountString": "Search Active",
+        "scrapedCountString": "34,000+",
         "scrapedSampleSize": 10,
         "recentPostings": [
           {
@@ -592,9 +592,9 @@
           }
         ],
         "entryLevelStats": {
-          "entryCountStr": "24% of sample",
-          "midSeniorCountStr": "30% Senior",
-          "entryRatio": 24
+          "entryCountStr": "0% of sample",
+          "midSeniorCountStr": "0% Senior",
+          "entryRatio": 0
         }
       },
       {
@@ -605,17 +605,17 @@
         "rank2026": 3,
         "openings2025": 28800,
         "openings2026": 32000,
-        "growthYoY": 38.2,
+        "growthYoY": 18.8,
         "status": "growing",
         "marketRecruitmentShare2025": 4.5,
         "marketRecruitmentShare2026": 12.9,
-        "past24hCountStr": "12,224+",
-        "past24hNum": 12224,
+        "past24hCountStr": "6,000+",
+        "past24hNum": 6000,
         "past7dCountStr": "24,000+",
         "past7dNum": 24000,
-        "velocityRate24h": 38.2,
+        "velocityRate24h": 18.8,
         "velocityRate7d": 75,
-        "velocityLabel": "High Velocity 🚀",
+        "velocityLabel": "Steady Influx ⚖️",
         "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Evaluation%20Engineer&location=Worldwide&f_TPR=r86400",
         "linkedinSearch7dUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Evaluation%20Engineer&location=Worldwide&f_TPR=r604800",
         "minedSkills": [
@@ -675,14 +675,14 @@
           }
         ],
         "entryLevelAccess": {
-          "score": 29,
+          "score": 30,
           "levelLabel": "Moderate Barrier (1-3 yrs)",
           "breakdown": {
-            "entryLevel": 12,
-            "midLevel": 38,
-            "seniorLead": 50
+            "entryLevel": 0,
+            "midLevel": 100,
+            "seniorLead": 0
           },
-          "insight": "Junior accessibility is 12%: Enterprises demand demonstrated knowledge of autonomous agent loops and MCP. Juniors need public portfolio agent projects to stand out."
+          "insight": "Live scraped from LinkedIn job postings: Average required experience is 4 years. 0% of postings accept 0–2 yrs, 100% target 3–5 yrs, and 0% mandate 6+ yrs or Senior/Lead."
         },
         "aiExposure": {
           "overallPercentage": 44,
@@ -729,7 +729,7 @@
           "Pure Rule-Based Chatbots",
           "Manual Text Parsing"
         ],
-        "whyItMatters": "Live scraped from LinkedIn with 32,000+ active global listings (12,224+ posted in last 24h, 38.2% velocity).",
+        "whyItMatters": "Live scraped from LinkedIn with 32,000+ active global listings (6,000+ posted in last 24h, 18.8% velocity).",
         "searchKeyword": "AI Evaluation Engineer",
         "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=AI%20Evaluation%20Engineer&location=Worldwide",
         "scrapedCountString": "32,000+",
@@ -807,9 +807,9 @@
           }
         ],
         "entryLevelStats": {
-          "entryCountStr": "12% of sample",
-          "midSeniorCountStr": "50% Senior",
-          "entryRatio": 12
+          "entryCountStr": "0% of sample",
+          "midSeniorCountStr": "0% Senior",
+          "entryRatio": 0
         }
       },
       {
@@ -820,17 +820,17 @@
         "rank2026": 4,
         "openings2025": 31500,
         "openings2026": 35000,
-        "growthYoY": 28.6,
+        "growthYoY": 22.9,
         "status": "declining",
         "marketRecruitmentShare2025": 17.6,
         "marketRecruitmentShare2026": 14.1,
-        "past24hCountStr": "10,000+",
-        "past24hNum": 10000,
+        "past24hCountStr": "8,000+",
+        "past24hNum": 8000,
         "past7dCountStr": "29,000+",
         "past7dNum": 29000,
-        "velocityRate24h": 28.6,
+        "velocityRate24h": 22.9,
         "velocityRate7d": 82.9,
-        "velocityLabel": "Moderate Velocity 📈",
+        "velocityLabel": "Steady Influx ⚖️",
         "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=Full%20Stack%20Engineer&location=Worldwide&f_TPR=r86400",
         "linkedinSearch7dUrl": "https://www.linkedin.com/jobs/search?keywords=Full%20Stack%20Engineer&location=Worldwide&f_TPR=r604800",
         "minedSkills": [
@@ -908,14 +908,14 @@
           }
         ],
         "entryLevelAccess": {
-          "score": 55,
-          "levelLabel": "Accessible (Junior Friendly)",
+          "score": 48,
+          "levelLabel": "Moderate Barrier (1-3 yrs)",
           "breakdown": {
-            "entryLevel": 28,
-            "midLevel": 44,
-            "seniorLead": 28
+            "entryLevel": 20,
+            "midLevel": 60,
+            "seniorLead": 20
           },
-          "insight": "Junior accessibility is 28%: Entry developers are actively recruited when paired with modern TypeScript, Next.js, and AI-assisted workflows."
+          "insight": "Live scraped from LinkedIn job postings: Average required experience is 3 years. 20% of postings accept 0–2 yrs, 60% target 3–5 yrs, and 20% mandate 6+ yrs or Senior/Lead."
         },
         "aiExposure": {
           "overallPercentage": 56,
@@ -962,7 +962,7 @@
           "jQuery / Legacy DOM Manipulation",
           "Basic boilerplate CRUD"
         ],
-        "whyItMatters": "Live scraped from LinkedIn with 35,000+ active global listings (10,000+ posted in last 24h, 28.6% velocity).",
+        "whyItMatters": "Live scraped from LinkedIn with 35,000+ active global listings (8,000+ posted in last 24h, 22.9% velocity).",
         "searchKeyword": "Full Stack Engineer",
         "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Full%20Stack%20Engineer&location=Worldwide",
         "scrapedCountString": "35,000+",
@@ -1040,9 +1040,9 @@
           }
         ],
         "entryLevelStats": {
-          "entryCountStr": "28% of sample",
-          "midSeniorCountStr": "28% Senior",
-          "entryRatio": 28
+          "entryCountStr": "20% of sample",
+          "midSeniorCountStr": "20% Senior",
+          "entryRatio": 20
         }
       },
       {
@@ -1053,15 +1053,15 @@
         "rank2026": 5,
         "openings2025": 28800,
         "openings2026": 32000,
-        "growthYoY": 18.8,
+        "growthYoY": 15.6,
         "status": "growing",
         "marketRecruitmentShare2025": 16.1,
         "marketRecruitmentShare2026": 12.9,
-        "past24hCountStr": "6,000+",
-        "past24hNum": 6000,
+        "past24hCountStr": "5,000+",
+        "past24hNum": 5000,
         "past7dCountStr": "23,000+",
         "past7dNum": 23000,
-        "velocityRate24h": 18.8,
+        "velocityRate24h": 15.6,
         "velocityRate7d": 71.9,
         "velocityLabel": "Steady Influx ⚖️",
         "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=Kubernetes%20Platform%20Architect&location=Worldwide&f_TPR=r86400",
@@ -1141,14 +1141,14 @@
           }
         ],
         "entryLevelAccess": {
-          "score": 16,
+          "score": 0,
           "levelLabel": "High Barrier (Senior Only)",
           "breakdown": {
-            "entryLevel": 6,
-            "midLevel": 24,
-            "seniorLead": 70
+            "entryLevel": 0,
+            "midLevel": 0,
+            "seniorLead": 100
           },
-          "insight": "LinkedIn postings show 66% Senior/Lead requirements due to high downtime blast radius. Junior entry (8%) is largely accessed via Cloud Support or DevOps Associate paths."
+          "insight": "Live scraped from LinkedIn job postings: Average required experience is 8.7 years. 0% of postings accept 0–2 yrs, 0% target 3–5 yrs, and 100% mandate 6+ yrs or Senior/Lead."
         },
         "aiExposure": {
           "overallPercentage": 34,
@@ -1195,7 +1195,7 @@
           "jQuery / Legacy DOM Manipulation",
           "Basic boilerplate CRUD"
         ],
-        "whyItMatters": "Live scraped from LinkedIn with 32,000+ active global listings (6,000+ posted in last 24h, 18.8% velocity).",
+        "whyItMatters": "Live scraped from LinkedIn with 32,000+ active global listings (5,000+ posted in last 24h, 15.6% velocity).",
         "searchKeyword": "Kubernetes Platform Architect",
         "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Kubernetes%20Platform%20Architect&location=Worldwide",
         "scrapedCountString": "32,000+",
@@ -1273,9 +1273,9 @@
           }
         ],
         "entryLevelStats": {
-          "entryCountStr": "6% of sample",
-          "midSeniorCountStr": "70% Senior",
-          "entryRatio": 6
+          "entryCountStr": "0% of sample",
+          "midSeniorCountStr": "100% Senior",
+          "entryRatio": 0
         }
       },
       {
@@ -1286,15 +1286,15 @@
         "rank2026": 6,
         "openings2025": 25200,
         "openings2026": 28000,
-        "growthYoY": 17.9,
+        "growthYoY": 14.3,
         "status": "declining",
         "marketRecruitmentShare2025": 14.1,
         "marketRecruitmentShare2026": 11.3,
-        "past24hCountStr": "5,000+",
-        "past24hNum": 5000,
+        "past24hCountStr": "4,000+",
+        "past24hNum": 4000,
         "past7dCountStr": "15,000+",
         "past7dNum": 15000,
-        "velocityRate24h": 17.9,
+        "velocityRate24h": 14.3,
         "velocityRate7d": 53.6,
         "velocityLabel": "Steady Influx ⚖️",
         "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=QA%20Automation%20Engineer&location=Worldwide&f_TPR=r86400",
@@ -1374,14 +1374,14 @@
           }
         ],
         "entryLevelAccess": {
-          "score": 44,
-          "levelLabel": "Moderate Barrier (1-3 yrs)",
+          "score": 18,
+          "levelLabel": "High Barrier (Senior Only)",
           "breakdown": {
-            "entryLevel": 20,
-            "midLevel": 46,
-            "seniorLead": 34
+            "entryLevel": 0,
+            "midLevel": 60,
+            "seniorLead": 40
           },
-          "insight": "Junior accessibility is 22%: Teams recruit juniors who can transition manual test cases into Playwright or AI-augmented exploration scripts."
+          "insight": "Live scraped from LinkedIn job postings: Average required experience is 5 years. 0% of postings accept 0–2 yrs, 60% target 3–5 yrs, and 40% mandate 6+ yrs or Senior/Lead."
         },
         "aiExposure": {
           "overallPercentage": 67,
@@ -1428,7 +1428,7 @@
           "jQuery / Legacy DOM Manipulation",
           "Basic boilerplate CRUD"
         ],
-        "whyItMatters": "Live scraped from LinkedIn with 28,000+ active global listings (5,000+ posted in last 24h, 17.9% velocity).",
+        "whyItMatters": "Live scraped from LinkedIn with 28,000+ active global listings (4,000+ posted in last 24h, 14.3% velocity).",
         "searchKeyword": "QA Automation Engineer",
         "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=QA%20Automation%20Engineer&location=Worldwide",
         "scrapedCountString": "28,000+",
@@ -1506,9 +1506,9 @@
           }
         ],
         "entryLevelStats": {
-          "entryCountStr": "20% of sample",
-          "midSeniorCountStr": "34% Senior",
-          "entryRatio": 20
+          "entryCountStr": "0% of sample",
+          "midSeniorCountStr": "40% Senior",
+          "entryRatio": 0
         }
       },
       {
@@ -1589,14 +1589,14 @@
           }
         ],
         "entryLevelAccess": {
-          "score": 37,
+          "score": 42,
           "levelLabel": "Moderate Barrier (1-3 yrs)",
           "breakdown": {
-            "entryLevel": 16,
-            "midLevel": 44,
+            "entryLevel": 20,
+            "midLevel": 40,
             "seniorLead": 40
           },
-          "insight": "Junior accessibility is 16%: Security positions lean mid-senior (40% Senior, 44% Mid) requiring hands-on vulnerability triage or threat modeling experience."
+          "insight": "Live scraped from LinkedIn job postings: Average required experience is 5.7 years. 20% of postings accept 0–2 yrs, 40% target 3–5 yrs, and 40% mandate 6+ yrs or Senior/Lead."
         },
         "aiExposure": {
           "overallPercentage": 45,
@@ -1721,9 +1721,9 @@
           }
         ],
         "entryLevelStats": {
-          "entryCountStr": "16% of sample",
+          "entryCountStr": "20% of sample",
           "midSeniorCountStr": "40% Senior",
-          "entryRatio": 16
+          "entryRatio": 20
         }
       },
       {
@@ -1734,17 +1734,17 @@
         "rank2026": 8,
         "openings2025": 31500,
         "openings2026": 35000,
-        "growthYoY": 48.6,
-        "status": "surging",
+        "growthYoY": 40,
+        "status": "growing",
         "marketRecruitmentShare2025": 4.9,
         "marketRecruitmentShare2026": 14.1,
-        "past24hCountStr": "17,000+",
-        "past24hNum": 17000,
+        "past24hCountStr": "14,000+",
+        "past24hNum": 14000,
         "past7dCountStr": "33,000+",
         "past7dNum": 33000,
-        "velocityRate24h": 48.6,
+        "velocityRate24h": 40,
         "velocityRate7d": 94.3,
-        "velocityLabel": "Surging Influx 🔥",
+        "velocityLabel": "High Velocity 🚀",
         "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=LLMOps%20Engineer&location=Worldwide&f_TPR=r86400",
         "linkedinSearch7dUrl": "https://www.linkedin.com/jobs/search?keywords=LLMOps%20Engineer&location=Worldwide&f_TPR=r604800",
         "minedSkills": [
@@ -1804,14 +1804,14 @@
           }
         ],
         "entryLevelAccess": {
-          "score": 29,
-          "levelLabel": "Moderate Barrier (1-3 yrs)",
+          "score": 53,
+          "levelLabel": "Accessible (Junior Friendly)",
           "breakdown": {
-            "entryLevel": 12,
-            "midLevel": 38,
-            "seniorLead": 50
+            "entryLevel": 25,
+            "midLevel": 50,
+            "seniorLead": 25
           },
-          "insight": "Junior accessibility is 28%: Entry developers are actively recruited when paired with modern TypeScript, Next.js, and AI-assisted workflows."
+          "insight": "Live scraped from LinkedIn job postings: Average required experience is 3.5 years. 25% of postings accept 0–2 yrs, 50% target 3–5 yrs, and 25% mandate 6+ yrs or Senior/Lead."
         },
         "aiExposure": {
           "overallPercentage": 40,
@@ -1858,7 +1858,7 @@
           "Pure Rule-Based Chatbots",
           "Manual Text Parsing"
         ],
-        "whyItMatters": "Live scraped from LinkedIn with 35,000+ active global listings (17,000+ posted in last 24h, 48.6% velocity).",
+        "whyItMatters": "Live scraped from LinkedIn with 35,000+ active global listings (14,000+ posted in last 24h, 40% velocity).",
         "searchKeyword": "LLMOps Engineer",
         "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=LLMOps%20Engineer&location=Worldwide",
         "scrapedCountString": "35,000+",
@@ -1936,9 +1936,9 @@
           }
         ],
         "entryLevelStats": {
-          "entryCountStr": "12% of sample",
-          "midSeniorCountStr": "50% Senior",
-          "entryRatio": 12
+          "entryCountStr": "25% of sample",
+          "midSeniorCountStr": "25% Senior",
+          "entryRatio": 25
         }
       }
     ],
@@ -1948,40 +1948,40 @@
         "name": "Model Context Protocol (MCP)",
         "category": "AI / Agents",
         "trend": "surging",
-        "changeRate": 80.8,
-        "velocityRate24h": 80.8,
-        "past24hCountStr": "21,000+",
-        "past24hNum": 21000,
-        "openingsMentionCount2025": 19500,
-        "openingsMentionCount2026": 26000,
+        "changeRate": 76,
+        "velocityRate24h": 76,
+        "past24hCountStr": "19,000+",
+        "past24hNum": 19000,
+        "openingsMentionCount2025": 18750,
+        "openingsMentionCount2026": 25000,
         "statusTag": "Crucial in 2026",
-        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (80.8%) meets or exceeds the 50% market benchmark, demonstrating strong positive hiring expansion.",
+        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (76%) meets or exceeds the 50% market benchmark, demonstrating strong positive hiring expansion.",
         "benchmarkThreshold": 50,
-        "context": "Tool integration protocol connecting LLMs to external systems (21,000+ new postings in past 24h).",
+        "context": "Tool integration protocol connecting LLMs to external systems (19,000+ new postings in past 24h).",
         "relevantRoles": [
           "Agentic AI Engineer"
         ],
         "searchKeyword": "Model Context Protocol",
         "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Model%20Context%20Protocol&location=Worldwide",
         "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=Model%20Context%20Protocol&location=Worldwide&f_TPR=r86400",
-        "scrapedJobCount": "26,000+",
-        "scrapedJobNumber": 26000
+        "scrapedJobCount": "Search Active",
+        "scrapedJobNumber": 25000
       },
       {
         "id": "langgraph",
         "name": "LangGraph & Multi-Agent Statecharts",
         "category": "AI / Agents",
-        "trend": "surging",
-        "changeRate": 50,
-        "velocityRate24h": 50,
-        "past24hCountStr": "17,000+",
-        "past24hNum": 17000,
+        "trend": "deprecating",
+        "changeRate": 41.2,
+        "velocityRate24h": 41.2,
+        "past24hCountStr": "14,000+",
+        "past24hNum": 14000,
         "openingsMentionCount2025": 25500,
         "openingsMentionCount2026": 34000,
-        "statusTag": "Rapidly Accelerating",
-        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (50%) meets or exceeds the 50% market benchmark, demonstrating strong positive hiring expansion.",
+        "statusTag": "At Risk",
+        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (41.2%) sits below the 50% market benchmark, reflecting slowing requisition volume and legacy phaseout.",
         "benchmarkThreshold": 50,
-        "context": "Graph-based cyclical agent orchestration (17,000+ new postings in past 24h).",
+        "context": "Graph-based cyclical agent orchestration (14,000+ new postings in past 24h).",
         "relevantRoles": [
           "Agentic AI Engineer"
         ],
@@ -1996,40 +1996,40 @@
         "name": "vLLM & High-Throughput Inference",
         "category": "AI / Agents",
         "trend": "surging",
-        "changeRate": 104.2,
-        "velocityRate24h": 104.2,
-        "past24hCountStr": "25,000+",
-        "past24hNum": 25000,
-        "openingsMentionCount2025": 18000,
-        "openingsMentionCount2026": 24000,
-        "statusTag": "Crucial in 2026",
-        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (104.2%) meets or exceeds the 50% market benchmark, demonstrating strong positive hiring expansion.",
+        "changeRate": 56.7,
+        "velocityRate24h": 56.7,
+        "past24hCountStr": "17,000+",
+        "past24hNum": 17000,
+        "openingsMentionCount2025": 22500,
+        "openingsMentionCount2026": 30000,
+        "statusTag": "Rapidly Accelerating",
+        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (56.7%) meets or exceeds the 50% market benchmark, demonstrating strong positive hiring expansion.",
         "benchmarkThreshold": 50,
-        "context": "High-throughput LLM serving engine with PagedAttention (25,000+ new postings in past 24h).",
+        "context": "High-throughput LLM serving engine with PagedAttention (17,000+ new postings in past 24h).",
         "relevantRoles": [
           "Agentic AI Engineer"
         ],
         "searchKeyword": "vLLM",
         "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=vLLM&location=Worldwide",
         "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=vLLM&location=Worldwide&f_TPR=r86400",
-        "scrapedJobCount": "24,000+",
-        "scrapedJobNumber": 24000
+        "scrapedJobCount": "30,000+",
+        "scrapedJobNumber": 30000
       },
       {
         "id": "kubernetes",
         "name": "Kubernetes Platform Orchestration",
         "category": "DevOps / Infra",
         "trend": "deprecating",
-        "changeRate": 44.1,
-        "velocityRate24h": 44.1,
-        "past24hCountStr": "15,000+",
-        "past24hNum": 15000,
+        "changeRate": 35.3,
+        "velocityRate24h": 35.3,
+        "past24hCountStr": "12,000+",
+        "past24hNum": 12000,
         "openingsMentionCount2025": 25500,
         "openingsMentionCount2026": 34000,
-        "statusTag": "At Risk",
-        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (44.1%) sits below the 50% market benchmark, reflecting slowing requisition volume and legacy phaseout.",
+        "statusTag": "Legacy Sunset",
+        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (35.3%) sits below the 50% market benchmark, reflecting slowing requisition volume and legacy phaseout.",
         "benchmarkThreshold": 50,
-        "context": "Distributed container infrastructure and GPU cluster scheduling (15,000+ new postings in past 24h).",
+        "context": "Distributed container infrastructure and GPU cluster scheduling (12,000+ new postings in past 24h).",
         "relevantRoles": [
           "Full-Stack Software Engineer"
         ],
@@ -2044,16 +2044,16 @@
         "name": "Vector Database & Retrieval (RAG)",
         "category": "Data / DB",
         "trend": "surging",
-        "changeRate": 64,
-        "velocityRate24h": 64,
-        "past24hCountStr": "16,000+",
-        "past24hNum": 16000,
+        "changeRate": 56,
+        "velocityRate24h": 56,
+        "past24hCountStr": "14,000+",
+        "past24hNum": 14000,
         "openingsMentionCount2025": 18750,
         "openingsMentionCount2026": 25000,
         "statusTag": "Rapidly Accelerating",
-        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (64%) meets or exceeds the 50% market benchmark, demonstrating strong positive hiring expansion.",
+        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (56%) meets or exceeds the 50% market benchmark, demonstrating strong positive hiring expansion.",
         "benchmarkThreshold": 50,
-        "context": "Dense vector search and retrieval-augmented generation (16,000+ new postings in past 24h).",
+        "context": "Dense vector search and retrieval-augmented generation (14,000+ new postings in past 24h).",
         "relevantRoles": [
           "Data Engineer"
         ],
@@ -2068,16 +2068,16 @@
         "name": "Selenium Manual QA Testing",
         "category": "Methodology",
         "trend": "deprecating",
-        "changeRate": 46.4,
-        "velocityRate24h": 46.4,
-        "past24hCountStr": "12,992+",
-        "past24hNum": 12992,
+        "changeRate": 35.7,
+        "velocityRate24h": 35.7,
+        "past24hCountStr": "10,000+",
+        "past24hNum": 10000,
         "openingsMentionCount2025": 21000,
         "openingsMentionCount2026": 28000,
-        "statusTag": "At Risk",
-        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (46.4%) sits below the 50% market benchmark, reflecting slowing requisition volume and legacy phaseout.",
+        "statusTag": "Legacy Sunset",
+        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (35.7%) sits below the 50% market benchmark, reflecting slowing requisition volume and legacy phaseout.",
         "benchmarkThreshold": 50,
-        "context": "Brittle imperative browser scripting being superseded by agentic vision loops (12,992+ new postings in past 24h).",
+        "context": "Brittle imperative browser scripting being superseded by agentic vision loops (10,000+ new postings in past 24h).",
         "alternativeOrReplacement": "Replaced by Playwright + Autonomous AI Vision Agents",
         "relevantRoles": [
           "Full-Stack Software Engineer"
@@ -2093,16 +2093,16 @@
         "name": "jQuery Legacy DOM Manipulation",
         "category": "Framework",
         "trend": "deprecating",
-        "changeRate": 38.1,
-        "velocityRate24h": 38.1,
-        "past24hCountStr": "8,000+",
-        "past24hNum": 8000,
+        "changeRate": 33.3,
+        "velocityRate24h": 33.3,
+        "past24hCountStr": "7,000+",
+        "past24hNum": 7000,
         "openingsMentionCount2025": 15750,
         "openingsMentionCount2026": 21000,
         "statusTag": "Legacy Sunset",
-        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (38.1%) sits below the 50% market benchmark, reflecting slowing requisition volume and legacy phaseout.",
+        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (33.3%) sits below the 50% market benchmark, reflecting slowing requisition volume and legacy phaseout.",
         "benchmarkThreshold": 50,
-        "context": "Legacy imperative DOM scripts replaced by modern component state frameworks (8,000+ new postings in past 24h).",
+        "context": "Legacy imperative DOM scripts replaced by modern component state frameworks (7,000+ new postings in past 24h).",
         "alternativeOrReplacement": "Replaced by React Server Components, Next.js, and Modern UI Frameworks",
         "relevantRoles": [
           "Full-Stack Software Engineer"
@@ -2118,16 +2118,16 @@
         "name": "Apache Hadoop / MapReduce",
         "category": "Data / DB",
         "trend": "surging",
-        "changeRate": 76,
-        "velocityRate24h": 76,
-        "past24hCountStr": "19,000+",
-        "past24hNum": 19000,
-        "openingsMentionCount2025": 18750,
-        "openingsMentionCount2026": 25000,
-        "statusTag": "Crucial in 2026",
-        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (76%) meets or exceeds the 50% market benchmark, demonstrating strong positive hiring expansion.",
+        "changeRate": 51.5,
+        "velocityRate24h": 51.5,
+        "past24hCountStr": "17,000+",
+        "past24hNum": 17000,
+        "openingsMentionCount2025": 24750,
+        "openingsMentionCount2026": 33000,
+        "statusTag": "Rapidly Accelerating",
+        "classificationRationale": "Dynamic Empirical: 24h replenishment velocity (51.5%) meets or exceeds the 50% market benchmark, demonstrating strong positive hiring expansion.",
         "benchmarkThreshold": 50,
-        "context": "Legacy batch infrastructure superseded by cloud lakehouses and streaming engines (19,000+ new postings in past 24h).",
+        "context": "Legacy batch infrastructure superseded by cloud lakehouses and streaming engines (17,000+ new postings in past 24h).",
         "alternativeOrReplacement": "Replaced by Snowflake, Apache Iceberg, Databricks & Spark",
         "relevantRoles": [
           "Data Engineer"
@@ -2135,8 +2135,8 @@
         "searchKeyword": "Hadoop",
         "linkedinSearchUrl": "https://www.linkedin.com/jobs/search?keywords=Hadoop&location=Worldwide",
         "linkedinSearch24hUrl": "https://www.linkedin.com/jobs/search?keywords=Hadoop&location=Worldwide&f_TPR=r86400",
-        "scrapedJobCount": "Search Active",
-        "scrapedJobNumber": 25000
+        "scrapedJobCount": "33,000+",
+        "scrapedJobNumber": 33000
       }
     ],
     "liveRawJobs": [
@@ -2219,8 +2219,8 @@
       },
       {
         "keyword": "Data Engineer",
-        "liveCountString": "Search Active",
-        "parsedCount": 0,
+        "liveCountString": "34,000+",
+        "parsedCount": 34000,
         "samplePostings": [
           {
             "id": "4479222247",
