@@ -517,7 +517,35 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
   }
 
   return (
-    <div className="w-full space-y-6 animate-in fade-in duration-300">
+    <div className="w-full space-y-6 animate-in fade-in duration-300 pb-16 transit-root">
+
+      {/* ── 1. HEADER (Standardized Transit/Trend Masthead + Live Sync Telemetry) ── */}
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-stone-900 text-amber-300 text-[10px] font-mono-board tracking-[0.25em] shadow-xs">
+            <Radio className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+            LIVE INTELLIGENCE WIRE · DAILY RESKILLING SIGNALS
+          </div>
+
+          <h1 className="font-signage text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-stone-900 leading-[0.9] mt-3">
+            DAILY<span className="text-transparent [-webkit-text-stroke:2px_#1C1917]"> UPDATES</span>
+          </h1>
+
+          <p className="text-sm sm:text-base text-stone-700 mt-2.5 max-w-2xl font-medium leading-relaxed">
+            Real-time industry developments, model releases, and market shifts synthesized daily.
+            Track which breakthroughs impact your target stations and reskilling pathway.
+          </p>
+        </div>
+
+        {/* Right side: Network Briefing Sync Telemetry Badge */}
+        <div className="p-3.5 px-4 rounded-2xl bg-white/90 backdrop-blur-md border border-stone-200/90 text-stone-900 shadow-xs flex items-center gap-3 shrink-0 self-start lg:self-auto font-mono-board text-xs">
+          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+          <div>
+            <div className="text-[10px] text-stone-500 font-bold uppercase tracking-wider">NETWORK BRIEFING SYNC</div>
+            <div className="text-stone-900 font-bold">{CURRENT_DATE_STR} · {CURRENT_DAY_OF_WEEK.toUpperCase()}</div>
+          </div>
+        </div>
+      </div>
 
       {/* VIEW SWITCHER DOCK (Metro Line Control Style) */}
       <div className="inline-flex p-1.5 rounded-full bg-stone-950 border border-stone-800 shadow-md gap-2 font-mono-board">
@@ -577,35 +605,22 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
 
           {/* UNDERGROUND / METRO STATION TERMINAL BOARD */}
           <div className="relative rounded-[28px] sm:rounded-[32px] bg-white/95 backdrop-blur-md border border-stone-300/90 shadow-[0_16px_36px_rgba(28,25,23,0.06)] p-5 sm:p-9 space-y-7 text-stone-900 overflow-hidden font-sans">
-
-            {/* TOP METRO STATION MASTHEAD */}
+            {/* TOP CARD MASTHEAD / DISPATCH */}
             <div className="space-y-4">
-              {/* Telemetry Row: Live Beacon + Terminal Date Clock */}
-              <div className="flex items-center justify-between pb-3 border-b border-stone-200">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-900 text-amber-300 text-[10px] font-mono-board tracking-[0.25em] shadow-xs">
-                  <Radio className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
-                  <span>Today's News</span>
-                </div>
-                <div className="text-right font-mono-board text-[11px] sm:text-xs text-stone-600 font-bold">
-                  <div>{CURRENT_DATE_STR}</div>
-                  <div className="text-stone-400 text-[10px] tracking-wider uppercase">{CURRENT_DAY_OF_WEEK}</div>
-                </div>
+              {/* CARD DISPATCH BAR */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-stone-200">
+              <div className="flex items-center gap-2.5">
+                <span className="px-2.5 py-1 rounded-md bg-stone-900 text-amber-300 font-mono-board text-[11px] font-black tracking-wider uppercase">
+                  TODAY'S HEADLINES
+                </span>
+                <span className="font-mono-board text-xs text-stone-500 font-semibold">
+                  ({filteredHeadlines.length} {filteredHeadlines.length === 1 ? 'brief' : 'briefs'} live)
+                </span>
               </div>
-
-              {/* Station Main Signage Title */}
-              <div className="pt-1 pb-1">
-                <h1 className="font-signage text-4xl sm:text-6xl md:text-7xl font-black text-stone-900 tracking-tight uppercase leading-none">
-                  The Daily Brief
-                </h1>
-                <div className="flex items-center gap-2 pt-2">
-                  <span className="font-mono-board text-xs sm:text-sm font-bold text-amber-800 uppercase tracking-wider">
-                    {viewMode === 'today' ? "Today's Headlines" : "Weekly Executive Syntheses"}
-                  </span>
-                  <span className="font-mono-board text-xs sm:text-sm text-stone-500 font-medium">
-                    ({filteredHeadlines.length} {filteredHeadlines.length === 1 ? 'brief' : 'briefs'})
-                  </span>
-                </div>
+              <div className="text-right font-mono-board text-[11px] text-stone-500 font-bold uppercase tracking-wider">
+                TERMINAL DISPATCH · {CURRENT_DAY_OF_WEEK}
               </div>
+            </div>
 
               {/* Line Navigation & Filter Control Bar */}
               <div className="border-t border-b border-stone-200 py-3">

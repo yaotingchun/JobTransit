@@ -86,7 +86,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     },
     {
       id: 'catchup',
-      label: 'Catchup',
+      label: 'Updates',
       icon: Sparkles,
       badge: '3',
       badgeType: 'count',
@@ -217,7 +217,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             type="button"
             onClick={() => handleTabClick('catchup')}
             className="relative p-2 rounded-full bg-white/30 hover:bg-white/60 border border-white/50 text-slate-700 hover:text-slate-950 transition-all cursor-pointer backdrop-blur-md active:scale-95"
-            title="3 new skill catchups"
+            title="3 new skill updates"
             aria-label="Notifications"
           >
             <Bell className="w-4 h-4" />

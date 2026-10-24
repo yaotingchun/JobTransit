@@ -444,7 +444,7 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout, initi
                         </span>
                       </div>
                       <h2 className="font-signage text-2xl sm:text-3xl font-black text-stone-900 tracking-wide mt-0.5">
-                        DAILY NEWS CATCHUP
+                        DAILY NEWS & UPDATES
                       </h2>
                     </div>
 
@@ -453,7 +453,7 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout, initi
                       onClick={() => setActiveTab('catchup')}
                       className="px-3.5 py-1.5 rounded-full bg-stone-900 hover:bg-black text-white font-mono-board text-xs font-bold tracking-wider transition-all cursor-pointer flex items-center gap-1 shadow-sm"
                     >
-                      <span>All Briefs</span>
+                      <span>All Updates</span>
                       <ArrowRight className="w-3.5 h-3.5 text-amber-400" />
                     </button>
                   </div>
@@ -545,7 +545,7 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout, initi
                     onClick={() => setActiveTab('catchup')}
                     className="w-full py-2.5 px-4 rounded-xl bg-stone-900 hover:bg-black text-white font-mono-board text-xs font-bold tracking-wider flex items-center justify-between transition-all cursor-pointer shadow-sm"
                   >
-                    <span>Open Complete Intelligence Feed (3 Unread)</span>
+                    <span>Open Daily Updates Feed (3 Unread)</span>
                     <ArrowRight className="w-4 h-4 text-amber-400" />
                   </button>
                 </div>
