@@ -399,8 +399,8 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
           type="button"
           onClick={() => setViewMode('today')}
           className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer select-none shadow-sm ${viewMode === 'today'
-              ? 'bg-slate-950 text-white shadow-slate-950/25 shadow-md border border-slate-900 scale-[1.02]'
-              : 'bg-white/50 hover:bg-white/75 text-slate-700 hover:text-slate-950 backdrop-blur-xl border border-white/75 shadow-xs'
+            ? 'bg-slate-950 text-white shadow-slate-950/25 shadow-md border border-slate-900 scale-[1.02]'
+            : 'bg-white/50 hover:bg-white/75 text-slate-700 hover:text-slate-950 backdrop-blur-xl border border-white/75 shadow-xs'
             }`}
         >
           <Newspaper className="w-4 h-4" />
@@ -411,8 +411,8 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
           type="button"
           onClick={() => setViewMode('weekly')}
           className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer select-none shadow-sm ${viewMode === 'weekly'
-              ? 'bg-slate-950 text-white shadow-slate-950/25 shadow-md border border-slate-900 scale-[1.02]'
-              : 'bg-white/50 hover:bg-white/75 text-slate-700 hover:text-slate-950 backdrop-blur-xl border border-white/75 shadow-xs'
+            ? 'bg-slate-950 text-white shadow-slate-950/25 shadow-md border border-slate-900 scale-[1.02]'
+            : 'bg-white/50 hover:bg-white/75 text-slate-700 hover:text-slate-950 backdrop-blur-xl border border-white/75 shadow-xs'
             }`}
         >
           <BarChart3 className="w-4 h-4" />
@@ -456,7 +456,7 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
 
             {/* Main Front Broadsheet Page */}
             <div className="relative bg-[#faf8f4] border border-stone-300/90 rounded-2xl sm:rounded-3xl shadow-xl p-5 sm:p-9 md:p-12 space-y-7 text-stone-900 overflow-hidden">
-              
+
               {/* TOP MASTHEAD (Matching Image 2: "THE DAILY BRIEF", Date on top right, "TODAY'S NEWS" kicker) */}
               <div className="space-y-3">
                 {/* Top Bar: Kicker + Date */}
@@ -498,19 +498,17 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
                             <button
                               type="button"
                               onClick={() => setSelectedTopic(topic.id)}
-                              className={`transition-colors cursor-pointer inline-flex items-center gap-1.5 pb-0.5 shrink-0 ${
-                                isSelected
+                              className={`transition-colors cursor-pointer inline-flex items-center gap-1.5 pb-0.5 shrink-0 ${isSelected
                                   ? 'font-bold text-blue-700 underline underline-offset-4 decoration-2'
                                   : 'font-medium text-stone-600 hover:text-stone-950'
-                              }`}
+                                }`}
                             >
                               <span>{topic.label}</span>
                               <span
-                                className={`text-[11px] font-bold px-1.5 py-0.5 rounded-md min-w-[20px] text-center ${
-                                  isSelected
+                                className={`text-[11px] font-bold px-1.5 py-0.5 rounded-md min-w-[20px] text-center ${isSelected
                                     ? 'bg-blue-100 text-blue-700'
                                     : 'bg-stone-200/80 text-stone-600'
-                                }`}
+                                  }`}
                               >
                                 {topic.count}
                               </span>
@@ -571,7 +569,7 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
                     return (
                       <div className="border border-blue-300/80 rounded-2xl bg-blue-50/25 p-5 sm:p-7 relative transition-all group shadow-2xs">
                         <div className="flex flex-col md:flex-row gap-6 items-start justify-between">
-                          
+
                           {/* Left: Lead Story Text */}
                           <div className="flex-1 space-y-3">
                             {/* Category Kicker */}
@@ -619,11 +617,10 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
                                   <button
                                     type="button"
                                     onClick={(e) => toggleBookmark(lead.id, e)}
-                                    className={`p-1.5 rounded-full transition-colors cursor-pointer ${
-                                      isBookmarked
+                                    className={`p-1.5 rounded-full transition-colors cursor-pointer ${isBookmarked
                                         ? 'text-blue-700 bg-blue-100/70 hover:bg-blue-200/70'
                                         : 'text-slate-400 hover:text-slate-700 hover:bg-slate-200/50'
-                                    }`}
+                                      }`}
                                     title={isBookmarked ? 'Remove bookmark' : 'Save for later'}
                                   >
                                     {isBookmarked ? (
@@ -723,11 +720,10 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
                               <button
                                 type="button"
                                 onClick={(e) => toggleBookmark(item.id, e)}
-                                className={`p-1 rounded-full transition-colors cursor-pointer ${
-                                  isBookmarked
+                                className={`p-1 rounded-full transition-colors cursor-pointer ${isBookmarked
                                     ? 'text-blue-700 bg-blue-100/70 hover:bg-blue-200/70'
                                     : 'text-slate-400 hover:text-slate-700 hover:bg-slate-100'
-                                }`}
+                                  }`}
                                 title={isBookmarked ? 'Remove bookmark' : 'Save for later'}
                               >
                                 {isBookmarked ? (
