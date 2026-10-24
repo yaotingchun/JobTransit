@@ -12,6 +12,8 @@ import {
   Brain,
 } from 'lucide-react'
 
+import { FollowUpPage } from './followUp/FollowUpPage'
+
 interface HomepageProps {
   currentUser: UserProfile
   onLogout: () => void
@@ -59,6 +61,16 @@ const topRoles = [
 export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => {
   const [activeTab, setActiveTab] = useState<NavTab>('home')
   const [selectedRole, setSelectedRole] = useState<string>('Agentic AI Engineer')
+
+  if (activeTab === 'follow-up') {
+    return (
+      <FollowUpPage
+        currentUser={currentUser}
+        onLogout={onLogout}
+        onNavigateTab={setActiveTab}
+      />
+    )
+  }
 
   return (
     <div className="relative h-screen w-full bg-[#f8fafc] text-slate-900 font-sans overflow-y-auto overflow-x-hidden custom-scrollbar selection:bg-orange-500/20 selection:text-orange-900">
@@ -135,7 +147,7 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
 
                     <button
                       type="button"
-                      onClick={() => setActiveTab('transit')}
+                      onClick={() => {}}
                       className="px-6 sm:px-7 py-3 rounded-full bg-white/70 hover:bg-white/90 text-slate-900 font-semibold text-sm border border-white/90 shadow-sm backdrop-blur-md transition-all cursor-pointer active:scale-95"
                     >
                       Build My Transit Card

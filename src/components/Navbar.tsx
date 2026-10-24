@@ -9,10 +9,11 @@ import {
   Menu,
   X,
   Compass,
+  HelpCircle,
 } from 'lucide-react'
 import logoImg from '../assets/JobTransitLogo.png'
 
-export type NavTab = 'home' | 'transit' | 'catchup' | 'trend' | 'profile'
+export type NavTab = 'home' | 'transit' | 'catchup' | 'trend' | 'profile' | 'follow-up'
 
 export interface UserProfile {
   name: string
@@ -20,7 +21,7 @@ export interface UserProfile {
 }
 
 export interface NavbarProps {
-  activeTab: NavTab
+  activeTab?: NavTab | null | string
   onSelectTab: (tab: NavTab) => void
   currentUser: UserProfile
   onLogout: () => void
@@ -64,6 +65,13 @@ export const Navbar: React.FC<NavbarProps> = ({
       label: 'Trend',
       icon: TrendingUp,
       badgeType: 'pulse',
+    },
+    {
+      id: 'follow-up',
+      label: 'Follow-Up',
+      icon: HelpCircle,
+      badge: 'Beta',
+      badgeType: 'count',
     },
   ]
 

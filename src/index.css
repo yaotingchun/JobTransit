@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  --font-hero: 'Plus Jakarta Sans', 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-heading: 'Plus Jakarta Sans', 'Outfit', sans-serif;
-  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-hero: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 :root {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -20,17 +20,18 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* Premium, Natural Headline Typography */
 .font-hero {
-  font-family: 'Plus Jakarta Sans', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-  letter-spacing: -0.025em;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: -0.02em;
 }
 
 .font-heading {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* Atmospheric left fading wash for natural text legibility */
@@ -181,6 +182,120 @@ body,
   border-color: rgba(255, 255, 255, 0.98);
   box-shadow: 0 20px 44px -8px rgba(15, 23, 42, 0.1), inset 0 1px 1px 0 rgba(255, 255, 255, 1);
   transform: translateY(-2px);
+}
+
+/* Metro Station Slide Transitions */
+@keyframes metroSlideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(36px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes metroSlideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-36px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes optionFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.metro-slide-in-right {
+  animation: metroSlideInRight 320ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.metro-slide-in-left {
+  animation: metroSlideInLeft 320ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.option-stagger-in {
+  animation: optionFadeUp 280ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Active Station Beacon Pulse */
+@keyframes stationPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(37, 99, 235, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+  }
+}
+
+.station-node-pulse {
+  animation: stationPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Button Ambient Shimmer */
+@keyframes buttonShimmer {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  50%, 100% {
+    transform: translateX(250%) skewX(-20deg);
+  }
+}
+
+.btn-shimmer-sweep {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+  animation: buttonShimmer 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Step Number Flipboard Entrance */
+@keyframes stepFlipSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-number-flip {
+  display: inline-block;
+  animation: stepFlipSlide 250ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .metro-slide-in-right,
+  .metro-slide-in-left,
+  .option-stagger-in,
+  .station-node-pulse,
+  .btn-shimmer-sweep,
+  .step-number-flip {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+  }
 }
 
 
