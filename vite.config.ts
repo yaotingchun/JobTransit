@@ -82,4 +82,11 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 5173,
   },
+  optimizeDeps: {
+    // Exclude pdfjs-dist from pre-bundling so the worker URL resolves correctly
+    exclude: ['pdfjs-dist'],
+  },
+  worker: {
+    format: 'es',
+  },
 })

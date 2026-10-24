@@ -26,7 +26,7 @@ import { TransitTab } from './transit/TransitTab'
 import catchupBg from '../assets/catchup-bg.png'
 import { FollowUpPage } from './followUp/FollowUpPage'
 import { TrendView } from './trend/TrendView'
-
+import { ProfileOnboarding } from './ProfileOnboarding'
 interface HomepageProps {
   currentUser: UserProfile
   onLogout: () => void
@@ -161,7 +161,7 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
       />
 
       {/* Main Container */}
-      <main className="relative z-10 pt-24 sm:pt-28 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
+      <main className={`relative z-10 pt-24 sm:pt-28 pb-16 px-4 sm:px-6 lg:px-8 mx-auto space-y-8 ${activeTab === 'profile' ? 'max-w-[1680px]' : 'max-w-7xl'}`}>
         {activeTab === 'home' && (
           <div className="space-y-8 animate-in fade-in duration-300">
 
@@ -576,48 +576,12 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
         {/* ── TREND TAB: LinkedIn Job Postings & Disruption Radar ── */}
         {activeTab === 'trend' && <TrendView />}
 
-        {/* ── PROFILE TAB ── */}
+        {/* ── PROFILE TAB (ONBOARDING & 3D TRANSIT PASS) ── */}
         {activeTab === 'profile' && (
-          <div className="map-frame rounded-3xl p-8 sm:p-10 max-w-xl mx-auto space-y-6 text-stone-100 border border-stone-800 shadow-xl">
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-400 to-orange-500 text-stone-950 flex items-center justify-center text-3xl font-black font-signage shadow-md">
-                {currentUser.name.charAt(0).toUpperCase()}
-              </div>
-              <div>
-                <h3 className="text-2xl font-black text-white font-signage tracking-wide">
-                  {currentUser.name.toUpperCase()}
-                </h3>
-                <p className="text-xs text-stone-400 font-mono-board">{currentUser.email}</p>
-                <span className="inline-block mt-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-400 text-stone-950 font-mono-board">
-                  TRANSIT PRO EXPLORER · LVL {level}
-                </span>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-stone-950/80 border border-stone-800 text-xs font-mono-board text-stone-300 space-y-1.5">
-              <div><strong className="text-stone-400">Base Station:</strong> [HUB-01] Full-Stack Developer</div>
-              <div><strong className="text-stone-400">Primary Target:</strong> [A-03] Agentic AI Engineer</div>
-              <div><strong className="text-stone-400">Market Alignment:</strong> <span className="text-emerald-400 font-bold">78% Match</span> (3 skills to bridge)</div>
-              <div><strong className="text-stone-400">Reward Horizon:</strong> +450 XP · RM 12k–18k / month</div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-3">
-              <button
-                type="button"
-                onClick={() => handleNavigateToPathway('agentic')}
-                className="flex-1 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-stone-950 text-xs font-black font-mono-board tracking-wider transition-all cursor-pointer text-center"
-              >
-                Open My Reskilling Pathway
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab('trend')}
-                className="py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold font-mono-board transition-all cursor-pointer text-center"
-              >
-                Inspect Market Radar
-              </button>
-            </div>
-          </div>
+          <ProfileOnboarding
+            currentUser={currentUser}
+            onClose={() => setActiveTab('home')}
+          />
         )}
       </main>
     </div>
