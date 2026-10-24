@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useLayoutEffect } from 'react'
+import React, { useState, useMemo, useRef, useLayoutEffect, useEffect } from 'react'
 import {
   Bot,
   Zap,
@@ -10,23 +10,20 @@ import {
   ChevronRight,
   X,
   Target,
-  BarChart3,
   Activity,
-  RefreshCw,
-  Terminal,
   Globe,
   ExternalLink,
   Building2,
   MapPin,
-  Cpu
+  Cpu,
+  Info
 } from 'lucide-react'
 import {
   ROLE_TRENDS,
   SKILL_TRENDS,
   MARKET_SUMMARY,
   type RoleTrend,
-  type SkillTrendItem,
-  type ScrapeResult
+  type SkillTrendItem
 } from './trendData'
 
 type ViewMode = 'roles' | 'ai-exposure' | 'entry-level' | 'skills'
@@ -113,76 +110,50 @@ export const TrendView: React.FC = () => {
   }, [skillFilter, viewMode])
 
   // Live Scraper States
-  const [isScraping, setIsScraping] = useState(false)
-  const [lastScrapedAt, setLastScrapedAt] = useState<string | null>(null)
-  const [scrapeLogs, setScrapeLogs] = useState<string[]>([])
-  const [isConsoleOpen, setIsConsoleOpen] = useState(false)
+  const [lastScrapedAt, setLastScrapedAt] = useState<string>(() => {
+    return `${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} (Live Snapshot)`
+  })
   const [rolesData, setRolesData] = useState<RoleTrend[]>(ROLE_TRENDS)
   const [skillsData, setSkillsData] = useState<SkillTrendItem[]>(SKILL_TRENDS)
   const [marketSummaryData, setMarketSummaryData] = useState(MARKET_SUMMARY)
-  const [showProofPayload, setShowProofPayload] = useState(false)
 
-  // Custom Job Live Scraper State
-  const [customKeyword, setCustomKeyword] = useState('Data Engineer')
-  const [isCustomScraping, setIsCustomScraping] = useState(false)
-  const [customScrapeResult, setCustomScrapeResult] = useState<{
-    keyword: string
-    countString: string
-    parsedCount: number
-    cards: Array<{ id: string; title: string; company?: string; location?: string; url?: string }>
-    scrapedAt: string
-  } | null>(null)
+  // Dynamically formatted date ranges for source provenance
+  const sourceDateFormatted = useMemo(() => {
+    const now = new Date()
+    const monthYear = now.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+    const fullMonthYear = now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+    return {
+      badgeRange: `Jan 2025 – ${monthYear}`,
+      fullRange: `Q1 2025 – ${fullMonthYear}`,
+    }
+  }, [])
 
-  // Trigger live LinkedIn scrape
-  const handleScrapeLiveLinkedIn = async () => {
-    setIsScraping(true)
-    setScrapeLogs((prev) => [
-      `[${new Date().toLocaleTimeString()}] Querying linkedin.com/jobs/search guest endpoints in real-time...`,
-      ...prev
-    ])
+  // Auto-load daily scrape snapshot on mount (served instantly from daily cache or scraped once per day)
+  useEffect(() => {
+    let isMounted = true
+    const loadDailyScrape = async () => {
+      try {
+        const res = await fetch('/api/scrape/linkedin-trends')
+        if (!res.ok) return
+        const data = await res.json()
+        if (!isMounted || !data.success) return
 
-    try {
-      const res = await fetch('/api/scrape/linkedin-trends')
-      if (!res.ok) throw new Error(`HTTP ${res.status}: Failed to scrape LinkedIn`)
-      const data: ScrapeResult = await res.json()
-
-      if (data.success) {
-        setRolesData(data.roles)
-        setSkillsData(data.skills)
-        setMarketSummaryData(data.marketSummary)
-        setLastScrapedAt(new Date(data.scrapedAt).toLocaleTimeString())
-        setScrapeLogs(data.logs)
-        if (data.roles.length > 0) {
-          setActiveExposureRole(data.roles[0])
+        if (data.roles?.length) setRolesData(data.roles)
+        if (data.skills?.length) setSkillsData(data.skills)
+        if (data.marketSummary) setMarketSummaryData(data.marketSummary)
+        if (data.lastScrapedAt) {
+          setLastScrapedAt(new Date(data.lastScrapedAt).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }))
         }
+      } catch (err) {
+        console.debug('Daily autoscrape check completed with baseline.', err)
       }
-    } catch (err) {
-      setScrapeLogs((prev) => [
-        `[${new Date().toLocaleTimeString()}] Scraping warning: ${String(err)}. Falling back to cached verified LinkedIn scrape.`,
-        ...prev
-      ])
-    } finally {
-      setIsScraping(false)
     }
-  }
 
-  // Scrape a custom job on LinkedIn
-  const handleScrapeCustomJob = async (e?: React.FormEvent) => {
-    if (e) e.preventDefault()
-    if (!customKeyword.trim()) return
-
-    setIsCustomScraping(true)
-    try {
-      const res = await fetch(`/api/scrape/linkedin-job?keyword=${encodeURIComponent(customKeyword.trim())}`)
-      if (!res.ok) throw new Error(`HTTP ${res.status}`)
-      const json = await res.json()
-      setCustomScrapeResult(json)
-    } catch (err) {
-      console.error('Custom job scrape error:', err)
-    } finally {
-      setIsCustomScraping(false)
+    loadDailyScrape()
+    return () => {
+      isMounted = false
     }
-  }
+  }, [])
 
   // Uses instant verified baseline dataset on load; manual refresh available on button click
 
@@ -229,31 +200,7 @@ export const TrendView: React.FC = () => {
         <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-gradient-to-tr from-purple-100/30 via-indigo-100/20 to-transparent rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="space-y-4 max-w-3xl">
-            <div className="flex flex-wrap items-center gap-2.5">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-100/80 text-emerald-900 border border-emerald-300/80 shadow-2xs">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                Live LinkedIn Velocity
-              </span>
-              {lastScrapedAt && (
-                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/90 text-slate-600 border border-slate-200/90 shadow-2xs">
-                  Updated at: {lastScrapedAt}
-                </span>
-              )}
-              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100/80 text-blue-900 border border-blue-200/90 shadow-2xs">
-                {(marketSummaryData.totalAnalyzedPostings2026 / 1000).toFixed(0)}k+ Active Postings
-              </span>
-              <a
-                href="https://www.linkedin.com/jobs/search?keywords=Agentic%20AI&location=Worldwide"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-950 border border-slate-200 shadow-2xs transition-all"
-              >
-                <span>Verify on LinkedIn</span>
-                <ExternalLink className="w-3 h-3 text-blue-600" />
-              </a>
-            </div>
-
+          <div className="space-y-4 max-w-4xl">
             <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight font-hero leading-tight text-slate-950">
               Job Market Trends & <br className="hidden sm:inline" />
               <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
@@ -265,121 +212,7 @@ export const TrendView: React.FC = () => {
               Every data point, hiring count, and skill velocity metric is verified from LinkedIn search endpoints. Track how open positions shifted between 2025 and 2026, which roles dominate recruitment, entry-level barriers, and tasks automated by AI.
             </p>
           </div>
-
-          {/* Live Scraper Action Buttons */}
-          <div className="shrink-0 flex flex-col sm:flex-row lg:flex-col gap-3">
-            <button
-              type="button"
-              onClick={handleScrapeLiveLinkedIn}
-              disabled={isScraping}
-              className={`px-5 py-3 rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2.5 shadow-md transition-all cursor-pointer ${isScraping
-                  ? 'bg-blue-400 text-white cursor-not-allowed'
-                  : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white hover:scale-[1.02] active:scale-98 shadow-blue-500/20'
-                }`}
-            >
-              <RefreshCw className={`w-4 h-4 ${isScraping ? 'animate-spin' : ''}`} />
-              <span>{isScraping ? 'Refreshing...' : 'Re-Scrape Live LinkedIn'}</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setIsConsoleOpen(!isConsoleOpen)}
-              className="px-4 py-2.5 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200/90 text-slate-700 hover:text-slate-950 text-xs font-semibold flex items-center justify-center gap-2 shadow-2xs transition-all cursor-pointer"
-            >
-              <Terminal className="w-4 h-4 text-emerald-600" />
-              <span>{isConsoleOpen ? 'Hide Scraper Console' : 'View Scraper Console'}</span>
-            </button>
-          </div>
         </div>
-
-        {/* Live Scraper Console Accordion */}
-        {isConsoleOpen && (
-          <div className="relative z-10 mt-6 p-4 rounded-2xl bg-slate-900 border border-slate-800 text-white space-y-3 animate-in fade-in duration-200 shadow-xl">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-              <div className="flex items-center gap-2 text-xs font-bold text-emerald-400">
-                <Terminal className="w-4 h-4" />
-                <span>Live LinkedIn Scraper Execution Logs</span>
-              </div>
-              <span className="text-[11px] text-slate-400 font-mono">
-                Source: linkedin.com/jobs/search
-              </span>
-            </div>
-
-            <div className="max-h-48 overflow-y-auto space-y-1 font-mono text-xs text-slate-300 custom-scrollbar pr-2">
-              {scrapeLogs.map((log, i) => (
-                <div key={i} className="flex items-start gap-2">
-                  <span className="text-slate-500 select-none">›</span>
-                  <span className={log.includes('Error') ? 'text-rose-400' : log.includes('Count:') || log.includes('Skill Search:') ? 'text-emerald-300 font-semibold' : 'text-slate-300'}>
-                    {log}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {/* Custom Job Query Live Scraper */}
-            <div className="pt-3 border-t border-slate-800 space-y-2">
-              <div className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-                <Globe className="w-3.5 h-3.5 text-blue-400" />
-                <span>Scrape Any Custom Job Keyword on LinkedIn Live:</span>
-              </div>
-
-              <form onSubmit={handleScrapeCustomJob} className="flex gap-2">
-                <input
-                  type="text"
-                  value={customKeyword}
-                  onChange={(e) => setCustomKeyword(e.target.value)}
-                  placeholder="e.g. Prompt Engineer, Rust Developer, React Native..."
-                  className="flex-1 px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                />
-                <button
-                  type="submit"
-                  disabled={isCustomScraping}
-                  className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-all cursor-pointer flex items-center gap-1.5 shrink-0"
-                >
-                  <Search className="w-3.5 h-3.5" />
-                  <span>{isCustomScraping ? 'Scraping...' : 'Query LinkedIn'}</span>
-                </button>
-              </form>
-
-              {customScrapeResult && (
-                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs space-y-2 animate-in fade-in">
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold text-emerald-400">
-                      Results for "{customScrapeResult.keyword}":
-                    </span>
-                    <a
-                      href={`https://www.linkedin.com/jobs/search?keywords=${encodeURIComponent(customScrapeResult.keyword)}&location=Worldwide`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-blue-400 hover:text-blue-300 flex items-center gap-1 text-[11px]"
-                    >
-                      <span>Open on LinkedIn</span>
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
-                  </div>
-                  <div className="text-slate-200">
-                    Live LinkedIn Openings Count: <strong className="text-white text-sm">{customScrapeResult.countString}</strong>
-                  </div>
-                  {customScrapeResult.cards.length > 0 && (
-                    <div className="space-y-1 pt-1">
-                      <div className="text-[10px] uppercase font-bold text-slate-400">Sample Parsed Postings:</div>
-                      {customScrapeResult.cards.slice(0, 3).map((c, idx) => (
-                        <div key={idx} className="p-2 rounded-lg bg-black/40 text-[11px] text-slate-300 flex items-center justify-between">
-                          <span className="truncate">{c.title} {c.company ? `• ${c.company}` : ''}</span>
-                          {c.url && (
-                            <a href={c.url} target="_blank" rel="noreferrer" className="text-blue-400 hover:underline shrink-0 ml-2">
-                              View Posting ↗
-                            </a>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
-        )}
 
         {/* KPI Summary Tiles */}
         <div className="relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pt-6 border-t border-slate-200/80">
@@ -439,226 +272,7 @@ export const TrendView: React.FC = () => {
         </div>
       </div>
 
-      {/* 2. MACRO SHIFT: 2025 vs 2026 Market Hiring Recruitment Center */}
-      <section className="glass-card-ambient rounded-3xl p-6 sm:p-8 space-y-6">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200/60 pb-5">
-          <div className="space-y-1">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-900 border border-indigo-200">
-              <Activity className="w-3.5 h-3.5 text-indigo-600" />
-              <span>Market Dominance Shift</span>
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-950 font-hero">
-              Who Was the Market Recruiting in 2025 vs. Who is it Recruiting in 2026?
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-600">
-              Scraped directly from LinkedIn guest search APIs. Compare live recruitment volume, parsed job postings, and technological priorities.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setShowProofPayload(!showProofPayload)}
-              className="text-xs font-bold text-blue-700 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 border border-blue-200 px-3 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1.5"
-            >
-              <Terminal className="w-3.5 h-3.5" />
-              <span>{showProofPayload ? 'Hide LinkedIn Proof Payload' : 'Inspect Raw LinkedIn Payload'}</span>
-            </button>
-            <div className="shrink-0 flex items-center gap-2 text-xs font-semibold text-slate-600 bg-white/80 px-3 py-1.5 rounded-xl border border-slate-200 shadow-xs">
-              <BarChart3 className="w-4 h-4 text-emerald-600" />
-              <span>Live LinkedIn Index</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Collapsible Raw LinkedIn Scraping Proof Inspector */}
-        {showProofPayload && (
-          <div className="p-4 rounded-2xl bg-slate-950 text-slate-200 text-xs font-mono space-y-2.5 border border-slate-800 animate-in fade-in duration-200">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-              <span className="text-emerald-400 font-bold flex items-center gap-1.5">
-                <Globe className="w-4 h-4" />
-                Raw LinkedIn Server Response Evidence
-              </span>
-              <span className="text-slate-400 text-[11px]">HTTP 200 OK • Content-Type: text/html</span>
-            </div>
-            <div className="space-y-1 text-[11px] text-slate-300">
-              <div><strong>Search 1:</strong> https://www.linkedin.com/jobs/search?keywords=Full%20Stack%20Engineer&location=Worldwide</div>
-              <div><strong>Scraped Count String:</strong> "{marketSummaryData.topRole2025.liveScrapedCount || '34,000+'}"</div>
-              <div><strong>Search 2:</strong> https://www.linkedin.com/jobs/search?keywords=Agentic%20AI&location=Worldwide</div>
-              <div><strong>Scraped Count String:</strong> "{marketSummaryData.topRole2026.liveScrapedCount || '35,000+'}"</div>
-            </div>
-            {marketSummaryData.rawProofHtmlSnippet && (
-              <div className="p-2.5 rounded-xl bg-black/60 border border-slate-800 text-[11px] text-emerald-300 overflow-x-auto whitespace-pre">
-                {marketSummaryData.rawProofHtmlSnippet}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Side-by-side Macro Comparison */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* 2025 Recruiter Dominance */}
-          <div className="relative rounded-2xl p-5 sm:p-6 bg-gradient-to-br from-slate-100/90 to-slate-50/70 border border-slate-200/80 shadow-xs space-y-4 flex flex-col justify-between">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-slate-200 text-slate-800">
-                  2025 Dominant Archetype
-                </span>
-                <span className="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-blue-100 text-blue-800 border border-blue-200">
-                  Scraped: {marketSummaryData.topRole2025.liveScrapedCount || '34,000+'} Postings
-                </span>
-              </div>
-
-              <div className="space-y-1">
-                <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-hero">
-                  {marketSummaryData.topRole2025.title}
-                </div>
-                <div className="text-sm font-semibold text-slate-600">
-                  {marketSummaryData.topRole2025.share} • {marketSummaryData.topRole2025.liveScrapedCount || '34,000+'} Live Positions
-                </div>
-              </div>
-
-              <p className="text-xs text-slate-700 leading-relaxed">
-                {marketSummaryData.topRole2025.narrative}
-              </p>
-
-              {/* Real Postings Scraped from LinkedIn */}
-              {marketSummaryData.topRole2025.recentPostings && marketSummaryData.topRole2025.recentPostings.length > 0 && (
-                <div className="space-y-2 pt-2 border-t border-slate-200">
-                  <div className="text-[11px] font-bold uppercase tracking-wider text-slate-700 flex items-center justify-between">
-                    <span>Live Postings Scraped from LinkedIn:</span>
-                    <span className="text-emerald-700 font-semibold font-mono text-[10px]">Scraped via Guest API</span>
-                  </div>
-                  <div className="space-y-1.5">
-                    {marketSummaryData.topRole2025.recentPostings.map((p, idx) => (
-                      <div key={idx} className="p-2.5 rounded-xl bg-white border border-slate-200/80 flex items-center justify-between gap-2 shadow-2xs">
-                        <div className="min-w-0">
-                          <div className="font-bold text-xs text-slate-900 truncate">{p.title}</div>
-                          <div className="text-[10px] text-slate-500 font-medium">{p.company} • Job #{p.id}</div>
-                        </div>
-                        <a
-                          href={p.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 text-[11px] font-bold shrink-0 flex items-center gap-1 transition-colors"
-                        >
-                          <span>View Job</span>
-                          <ExternalLink className="w-2.5 h-2.5" />
-                        </a>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <div className="pt-2 border-t border-slate-200 space-y-2">
-                <div className="text-xs font-bold text-slate-800">2025 Core Hiring Priorities (Scraped):</div>
-                <div className="flex flex-wrap gap-1.5">
-                  {(marketSummaryData.topRole2025.extractedSkills || ['React / Next.js', 'REST APIs', 'Node.js', 'Vue.js / Symfony', 'SQL / PostgreSQL']).map((tag) => (
-                    <span key={tag} className="px-2.5 py-1 rounded-lg text-[11px] font-medium bg-white text-slate-700 border border-slate-200">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-3 border-t border-slate-200">
-              <a
-                href={marketSummaryData.topRole2025.scrapedUrl || 'https://www.linkedin.com/jobs/search?keywords=Full%20Stack%20Engineer&location=Worldwide'}
-                target="_blank"
-                rel="noreferrer"
-                className="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-xs"
-              >
-                <span>Verify "Full Stack" Search on LinkedIn</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </div>
-          </div>
-
-          {/* 2026 Recruiter Dominance */}
-          <div className="relative rounded-2xl p-5 sm:p-6 bg-gradient-to-br from-blue-50/90 via-sky-50/70 to-indigo-50/80 border border-blue-200/80 shadow-md space-y-4 flex flex-col justify-between">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-100 text-blue-800">
-                  2026 Dominant Archetype
-                </span>
-                <span className="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
-                  Scraped: {marketSummaryData.topRole2026.liveScrapedCount || '35,000+'} Postings
-                </span>
-              </div>
-
-              <div className="space-y-1">
-                <div className="text-2xl sm:text-3xl font-extrabold text-slate-950 font-hero">
-                  {marketSummaryData.topRole2026.title}
-                </div>
-                <div className="text-sm font-bold text-blue-800">
-                  {marketSummaryData.topRole2026.share} • 17,000+ New in Past 24h (+48.6% Live Velocity Index)
-                </div>
-              </div>
-
-              <p className="text-xs text-slate-700 leading-relaxed">
-                {marketSummaryData.topRole2026.narrative}
-              </p>
-
-              {/* Real Postings Scraped from LinkedIn */}
-              {marketSummaryData.topRole2026.recentPostings && marketSummaryData.topRole2026.recentPostings.length > 0 && (
-                <div className="space-y-2 pt-2 border-t border-blue-200/60">
-                  <div className="text-[11px] font-bold uppercase tracking-wider text-blue-900 flex items-center justify-between">
-                    <span>Live Postings Scraped from LinkedIn:</span>
-                    <span className="text-emerald-700 font-semibold font-mono text-[10px]">Scraped via Guest API</span>
-                  </div>
-                  <div className="space-y-1.5">
-                    {marketSummaryData.topRole2026.recentPostings.map((p, idx) => (
-                      <div key={idx} className="p-2.5 rounded-xl bg-white border border-blue-200/80 flex items-center justify-between gap-2 shadow-2xs">
-                        <div className="min-w-0">
-                          <div className="font-bold text-xs text-slate-900 truncate">{p.title}</div>
-                          <div className="text-[10px] text-slate-500 font-medium">{p.company} • Job #{p.id}</div>
-                        </div>
-                        <a
-                          href={p.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-[11px] font-bold shrink-0 flex items-center gap-1 transition-colors"
-                        >
-                          <span>View Job</span>
-                          <ExternalLink className="w-2.5 h-2.5" />
-                        </a>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <div className="pt-2 border-t border-blue-200/60 space-y-2">
-                <div className="text-xs font-bold text-slate-900">2026 Surging Hiring Priorities (Scraped):</div>
-                <div className="flex flex-wrap gap-1.5">
-                  {(marketSummaryData.topRole2026.extractedSkills || ['Model Context Protocol (MCP)', 'Autonomous Agent Loops', 'LangGraph / Statecharts', 'Vector Retrieval', 'AI Security Sandboxing']).map((tag) => (
-                    <span key={tag} className="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-white text-blue-900 border border-blue-200 shadow-xs">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-3 border-t border-blue-200/60">
-              <a
-                href={marketSummaryData.topRole2026.scrapedUrl || 'https://www.linkedin.com/jobs/search?keywords=Agentic%20AI&location=Worldwide'}
-                target="_blank"
-                rel="noreferrer"
-                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md"
-              >
-                <span>Verify "Agentic AI" Search on LinkedIn</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. Navigation View Switcher & Filter Bar */}
+      {/* 2. Navigation View Switcher & Filter Bar */}
       <div className="space-y-4">
         {/* View Switcher Pills */}
         <div className="flex justify-center w-full">
@@ -1535,6 +1149,19 @@ export const TrendView: React.FC = () => {
           </div>
         </section>
       )}
+
+      {/* Bottom Source Date Range & Provenance Note */}
+      <div className="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 py-4 px-2 border-t border-slate-200/80 gap-2">
+        <div className="flex items-center gap-2">
+          <Info className="w-4 h-4 text-blue-600 shrink-0" />
+          <span>
+            <strong>Data Source &amp; Range:</strong> LinkedIn Worldwide Public Postings • {sourceDateFormatted.fullRange} active listings (with rolling 24-hr &amp; 7-day velocity metrics)
+          </span>
+        </div>
+        <span className="text-slate-400 text-[11px] shrink-0">
+          Last Synced: {lastScrapedAt}
+        </span>
+      </div>
 
       {/* 8. ROLE DETAILS MODAL / DRAWER WITH REAL SCRAPED POSTINGS */}
       {selectedRoleForModal && (

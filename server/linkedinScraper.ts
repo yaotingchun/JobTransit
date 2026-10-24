@@ -1,5 +1,7 @@
 import https from 'node:https'
 import type { IncomingMessage } from 'node:http'
+import fs from 'node:fs'
+import path from 'node:path'
 import { determineSkillTrend, type RoleTrend, type SkillTrendItem, type ScrapedJobSummary, type MarketSummaryData, type ScrapeResult, type MinedSkillItem, type TaskAIExposure } from '../src/components/trend/trendData.ts'
 
 export type { ScrapedJobSummary, ScrapeResult, MinedSkillItem }
@@ -801,3 +803,111 @@ export async function scrapeLinkedInTrends(): Promise<ScrapeResult> {
     liveRawJobs,
   }
 }
+
+// -------------------------------------------------------------
+// Daily Persistent Cache & Scheduler Logic (1 Time Per Day)
+// -------------------------------------------------------------
+const CACHE_FILE_PATH = path.resolve(process.cwd(), 'state', 'linkedin-daily-cache.json')
+export const DAILY_SCRAPE_INTERVAL_MS = 24 * 60 * 60 * 1000 // 24 hours
+
+export interface CachedDailyScrape {
+  lastScrapedAt: string
+  nextScrapeDueAt: string
+  data: ScrapeResult
+}
+
+export function readDailyScrapeCache(): CachedDailyScrape | null {
+  try {
+    if (!fs.existsSync(CACHE_FILE_PATH)) return null
+    const raw = fs.readFileSync(CACHE_FILE_PATH, 'utf-8')
+    const parsed = JSON.parse(raw) as CachedDailyScrape
+    if (!parsed || !parsed.data || !parsed.lastScrapedAt) return null
+    return parsed
+  } catch (err) {
+    console.error('[LinkedIn Scraper] Failed to read daily cache:', err)
+    return null
+  }
+}
+
+export function saveDailyScrapeCache(data: ScrapeResult): CachedDailyScrape {
+  try {
+    const dir = path.dirname(CACHE_FILE_PATH)
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+    const lastScrapedAt = data.scrapedAt || new Date().toISOString()
+    const nextScrapeDueAt = new Date(new Date(lastScrapedAt).getTime() + DAILY_SCRAPE_INTERVAL_MS).toISOString()
+    const payload: CachedDailyScrape = {
+      lastScrapedAt,
+      nextScrapeDueAt,
+      data,
+    }
+    fs.writeFileSync(CACHE_FILE_PATH, JSON.stringify(payload, null, 2), 'utf-8')
+    return payload
+  } catch (err) {
+    console.error('[LinkedIn Scraper] Failed to write daily cache:', err)
+    return {
+      lastScrapedAt: data.scrapedAt || new Date().toISOString(),
+      nextScrapeDueAt: new Date(Date.now() + DAILY_SCRAPE_INTERVAL_MS).toISOString(),
+      data,
+    }
+  }
+}
+
+let isScrapingInProgress = false
+
+export async function getOrUpdateDailyScrape(options?: { force?: boolean }): Promise<{
+  data: ScrapeResult
+  fromCache: boolean
+  lastScrapedAt: string
+  nextScrapeDueAt: string
+}> {
+  const cached = readDailyScrapeCache()
+  const now = Date.now()
+  const isExpired = !cached || (now - new Date(cached.lastScrapedAt).getTime() >= DAILY_SCRAPE_INTERVAL_MS)
+
+  // Serve daily cache if valid and not forcing a re-scrape
+  if (!options?.force && cached && !isExpired) {
+    return {
+      data: cached.data,
+      fromCache: true,
+      lastScrapedAt: cached.lastScrapedAt,
+      nextScrapeDueAt: cached.nextScrapeDueAt,
+    }
+  }
+
+  // If another scrape is already active in the background, serve existing cache to avoid duplicate requests
+  if (isScrapingInProgress && cached) {
+    return {
+      data: cached.data,
+      fromCache: true,
+      lastScrapedAt: cached.lastScrapedAt,
+      nextScrapeDueAt: cached.nextScrapeDueAt,
+    }
+  }
+
+  isScrapingInProgress = true
+  try {
+    console.log(`[LinkedIn Scraper] ${options?.force ? 'Manual force requested' : 'Daily 24-hr schedule triggered'}: Scraping live LinkedIn trends...`)
+    const freshData = await scrapeLinkedInTrends()
+    const saved = saveDailyScrapeCache(freshData)
+    return {
+      data: saved.data,
+      fromCache: false,
+      lastScrapedAt: saved.lastScrapedAt,
+      nextScrapeDueAt: saved.nextScrapeDueAt,
+    }
+  } catch (err) {
+    console.error('[LinkedIn Scraper] Live scrape failed during daily check:', err)
+    if (cached) {
+      return {
+        data: cached.data,
+        fromCache: true,
+        lastScrapedAt: cached.lastScrapedAt,
+        nextScrapeDueAt: cached.nextScrapeDueAt,
+      }
+    }
+    throw err
+  } finally {
+    isScrapingInProgress = false
+  }
+}
+
