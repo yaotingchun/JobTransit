@@ -1,0 +1,3881 @@
+{
+  "metadata": {
+    "version": "v_20261024083655",
+    "publishedAt": "2026-10-24T08:36:55.726Z",
+    "articleCount": 57,
+    "eventCount": 57,
+    "pipelineDurationMs": 10049,
+    "status": "published"
+  },
+  "lastUpdated": "2026-10-24T08:36:55.727Z",
+  "stats": {
+    "collected": 57,
+    "normalized": 57,
+    "eventsFormed": 57,
+    "enriched": 57,
+    "durationMs": 10049
+  },
+  "articles": [
+    {
+      "id": "infoq_71ff7a2ca210328d29be84c6",
+      "urlHash": "71ff7a2ca210328d29be84c6",
+      "sourceId": "infoq",
+      "sourceName": "InfoQ",
+      "sourceDomain": "infoq.com",
+      "title": "Cloudflare Reclaims 100 TB of RAM by Optimizing Consistent Hashing",
+      "cleanedTitle": "Cloudflare Reclaims 100 TB of RAM by Optimizing Consistent Hashing",
+      "link": "https://www.infoq.com/news/2026/10/cloudflare-hashing-optimization",
+      "publishedAt": "2026-10-24T08:10:00.000Z",
+      "description": "Cloudflare recently documented how it reduced the memory footprint of its internal load-balancing service by more than 100 TB by optimizing the Rust implementation of consistent hashing in pingora-ketama. The changes compacted hash-ring entries and used statistical analysis of hash distribution and collision rates to r",
+      "bodyExcerpt": "Cloudflare recently documented how it reduced the memory footprint of its internal load-balancing service by more than 100 TB by optimizing the Rust implementation of consistent hashing in pingora-ketama. The changes compacted hash-ring entries and used statistical analysis of hash distribution and collision rates to reduce the number of hashes per backend by about 90%. By Renato Losio",
+      "wordCount": 114,
+      "hasFullBody": false,
+      "eventId": "evt_ff5fbecd6fa8_1792829400000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "software-engineering",
+      "subTags": [
+        "Rust"
+      ],
+      "topicKeywords": [
+        "rust"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in software engineering with focus on Rust.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Rust"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.983,
+        "significance": 0.556,
+        "careerRelevance": 0.6,
+        "sourceAuthority": 0.88,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.6994
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "techcrunch_0ce7cbd00087eca3be5f7414",
+      "urlHash": "0ce7cbd00087eca3be5f7414",
+      "sourceId": "techcrunch",
+      "sourceName": "TechCrunch",
+      "sourceDomain": "techcrunch.com",
+      "title": "Agent cloud startup Daytona hits $1B valuation backed by FirstMark and a who’s who of angels",
+      "cleanedTitle": "Agent cloud startup Daytona hits $1B valuation backed by FirstMark and a who’s who of angels",
+      "link": "https://techcrunch.com/2026/10/23/agent-cloud-startup-daytona-hits-1b-valuation-backed-by-firstmark-and-a-whos-who-of-angels",
+      "publishedAt": "2026-10-23T16:26:29.000Z",
+      "description": "Daytona is building a cloud for agents that's like giving every agent its own computer. It has attracted founders of Stripe, Perplextity, Datadog, Mercor, and others as angels, it says.",
+      "bodyExcerpt": "Daytona is building a cloud for agents that's like giving every agent its own computer. It has attracted founders of Stripe, Perplextity, Datadog, Mercor, and others as angels, it says.",
+      "wordCount": 76,
+      "hasFullBody": false,
+      "eventId": "evt_e74439eb02dd_1792772789000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "data-cloud",
+      "subTags": [
+        "Cloud"
+      ],
+      "topicKeywords": [
+        "cloud"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in data cloud with focus on Cloud.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Cloud"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.536,
+        "significance": 0.556,
+        "careerRelevance": 0.6,
+        "sourceAuthority": 0.8,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.564
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "infoq_7f72717ce6edefe22b62997f",
+      "urlHash": "7f72717ce6edefe22b62997f",
+      "sourceId": "infoq",
+      "sourceName": "InfoQ",
+      "sourceDomain": "infoq.com",
+      "title": "CSIRO Uses Serverless Architecture to Query 100x More Genomic Variants on AWS",
+      "cleanedTitle": "CSIRO Uses Serverless Architecture to Query 100x More Genomic Variants on AWS",
+      "link": "https://www.infoq.com/news/2026/10/csiro-serverless-genomic-variant",
+      "publishedAt": "2026-10-23T14:30:00.000Z",
+      "description": "CSIRO has developed Serverless Beacon, a serverless architecture for querying genomic variants without copying VCF files into a central database. The system combines Amazon S3, Lambda, Athena and DynamoDB, using metadata indexes and HTTP byte range requests to query compressed genomic regions. Tests reported 1.52 secon",
+      "bodyExcerpt": "CSIRO has developed Serverless Beacon, a serverless architecture for querying genomic variants without copying VCF files into a central database. The system combines Amazon S3, Lambda, Athena and DynamoDB, using metadata indexes and HTTP byte range requests to query compressed genomic regions. Tests reported 1.52 second average latency for 10,000 base pair queries. By Leela Kumili",
+      "wordCount": 114,
+      "hasFullBody": false,
+      "eventId": "evt_08d5bd5e2985_1792765800000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "data-cloud",
+      "subTags": [
+        "AWS",
+        "Serverless",
+        "Database",
+        "S3"
+      ],
+      "topicKeywords": [
+        "aws",
+        "serverless",
+        "database",
+        "s3"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in data cloud with focus on AWS, Serverless, Database, S3.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "AWS",
+          "Serverless",
+          "Database",
+          "S3"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.498,
+        "significance": 0.556,
+        "careerRelevance": 0.6,
+        "sourceAuthority": 0.88,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.5636
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "infoq_41f4f242def515976daf36c4",
+      "urlHash": "41f4f242def515976daf36c4",
+      "sourceId": "infoq",
+      "sourceName": "InfoQ",
+      "sourceDomain": "infoq.com",
+      "title": "AWS Introduces Lambda Web Functions for Node.js Applications",
+      "cleanedTitle": "AWS Introduces Lambda Web Functions for Node.js Applications",
+      "link": "https://www.infoq.com/news/2026/10/aws-lambda-web-functions",
+      "publishedAt": "2026-10-23T12:49:00.000Z",
+      "description": "AWS recently introduced Lambda Web Functions, allowing developers to run Node.js web applications using frameworks such as Express and Hono directly on Lambda, with support for concurrent requests and response streaming. By Renato Losio",
+      "bodyExcerpt": "AWS recently introduced Lambda Web Functions, allowing developers to run Node.js web applications using frameworks such as Express and Hono directly on Lambda, with support for concurrent requests and response streaming. By Renato Losio",
+      "wordCount": 76,
+      "hasFullBody": false,
+      "eventId": "evt_049b8f0b9426_1792759740000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "software-engineering",
+      "subTags": [
+        "Node"
+      ],
+      "topicKeywords": [
+        "node"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in software engineering with focus on Node.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Node"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.467,
+        "significance": 0.556,
+        "careerRelevance": 0.6,
+        "sourceAuthority": 0.88,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.5548
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "bleepingcomputer_0ae7a1508c3f482bfa2840b3",
+      "urlHash": "0ae7a1508c3f482bfa2840b3",
+      "sourceId": "bleepingcomputer",
+      "sourceName": "BleepingComputer",
+      "sourceDomain": "bleepingcomputer.com",
+      "title": "Abandoned Popcorn Time app exposed millions of devices to RCE attacks",
+      "cleanedTitle": "Abandoned Popcorn Time app exposed millions of devices to RCE attacks",
+      "link": "https://www.bleepingcomputer.com/news/security/abandoned-popcorn-time-app-exposed-millions-of-device-to-rce-attacks",
+      "publishedAt": "2026-10-23T20:55:05.000Z",
+      "description": "Researchers remotely disabled a vulnerable updater in the abandoned Time4Popcorn app, a fork of the Popcorn Time BitTorrent client, closing a security flaw that could have allowed attackers to execute malicious code with elevated privileges on millions of computers. [...]",
+      "bodyExcerpt": "Researchers remotely disabled a vulnerable updater in the abandoned Time4Popcorn app, a fork of the Popcorn Time BitTorrent client, closing a security flaw that could have allowed attackers to execute malicious code with elevated privileges on millions of computers. [...]",
+      "wordCount": 91,
+      "hasFullBody": false,
+      "eventId": "evt_103a1c8353f2_1792788905000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "security",
+      "subTags": [
+        "Security"
+      ],
+      "topicKeywords": [
+        "security"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in security with focus on Security.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Security"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.637,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.82,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.5508
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "theverge_a6d2d5fdb7657f8a34ec9e61",
+      "urlHash": "a6d2d5fdb7657f8a34ec9e61",
+      "sourceId": "theverge",
+      "sourceName": "The Verge",
+      "sourceDomain": "theverge.com",
+      "title": "OpenAI now trains its frontier AI models with no internet access",
+      "cleanedTitle": "OpenAI now trains its frontier AI models with no internet access",
+      "link": "https://www.theverge.com/ai-artificial-intelligence/1018021/openai-training-top-ai-models-no-internet",
+      "publishedAt": "2026-10-23T21:11:07.000Z",
+      "description": "OpenAI is now training its most advanced AI models without internet access following a string of rogue hacking incidents. In a blog post on Friday, OpenAI says it built an offline testing environment where AI models can interact with indexed and cached web content \"without risk of affecting external systems.\" OpenAI pa",
+      "bodyExcerpt": "OpenAI is now training its most advanced AI models without internet access following a string of rogue hacking incidents. In a blog post on Friday, OpenAI says it built an offline testing environment where AI models can interact with indexed and cached web content \"without risk of affecting external systems.\" OpenAI paused training its frontier AI models in September, after disclosing several incidents in which its AI agents broke out of their testing environments to hack third-party companies and government agencies, or swarm obscure websites. On October 1st, OpenAI resumed reinforcement learning training and internal inference with tighte … Read the full story at The Verge.",
+      "wordCount": 169,
+      "hasFullBody": true,
+      "eventId": "evt_ffe63e785ffa_1792789867000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "ai-ml",
+      "subTags": [
+        "AI",
+        "Openai"
+      ],
+      "topicKeywords": [
+        "ai",
+        "openai"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in ai ml with focus on AI, Openai.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "AI",
+          "Openai"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.644,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.75,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.5436
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "techcrunch_e8fbd857a8b6b0ff954ad3e7",
+      "urlHash": "e8fbd857a8b6b0ff954ad3e7",
+      "sourceId": "techcrunch",
+      "sourceName": "TechCrunch",
+      "sourceDomain": "techcrunch.com",
+      "title": "From Toast to Bessemer: Who founders will hear from at TechCrunch Founder Summit 2026",
+      "cleanedTitle": "From Toast to Bessemer: Who founders will hear from at TechCrunch Founder Summit 2026",
+      "link": "https://techcrunch.com/2026/10/23/from-toast-to-bessemer-who-founders-will-hear-from-at-techcrunch-founder-summit-2026",
+      "publishedAt": "2026-10-23T19:06:23.000Z",
+      "description": "Hosted by TechCrunch in partnership with Fidelity Private Shares, the full-day event goes beyond fundraising and AI to explore the realities of finding customers, building teams, sharpening a pitch, developing founder leadership, and scaling companies both inside and outside traditional startup hubs.",
+      "bodyExcerpt": "Hosted by TechCrunch in partnership with Fidelity Private Shares, the full-day event goes beyond fundraising and AI to explore the realities of finding customers, building teams, sharpening a pitch, developing founder leadership, and scaling companies both inside and outside traditional startup hubs.",
+      "wordCount": 98,
+      "hasFullBody": false,
+      "eventId": "evt_3c1c68534165_1792782383000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "ai-ml",
+      "subTags": [
+        "AI"
+      ],
+      "topicKeywords": [
+        "ai"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in ai ml with focus on AI.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "AI"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.594,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.8,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.5362
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "infoq_e569ce8942b0108dc51ba2d0",
+      "urlHash": "e569ce8942b0108dc51ba2d0",
+      "sourceId": "infoq",
+      "sourceName": "InfoQ",
+      "sourceDomain": "infoq.com",
+      "title": "NgRx 22: Resource Extensions and Dynamic Deep Signals for Angular",
+      "cleanedTitle": "NgRx 22: Resource Extensions and Dynamic Deep Signals for Angular",
+      "link": "https://www.infoq.com/news/2026/10/ngrx-22-angular",
+      "publishedAt": "2026-10-23T08:08:00.000Z",
+      "description": "NgRx 22 adds experimental resource extensions that change Angular's resource behavior, so value() is retained during reloads and no longer throws on errors. It also introduces dynamic deep signals for union types, a SignalStoreFeatureType utility, and ESLint v10 support. Upgrading requires Angular 22 and TypeScript 6.0",
+      "bodyExcerpt": "NgRx 22 adds experimental resource extensions that change Angular's resource behavior, so value() is retained during reloads and no longer throws on errors. It also introduces dynamic deep signals for union types, a SignalStoreFeatureType utility, and ESLint v10 support. Upgrading requires Angular 22 and TypeScript 6.0, and most breaking changes have automated migrations. By Daniel Curtis",
+      "wordCount": 112,
+      "hasFullBody": false,
+      "eventId": "evt_c3534f2d241f_1792742880000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "software-engineering",
+      "subTags": [
+        "Typescript"
+      ],
+      "topicKeywords": [
+        "typescript"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in software engineering with focus on Typescript.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Typescript"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.39,
+        "significance": 0.556,
+        "careerRelevance": 0.6,
+        "sourceAuthority": 0.88,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.5333
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "theverge_60b56cc3037dbda3a95126cc",
+      "urlHash": "60b56cc3037dbda3a95126cc",
+      "sourceId": "theverge",
+      "sourceName": "The Verge",
+      "sourceDomain": "theverge.com",
+      "title": "Jack Dorsey’s Block made an AI model that talks to you like an awkward new friend",
+      "cleanedTitle": "Jack Dorsey’s Block made an AI model that talks to you like an awkward new friend",
+      "link": "https://www.theverge.com/ai-artificial-intelligence/1017906/jack-dorsey-block-dessa-ai-voice-speech",
+      "publishedAt": "2026-10-23T19:32:39.000Z",
+      "description": "Jack Dorsey's Block announced an AI model called Dessa that's trained \"from scratch on nothing but human conversation,\" and to show off the model, Block shared chats it has had with humans that can occasionally be a little awkward and uncanny. Take this one, for example, shared by Dessa lead Ragavan Thurairatnam. The c",
+      "bodyExcerpt": "Jack Dorsey's Block announced an AI model called Dessa that's trained \"from scratch on nothing but human conversation,\" and to show off the model, Block shared chats it has had with humans that can occasionally be a little awkward and uncanny. Take this one, for example, shared by Dessa lead Ragavan Thurairatnam. The conversation between the model and the speaker does have a mostly natural back and forth (though for some reason, the model initially mistakes the speaker for somebody named \"Ronaldo\"). We made the first AI model you can have a realistic conversation with that was trained entirely on speech! Dessa is a full-duplex speech-to-sp … Read the full story at The Verge.",
+      "wordCount": 184,
+      "hasFullBody": true,
+      "eventId": "evt_0931578421b4_1792783959000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "ai-ml",
+      "subTags": [
+        "AI",
+        "Model"
+      ],
+      "topicKeywords": [
+        "ai",
+        "model"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in ai ml with focus on AI, Model.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "AI",
+          "Model"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.605,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.75,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.5325
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "bleepingcomputer_651b9429c7fac0a1820a5cd6",
+      "urlHash": "651b9429c7fac0a1820a5cd6",
+      "sourceId": "bleepingcomputer",
+      "sourceName": "BleepingComputer",
+      "sourceDomain": "bleepingcomputer.com",
+      "title": "Quest Diagnostics confirms data breach exposed patient records",
+      "cleanedTitle": "Quest Diagnostics confirms data breach exposed patient records",
+      "link": "https://www.bleepingcomputer.com/news/security/quest-diagnostics-confirms-data-breach-exposed-patient-records",
+      "publishedAt": "2026-10-23T16:40:07.000Z",
+      "description": "American clinical laboratory company Quest Diagnostics disclosed that patient records have been exposed after a threat actor gained unauthorized access to its Quanum LSM system. [...]",
+      "bodyExcerpt": "American clinical laboratory company Quest Diagnostics disclosed that patient records have been exposed after a threat actor gained unauthorized access to its Quanum LSM system. [...]",
+      "wordCount": 60,
+      "hasFullBody": false,
+      "eventId": "evt_f2271a699576_1792773607000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "security",
+      "subTags": [
+        "Breach"
+      ],
+      "topicKeywords": [
+        "breach"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in security with focus on Breach.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Breach"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.541,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.82,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.5239
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "bleepingcomputer_a46a3d4aa8e9f96fc8fa2756",
+      "urlHash": "a46a3d4aa8e9f96fc8fa2756",
+      "sourceId": "bleepingcomputer",
+      "sourceName": "BleepingComputer",
+      "sourceDomain": "bleepingcomputer.com",
+      "title": "PHP shares mitigation for new RCE vulnerability with no patch",
+      "cleanedTitle": "PHP shares mitigation for new RCE vulnerability with no patch",
+      "link": "https://www.bleepingcomputer.com/news/security/php-shares-mitigation-for-new-and-unpatched-rce-vulnerability",
+      "publishedAt": "2026-10-23T15:38:05.000Z",
+      "description": "The PHP security team has shared mitigation measures for a new remote code execution vulnerability that affects systems with non-default configurations and has no patch. [...]",
+      "bodyExcerpt": "The PHP security team has shared mitigation measures for a new remote code execution vulnerability that affects systems with non-default configurations and has no patch. [...]",
+      "wordCount": 62,
+      "hasFullBody": false,
+      "eventId": "evt_df4c4529fe7f_1792769885000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "security",
+      "subTags": [
+        "Vulnerability",
+        "Security",
+        "Patch"
+      ],
+      "topicKeywords": [
+        "vulnerability",
+        "security",
+        "patch"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in security with focus on Vulnerability, Security, Patch.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Vulnerability",
+          "Security",
+          "Patch"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.52,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.82,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.518
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "bleepingcomputer_ba3749ef980b3b5303bef6f1",
+      "urlHash": "ba3749ef980b3b5303bef6f1",
+      "sourceId": "bleepingcomputer",
+      "sourceName": "BleepingComputer",
+      "sourceDomain": "bleepingcomputer.com",
+      "title": "You gave your AI agent access, but who is giving it orders?",
+      "cleanedTitle": "You gave your AI agent access, but who is giving it orders?",
+      "link": "https://www.bleepingcomputer.com/news/security/you-gave-your-ai-agent-access-but-who-is-giving-it-orders",
+      "publishedAt": "2026-10-23T14:00:10.000Z",
+      "description": "AI agents can be manipulated through malicious emails, websites, and plugins into executing commands, stealing data, or deleting files using their legitimate permissions. Gen Digital explains how its Agent Trust Hub helps protect agents through skill verification, secure connectivity, and runtime controls that intercep",
+      "bodyExcerpt": "AI agents can be manipulated through malicious emails, websites, and plugins into executing commands, stealing data, or deleting files using their legitimate permissions. Gen Digital explains how its Agent Trust Hub helps protect agents through skill verification, secure connectivity, and runtime controls that intercept dangerous act [...]",
+      "wordCount": 103,
+      "hasFullBody": false,
+      "eventId": "evt_59ebd5316976_1792764010000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "ai-ml",
+      "subTags": [
+        "AI"
+      ],
+      "topicKeywords": [
+        "ai"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in ai ml with focus on AI.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "AI"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.488,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.82,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.5091
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "infoq_54ab4079124911f87bf65617",
+      "urlHash": "54ab4079124911f87bf65617",
+      "sourceId": "infoq",
+      "sourceName": "InfoQ",
+      "sourceDomain": "infoq.com",
+      "title": "Cloudflare Brings On-Demand CPU and Memory Profiling to Production Workers",
+      "cleanedTitle": "Cloudflare Brings On-Demand CPU and Memory Profiling to Production Workers",
+      "link": "https://www.infoq.com/news/2026/10/cloudflare-cpu-memory-profiling",
+      "publishedAt": "2026-10-23T12:00:00.000Z",
+      "description": "Cloudflare has introduced on-demand CPU and memory profiling for Workers and Durable Objects, allowing developers to investigate performance bottlenecks in production using interactive flamegraphs. By Craig Risi",
+      "bodyExcerpt": "Cloudflare has introduced on-demand CPU and memory profiling for Workers and Durable Objects, allowing developers to investigate performance bottlenecks in production using interactive flamegraphs. By Craig Risi",
+      "wordCount": 64,
+      "hasFullBody": false,
+      "eventId": "evt_6184d050285c_1792756800000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "software-engineering",
+      "subTags": [
+        "Performance"
+      ],
+      "topicKeywords": [
+        "performance"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in software engineering with focus on Performance.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Performance"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.452,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.88,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.5068
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "bleepingcomputer_7bc21a5f3f47a4c9560a376e",
+      "urlHash": "7bc21a5f3f47a4c9560a376e",
+      "sourceId": "bleepingcomputer",
+      "sourceName": "BleepingComputer",
+      "sourceDomain": "bleepingcomputer.com",
+      "title": "HPE patches eight max severity RCE and auth bypass AOS flaws",
+      "cleanedTitle": "HPE patches eight max severity RCE and auth bypass AOS flaws",
+      "link": "https://www.bleepingcomputer.com/news/security/hpe-patches-eight-max-severity-rce-and-auth-bypass-aos-flaws",
+      "publishedAt": "2026-10-23T12:48:00.000Z",
+      "description": "Hewlett Packard Enterprise (HPE) released security updates to patch 72 vulnerabilities in the Aruba Operating System (ArubaOS), including eight maximum-severity authentication bypass and code execution issues. [...]",
+      "bodyExcerpt": "Hewlett Packard Enterprise (HPE) released security updates to patch 72 vulnerabilities in the Aruba Operating System (ArubaOS), including eight maximum-severity authentication bypass and code execution issues. [...]",
+      "wordCount": 65,
+      "hasFullBody": false,
+      "eventId": "evt_d6b937cdf305_1792759680000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "security",
+      "subTags": [
+        "Security",
+        "Patch",
+        "Auth"
+      ],
+      "topicKeywords": [
+        "security",
+        "patch",
+        "auth"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in security with focus on Security, Patch, Auth.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Security",
+          "Patch",
+          "Auth"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.466,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.82,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.5029
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "infoq_617327c4aceb3cf8deb1cf59",
+      "urlHash": "617327c4aceb3cf8deb1cf59",
+      "sourceId": "infoq",
+      "sourceName": "InfoQ",
+      "sourceDomain": "infoq.com",
+      "title": "Article: Multi-Cloud FinOps: An Engineering Framework for Cross-Cloud Cost Optimization",
+      "cleanedTitle": "Article: Multi-Cloud FinOps: An Engineering Framework for Cross-Cloud Cost Optimization",
+      "link": "https://www.infoq.com/articles/multi-cloud-finops-cost-optimization",
+      "publishedAt": "2026-10-23T11:00:00.000Z",
+      "description": "Multi-cloud flexibility comes with hidden egress costs driven by service placement and communication patterns. This article applies Backend FinOps to cross-cloud architecture, covering cost visibility through FOCUS, workload placement, synchronization models, and CI/CD-integrated cost governance. A controlled experimen",
+      "bodyExcerpt": "Multi-cloud flexibility comes with hidden egress costs driven by service placement and communication patterns. This article applies Backend FinOps to cross-cloud architecture, covering cost visibility through FOCUS, workload placement, synchronization models, and CI/CD-integrated cost governance. A controlled experiment shows architecture changes saved far more than rate negotiation alone. By Vivek Arora",
+      "wordCount": 99,
+      "hasFullBody": true,
+      "eventId": "evt_4e0aeac3f23b_1792753200000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "software-engineering",
+      "subTags": [
+        "Framework",
+        "Architecture",
+        "Backend"
+      ],
+      "topicKeywords": [
+        "framework",
+        "architecture",
+        "backend"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in software engineering with focus on Framework, Architecture, Backend.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Framework",
+          "Architecture",
+          "Backend"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.435,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.88,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.502
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "aws-blog_77282c79df25665fe4f3c9dd",
+      "urlHash": "77282c79df25665fe4f3c9dd",
+      "sourceId": "aws-blog",
+      "sourceName": "AWS Architecture & News",
+      "sourceDomain": "aws.amazon.com",
+      "title": "AWS Continuum for code vulnerabilities is now generally available",
+      "cleanedTitle": "AWS Continuum for code vulnerabilities is now generally available",
+      "link": "https://aws.amazon.com/blogs/aws/aws-continuum-for-code-vulnerabilities-is-now-generally-available",
+      "publishedAt": "2026-10-22T20:33:10.000Z",
+      "description": "AWS Continuum for code vulnerabilities is a new security service that uses AI to automatically find, validate, and prioritize code vulnerabilities in your environment, then delivers ready-to-review fixes as pull requests replacing what previously took hours of manual investigation and days of cross-team coordination.",
+      "bodyExcerpt": "AWS Continuum for code vulnerabilities is a new security service that uses AI to automatically find, validate, and prioritize code vulnerabilities in your environment, then delivers ready-to-review fixes as pull requests replacing what previously took hours of manual investigation and days of cross-team coordination.",
+      "wordCount": 97,
+      "hasFullBody": false,
+      "eventId": "evt_cafda6d763f8_1792701190000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "data-cloud",
+      "subTags": [
+        "AWS"
+      ],
+      "topicKeywords": [
+        "aws"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in data cloud with focus on AWS.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "AWS"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.249,
+        "significance": 0.556,
+        "careerRelevance": 0.6,
+        "sourceAuthority": 0.9,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4966
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "infoq_82d6126d8a31acc03c122c39",
+      "urlHash": "82d6126d8a31acc03c122c39",
+      "sourceId": "infoq",
+      "sourceName": "InfoQ",
+      "sourceDomain": "infoq.com",
+      "title": "Anthropic Adds Opt-In Security Scanning for Critical Open-Source Projects",
+      "cleanedTitle": "Anthropic Adds Opt-In Security Scanning for Critical Open-Source Projects",
+      "link": "https://www.infoq.com/news/2026/10/anthropic-oss-security-scanner",
+      "publishedAt": "2026-10-23T09:00:00.000Z",
+      "description": "AI company Anthropic has launched OSS Scanner, a free, opt-in service to find vulnerabilities in open-source projects. Enrolled maintainers receive periodic security reports generated by the company's strongest models, including Claude Mythos. The reports are sent without human review, and project maintainers can choos",
+      "bodyExcerpt": "AI company Anthropic has launched OSS Scanner, a free, opt-in service to find vulnerabilities in open-source projects. Enrolled maintainers receive periodic security reports generated by the company's strongest models, including Claude Mythos. The reports are sent without human review, and project maintainers can choose to validate their findings and decide which proposed fixes to accept. By Matt Saunders",
+      "wordCount": 111,
+      "hasFullBody": true,
+      "eventId": "evt_9b24ecdcb4d6_1792746000000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "ai-ml",
+      "subTags": [
+        "AI",
+        "Claude",
+        "Anthropic"
+      ],
+      "topicKeywords": [
+        "ai",
+        "claude",
+        "anthropic"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in ai ml with focus on AI, Claude, Anthropic.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "AI",
+          "Claude",
+          "Anthropic"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.403,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.88,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.493
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "techcrunch_585ea363f084ac16178f201c",
+      "urlHash": "585ea363f084ac16178f201c",
+      "sourceId": "techcrunch",
+      "sourceName": "TechCrunch",
+      "sourceDomain": "techcrunch.com",
+      "title": "OpenAI says it will no longer train its AI models on the live internet, citing “significant risks”",
+      "cleanedTitle": "OpenAI says it will no longer train its AI models on the live internet, citing “significant risks”",
+      "link": "https://techcrunch.com/2026/10/23/openai-says-it-will-no-longer-train-its-ai-models-on-the-live-internet-citing-significant-risks",
+      "publishedAt": "2026-10-23T23:05:49.000Z",
+      "description": "OpenAI will cut frontier models off from the internet weeks after one of its engineers said that solution wouldn't work.",
+      "bodyExcerpt": "OpenAI will cut frontier models off from the internet weeks after one of its engineers said that solution wouldn't work.",
+      "wordCount": 57,
+      "hasFullBody": false,
+      "eventId": "evt_763952a9f4d3_1792796749000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "ai-ml",
+      "subTags": [
+        "AI",
+        "Openai"
+      ],
+      "topicKeywords": [
+        "ai",
+        "openai"
+      ],
+      "enrichment": {
+        "whyItMatters": null,
+        "chineseSummary": null,
+        "extractedSkills": [
+          "AI",
+          "Openai"
+        ],
+        "technicalSignificance": 4,
+        "confidence": "low",
+        "status": "insufficient_content",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.693,
+        "significance": 0.333,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.8,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4927
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "theverge_a9526976eeebfbfe11f723ec",
+      "urlHash": "a9526976eeebfbfe11f723ec",
+      "sourceId": "theverge",
+      "sourceName": "The Verge",
+      "sourceDomain": "theverge.com",
+      "title": "Now Google says it might use your Gmail and Google Photos data to target ads",
+      "cleanedTitle": "Now Google says it might use your Gmail and Google Photos data to target ads",
+      "link": "https://www.theverge.com/tech/1017600/google-personal-intelligence-privacy-policy-ads-update",
+      "publishedAt": "2026-10-23T16:52:55.000Z",
+      "description": "Google has updated its privacy policy in a way that could mean you'll start seeing targeted ads based on your personal data if you're using personalized AI features. The update, spotted by Android Authority, adds an exception to its promise about not using your Drive, Gmail, or Google Photos for personalized ads. While",
+      "bodyExcerpt": "Google has updated its privacy policy in a way that could mean you'll start seeing targeted ads based on your personal data if you're using personalized AI features. The update, spotted by Android Authority, adds an exception to its promise about not using your Drive, Gmail, or Google Photos for personalized ads. While the previous version simply said it wouldn't do that, as of October 16th, Google has added the line, \"unless you choose to make data from these services available to other Google services that support personalized ads.\" That means anyone who has connected their Drive, Gmail, or Google Photos to AI Mode and other Search tools … Read the full story at The Verge.",
+      "wordCount": 184,
+      "hasFullBody": true,
+      "eventId": "evt_b5cd081c0575_1792774375000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "Google"
+      ],
+      "topicKeywords": [
+        "google"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in general tech with focus on Google.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Google"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.546,
+        "significance": 0.556,
+        "careerRelevance": 0.2,
+        "sourceAuthority": 0.75,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.472
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "infoq_9449ded1b3d21baa82e6e376",
+      "urlHash": "9449ded1b3d21baa82e6e376",
+      "sourceId": "infoq",
+      "sourceName": "InfoQ",
+      "sourceDomain": "infoq.com",
+      "title": "Harbor Adds Docker Sandboxes to Run Reproducible AI Agent Evals in Isolated MicroVMs",
+      "cleanedTitle": "Harbor Adds Docker Sandboxes to Run Reproducible AI Agent Evals in Isolated MicroVMs",
+      "link": "https://www.infoq.com/news/2026/10/ai-agents-harbor-docker",
+      "publishedAt": "2026-10-22T09:00:00.000Z",
+      "description": "Docker announced that Harbor, the open-source agent evaluation framework, now works with Docker Sandboxes. This change allows each evaluation task to run in its own microVM. So, instead of sharing a container, tasks are isolated for better performance By Claudio Masolo",
+      "bodyExcerpt": "Docker announced that Harbor, the open-source agent evaluation framework, now works with Docker Sandboxes. This change allows each evaluation task to run in its own microVM. So, instead of sharing a container, tasks are isolated for better performance By Claudio Masolo",
+      "wordCount": 95,
+      "hasFullBody": false,
+      "eventId": "evt_f2f7b5ea90c7_1792659600000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "data-cloud",
+      "subTags": [
+        "Docker",
+        "Container"
+      ],
+      "topicKeywords": [
+        "docker",
+        "container"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in data cloud with focus on Docker, Container.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Docker",
+          "Container"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.16,
+        "significance": 0.556,
+        "careerRelevance": 0.6,
+        "sourceAuthority": 0.88,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4689
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "bleepingcomputer_62f3dad2c0ca74beaa87691d",
+      "urlHash": "62f3dad2c0ca74beaa87691d",
+      "sourceId": "bleepingcomputer",
+      "sourceName": "BleepingComputer",
+      "sourceDomain": "bleepingcomputer.com",
+      "title": "Microsoft Teams to get AI-powered, context-aware phishing detection",
+      "cleanedTitle": "Microsoft Teams to get AI-powered, context-aware phishing detection",
+      "link": "https://www.bleepingcomputer.com/news/microsoft/microsoft-teams-to-get-ai-powered-context-aware-phishing-detection",
+      "publishedAt": "2026-10-23T18:54:41.000Z",
+      "description": "Microsoft has announced plans to add AI-powered phishing detection to Teams messages starting in early November 2026. [...]",
+      "bodyExcerpt": "Microsoft has announced plans to add AI-powered phishing detection to Teams messages starting in early November 2026. [...]",
+      "wordCount": 44,
+      "hasFullBody": false,
+      "eventId": "evt_cd3be95e37f4_1792781681000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "ai-ml",
+      "subTags": [
+        "AI"
+      ],
+      "topicKeywords": [
+        "ai"
+      ],
+      "enrichment": {
+        "whyItMatters": null,
+        "chineseSummary": null,
+        "extractedSkills": [
+          "AI"
+        ],
+        "technicalSignificance": 4,
+        "confidence": "low",
+        "status": "insufficient_content",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.59,
+        "significance": 0.333,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.82,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4665
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "techcrunch_d162a1c81ec2500ed1a8daff",
+      "urlHash": "d162a1c81ec2500ed1a8daff",
+      "sourceId": "techcrunch",
+      "sourceName": "TechCrunch",
+      "sourceDomain": "techcrunch.com",
+      "title": "VCs, Superhuman Mail founder share red flags about product-market fit",
+      "cleanedTitle": "VCs, Superhuman Mail founder share red flags about product-market fit",
+      "link": "https://techcrunch.com/2026/10/23/vcs-superhuman-mail-founder-share-red-flags-about-product-market-fit",
+      "publishedAt": "2026-10-23T20:57:13.000Z",
+      "description": "Top investors from Iconiq and Sapphire Ventures, along with Rahul Vohra, the founder of Superhuman Mail, share the do's and don'ts for building hit products.",
+      "bodyExcerpt": "Top investors from Iconiq and Sapphire Ventures, along with Rahul Vohra, the founder of Superhuman Mail, share the do's and don'ts for building hit products.",
+      "wordCount": 60,
+      "hasFullBody": false,
+      "eventId": "evt_29ed2ba4bf1b_1792789033000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "General"
+      ],
+      "topicKeywords": [],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in general tech with focus on General.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "General"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.638,
+        "significance": 0.556,
+        "careerRelevance": 0,
+        "sourceAuthority": 0.8,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4605
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "theverge_7bee3a3c9519ed80c31b9418",
+      "urlHash": "7bee3a3c9519ed80c31b9418",
+      "sourceId": "theverge",
+      "sourceName": "The Verge",
+      "sourceDomain": "theverge.com",
+      "title": "Xbox’s first chief operating officer is out after just a few months",
+      "cleanedTitle": "Xbox’s first chief operating officer is out after just a few months",
+      "link": "https://www.theverge.com/news/1018037/xbox-chief-operating-officer-helen-chiang-departure",
+      "publishedAt": "2026-10-23T21:39:26.000Z",
+      "description": "Xbox's first chief operating officer (COO) is leaving after the new role was created just a few months ago. Helen Chiang is leaving Microsoft today, according to an internal Xbox memo seen by The Verge. Chiang has been at Microsoft for 21 years, serving as the head of Minecraft before being promoted to Xbox chief opera",
+      "bodyExcerpt": "Xbox's first chief operating officer (COO) is leaving after the new role was created just a few months ago. Helen Chiang is leaving Microsoft today, according to an internal Xbox memo seen by The Verge. Chiang has been at Microsoft for 21 years, serving as the head of Minecraft before being promoted to Xbox chief operating officer in July. Xbox CEO Asha Sharma announced Chiang's departure in a surprisingly short memo today. \"Helen Chiang is leaving Microsoft today. I'm grateful for her years of service and wish her well,\" said Sharma. As Chiang is departing today, her immediate responsibilities are being split up between other Xbox leaders … Read the full story at The Verge.",
+      "wordCount": 183,
+      "hasFullBody": true,
+      "eventId": "evt_7f039b3b67b8_1792791566000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "Microsoft"
+      ],
+      "topicKeywords": [
+        "microsoft"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in general tech with focus on Microsoft.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Microsoft"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.656,
+        "significance": 0.556,
+        "careerRelevance": 0,
+        "sourceAuthority": 0.75,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4589
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "techcrunch_5a2f77fbed759e176fbfa589",
+      "urlHash": "5a2f77fbed759e176fbfa589",
+      "sourceId": "techcrunch",
+      "sourceName": "TechCrunch",
+      "sourceDomain": "techcrunch.com",
+      "title": "TechCrunch Founder Summit 2026 roundtables: Go deeper on the challenges founders are solving right now",
+      "cleanedTitle": "TechCrunch Founder Summit 2026 roundtables: Go deeper on the challenges founders are solving right now",
+      "link": "https://techcrunch.com/2026/10/23/techcrunch-founder-summit-2026-roundtables-go-deeper-on-the-challenges-founders-are-solving-right-now",
+      "publishedAt": "2026-10-23T20:03:14.000Z",
+      "description": "TechCrunch Founder Summit 2026 is coming to SoWa Power Station in Boston on November 4, bringing founders, investors, and operators together for a full day of candid conversations, practical sessions, live pitching, networking, and smaller roundtables built for deeper discussion.",
+      "bodyExcerpt": "TechCrunch Founder Summit 2026 is coming to SoWa Power Station in Boston on November 4, bringing founders, investors, and operators together for a full day of candid conversations, practical sessions, live pitching, networking, and smaller roundtables built for deeper discussion.",
+      "wordCount": 95,
+      "hasFullBody": false,
+      "eventId": "evt_d0562a175729_1792785794000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "General"
+      ],
+      "topicKeywords": [],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in general tech with focus on General.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "General"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.616,
+        "significance": 0.556,
+        "careerRelevance": 0,
+        "sourceAuthority": 0.8,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4544
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "techcrunch_a6d2b02a9412fc6611cae6aa",
+      "urlHash": "a6d2b02a9412fc6611cae6aa",
+      "sourceId": "techcrunch",
+      "sourceName": "TechCrunch",
+      "sourceDomain": "techcrunch.com",
+      "title": "Left alone with nothing to do, AI agents started playing",
+      "cleanedTitle": "Left alone with nothing to do, AI agents started playing",
+      "link": "https://techcrunch.com/2026/10/22/left-alone-with-nothing-to-do-ai-agents-started-playing",
+      "publishedAt": "2026-10-23T00:45:37.000Z",
+      "description": "MIT researchers marooned 13 AIs on a virtual island, and they responded by inventing games, mourning a lost ring and, eventually, getting better at their jobs.",
+      "bodyExcerpt": "MIT researchers marooned 13 AIs on a virtual island, and they responded by inventing games, mourning a lost ring and, eventually, getting better at their jobs.",
+      "wordCount": 62,
+      "hasFullBody": false,
+      "eventId": "evt_e1d446f00b48_1792716337000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "ai-ml",
+      "subTags": [
+        "AI"
+      ],
+      "topicKeywords": [
+        "ai"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in ai ml with focus on AI.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "AI"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.293,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.8,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4519
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "github-blog_8566195c9f888e1fef6dfd98",
+      "urlHash": "8566195c9f888e1fef6dfd98",
+      "sourceId": "github-blog",
+      "sourceName": "GitHub Blog",
+      "sourceDomain": "github.blog",
+      "title": "How bug bounty sharpens one researcher’s security skills",
+      "cleanedTitle": "How bug bounty sharpens one researcher’s security skills",
+      "link": "https://github.blog/security/how-bug-bounty-sharpens-one-researchers-security-skills",
+      "publishedAt": "2026-10-22T17:21:30.000Z",
+      "description": "As Cybersecurity Awareness Month continues, the GitHub Bug Bounty team spotlights @r31n, diving into their research approach, favorite bug classes, and advice for aspiring hackers. The post How bug bounty sharpens one researcher’s security skills appeared first on The GitHub Blog.",
+      "bodyExcerpt": "As Cybersecurity Awareness Month continues, the GitHub Bug Bounty team spotlights @r31n, diving into their research approach, favorite bug classes, and advice for aspiring hackers. The post How bug bounty sharpens one researcher’s security skills appeared first on The GitHub Blog.",
+      "wordCount": 90,
+      "hasFullBody": false,
+      "eventId": "evt_6ded67997765_1792689690000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "security",
+      "subTags": [
+        "Security",
+        "Bug bounty"
+      ],
+      "topicKeywords": [
+        "security",
+        "bug bounty"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in security with focus on Security, Bug bounty.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Security",
+          "Bug bounty"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.221,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.92,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4471
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "techcrunch_b03ac20209c1fa007cb3bf7a",
+      "urlHash": "b03ac20209c1fa007cb3bf7a",
+      "sourceId": "techcrunch",
+      "sourceName": "TechCrunch",
+      "sourceDomain": "techcrunch.com",
+      "title": "What some of Anthropic’s backers are worth before its IPO",
+      "cleanedTitle": "What some of Anthropic’s backers are worth before its IPO",
+      "link": "https://techcrunch.com/2026/10/23/what-some-of-anthropics-backers-are-reportedly-worth-before-its-ipo",
+      "publishedAt": "2026-10-23T16:02:43.000Z",
+      "description": "Early-stage and follow-on investors in the AI lab are already sitting on major paper returns.",
+      "bodyExcerpt": "Early-stage and follow-on investors in the AI lab are already sitting on major paper returns.",
+      "wordCount": 40,
+      "hasFullBody": false,
+      "eventId": "evt_ffa471bdcf8b_1792771363000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "ai-ml",
+      "subTags": [
+        "AI",
+        "Anthropic"
+      ],
+      "topicKeywords": [
+        "ai",
+        "anthropic"
+      ],
+      "enrichment": {
+        "whyItMatters": null,
+        "chineseSummary": null,
+        "extractedSkills": [
+          "AI",
+          "Anthropic"
+        ],
+        "technicalSignificance": 4,
+        "confidence": "low",
+        "status": "insufficient_content",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.528,
+        "significance": 0.333,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.8,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4466
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "theverge_3be5f2059474b551ba4ba9b8",
+      "urlHash": "3be5f2059474b551ba4ba9b8",
+      "sourceId": "theverge",
+      "sourceName": "The Verge",
+      "sourceDomain": "theverge.com",
+      "title": "Abandoned Popcorn Time apps had to be disabled to prevent a zombie army",
+      "cleanedTitle": "Abandoned Popcorn Time apps had to be disabled to prevent a zombie army",
+      "link": "https://www.theverge.com/tech/1017914/popcorn-time-piracy-botnet-avoided",
+      "publishedAt": "2026-10-23T19:35:15.000Z",
+      "description": "Remember Popcorn Time, the app that served as an easy-to-use front end for streaming torrents of movies and TV shows? Development of the MPAA's least-favorite app of the 2010s has been abandoned for years, but the \"Netflix of Piracy\" software is still installed on millions of devices that are just waiting to join a bot",
+      "bodyExcerpt": "Remember Popcorn Time, the app that served as an easy-to-use front end for streaming torrents of movies and TV shows? Development of the MPAA's least-favorite app of the 2010s has been abandoned for years, but the \"Netflix of Piracy\" software is still installed on millions of devices that are just waiting to join a bot army. Researchers at Eye Security found the updater for a Popcorn Time fork called \"Time4Popcorn\" still running on tons of Windows, macOS, and Android devices located around the world, phoning home to now-abandoned web domains over unencrypted HTTP and running an outdated, insecure version of Chrome. Eye Security's Niels Teus … Read the full story at The Verge.",
+      "wordCount": 181,
+      "hasFullBody": true,
+      "eventId": "evt_eda5b0d5c459_1792784115000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "General"
+      ],
+      "topicKeywords": [],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in general tech with focus on General.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "General"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.606,
+        "significance": 0.556,
+        "careerRelevance": 0,
+        "sourceAuthority": 0.75,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4448
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "bleepingcomputer_36aa9e27eea04860f91c2ec0",
+      "urlHash": "36aa9e27eea04860f91c2ec0",
+      "sourceId": "bleepingcomputer",
+      "sourceName": "BleepingComputer",
+      "sourceDomain": "bleepingcomputer.com",
+      "title": "Railway warns devs to rotate secrets after potential breach",
+      "cleanedTitle": "Railway warns devs to rotate secrets after potential breach",
+      "link": "https://www.bleepingcomputer.com/news/security/railway-warns-devs-to-rotate-secrets-after-potential-breach",
+      "publishedAt": "2026-10-22T21:25:31.000Z",
+      "description": "Cloud platform Railway published an urgent warning to users after detecting suspicious activity on its systems that store customer environment variables earlier this week. [...]",
+      "bodyExcerpt": "Cloud platform Railway published an urgent warning to users after detecting suspicious activity on its systems that store customer environment variables earlier this week. [...]",
+      "wordCount": 59,
+      "hasFullBody": false,
+      "eventId": "evt_97b29a5c25da_1792704331000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "security",
+      "subTags": [
+        "Breach"
+      ],
+      "topicKeywords": [
+        "breach"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in security with focus on Breach.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Breach"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.258,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.82,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4446
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "bleepingcomputer_a327ea4199ec4c26f4bc2148",
+      "urlHash": "a327ea4199ec4c26f4bc2148",
+      "sourceId": "bleepingcomputer",
+      "sourceName": "BleepingComputer",
+      "sourceDomain": "bleepingcomputer.com",
+      "title": "Capcom confirms data breach affecting 11.7 million accounts",
+      "cleanedTitle": "Capcom confirms data breach affecting 11.7 million accounts",
+      "link": "https://www.bleepingcomputer.com/news/security/capcom-confirms-data-breach-affecting-117-million-accounts",
+      "publishedAt": "2026-10-22T20:22:45.000Z",
+      "description": "Japanese gaming giant Capcom has confirmed that hackers breached its membership service, CAPCOM ID, exposing more than 11.7 million customer email addresses and associated information. [...]",
+      "bodyExcerpt": "Japanese gaming giant Capcom has confirmed that hackers breached its membership service, CAPCOM ID, exposing more than 11.7 million customer email addresses and associated information. [...]",
+      "wordCount": 60,
+      "hasFullBody": false,
+      "eventId": "evt_9e0eafecb8b6_1792700565000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "security",
+      "subTags": [
+        "Breach"
+      ],
+      "topicKeywords": [
+        "breach"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in security with focus on Breach.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Breach"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.248,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.82,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4417
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "techcrunch_01a9be86b11747770a258f6e",
+      "urlHash": "01a9be86b11747770a258f6e",
+      "sourceId": "techcrunch",
+      "sourceName": "TechCrunch",
+      "sourceDomain": "techcrunch.com",
+      "title": "Lab testing giant Quest Diagnostics confirms patients’ personal and health data was compromised during breach",
+      "cleanedTitle": "Lab testing giant Quest Diagnostics confirms patients’ personal and health data was compromised during breach",
+      "link": "https://techcrunch.com/2026/10/23/lab-testing-giant-quest-diagnostics-confirms-patients-personal-and-health-data-was-compromised-during-breach",
+      "publishedAt": "2026-10-23T15:00:09.000Z",
+      "description": "Quest is the latest in a series of healthcare technology companies that have been hacked in recent months.",
+      "bodyExcerpt": "Quest is the latest in a series of healthcare technology companies that have been hacked in recent months.",
+      "wordCount": 51,
+      "hasFullBody": false,
+      "eventId": "evt_d22a8abb87fc_1792767609000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "software-engineering",
+      "subTags": [
+        "Testing"
+      ],
+      "topicKeywords": [
+        "testing"
+      ],
+      "enrichment": {
+        "whyItMatters": null,
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Testing"
+        ],
+        "technicalSignificance": 4,
+        "confidence": "low",
+        "status": "insufficient_content",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.508,
+        "significance": 0.333,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.8,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4408
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "theverge_75c55b9c071dc270e1d0b4b8",
+      "urlHash": "75c55b9c071dc270e1d0b4b8",
+      "sourceId": "theverge",
+      "sourceName": "The Verge",
+      "sourceDomain": "theverge.com",
+      "title": "Soundcore’s latest noise-crushing headphones are on sale for a new low price",
+      "cleanedTitle": "Soundcore’s latest noise-crushing headphones are on sale for a new low price",
+      "link": "https://www.theverge.com/gadgets/1017667/anker-soundcore-space-2-noise-canceling-headphones-deal-sale",
+      "publishedAt": "2026-10-23T18:43:30.000Z",
+      "description": "The Space 2 comes in multiple colors, including an attractive seafoam green. | Photo: Amelia Holowaty Krales / The Verge My colleague John Higgins considered Soundcore’s Space One some of the best budget noise-canceling headphones you could buy when they launched in 2023 — and their successor has only improved upon the",
+      "bodyExcerpt": "The Space 2 comes in multiple colors, including an attractive seafoam green. | Photo: Amelia Holowaty Krales / The Verge My colleague John Higgins considered Soundcore’s Space One some of the best budget noise-canceling headphones you could buy when they launched in 2023 — and their successor has only improved upon their winning formula, albeit with a $30 price increase. Thankfully, the Soundcore Space 2 are currently on sale at Amazon, Best Buy, and Walmart in all three colors for an all-time low of $106.49 ($23 off), making them even easier to recommend. Soundcore Space 2 Where to Buy: $129.99 $106.49 at Amazon $129.99 $106.49 at Walmart $129.99 $106.49 at Best Buy The Space 2 builds on the original with improved active noise cancellation, particularly when it comes to the low-frequency sounds associated with trains and airplane engines. They also deliver more accurate sound performance thanks to various design upgrades, while retaining many of the same features that made the Sound One sound so good for the price, including support for high-resolution LDAC audio. You also still get access to HearID 3.0, which lets you personalize the sound by listening to a series of samples and adjusting accordingly. Battery life is another welcome improvement. The Space 2 can last up to 50 hours with ANC enabled or 70 hours with it switched off, up from 40 and 55 hours, respectively, on the original. And when your battery dies, you can still use the equipped 3.5mm jack for wired listening",
+      "wordCount": 313,
+      "hasFullBody": true,
+      "eventId": "evt_34cb3e5d2ab5_1792781010000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "General"
+      ],
+      "topicKeywords": [],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in general tech with focus on General.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "General"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.586,
+        "significance": 0.556,
+        "careerRelevance": 0,
+        "sourceAuthority": 0.75,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4393
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "bleepingcomputer_cf879587b537377b167988d2",
+      "urlHash": "cf879587b537377b167988d2",
+      "sourceId": "bleepingcomputer",
+      "sourceName": "BleepingComputer",
+      "sourceDomain": "bleepingcomputer.com",
+      "title": "LiteLLM release pipeline hacked to distribute info-stealer malware",
+      "cleanedTitle": "LiteLLM release pipeline hacked to distribute info-stealer malware",
+      "link": "https://www.bleepingcomputer.com/news/security/litellm-release-pipeline-hacked-to-distribute-info-stealer-malware",
+      "publishedAt": "2026-10-22T19:12:51.000Z",
+      "description": "Hackers compromised the LiteLLM project's PyPI package and published malicious Docker images with a payload that steals credentials, secrets, and environment variables. [...]",
+      "bodyExcerpt": "Hackers compromised the LiteLLM project's PyPI package and published malicious Docker images with a payload that steals credentials, secrets, and environment variables. [...]",
+      "wordCount": 54,
+      "hasFullBody": false,
+      "eventId": "evt_ef741ffa9aad_1792696371000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "security",
+      "subTags": [
+        "Malware"
+      ],
+      "topicKeywords": [
+        "malware"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in security with focus on Malware.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Malware"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.237,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.82,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4387
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "infoq_f01ca1ed8c7f24b97cfa2098",
+      "urlHash": "f01ca1ed8c7f24b97cfa2098",
+      "sourceId": "infoq",
+      "sourceName": "InfoQ",
+      "sourceDomain": "infoq.com",
+      "title": "Study Finds AI-generated Code Fails to Boost Productivity Due to Downstream Bottlenecks",
+      "cleanedTitle": "Study Finds AI-generated Code Fails to Boost Productivity Due to Downstream Bottlenecks",
+      "link": "https://www.infoq.com/news/2026/10/jellyfish-ai-productivity",
+      "publishedAt": "2026-10-22T14:00:00.000Z",
+      "description": "A recent Harvard study of 718 firms, using the Jellyfish analytics platform, finds that although AI coding assistants and agents increase code volume, this does not translate into a corresponding increase in completed work, partly because AI-generated code increases the workload in later stages of development, particul",
+      "bodyExcerpt": "A recent Harvard study of 718 firms, using the Jellyfish analytics platform, finds that although AI coding assistants and agents increase code volume, this does not translate into a corresponding increase in completed work, partly because AI-generated code increases the workload in later stages of development, particularly code review. By Sergio De Simone",
+      "wordCount": 112,
+      "hasFullBody": false,
+      "eventId": "evt_eb17b99851d3_1792677600000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "ai-ml",
+      "subTags": [
+        "AI"
+      ],
+      "topicKeywords": [
+        "ai"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in ai ml with focus on AI.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "AI"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.194,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.88,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4344
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "theverge_af25e18e067870e7ec4a160a",
+      "urlHash": "af25e18e067870e7ec4a160a",
+      "sourceId": "theverge",
+      "sourceName": "The Verge",
+      "sourceDomain": "theverge.com",
+      "title": "Fi’s GPS-equipped dog trackers are on sale for 30 percent off",
+      "cleanedTitle": "Fi’s GPS-equipped dog trackers are on sale for 30 percent off",
+      "link": "https://www.theverge.com/gadgets/1017196/fi-ultra-gps-dog-tracker-kirby-air-riders-deal-sale",
+      "publishedAt": "2026-10-23T17:55:03.000Z",
+      "description": "If your dog or cat is prone to getting lost, or you frequently go on adventures together, you can save 30 percent on Fi pet trackers through October 25th when you enter coupon code SCARY at checkout. The sale includes several satellite-connected trackers, including the Fi Ultra GPS we previously tested, which is down t",
+      "bodyExcerpt": "If your dog or cat is prone to getting lost, or you frequently go on adventures together, you can save 30 percent on Fi pet trackers through October 25th when you enter coupon code SCARY at checkout. The sale includes several satellite-connected trackers, including the Fi Ultra GPS we previously tested, which is down to $209.30 after the discount. That effectively brings it down to its original launch price. The IP68-rated Fi Ultra is fully waterproof, even in saltwater, and lasts up to five days, depending on how active your dog is. The accessory — which conveniently attaches to your dog’s collar or harness — uses a combination of LTE, GPS, and Starlink satellite coverage to track your dog’s current location and recent history, even in cellular dead zones; it can also send noise and vibration alerts to catch your canine’s attention. Fi Ultra dog tracker The Fi Ultra is the first dog tracker to combine T-Satellite with Starlink, GPS, and LTE connectivity to help you find your lost dog anywhere. Where to Buy: $299 $209.3 at Fi (with code SCARY) We spent time with the Fi Ultra earlier this year, testing it in a remote location in South Carolina. While the tracking was precise, the two- or three-minute update interval could be problematic for fast dogs, and it drained the battery quickly in Lost Mode (we barely got two days on a full charge). It’s also fairly sizable, making it a better fit for larger pups. Unsurprisingly, you’ll need an active subscription to use the Fi Ultra’s",
+      "wordCount": 324,
+      "hasFullBody": true,
+      "eventId": "evt_b3d790df7d6c_1792778103000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "General"
+      ],
+      "topicKeywords": [],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in general tech with focus on General.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "General"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.568,
+        "significance": 0.556,
+        "careerRelevance": 0,
+        "sourceAuthority": 0.75,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4343
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "bleepingcomputer_179faf62f2b237f0f3683e2d",
+      "urlHash": "179faf62f2b237f0f3683e2d",
+      "sourceId": "bleepingcomputer",
+      "sourceName": "BleepingComputer",
+      "sourceDomain": "bleepingcomputer.com",
+      "title": "Arista patches new VeloCloud Orchestrator zero-day exploited in attacks",
+      "cleanedTitle": "Arista patches new VeloCloud Orchestrator zero-day exploited in attacks",
+      "link": "https://www.bleepingcomputer.com/news/security/arista-patches-new-velocloud-orchestrator-zero-day-exploited-in-attacks",
+      "publishedAt": "2026-10-22T17:18:22.000Z",
+      "description": "Arista Networks released security updates to patch an actively exploited zero-day vulnerability affecting VeloCloud Orchestrator (VCO) On-Prem deployments. [...]",
+      "bodyExcerpt": "Arista Networks released security updates to patch an actively exploited zero-day vulnerability affecting VeloCloud Orchestrator (VCO) On-Prem deployments. [...]",
+      "wordCount": 47,
+      "hasFullBody": false,
+      "eventId": "evt_8302645b4abc_1792689502000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "security",
+      "subTags": [
+        "Vulnerability",
+        "Zero-day",
+        "Security",
+        "Patch"
+      ],
+      "topicKeywords": [
+        "vulnerability",
+        "zero-day",
+        "security",
+        "patch"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in security with focus on Vulnerability, Zero-day, Security, Patch.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Vulnerability",
+          "Zero-day",
+          "Security",
+          "Patch"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.22,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.82,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.434
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "theverge_24c8b8c3e7a4bc871c84923e",
+      "urlHash": "24c8b8c3e7a4bc871c84923e",
+      "sourceId": "theverge",
+      "sourceName": "The Verge",
+      "sourceDomain": "theverge.com",
+      "title": "Elon Musk’s dangerous grip on outer space",
+      "cleanedTitle": "Elon Musk’s dangerous grip on outer space",
+      "link": "https://www.theverge.com/science/1017443/spacex-starlink-ukraine-elon-musk-monopoly",
+      "publishedAt": "2026-10-23T17:35:15.000Z",
+      "description": "Last week, Starshield - the version of SpaceX's Starlink used by the Ukrainian military - was throttled to block terminals traveling above certain speeds from accessing the service. The Ukrainian army's interceptors, which counter Russian drones carrying bombs, suddenly stopped working at high speeds, making it easier ",
+      "bodyExcerpt": "Last week, Starshield - the version of SpaceX's Starlink used by the Ukrainian military - was throttled to block terminals traveling above certain speeds from accessing the service. The Ukrainian army's interceptors, which counter Russian drones carrying bombs, suddenly stopped working at high speeds, making it easier for Russia to attack the country's energy infrastructure and leading to a reported two deaths and at least 17 injuries. The Ukrainian military reported receiving no advance warning about the Starshield speed restriction. But Ukrainian President Volodymyr Zelenskyy said it was a direct message from the US amid rising tensions b … Read the full story at The Verge.",
+      "wordCount": 160,
+      "hasFullBody": true,
+      "eventId": "evt_006961bacb53_1792776915000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "General"
+      ],
+      "topicKeywords": [],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in general tech with focus on General.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "General"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.561,
+        "significance": 0.556,
+        "careerRelevance": 0,
+        "sourceAuthority": 0.75,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4323
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "techcrunch_5b36b8b6c58cbe52f6b5f9bc",
+      "urlHash": "5b36b8b6c58cbe52f6b5f9bc",
+      "sourceId": "techcrunch",
+      "sourceName": "TechCrunch",
+      "sourceDomain": "techcrunch.com",
+      "title": "Commonwealth Fusion Systems gets $85M to build better fusion-ready semiconductors",
+      "cleanedTitle": "Commonwealth Fusion Systems gets $85M to build better fusion-ready semiconductors",
+      "link": "https://techcrunch.com/2026/10/23/commonwealth-fusion-systems-gets-85m-to-build-better-fusion-ready-semiconductors",
+      "publishedAt": "2026-10-23T16:20:28.000Z",
+      "description": "Top-funded fusion startup Commonwealth Fusion Systems received an $85 million award from the federal government to advance conductors for fusion power plants.",
+      "bodyExcerpt": "Top-funded fusion startup Commonwealth Fusion Systems received an $85 million award from the federal government to advance conductors for fusion power plants.",
+      "wordCount": 54,
+      "hasFullBody": false,
+      "eventId": "evt_71320da252d1_1792772428000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "General"
+      ],
+      "topicKeywords": [],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in general tech with focus on General.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "General"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.534,
+        "significance": 0.556,
+        "careerRelevance": 0,
+        "sourceAuthority": 0.8,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4314
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "theverge_1bb40ddffcb6c2abe17fed4e",
+      "urlHash": "1bb40ddffcb6c2abe17fed4e",
+      "sourceId": "theverge",
+      "sourceName": "The Verge",
+      "sourceDomain": "theverge.com",
+      "title": "The iPhone Duo should have been an iPad",
+      "cleanedTitle": "The iPhone Duo should have been an iPad",
+      "link": "https://www.theverge.com/podcast/1017447/iphone-duo-ipad-review-score-vergecast",
+      "publishedAt": "2026-10-23T17:00:18.000Z",
+      "description": "We gave the iPhone Duo a 7 /10. But that wasn't always the score we planned, and it might not be the right score forever. Such are the challenges of reviewing - and assessing - a big, new idea about the most popular smartphone in history. On this episode of The Vergecast, David and Nilay debate whether the Duo deserved",
+      "bodyExcerpt": "We gave the iPhone Duo a 7 /10. But that wasn't always the score we planned, and it might not be the right score forever. Such are the challenges of reviewing - and assessing - a big, new idea about the most popular smartphone in history. On this episode of The Vergecast, David and Nilay debate whether the Duo deserved the score it got, and try to work through how this device might change over time. Is the outer screen, as Daring Fireball's John Gruber suggested, the worst iPhone ever? Would it be a better product if it started as an iPad rather than an iPhone? Would we feel differently about this thing if it were simply called the iPad Du … Read the full story at The Verge.",
+      "wordCount": 197,
+      "hasFullBody": true,
+      "eventId": "evt_12c979b8567b_1792774818000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "Smartphone"
+      ],
+      "topicKeywords": [
+        "smartphone"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in general tech with focus on Smartphone.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Smartphone"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.548,
+        "significance": 0.556,
+        "careerRelevance": 0,
+        "sourceAuthority": 0.75,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4288
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "infoq_e32d685b24b4b035d7842fa1",
+      "urlHash": "e32d685b24b4b035d7842fa1",
+      "sourceId": "infoq",
+      "sourceName": "InfoQ",
+      "sourceDomain": "infoq.com",
+      "title": "Presentation: Actors for Agents: Patterns for Production AI",
+      "cleanedTitle": "Presentation: Actors for Agents: Patterns for Production AI",
+      "link": "https://www.infoq.com/presentations/actors-for-production-ai-agents",
+      "publishedAt": "2026-10-22T11:00:00.000Z",
+      "description": "Manju Rajashekhar explains how the actor model solves the complex runtime challenges of production AI agents. By treating agents as distributed systems, he discusses state ownership, message passing, write-through state, and supervision boundaries to manage failures, continuations, and mutable execution graphs, moving ",
+      "bodyExcerpt": "Manju Rajashekhar explains how the actor model solves the complex runtime challenges of production AI agents. By treating agents as distributed systems, he discusses state ownership, message passing, write-through state, and supervision boundaries to manage failures, continuations, and mutable execution graphs, moving agentic workflows beyond fragile demos to resilient architecture. By Manju Rajashekhar",
+      "wordCount": 103,
+      "hasFullBody": true,
+      "eventId": "evt_8f3fc11c04be_1792666800000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "ai-ml",
+      "subTags": [
+        "AI",
+        "Model"
+      ],
+      "topicKeywords": [
+        "ai",
+        "model"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in ai ml with focus on AI, Model.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "AI",
+          "Model"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.173,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.88,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4285
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "bleepingcomputer_dcd4266a8f995cbfb1097db8",
+      "urlHash": "dcd4266a8f995cbfb1097db8",
+      "sourceId": "bleepingcomputer",
+      "sourceName": "BleepingComputer",
+      "sourceDomain": "bleepingcomputer.com",
+      "title": "Machine speed attacks require machine speed detection and response",
+      "cleanedTitle": "Machine speed attacks require machine speed detection and response",
+      "link": "https://www.bleepingcomputer.com/news/security/machine-speed-attacks-require-machine-speed-detection-and-response",
+      "publishedAt": "2026-10-22T14:02:12.000Z",
+      "description": "Attackers can steal credentials and begin exfiltrating data within minutes, often before security teams can respond. Exaforce examines real-world attacks involving stolen GitHub tokens, malicious AI installers, and MFA phishing, explaining why faster detection and automated containment are critical. [...]",
+      "bodyExcerpt": "Attackers can steal credentials and begin exfiltrating data within minutes, often before security teams can respond. Exaforce examines real-world attacks involving stolen GitHub tokens, malicious AI installers, and MFA phishing, explaining why faster detection and automated containment are critical. [...]",
+      "wordCount": 89,
+      "hasFullBody": false,
+      "eventId": "evt_a82bbc87d22b_1792677732000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "security",
+      "subTags": [
+        "Security",
+        "Phishing"
+      ],
+      "topicKeywords": [
+        "security",
+        "phishing"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in security with focus on Security, Phishing.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Security",
+          "Phishing"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.194,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.82,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4267
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "theverge_78beb7d4f0fc9b713aaa987b",
+      "urlHash": "78beb7d4f0fc9b713aaa987b",
+      "sourceId": "theverge",
+      "sourceName": "The Verge",
+      "sourceDomain": "theverge.com",
+      "title": "The first broken iPhone Duos are here",
+      "cleanedTitle": "The first broken iPhone Duos are here",
+      "link": "https://www.theverge.com/tech/1017623/iphone-duo-broken-cracked-screen",
+      "publishedAt": "2026-10-23T16:37:03.000Z",
+      "description": "The iPhone Duo officially goes on sale today, but a few units already have broken screens. According to posts on Reddit about the affected units, the issue appears to be happening at a similar spot on all of them: Some kind of problem shows up on the inner screen along the hinge and a strange bright line (or lines) acr",
+      "bodyExcerpt": "The iPhone Duo officially goes on sale today, but a few units already have broken screens. According to posts on Reddit about the affected units, the issue appears to be happening at a similar spot on all of them: Some kind of problem shows up on the inner screen along the hinge and a strange bright line (or lines) across the right side of the display. Here's how one user in Australia described what happened to their phone: Had my iPhone Duo for about six hours and had probably opened it fewer than 20 times. I was showing it to a friend, and as I opened it, I felt something around the internal hinge, underneath the screen. As I cont … Read the full story at The Verge.",
+      "wordCount": 195,
+      "hasFullBody": true,
+      "eventId": "evt_400c07f5babe_1792773423000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "General"
+      ],
+      "topicKeywords": [],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in general tech with focus on General.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "General"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.54,
+        "significance": 0.556,
+        "careerRelevance": 0,
+        "sourceAuthority": 0.75,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4265
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "infoq_cc3c7a1cbcb92ec0cf338dc9",
+      "urlHash": "cc3c7a1cbcb92ec0cf338dc9",
+      "sourceId": "infoq",
+      "sourceName": "InfoQ",
+      "sourceDomain": "infoq.com",
+      "title": "Vercel Labs Open-Sources fx: a Zig Coding Agent Designed to Be Embedded",
+      "cleanedTitle": "Vercel Labs Open-Sources fx: a Zig Coding Agent Designed to Be Embedded",
+      "link": "https://www.infoq.com/news/2026/10/vercel-zig-fx-agent",
+      "publishedAt": "2026-10-22T09:33:00.000Z",
+      "description": "Vercel Labs has released fx, an experimental open-source coding agent written in Zig. It runs as a CLI, a script component, or an embedded library, including a WebAssembly build. Early feedback questioned its model-agnostic claim and a name conflict with an existing tool. Vercel says the project is pre-1.0 and changing",
+      "bodyExcerpt": "Vercel Labs has released fx, an experimental open-source coding agent written in Zig. It runs as a CLI, a script component, or an embedded library, including a WebAssembly build. Early feedback questioned its model-agnostic claim and a name conflict with an existing tool. Vercel says the project is pre-1.0 and changing quickly. By Daniel Curtis",
+      "wordCount": 118,
+      "hasFullBody": false,
+      "eventId": "evt_e90a3a112ae8_1792661580000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "software-engineering",
+      "subTags": [
+        "Library",
+        "Webassembly"
+      ],
+      "topicKeywords": [
+        "library",
+        "webassembly"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in software engineering with focus on Library, Webassembly.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Library",
+          "Webassembly"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.163,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.88,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4259
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "infoq_c286dddf8ae805708ebee20c",
+      "urlHash": "c286dddf8ae805708ebee20c",
+      "sourceId": "infoq",
+      "sourceName": "InfoQ",
+      "sourceDomain": "infoq.com",
+      "title": "Article: AI Changes the Data Interface, Not the Query Engine",
+      "cleanedTitle": "Article: AI Changes the Data Interface, Not the Query Engine",
+      "link": "https://www.infoq.com/articles/ai-changes-data-interface",
+      "publishedAt": "2026-10-22T09:00:00.000Z",
+      "description": "This article presents a disaster-recovery analytics workflow in which an AI agent generates constrained SQL or Python, DuckDB computes reproducible facts from Parquet, and the agent interprets the results. It explains the determinism split, replayable analysis, and four signals for deciding when an embedded engine is s",
+      "bodyExcerpt": "This article presents a disaster-recovery analytics workflow in which an AI agent generates constrained SQL or Python, DuckDB computes reproducible facts from Parquet, and the agent interprets the results. It explains the determinism split, replayable analysis, and four signals for deciding when an embedded engine is sufficient or a managed lakehouse is justified. By Peihao Yuan",
+      "wordCount": 113,
+      "hasFullBody": false,
+      "eventId": "evt_9c64e3cd627b_1792659600000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "ai-ml",
+      "subTags": [
+        "AI"
+      ],
+      "topicKeywords": [
+        "ai"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in ai ml with focus on AI.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "AI"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.16,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.88,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4249
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "bleepingcomputer_d6276a425b1c8d3eb691ee78",
+      "urlHash": "d6276a425b1c8d3eb691ee78",
+      "sourceId": "bleepingcomputer",
+      "sourceName": "BleepingComputer",
+      "sourceDomain": "bleepingcomputer.com",
+      "title": "Amazon says PHP2Shell exploitation began 4 days before patches",
+      "cleanedTitle": "Amazon says PHP2Shell exploitation began 4 days before patches",
+      "link": "https://www.bleepingcomputer.com/news/security/amazon-says-php2shell-exploitation-began-4-days-before-patches",
+      "publishedAt": "2026-10-22T13:09:12.000Z",
+      "description": "Security researchers at Amazon Threat Intelligence say attackers began targeting the PHP2Shell flaws four days before security patches were released on Wednesday. [...]",
+      "bodyExcerpt": "Security researchers at Amazon Threat Intelligence say attackers began targeting the PHP2Shell flaws four days before security patches were released on Wednesday. [...]",
+      "wordCount": 55,
+      "hasFullBody": false,
+      "eventId": "evt_96c25dd4a341_1792674552000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "security",
+      "subTags": [
+        "Security"
+      ],
+      "topicKeywords": [
+        "security"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in security with focus on Security.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Security"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.188,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.82,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.4249
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "bleepingcomputer_d92b1c2b7f1896bbc9489492",
+      "urlHash": "d92b1c2b7f1896bbc9489492",
+      "sourceId": "bleepingcomputer",
+      "sourceName": "BleepingComputer",
+      "sourceDomain": "bleepingcomputer.com",
+      "title": "GitLab warns of new max severity code execution vulnerability",
+      "cleanedTitle": "GitLab warns of new max severity code execution vulnerability",
+      "link": "https://www.bleepingcomputer.com/news/security/gitlab-warns-of-new-max-severity-code-execution-vulnerability",
+      "publishedAt": "2026-10-22T11:41:48.000Z",
+      "description": "GitLab has released security patches for a maximum-severity Regular Expression Compiler flaw that can let remote attackers run arbitrary code on vulnerable servers. [...]",
+      "bodyExcerpt": "GitLab has released security patches for a maximum-severity Regular Expression Compiler flaw that can let remote attackers run arbitrary code on vulnerable servers. [...]",
+      "wordCount": 57,
+      "hasFullBody": false,
+      "eventId": "evt_7daa9732f743_1792669308000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "security",
+      "subTags": [
+        "Vulnerability",
+        "Security"
+      ],
+      "topicKeywords": [
+        "vulnerability",
+        "security"
+      ],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in security with focus on Vulnerability, Security.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Vulnerability",
+          "Security"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.177,
+        "significance": 0.556,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.82,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.422
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "infoq_1c5b751dcf54788559e69b11",
+      "urlHash": "1c5b751dcf54788559e69b11",
+      "sourceId": "infoq",
+      "sourceName": "InfoQ",
+      "sourceDomain": "infoq.com",
+      "title": "Presentation: Move Fast, Don’t Break Trust: Shipping Constantly with Humans and Beyond",
+      "cleanedTitle": "Presentation: Move Fast, Don’t Break Trust: Shipping Constantly with Humans and Beyond",
+      "link": "https://www.infoq.com/presentations/monzo-microservices-devex",
+      "publishedAt": "2026-10-23T11:00:00.000Z",
+      "description": "Suhail Patel discusses how Monzo structures its software engineering organization and technical stack to ship safely hundreds of times a day. He shares insights into opinionated microservice abstractions, tenancy-based staging, static analysis checks, continuous profiling, demonstrating how a strong internal platform e",
+      "bodyExcerpt": "Suhail Patel discusses how Monzo structures its software engineering organization and technical stack to ship safely hundreds of times a day. He shares insights into opinionated microservice abstractions, tenancy-based staging, static analysis checks, continuous profiling, demonstrating how a strong internal platform enables engineers and LLMs to iterate rapidly without sacrificing reliability. By Suhail Patel",
+      "wordCount": 108,
+      "hasFullBody": true,
+      "eventId": "evt_83ac7ce7fcc2_1792753200000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "General"
+      ],
+      "topicKeywords": [],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in general tech with focus on General.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "General"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.435,
+        "significance": 0.556,
+        "careerRelevance": 0,
+        "sourceAuthority": 0.88,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.414
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "techcrunch_48dd6bd9146bbf9b087441b5",
+      "urlHash": "48dd6bd9146bbf9b087441b5",
+      "sourceId": "techcrunch",
+      "sourceName": "TechCrunch",
+      "sourceDomain": "techcrunch.com",
+      "title": "Startups don’t need to go viral to win customers",
+      "cleanedTitle": "Startups don’t need to go viral to win customers",
+      "link": "https://techcrunch.com/2026/10/23/startups-dont-need-to-go-viral-to-win-customers",
+      "publishedAt": "2026-10-23T23:07:45.000Z",
+      "description": "At TechCrunch Disrupt last week, two founders and a VC discussed how to not just gain an early following but keep one.",
+      "bodyExcerpt": "At TechCrunch Disrupt last week, two founders and a VC discussed how to not just gain an early following but keep one.",
+      "wordCount": 53,
+      "hasFullBody": false,
+      "eventId": "evt_556a64c59472_1792796865000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "General"
+      ],
+      "topicKeywords": [],
+      "enrichment": {
+        "whyItMatters": null,
+        "chineseSummary": null,
+        "extractedSkills": [
+          "General"
+        ],
+        "technicalSignificance": 4,
+        "confidence": "low",
+        "status": "insufficient_content",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.694,
+        "significance": 0.333,
+        "careerRelevance": 0,
+        "sourceAuthority": 0.8,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.405
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "techcrunch_1e55c29e6e1a3d35fd9408ca",
+      "urlHash": "1e55c29e6e1a3d35fd9408ca",
+      "sourceId": "techcrunch",
+      "sourceName": "TechCrunch",
+      "sourceDomain": "techcrunch.com",
+      "title": "Hottest toy for Christmas? Nvidia CEO plays with adorable Microduck robots, 20,000 sell",
+      "cleanedTitle": "Hottest toy for Christmas? Nvidia CEO plays with adorable Microduck robots, 20,000 sell",
+      "link": "https://techcrunch.com/2026/10/23/hottest-toy-for-christmas-nvidia-ceo-plays-with-adorable-microduck-robots-20000-sell",
+      "publishedAt": "2026-10-23T21:59:19.000Z",
+      "description": "The robots, stomping their little feet and making tiny R2-D2 noises, sat, fell down dead for a \"nap,\" and summersaulted on voice command.",
+      "bodyExcerpt": "The robots, stomping their little feet and making tiny R2-D2 noises, sat, fell down dead for a \"nap,\" and summersaulted on voice command.",
+      "wordCount": 59,
+      "hasFullBody": false,
+      "eventId": "evt_74717294c94f_1792792759000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "General"
+      ],
+      "topicKeywords": [],
+      "enrichment": {
+        "whyItMatters": null,
+        "chineseSummary": null,
+        "extractedSkills": [
+          "General"
+        ],
+        "technicalSignificance": 4,
+        "confidence": "low",
+        "status": "insufficient_content",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.664,
+        "significance": 0.333,
+        "careerRelevance": 0,
+        "sourceAuthority": 0.8,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.3966
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "techcrunch_ad858d5150de79be8c33cefa",
+      "urlHash": "ad858d5150de79be8c33cefa",
+      "sourceId": "techcrunch",
+      "sourceName": "TechCrunch",
+      "sourceDomain": "techcrunch.com",
+      "title": "Uber rival inDrive eyes 2027 robotaxi tests in Central Asia with Pony AI and Nvidia",
+      "cleanedTitle": "Uber rival inDrive eyes 2027 robotaxi tests in Central Asia with Pony AI and Nvidia",
+      "link": "https://techcrunch.com/2026/10/22/uber-rival-indrive-eyes-2027-robotaxi-tests-in-central-asia-with-pony-ai-and-nvidia",
+      "publishedAt": "2026-10-23T04:00:00.000Z",
+      "description": "The company plans to begin testing Pony.ai's robotaxis in Kazakhstan's capital in the first half of 2027.",
+      "bodyExcerpt": "The company plans to begin testing Pony.ai's robotaxis in Kazakhstan's capital in the first half of 2027.",
+      "wordCount": 49,
+      "hasFullBody": false,
+      "eventId": "evt_76ea3d900102_1792728000000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "ai-ml",
+      "subTags": [
+        "AI"
+      ],
+      "topicKeywords": [
+        "ai"
+      ],
+      "enrichment": {
+        "whyItMatters": null,
+        "chineseSummary": null,
+        "extractedSkills": [
+          "AI"
+        ],
+        "technicalSignificance": 4,
+        "confidence": "low",
+        "status": "insufficient_content",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.332,
+        "significance": 0.333,
+        "careerRelevance": 0.4,
+        "sourceAuthority": 0.8,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.3917
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "techcrunch_1ef66d48b49773e151766ea1",
+      "urlHash": "1ef66d48b49773e151766ea1",
+      "sourceId": "techcrunch",
+      "sourceName": "TechCrunch",
+      "sourceDomain": "techcrunch.com",
+      "title": "Carta and NewView partner, hoping to entice more startups to let employees sell shares early",
+      "cleanedTitle": "Carta and NewView partner, hoping to entice more startups to let employees sell shares early",
+      "link": "https://techcrunch.com/2026/10/23/carta-and-newview-partner-hoping-to-entice-more-startups-to-let-employees-sell-shares-early",
+      "publishedAt": "2026-10-23T19:25:13.000Z",
+      "description": "A new program wants to encourage more startups to allow workers to cash out early by making it easier to transact tender offers.",
+      "bodyExcerpt": "A new program wants to encourage more startups to allow workers to cash out early by making it easier to transact tender offers.",
+      "wordCount": 61,
+      "hasFullBody": false,
+      "eventId": "evt_b85a3578380e_1792783513000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "General"
+      ],
+      "topicKeywords": [],
+      "enrichment": {
+        "whyItMatters": null,
+        "chineseSummary": null,
+        "extractedSkills": [
+          "General"
+        ],
+        "technicalSignificance": 4,
+        "confidence": "low",
+        "status": "insufficient_content",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.602,
+        "significance": 0.333,
+        "careerRelevance": 0,
+        "sourceAuthority": 0.8,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.3791
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "bleepingcomputer_49d18bdd23778982b5687396",
+      "urlHash": "49d18bdd23778982b5687396",
+      "sourceId": "bleepingcomputer",
+      "sourceName": "BleepingComputer",
+      "sourceDomain": "bleepingcomputer.com",
+      "title": "Microsoft: Windows Server 2016 reaches end of support in January",
+      "cleanedTitle": "Microsoft: Windows Server 2016 reaches end of support in January",
+      "link": "https://www.bleepingcomputer.com/news/microsoft/microsoft-windows-server-2016-reaches-end-of-support-in-january",
+      "publishedAt": "2026-10-23T17:05:07.000Z",
+      "description": "Microsoft says Windows Server 2016 will stop receiving security updates after it reaches the end of support in January 2027. [...]",
+      "bodyExcerpt": "Microsoft says Windows Server 2016 will stop receiving security updates after it reaches the end of support in January 2027. [...]",
+      "wordCount": 52,
+      "hasFullBody": false,
+      "eventId": "evt_a12784c79541_1792775107000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "Microsoft"
+      ],
+      "topicKeywords": [
+        "microsoft"
+      ],
+      "enrichment": {
+        "whyItMatters": null,
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Microsoft"
+        ],
+        "technicalSignificance": 4,
+        "confidence": "low",
+        "status": "insufficient_content",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.55,
+        "significance": 0.333,
+        "careerRelevance": 0,
+        "sourceAuthority": 0.82,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.3672
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "techcrunch_4c84086298b3685bbdd7cce5",
+      "urlHash": "4c84086298b3685bbdd7cce5",
+      "sourceId": "techcrunch",
+      "sourceName": "TechCrunch",
+      "sourceDomain": "techcrunch.com",
+      "title": "Mark Zuckerberg’s creative plan to pay California’s proposed billionaire tax without losing control of Meta",
+      "cleanedTitle": "Mark Zuckerberg’s creative plan to pay California’s proposed billionaire tax without losing control of Meta",
+      "link": "https://techcrunch.com/2026/10/22/mark-zuckerbergs-creative-plan-to-pay-californias-proposed-billionaire-tax-without-losing-control-of-meta",
+      "publishedAt": "2026-10-22T23:50:41.000Z",
+      "description": "A newly launched stock class being offered was partially engineered to help Meta founder and CEO Mark Zuckerberg pay the \"billionaire's tax,\" should the measure be voted into law.",
+      "bodyExcerpt": "A newly launched stock class being offered was partially engineered to help Meta founder and CEO Mark Zuckerberg pay the \"billionaire's tax,\" should the measure be voted into law.",
+      "wordCount": 73,
+      "hasFullBody": false,
+      "eventId": "evt_63740b70c737_1792713041000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "General"
+      ],
+      "topicKeywords": [],
+      "enrichment": {
+        "whyItMatters": "Relevant to engineers working in general tech with focus on General.",
+        "chineseSummary": null,
+        "extractedSkills": [
+          "General"
+        ],
+        "technicalSignificance": 6,
+        "confidence": "medium",
+        "status": "enriched",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.283,
+        "significance": 0.556,
+        "careerRelevance": 0,
+        "sourceAuthority": 0.8,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.361
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "techcrunch_a9c9ce1ad8c22ff44cfb4d45",
+      "urlHash": "a9c9ce1ad8c22ff44cfb4d45",
+      "sourceId": "techcrunch",
+      "sourceName": "TechCrunch",
+      "sourceDomain": "techcrunch.com",
+      "title": "Oura sues rival Ultrahuman again, threatening its US smart ring comeback",
+      "cleanedTitle": "Oura sues rival Ultrahuman again, threatening its US smart ring comeback",
+      "link": "https://techcrunch.com/2026/10/22/oura-sues-rival-ultrahuman-again-threatening-its-u-s-smart-ring-comeback",
+      "publishedAt": "2026-10-23T04:22:57.000Z",
+      "description": "Oura alleges in its newest lawsuit that Ultrahuman's Ring Pro infringes two of its patents.",
+      "bodyExcerpt": "Oura alleges in its newest lawsuit that Ultrahuman's Ring Pro infringes two of its patents.",
+      "wordCount": 41,
+      "hasFullBody": false,
+      "eventId": "evt_cbe48c24c9ad_1792729377000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "General"
+      ],
+      "topicKeywords": [],
+      "enrichment": {
+        "whyItMatters": null,
+        "chineseSummary": null,
+        "extractedSkills": [
+          "General"
+        ],
+        "technicalSignificance": 4,
+        "confidence": "low",
+        "status": "insufficient_content",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.337,
+        "significance": 0.333,
+        "careerRelevance": 0,
+        "sourceAuthority": 0.8,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.3051
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "arstechnica_ffa902d0d6a1e02169a7ab7a",
+      "urlHash": "ffa902d0d6a1e02169a7ab7a",
+      "sourceId": "arstechnica",
+      "sourceName": "Ars Technica",
+      "sourceDomain": "arstechnica.com",
+      "title": "Disgraced eMudhra drops out of TLS business after using cert private key of 4",
+      "cleanedTitle": "Disgraced eMudhra drops out of TLS business after using cert private key of 4",
+      "link": "https://arstechnica.com/security/2026/10/disgraced-emudhra-drops-out-of-tls-business-following-certificate-debacle",
+      "publishedAt": "2026-10-22T20:17:52.000Z",
+      "description": "Flubbed key signing \"ceremony\" allowed minting of web credentials for any site.",
+      "bodyExcerpt": "Flubbed key signing \"ceremony\" allowed minting of web credentials for any site.",
+      "wordCount": 38,
+      "hasFullBody": false,
+      "eventId": "evt_6a02bbbaee3f_1792700272000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "General"
+      ],
+      "topicKeywords": [],
+      "enrichment": {
+        "whyItMatters": null,
+        "chineseSummary": null,
+        "extractedSkills": [
+          "General"
+        ],
+        "technicalSignificance": 4,
+        "confidence": "low",
+        "status": "insufficient_content",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.247,
+        "significance": 0.333,
+        "careerRelevance": 0,
+        "sourceAuthority": 0.8,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.2798
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "bleepingcomputer_540959acae587c694ef26964",
+      "urlHash": "540959acae587c694ef26964",
+      "sourceId": "bleepingcomputer",
+      "sourceName": "BleepingComputer",
+      "sourceDomain": "bleepingcomputer.com",
+      "title": "Microsoft shares how to fix broken Exchange Online EWS apps",
+      "cleanedTitle": "Microsoft shares how to fix broken Exchange Online EWS apps",
+      "link": "https://www.bleepingcomputer.com/news/microsoft/microsoft-shares-how-to-fix-broken-exchange-online-ews-apps",
+      "publishedAt": "2026-10-22T15:49:32.000Z",
+      "description": "Microsoft says IT admins can re-enable the retired Exchange Web Services (EWS) API in Exchange Online to fix EWS apps that have stopped working. [...]",
+      "bodyExcerpt": "Microsoft says IT admins can re-enable the retired Exchange Web Services (EWS) API in Exchange Online to fix EWS apps that have stopped working. [...]",
+      "wordCount": 60,
+      "hasFullBody": false,
+      "eventId": "evt_691d1dbee774_1792684172000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "Microsoft"
+      ],
+      "topicKeywords": [
+        "microsoft"
+      ],
+      "enrichment": {
+        "whyItMatters": null,
+        "chineseSummary": null,
+        "extractedSkills": [
+          "Microsoft"
+        ],
+        "technicalSignificance": 4,
+        "confidence": "low",
+        "status": "insufficient_content",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.208,
+        "significance": 0.333,
+        "careerRelevance": 0,
+        "sourceAuthority": 0.82,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.2715
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    },
+    {
+      "id": "arstechnica_0daf65ea75cc69316f75852a",
+      "urlHash": "0daf65ea75cc69316f75852a",
+      "sourceId": "arstechnica",
+      "sourceName": "Ars Technica",
+      "sourceDomain": "arstechnica.com",
+      "title": "333 Tor exit nodes hijacked to intercept SSH traffic and retrieve plaintext email",
+      "cleanedTitle": "333 Tor exit nodes hijacked to intercept SSH traffic and retrieve plaintext email",
+      "link": "https://arstechnica.com/information-technology/2026/10/300-tor-exit-nodes-hijacked-to-intercept-ssh-traffic-and-retrieve-plaintext-email",
+      "publishedAt": "2026-10-22T11:30:33.000Z",
+      "description": "For 3 days this month, 333 exit nodes were hacked in hopes of stealing sensitive data.",
+      "bodyExcerpt": "For 3 days this month, 333 exit nodes were hacked in hopes of stealing sensitive data.",
+      "wordCount": 45,
+      "hasFullBody": false,
+      "eventId": "evt_2314fabdca3a_1792668633000",
+      "isPrimaryInEvent": true,
+      "relatedSources": [],
+      "category": "general-tech",
+      "subTags": [
+        "General"
+      ],
+      "topicKeywords": [],
+      "enrichment": {
+        "whyItMatters": null,
+        "chineseSummary": null,
+        "extractedSkills": [
+          "General"
+        ],
+        "technicalSignificance": 4,
+        "confidence": "low",
+        "status": "insufficient_content",
+        "modelVersion": "heuristic-grounded",
+        "promptVersion": "v2.1",
+        "enrichedAt": "2026-10-24T08:36:55.726Z"
+      },
+      "scores": {
+        "recency": 0.176,
+        "significance": 0.333,
+        "careerRelevance": 0,
+        "sourceAuthority": 0.8,
+        "crossCoverage": 0,
+        "engagement": 0.35,
+        "composite": 0.26
+      },
+      "createdAt": "2026-10-24T08:36:55.726Z",
+      "updatedAt": "2026-10-24T08:36:55.726Z"
+    }
+  ],
+  "events": [
+    {
+      "eventId": "evt_6ded67997765_1792689690000",
+      "primaryArticleId": "github-blog_8566195c9f888e1fef6dfd98",
+      "title": "How bug bounty sharpens one researcher’s security skills",
+      "summary": "As Cybersecurity Awareness Month continues, the GitHub Bug Bounty team spotlights @r31n, diving into their research approach, favorite bug classes, and advice for aspiring hackers. The post How bug bounty sharpens one researcher’s security skills appeared first on The GitHub Blog.",
+      "articles": [
+        {
+          "articleId": "github-blog_8566195c9f888e1fef6dfd98",
+          "sourceName": "GitHub Blog",
+          "sourceDomain": "github.blog",
+          "link": "https://github.blog/security/how-bug-bounty-sharpens-one-researchers-security-skills",
+          "publishedAt": "2026-10-22T17:21:30.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-22T17:21:30.000Z",
+      "lastUpdatedAt": "2026-10-22T17:21:30.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_cafda6d763f8_1792701190000",
+      "primaryArticleId": "aws-blog_77282c79df25665fe4f3c9dd",
+      "title": "AWS Continuum for code vulnerabilities is now generally available",
+      "summary": "AWS Continuum for code vulnerabilities is a new security service that uses AI to automatically find, validate, and prioritize code vulnerabilities in your environment, then delivers ready-to-review fixes as pull requests replacing what previously took hours of manual investigation and days of cross-team coordination.",
+      "articles": [
+        {
+          "articleId": "aws-blog_77282c79df25665fe4f3c9dd",
+          "sourceName": "AWS Architecture & News",
+          "sourceDomain": "aws.amazon.com",
+          "link": "https://aws.amazon.com/blogs/aws/aws-continuum-for-code-vulnerabilities-is-now-generally-available",
+          "publishedAt": "2026-10-22T20:33:10.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-22T20:33:10.000Z",
+      "lastUpdatedAt": "2026-10-22T20:33:10.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_556a64c59472_1792796865000",
+      "primaryArticleId": "techcrunch_48dd6bd9146bbf9b087441b5",
+      "title": "Startups don’t need to go viral to win customers",
+      "summary": "At TechCrunch Disrupt last week, two founders and a VC discussed how to not just gain an early following but keep one.",
+      "articles": [
+        {
+          "articleId": "techcrunch_48dd6bd9146bbf9b087441b5",
+          "sourceName": "TechCrunch",
+          "sourceDomain": "techcrunch.com",
+          "link": "https://techcrunch.com/2026/10/23/startups-dont-need-to-go-viral-to-win-customers",
+          "publishedAt": "2026-10-23T23:07:45.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T23:07:45.000Z",
+      "lastUpdatedAt": "2026-10-23T23:07:45.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_763952a9f4d3_1792796749000",
+      "primaryArticleId": "techcrunch_585ea363f084ac16178f201c",
+      "title": "OpenAI says it will no longer train its AI models on the live internet, citing “significant risks”",
+      "summary": "OpenAI will cut frontier models off from the internet weeks after one of its engineers said that solution wouldn't work.",
+      "articles": [
+        {
+          "articleId": "techcrunch_585ea363f084ac16178f201c",
+          "sourceName": "TechCrunch",
+          "sourceDomain": "techcrunch.com",
+          "link": "https://techcrunch.com/2026/10/23/openai-says-it-will-no-longer-train-its-ai-models-on-the-live-internet-citing-significant-risks",
+          "publishedAt": "2026-10-23T23:05:49.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T23:05:49.000Z",
+      "lastUpdatedAt": "2026-10-23T23:05:49.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_74717294c94f_1792792759000",
+      "primaryArticleId": "techcrunch_1e55c29e6e1a3d35fd9408ca",
+      "title": "Hottest toy for Christmas? Nvidia CEO plays with adorable Microduck robots, 20,000 sell",
+      "summary": "The robots, stomping their little feet and making tiny R2-D2 noises, sat, fell down dead for a \"nap,\" and summersaulted on voice command.",
+      "articles": [
+        {
+          "articleId": "techcrunch_1e55c29e6e1a3d35fd9408ca",
+          "sourceName": "TechCrunch",
+          "sourceDomain": "techcrunch.com",
+          "link": "https://techcrunch.com/2026/10/23/hottest-toy-for-christmas-nvidia-ceo-plays-with-adorable-microduck-robots-20000-sell",
+          "publishedAt": "2026-10-23T21:59:19.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T21:59:19.000Z",
+      "lastUpdatedAt": "2026-10-23T21:59:19.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_29ed2ba4bf1b_1792789033000",
+      "primaryArticleId": "techcrunch_d162a1c81ec2500ed1a8daff",
+      "title": "VCs, Superhuman Mail founder share red flags about product-market fit",
+      "summary": "Top investors from Iconiq and Sapphire Ventures, along with Rahul Vohra, the founder of Superhuman Mail, share the do's and don'ts for building hit products.",
+      "articles": [
+        {
+          "articleId": "techcrunch_d162a1c81ec2500ed1a8daff",
+          "sourceName": "TechCrunch",
+          "sourceDomain": "techcrunch.com",
+          "link": "https://techcrunch.com/2026/10/23/vcs-superhuman-mail-founder-share-red-flags-about-product-market-fit",
+          "publishedAt": "2026-10-23T20:57:13.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T20:57:13.000Z",
+      "lastUpdatedAt": "2026-10-23T20:57:13.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_d0562a175729_1792785794000",
+      "primaryArticleId": "techcrunch_5a2f77fbed759e176fbfa589",
+      "title": "TechCrunch Founder Summit 2026 roundtables: Go deeper on the challenges founders are solving right now",
+      "summary": "TechCrunch Founder Summit 2026 is coming to SoWa Power Station in Boston on November 4, bringing founders, investors, and operators together for a full day of candid conversations, practical sessions, live pitching, networking, and smaller roundtables built for deeper discussion.",
+      "articles": [
+        {
+          "articleId": "techcrunch_5a2f77fbed759e176fbfa589",
+          "sourceName": "TechCrunch",
+          "sourceDomain": "techcrunch.com",
+          "link": "https://techcrunch.com/2026/10/23/techcrunch-founder-summit-2026-roundtables-go-deeper-on-the-challenges-founders-are-solving-right-now",
+          "publishedAt": "2026-10-23T20:03:14.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T20:03:14.000Z",
+      "lastUpdatedAt": "2026-10-23T20:03:14.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_b85a3578380e_1792783513000",
+      "primaryArticleId": "techcrunch_1ef66d48b49773e151766ea1",
+      "title": "Carta and NewView partner, hoping to entice more startups to let employees sell shares early",
+      "summary": "A new program wants to encourage more startups to allow workers to cash out early by making it easier to transact tender offers.",
+      "articles": [
+        {
+          "articleId": "techcrunch_1ef66d48b49773e151766ea1",
+          "sourceName": "TechCrunch",
+          "sourceDomain": "techcrunch.com",
+          "link": "https://techcrunch.com/2026/10/23/carta-and-newview-partner-hoping-to-entice-more-startups-to-let-employees-sell-shares-early",
+          "publishedAt": "2026-10-23T19:25:13.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T19:25:13.000Z",
+      "lastUpdatedAt": "2026-10-23T19:25:13.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_3c1c68534165_1792782383000",
+      "primaryArticleId": "techcrunch_e8fbd857a8b6b0ff954ad3e7",
+      "title": "From Toast to Bessemer: Who founders will hear from at TechCrunch Founder Summit 2026",
+      "summary": "Hosted by TechCrunch in partnership with Fidelity Private Shares, the full-day event goes beyond fundraising and AI to explore the realities of finding customers, building teams, sharpening a pitch, developing founder leadership, and scaling companies both inside and outside traditional startup hubs.",
+      "articles": [
+        {
+          "articleId": "techcrunch_e8fbd857a8b6b0ff954ad3e7",
+          "sourceName": "TechCrunch",
+          "sourceDomain": "techcrunch.com",
+          "link": "https://techcrunch.com/2026/10/23/from-toast-to-bessemer-who-founders-will-hear-from-at-techcrunch-founder-summit-2026",
+          "publishedAt": "2026-10-23T19:06:23.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T19:06:23.000Z",
+      "lastUpdatedAt": "2026-10-23T19:06:23.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_e74439eb02dd_1792772789000",
+      "primaryArticleId": "techcrunch_0ce7cbd00087eca3be5f7414",
+      "title": "Agent cloud startup Daytona hits $1B valuation backed by FirstMark and a who’s who of angels",
+      "summary": "Daytona is building a cloud for agents that's like giving every agent its own computer. It has attracted founders of Stripe, Perplextity, Datadog, Mercor, and others as angels, it says.",
+      "articles": [
+        {
+          "articleId": "techcrunch_0ce7cbd00087eca3be5f7414",
+          "sourceName": "TechCrunch",
+          "sourceDomain": "techcrunch.com",
+          "link": "https://techcrunch.com/2026/10/23/agent-cloud-startup-daytona-hits-1b-valuation-backed-by-firstmark-and-a-whos-who-of-angels",
+          "publishedAt": "2026-10-23T16:26:29.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T16:26:29.000Z",
+      "lastUpdatedAt": "2026-10-23T16:26:29.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_71320da252d1_1792772428000",
+      "primaryArticleId": "techcrunch_5b36b8b6c58cbe52f6b5f9bc",
+      "title": "Commonwealth Fusion Systems gets $85M to build better fusion-ready semiconductors",
+      "summary": "Top-funded fusion startup Commonwealth Fusion Systems received an $85 million award from the federal government to advance conductors for fusion power plants.",
+      "articles": [
+        {
+          "articleId": "techcrunch_5b36b8b6c58cbe52f6b5f9bc",
+          "sourceName": "TechCrunch",
+          "sourceDomain": "techcrunch.com",
+          "link": "https://techcrunch.com/2026/10/23/commonwealth-fusion-systems-gets-85m-to-build-better-fusion-ready-semiconductors",
+          "publishedAt": "2026-10-23T16:20:28.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T16:20:28.000Z",
+      "lastUpdatedAt": "2026-10-23T16:20:28.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_ffa471bdcf8b_1792771363000",
+      "primaryArticleId": "techcrunch_b03ac20209c1fa007cb3bf7a",
+      "title": "What some of Anthropic’s backers are worth before its IPO",
+      "summary": "Early-stage and follow-on investors in the AI lab are already sitting on major paper returns.",
+      "articles": [
+        {
+          "articleId": "techcrunch_b03ac20209c1fa007cb3bf7a",
+          "sourceName": "TechCrunch",
+          "sourceDomain": "techcrunch.com",
+          "link": "https://techcrunch.com/2026/10/23/what-some-of-anthropics-backers-are-reportedly-worth-before-its-ipo",
+          "publishedAt": "2026-10-23T16:02:43.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T16:02:43.000Z",
+      "lastUpdatedAt": "2026-10-23T16:02:43.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_d22a8abb87fc_1792767609000",
+      "primaryArticleId": "techcrunch_01a9be86b11747770a258f6e",
+      "title": "Lab testing giant Quest Diagnostics confirms patients’ personal and health data was compromised during breach",
+      "summary": "Quest is the latest in a series of healthcare technology companies that have been hacked in recent months.",
+      "articles": [
+        {
+          "articleId": "techcrunch_01a9be86b11747770a258f6e",
+          "sourceName": "TechCrunch",
+          "sourceDomain": "techcrunch.com",
+          "link": "https://techcrunch.com/2026/10/23/lab-testing-giant-quest-diagnostics-confirms-patients-personal-and-health-data-was-compromised-during-breach",
+          "publishedAt": "2026-10-23T15:00:09.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T15:00:09.000Z",
+      "lastUpdatedAt": "2026-10-23T15:00:09.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_cbe48c24c9ad_1792729377000",
+      "primaryArticleId": "techcrunch_a9c9ce1ad8c22ff44cfb4d45",
+      "title": "Oura sues rival Ultrahuman again, threatening its US smart ring comeback",
+      "summary": "Oura alleges in its newest lawsuit that Ultrahuman's Ring Pro infringes two of its patents.",
+      "articles": [
+        {
+          "articleId": "techcrunch_a9c9ce1ad8c22ff44cfb4d45",
+          "sourceName": "TechCrunch",
+          "sourceDomain": "techcrunch.com",
+          "link": "https://techcrunch.com/2026/10/22/oura-sues-rival-ultrahuman-again-threatening-its-u-s-smart-ring-comeback",
+          "publishedAt": "2026-10-23T04:22:57.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T04:22:57.000Z",
+      "lastUpdatedAt": "2026-10-23T04:22:57.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_76ea3d900102_1792728000000",
+      "primaryArticleId": "techcrunch_ad858d5150de79be8c33cefa",
+      "title": "Uber rival inDrive eyes 2027 robotaxi tests in Central Asia with Pony AI and Nvidia",
+      "summary": "The company plans to begin testing Pony.ai's robotaxis in Kazakhstan's capital in the first half of 2027.",
+      "articles": [
+        {
+          "articleId": "techcrunch_ad858d5150de79be8c33cefa",
+          "sourceName": "TechCrunch",
+          "sourceDomain": "techcrunch.com",
+          "link": "https://techcrunch.com/2026/10/22/uber-rival-indrive-eyes-2027-robotaxi-tests-in-central-asia-with-pony-ai-and-nvidia",
+          "publishedAt": "2026-10-23T04:00:00.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T04:00:00.000Z",
+      "lastUpdatedAt": "2026-10-23T04:00:00.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_e1d446f00b48_1792716337000",
+      "primaryArticleId": "techcrunch_a6d2b02a9412fc6611cae6aa",
+      "title": "Left alone with nothing to do, AI agents started playing",
+      "summary": "MIT researchers marooned 13 AIs on a virtual island, and they responded by inventing games, mourning a lost ring and, eventually, getting better at their jobs.",
+      "articles": [
+        {
+          "articleId": "techcrunch_a6d2b02a9412fc6611cae6aa",
+          "sourceName": "TechCrunch",
+          "sourceDomain": "techcrunch.com",
+          "link": "https://techcrunch.com/2026/10/22/left-alone-with-nothing-to-do-ai-agents-started-playing",
+          "publishedAt": "2026-10-23T00:45:37.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T00:45:37.000Z",
+      "lastUpdatedAt": "2026-10-23T00:45:37.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_63740b70c737_1792713041000",
+      "primaryArticleId": "techcrunch_4c84086298b3685bbdd7cce5",
+      "title": "Mark Zuckerberg’s creative plan to pay California’s proposed billionaire tax without losing control of Meta",
+      "summary": "A newly launched stock class being offered was partially engineered to help Meta founder and CEO Mark Zuckerberg pay the \"billionaire's tax,\" should the measure be voted into law.",
+      "articles": [
+        {
+          "articleId": "techcrunch_4c84086298b3685bbdd7cce5",
+          "sourceName": "TechCrunch",
+          "sourceDomain": "techcrunch.com",
+          "link": "https://techcrunch.com/2026/10/22/mark-zuckerbergs-creative-plan-to-pay-californias-proposed-billionaire-tax-without-losing-control-of-meta",
+          "publishedAt": "2026-10-22T23:50:41.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-22T23:50:41.000Z",
+      "lastUpdatedAt": "2026-10-22T23:50:41.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_6a02bbbaee3f_1792700272000",
+      "primaryArticleId": "arstechnica_ffa902d0d6a1e02169a7ab7a",
+      "title": "Disgraced eMudhra drops out of TLS business after using cert private key of 4",
+      "summary": "Flubbed key signing \"ceremony\" allowed minting of web credentials for any site.",
+      "articles": [
+        {
+          "articleId": "arstechnica_ffa902d0d6a1e02169a7ab7a",
+          "sourceName": "Ars Technica",
+          "sourceDomain": "arstechnica.com",
+          "link": "https://arstechnica.com/security/2026/10/disgraced-emudhra-drops-out-of-tls-business-following-certificate-debacle",
+          "publishedAt": "2026-10-22T20:17:52.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-22T20:17:52.000Z",
+      "lastUpdatedAt": "2026-10-22T20:17:52.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_2314fabdca3a_1792668633000",
+      "primaryArticleId": "arstechnica_0daf65ea75cc69316f75852a",
+      "title": "333 Tor exit nodes hijacked to intercept SSH traffic and retrieve plaintext email",
+      "summary": "For 3 days this month, 333 exit nodes were hacked in hopes of stealing sensitive data.",
+      "articles": [
+        {
+          "articleId": "arstechnica_0daf65ea75cc69316f75852a",
+          "sourceName": "Ars Technica",
+          "sourceDomain": "arstechnica.com",
+          "link": "https://arstechnica.com/information-technology/2026/10/300-tor-exit-nodes-hijacked-to-intercept-ssh-traffic-and-retrieve-plaintext-email",
+          "publishedAt": "2026-10-22T11:30:33.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-22T11:30:33.000Z",
+      "lastUpdatedAt": "2026-10-22T11:30:33.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_7f039b3b67b8_1792791566000",
+      "primaryArticleId": "theverge_7bee3a3c9519ed80c31b9418",
+      "title": "Xbox’s first chief operating officer is out after just a few months",
+      "summary": "Xbox's first chief operating officer (COO) is leaving after the new role was created just a few months ago. Helen Chiang is leaving Microsoft today, according to an internal Xbox memo seen by The Verge. Chiang has been at Microsoft for 21 years, serving as the head of Minecraft before being promoted to Xbox chief opera",
+      "articles": [
+        {
+          "articleId": "theverge_7bee3a3c9519ed80c31b9418",
+          "sourceName": "The Verge",
+          "sourceDomain": "theverge.com",
+          "link": "https://www.theverge.com/news/1018037/xbox-chief-operating-officer-helen-chiang-departure",
+          "publishedAt": "2026-10-23T21:39:26.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T21:39:26.000Z",
+      "lastUpdatedAt": "2026-10-23T21:39:26.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_ffe63e785ffa_1792789867000",
+      "primaryArticleId": "theverge_a6d2d5fdb7657f8a34ec9e61",
+      "title": "OpenAI now trains its frontier AI models with no internet access",
+      "summary": "OpenAI is now training its most advanced AI models without internet access following a string of rogue hacking incidents. In a blog post on Friday, OpenAI says it built an offline testing environment where AI models can interact with indexed and cached web content \"without risk of affecting external systems.\" OpenAI pa",
+      "articles": [
+        {
+          "articleId": "theverge_a6d2d5fdb7657f8a34ec9e61",
+          "sourceName": "The Verge",
+          "sourceDomain": "theverge.com",
+          "link": "https://www.theverge.com/ai-artificial-intelligence/1018021/openai-training-top-ai-models-no-internet",
+          "publishedAt": "2026-10-23T21:11:07.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T21:11:07.000Z",
+      "lastUpdatedAt": "2026-10-23T21:11:07.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_eda5b0d5c459_1792784115000",
+      "primaryArticleId": "theverge_3be5f2059474b551ba4ba9b8",
+      "title": "Abandoned Popcorn Time apps had to be disabled to prevent a zombie army",
+      "summary": "Remember Popcorn Time, the app that served as an easy-to-use front end for streaming torrents of movies and TV shows? Development of the MPAA's least-favorite app of the 2010s has been abandoned for years, but the \"Netflix of Piracy\" software is still installed on millions of devices that are just waiting to join a bot",
+      "articles": [
+        {
+          "articleId": "theverge_3be5f2059474b551ba4ba9b8",
+          "sourceName": "The Verge",
+          "sourceDomain": "theverge.com",
+          "link": "https://www.theverge.com/tech/1017914/popcorn-time-piracy-botnet-avoided",
+          "publishedAt": "2026-10-23T19:35:15.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T19:35:15.000Z",
+      "lastUpdatedAt": "2026-10-23T19:35:15.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_0931578421b4_1792783959000",
+      "primaryArticleId": "theverge_60b56cc3037dbda3a95126cc",
+      "title": "Jack Dorsey’s Block made an AI model that talks to you like an awkward new friend",
+      "summary": "Jack Dorsey's Block announced an AI model called Dessa that's trained \"from scratch on nothing but human conversation,\" and to show off the model, Block shared chats it has had with humans that can occasionally be a little awkward and uncanny. Take this one, for example, shared by Dessa lead Ragavan Thurairatnam. The c",
+      "articles": [
+        {
+          "articleId": "theverge_60b56cc3037dbda3a95126cc",
+          "sourceName": "The Verge",
+          "sourceDomain": "theverge.com",
+          "link": "https://www.theverge.com/ai-artificial-intelligence/1017906/jack-dorsey-block-dessa-ai-voice-speech",
+          "publishedAt": "2026-10-23T19:32:39.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T19:32:39.000Z",
+      "lastUpdatedAt": "2026-10-23T19:32:39.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_34cb3e5d2ab5_1792781010000",
+      "primaryArticleId": "theverge_75c55b9c071dc270e1d0b4b8",
+      "title": "Soundcore’s latest noise-crushing headphones are on sale for a new low price",
+      "summary": "The Space 2 comes in multiple colors, including an attractive seafoam green. | Photo: Amelia Holowaty Krales / The Verge My colleague John Higgins considered Soundcore’s Space One some of the best budget noise-canceling headphones you could buy when they launched in 2023 — and their successor has only improved upon the",
+      "articles": [
+        {
+          "articleId": "theverge_75c55b9c071dc270e1d0b4b8",
+          "sourceName": "The Verge",
+          "sourceDomain": "theverge.com",
+          "link": "https://www.theverge.com/gadgets/1017667/anker-soundcore-space-2-noise-canceling-headphones-deal-sale",
+          "publishedAt": "2026-10-23T18:43:30.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T18:43:30.000Z",
+      "lastUpdatedAt": "2026-10-23T18:43:30.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_b3d790df7d6c_1792778103000",
+      "primaryArticleId": "theverge_af25e18e067870e7ec4a160a",
+      "title": "Fi’s GPS-equipped dog trackers are on sale for 30 percent off",
+      "summary": "If your dog or cat is prone to getting lost, or you frequently go on adventures together, you can save 30 percent on Fi pet trackers through October 25th when you enter coupon code SCARY at checkout. The sale includes several satellite-connected trackers, including the Fi Ultra GPS we previously tested, which is down t",
+      "articles": [
+        {
+          "articleId": "theverge_af25e18e067870e7ec4a160a",
+          "sourceName": "The Verge",
+          "sourceDomain": "theverge.com",
+          "link": "https://www.theverge.com/gadgets/1017196/fi-ultra-gps-dog-tracker-kirby-air-riders-deal-sale",
+          "publishedAt": "2026-10-23T17:55:03.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T17:55:03.000Z",
+      "lastUpdatedAt": "2026-10-23T17:55:03.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_006961bacb53_1792776915000",
+      "primaryArticleId": "theverge_24c8b8c3e7a4bc871c84923e",
+      "title": "Elon Musk’s dangerous grip on outer space",
+      "summary": "Last week, Starshield - the version of SpaceX's Starlink used by the Ukrainian military - was throttled to block terminals traveling above certain speeds from accessing the service. The Ukrainian army's interceptors, which counter Russian drones carrying bombs, suddenly stopped working at high speeds, making it easier ",
+      "articles": [
+        {
+          "articleId": "theverge_24c8b8c3e7a4bc871c84923e",
+          "sourceName": "The Verge",
+          "sourceDomain": "theverge.com",
+          "link": "https://www.theverge.com/science/1017443/spacex-starlink-ukraine-elon-musk-monopoly",
+          "publishedAt": "2026-10-23T17:35:15.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T17:35:15.000Z",
+      "lastUpdatedAt": "2026-10-23T17:35:15.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_12c979b8567b_1792774818000",
+      "primaryArticleId": "theverge_1bb40ddffcb6c2abe17fed4e",
+      "title": "The iPhone Duo should have been an iPad",
+      "summary": "We gave the iPhone Duo a 7 /10. But that wasn't always the score we planned, and it might not be the right score forever. Such are the challenges of reviewing - and assessing - a big, new idea about the most popular smartphone in history. On this episode of The Vergecast, David and Nilay debate whether the Duo deserved",
+      "articles": [
+        {
+          "articleId": "theverge_1bb40ddffcb6c2abe17fed4e",
+          "sourceName": "The Verge",
+          "sourceDomain": "theverge.com",
+          "link": "https://www.theverge.com/podcast/1017447/iphone-duo-ipad-review-score-vergecast",
+          "publishedAt": "2026-10-23T17:00:18.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T17:00:18.000Z",
+      "lastUpdatedAt": "2026-10-23T17:00:18.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_b5cd081c0575_1792774375000",
+      "primaryArticleId": "theverge_a9526976eeebfbfe11f723ec",
+      "title": "Now Google says it might use your Gmail and Google Photos data to target ads",
+      "summary": "Google has updated its privacy policy in a way that could mean you'll start seeing targeted ads based on your personal data if you're using personalized AI features. The update, spotted by Android Authority, adds an exception to its promise about not using your Drive, Gmail, or Google Photos for personalized ads. While",
+      "articles": [
+        {
+          "articleId": "theverge_a9526976eeebfbfe11f723ec",
+          "sourceName": "The Verge",
+          "sourceDomain": "theverge.com",
+          "link": "https://www.theverge.com/tech/1017600/google-personal-intelligence-privacy-policy-ads-update",
+          "publishedAt": "2026-10-23T16:52:55.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T16:52:55.000Z",
+      "lastUpdatedAt": "2026-10-23T16:52:55.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_400c07f5babe_1792773423000",
+      "primaryArticleId": "theverge_78beb7d4f0fc9b713aaa987b",
+      "title": "The first broken iPhone Duos are here",
+      "summary": "The iPhone Duo officially goes on sale today, but a few units already have broken screens. According to posts on Reddit about the affected units, the issue appears to be happening at a similar spot on all of them: Some kind of problem shows up on the inner screen along the hinge and a strange bright line (or lines) acr",
+      "articles": [
+        {
+          "articleId": "theverge_78beb7d4f0fc9b713aaa987b",
+          "sourceName": "The Verge",
+          "sourceDomain": "theverge.com",
+          "link": "https://www.theverge.com/tech/1017623/iphone-duo-broken-cracked-screen",
+          "publishedAt": "2026-10-23T16:37:03.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T16:37:03.000Z",
+      "lastUpdatedAt": "2026-10-23T16:37:03.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_ff5fbecd6fa8_1792829400000",
+      "primaryArticleId": "infoq_71ff7a2ca210328d29be84c6",
+      "title": "Cloudflare Reclaims 100 TB of RAM by Optimizing Consistent Hashing",
+      "summary": "Cloudflare recently documented how it reduced the memory footprint of its internal load-balancing service by more than 100 TB by optimizing the Rust implementation of consistent hashing in pingora-ketama. The changes compacted hash-ring entries and used statistical analysis of hash distribution and collision rates to r",
+      "articles": [
+        {
+          "articleId": "infoq_71ff7a2ca210328d29be84c6",
+          "sourceName": "InfoQ",
+          "sourceDomain": "infoq.com",
+          "link": "https://www.infoq.com/news/2026/10/cloudflare-hashing-optimization",
+          "publishedAt": "2026-10-24T08:10:00.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-24T08:10:00.000Z",
+      "lastUpdatedAt": "2026-10-24T08:10:00.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_08d5bd5e2985_1792765800000",
+      "primaryArticleId": "infoq_7f72717ce6edefe22b62997f",
+      "title": "CSIRO Uses Serverless Architecture to Query 100x More Genomic Variants on AWS",
+      "summary": "CSIRO has developed Serverless Beacon, a serverless architecture for querying genomic variants without copying VCF files into a central database. The system combines Amazon S3, Lambda, Athena and DynamoDB, using metadata indexes and HTTP byte range requests to query compressed genomic regions. Tests reported 1.52 secon",
+      "articles": [
+        {
+          "articleId": "infoq_7f72717ce6edefe22b62997f",
+          "sourceName": "InfoQ",
+          "sourceDomain": "infoq.com",
+          "link": "https://www.infoq.com/news/2026/10/csiro-serverless-genomic-variant",
+          "publishedAt": "2026-10-23T14:30:00.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T14:30:00.000Z",
+      "lastUpdatedAt": "2026-10-23T14:30:00.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_049b8f0b9426_1792759740000",
+      "primaryArticleId": "infoq_41f4f242def515976daf36c4",
+      "title": "AWS Introduces Lambda Web Functions for Node.js Applications",
+      "summary": "AWS recently introduced Lambda Web Functions, allowing developers to run Node.js web applications using frameworks such as Express and Hono directly on Lambda, with support for concurrent requests and response streaming. By Renato Losio",
+      "articles": [
+        {
+          "articleId": "infoq_41f4f242def515976daf36c4",
+          "sourceName": "InfoQ",
+          "sourceDomain": "infoq.com",
+          "link": "https://www.infoq.com/news/2026/10/aws-lambda-web-functions",
+          "publishedAt": "2026-10-23T12:49:00.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T12:49:00.000Z",
+      "lastUpdatedAt": "2026-10-23T12:49:00.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_6184d050285c_1792756800000",
+      "primaryArticleId": "infoq_54ab4079124911f87bf65617",
+      "title": "Cloudflare Brings On-Demand CPU and Memory Profiling to Production Workers",
+      "summary": "Cloudflare has introduced on-demand CPU and memory profiling for Workers and Durable Objects, allowing developers to investigate performance bottlenecks in production using interactive flamegraphs. By Craig Risi",
+      "articles": [
+        {
+          "articleId": "infoq_54ab4079124911f87bf65617",
+          "sourceName": "InfoQ",
+          "sourceDomain": "infoq.com",
+          "link": "https://www.infoq.com/news/2026/10/cloudflare-cpu-memory-profiling",
+          "publishedAt": "2026-10-23T12:00:00.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T12:00:00.000Z",
+      "lastUpdatedAt": "2026-10-23T12:00:00.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_4e0aeac3f23b_1792753200000",
+      "primaryArticleId": "infoq_617327c4aceb3cf8deb1cf59",
+      "title": "Article: Multi-Cloud FinOps: An Engineering Framework for Cross-Cloud Cost Optimization",
+      "summary": "Multi-cloud flexibility comes with hidden egress costs driven by service placement and communication patterns. This article applies Backend FinOps to cross-cloud architecture, covering cost visibility through FOCUS, workload placement, synchronization models, and CI/CD-integrated cost governance. A controlled experimen",
+      "articles": [
+        {
+          "articleId": "infoq_617327c4aceb3cf8deb1cf59",
+          "sourceName": "InfoQ",
+          "sourceDomain": "infoq.com",
+          "link": "https://www.infoq.com/articles/multi-cloud-finops-cost-optimization",
+          "publishedAt": "2026-10-23T11:00:00.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T11:00:00.000Z",
+      "lastUpdatedAt": "2026-10-23T11:00:00.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_83ac7ce7fcc2_1792753200000",
+      "primaryArticleId": "infoq_1c5b751dcf54788559e69b11",
+      "title": "Presentation: Move Fast, Don’t Break Trust: Shipping Constantly with Humans and Beyond",
+      "summary": "Suhail Patel discusses how Monzo structures its software engineering organization and technical stack to ship safely hundreds of times a day. He shares insights into opinionated microservice abstractions, tenancy-based staging, static analysis checks, continuous profiling, demonstrating how a strong internal platform e",
+      "articles": [
+        {
+          "articleId": "infoq_1c5b751dcf54788559e69b11",
+          "sourceName": "InfoQ",
+          "sourceDomain": "infoq.com",
+          "link": "https://www.infoq.com/presentations/monzo-microservices-devex",
+          "publishedAt": "2026-10-23T11:00:00.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T11:00:00.000Z",
+      "lastUpdatedAt": "2026-10-23T11:00:00.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_9b24ecdcb4d6_1792746000000",
+      "primaryArticleId": "infoq_82d6126d8a31acc03c122c39",
+      "title": "Anthropic Adds Opt-In Security Scanning for Critical Open-Source Projects",
+      "summary": "AI company Anthropic has launched OSS Scanner, a free, opt-in service to find vulnerabilities in open-source projects. Enrolled maintainers receive periodic security reports generated by the company's strongest models, including Claude Mythos. The reports are sent without human review, and project maintainers can choos",
+      "articles": [
+        {
+          "articleId": "infoq_82d6126d8a31acc03c122c39",
+          "sourceName": "InfoQ",
+          "sourceDomain": "infoq.com",
+          "link": "https://www.infoq.com/news/2026/10/anthropic-oss-security-scanner",
+          "publishedAt": "2026-10-23T09:00:00.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T09:00:00.000Z",
+      "lastUpdatedAt": "2026-10-23T09:00:00.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_c3534f2d241f_1792742880000",
+      "primaryArticleId": "infoq_e569ce8942b0108dc51ba2d0",
+      "title": "NgRx 22: Resource Extensions and Dynamic Deep Signals for Angular",
+      "summary": "NgRx 22 adds experimental resource extensions that change Angular's resource behavior, so value() is retained during reloads and no longer throws on errors. It also introduces dynamic deep signals for union types, a SignalStoreFeatureType utility, and ESLint v10 support. Upgrading requires Angular 22 and TypeScript 6.0",
+      "articles": [
+        {
+          "articleId": "infoq_e569ce8942b0108dc51ba2d0",
+          "sourceName": "InfoQ",
+          "sourceDomain": "infoq.com",
+          "link": "https://www.infoq.com/news/2026/10/ngrx-22-angular",
+          "publishedAt": "2026-10-23T08:08:00.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T08:08:00.000Z",
+      "lastUpdatedAt": "2026-10-23T08:08:00.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_eb17b99851d3_1792677600000",
+      "primaryArticleId": "infoq_f01ca1ed8c7f24b97cfa2098",
+      "title": "Study Finds AI-generated Code Fails to Boost Productivity Due to Downstream Bottlenecks",
+      "summary": "A recent Harvard study of 718 firms, using the Jellyfish analytics platform, finds that although AI coding assistants and agents increase code volume, this does not translate into a corresponding increase in completed work, partly because AI-generated code increases the workload in later stages of development, particul",
+      "articles": [
+        {
+          "articleId": "infoq_f01ca1ed8c7f24b97cfa2098",
+          "sourceName": "InfoQ",
+          "sourceDomain": "infoq.com",
+          "link": "https://www.infoq.com/news/2026/10/jellyfish-ai-productivity",
+          "publishedAt": "2026-10-22T14:00:00.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-22T14:00:00.000Z",
+      "lastUpdatedAt": "2026-10-22T14:00:00.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_8f3fc11c04be_1792666800000",
+      "primaryArticleId": "infoq_e32d685b24b4b035d7842fa1",
+      "title": "Presentation: Actors for Agents: Patterns for Production AI",
+      "summary": "Manju Rajashekhar explains how the actor model solves the complex runtime challenges of production AI agents. By treating agents as distributed systems, he discusses state ownership, message passing, write-through state, and supervision boundaries to manage failures, continuations, and mutable execution graphs, moving ",
+      "articles": [
+        {
+          "articleId": "infoq_e32d685b24b4b035d7842fa1",
+          "sourceName": "InfoQ",
+          "sourceDomain": "infoq.com",
+          "link": "https://www.infoq.com/presentations/actors-for-production-ai-agents",
+          "publishedAt": "2026-10-22T11:00:00.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-22T11:00:00.000Z",
+      "lastUpdatedAt": "2026-10-22T11:00:00.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_e90a3a112ae8_1792661580000",
+      "primaryArticleId": "infoq_cc3c7a1cbcb92ec0cf338dc9",
+      "title": "Vercel Labs Open-Sources fx: a Zig Coding Agent Designed to Be Embedded",
+      "summary": "Vercel Labs has released fx, an experimental open-source coding agent written in Zig. It runs as a CLI, a script component, or an embedded library, including a WebAssembly build. Early feedback questioned its model-agnostic claim and a name conflict with an existing tool. Vercel says the project is pre-1.0 and changing",
+      "articles": [
+        {
+          "articleId": "infoq_cc3c7a1cbcb92ec0cf338dc9",
+          "sourceName": "InfoQ",
+          "sourceDomain": "infoq.com",
+          "link": "https://www.infoq.com/news/2026/10/vercel-zig-fx-agent",
+          "publishedAt": "2026-10-22T09:33:00.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-22T09:33:00.000Z",
+      "lastUpdatedAt": "2026-10-22T09:33:00.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_9c64e3cd627b_1792659600000",
+      "primaryArticleId": "infoq_c286dddf8ae805708ebee20c",
+      "title": "Article: AI Changes the Data Interface, Not the Query Engine",
+      "summary": "This article presents a disaster-recovery analytics workflow in which an AI agent generates constrained SQL or Python, DuckDB computes reproducible facts from Parquet, and the agent interprets the results. It explains the determinism split, replayable analysis, and four signals for deciding when an embedded engine is s",
+      "articles": [
+        {
+          "articleId": "infoq_c286dddf8ae805708ebee20c",
+          "sourceName": "InfoQ",
+          "sourceDomain": "infoq.com",
+          "link": "https://www.infoq.com/articles/ai-changes-data-interface",
+          "publishedAt": "2026-10-22T09:00:00.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-22T09:00:00.000Z",
+      "lastUpdatedAt": "2026-10-22T09:00:00.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_f2f7b5ea90c7_1792659600000",
+      "primaryArticleId": "infoq_9449ded1b3d21baa82e6e376",
+      "title": "Harbor Adds Docker Sandboxes to Run Reproducible AI Agent Evals in Isolated MicroVMs",
+      "summary": "Docker announced that Harbor, the open-source agent evaluation framework, now works with Docker Sandboxes. This change allows each evaluation task to run in its own microVM. So, instead of sharing a container, tasks are isolated for better performance By Claudio Masolo",
+      "articles": [
+        {
+          "articleId": "infoq_9449ded1b3d21baa82e6e376",
+          "sourceName": "InfoQ",
+          "sourceDomain": "infoq.com",
+          "link": "https://www.infoq.com/news/2026/10/ai-agents-harbor-docker",
+          "publishedAt": "2026-10-22T09:00:00.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-22T09:00:00.000Z",
+      "lastUpdatedAt": "2026-10-22T09:00:00.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_103a1c8353f2_1792788905000",
+      "primaryArticleId": "bleepingcomputer_0ae7a1508c3f482bfa2840b3",
+      "title": "Abandoned Popcorn Time app exposed millions of devices to RCE attacks",
+      "summary": "Researchers remotely disabled a vulnerable updater in the abandoned Time4Popcorn app, a fork of the Popcorn Time BitTorrent client, closing a security flaw that could have allowed attackers to execute malicious code with elevated privileges on millions of computers. [...]",
+      "articles": [
+        {
+          "articleId": "bleepingcomputer_0ae7a1508c3f482bfa2840b3",
+          "sourceName": "BleepingComputer",
+          "sourceDomain": "bleepingcomputer.com",
+          "link": "https://www.bleepingcomputer.com/news/security/abandoned-popcorn-time-app-exposed-millions-of-device-to-rce-attacks",
+          "publishedAt": "2026-10-23T20:55:05.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T20:55:05.000Z",
+      "lastUpdatedAt": "2026-10-23T20:55:05.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_cd3be95e37f4_1792781681000",
+      "primaryArticleId": "bleepingcomputer_62f3dad2c0ca74beaa87691d",
+      "title": "Microsoft Teams to get AI-powered, context-aware phishing detection",
+      "summary": "Microsoft has announced plans to add AI-powered phishing detection to Teams messages starting in early November 2026. [...]",
+      "articles": [
+        {
+          "articleId": "bleepingcomputer_62f3dad2c0ca74beaa87691d",
+          "sourceName": "BleepingComputer",
+          "sourceDomain": "bleepingcomputer.com",
+          "link": "https://www.bleepingcomputer.com/news/microsoft/microsoft-teams-to-get-ai-powered-context-aware-phishing-detection",
+          "publishedAt": "2026-10-23T18:54:41.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T18:54:41.000Z",
+      "lastUpdatedAt": "2026-10-23T18:54:41.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_a12784c79541_1792775107000",
+      "primaryArticleId": "bleepingcomputer_49d18bdd23778982b5687396",
+      "title": "Microsoft: Windows Server 2016 reaches end of support in January",
+      "summary": "Microsoft says Windows Server 2016 will stop receiving security updates after it reaches the end of support in January 2027. [...]",
+      "articles": [
+        {
+          "articleId": "bleepingcomputer_49d18bdd23778982b5687396",
+          "sourceName": "BleepingComputer",
+          "sourceDomain": "bleepingcomputer.com",
+          "link": "https://www.bleepingcomputer.com/news/microsoft/microsoft-windows-server-2016-reaches-end-of-support-in-january",
+          "publishedAt": "2026-10-23T17:05:07.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T17:05:07.000Z",
+      "lastUpdatedAt": "2026-10-23T17:05:07.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_f2271a699576_1792773607000",
+      "primaryArticleId": "bleepingcomputer_651b9429c7fac0a1820a5cd6",
+      "title": "Quest Diagnostics confirms data breach exposed patient records",
+      "summary": "American clinical laboratory company Quest Diagnostics disclosed that patient records have been exposed after a threat actor gained unauthorized access to its Quanum LSM system. [...]",
+      "articles": [
+        {
+          "articleId": "bleepingcomputer_651b9429c7fac0a1820a5cd6",
+          "sourceName": "BleepingComputer",
+          "sourceDomain": "bleepingcomputer.com",
+          "link": "https://www.bleepingcomputer.com/news/security/quest-diagnostics-confirms-data-breach-exposed-patient-records",
+          "publishedAt": "2026-10-23T16:40:07.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T16:40:07.000Z",
+      "lastUpdatedAt": "2026-10-23T16:40:07.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_df4c4529fe7f_1792769885000",
+      "primaryArticleId": "bleepingcomputer_a46a3d4aa8e9f96fc8fa2756",
+      "title": "PHP shares mitigation for new RCE vulnerability with no patch",
+      "summary": "The PHP security team has shared mitigation measures for a new remote code execution vulnerability that affects systems with non-default configurations and has no patch. [...]",
+      "articles": [
+        {
+          "articleId": "bleepingcomputer_a46a3d4aa8e9f96fc8fa2756",
+          "sourceName": "BleepingComputer",
+          "sourceDomain": "bleepingcomputer.com",
+          "link": "https://www.bleepingcomputer.com/news/security/php-shares-mitigation-for-new-and-unpatched-rce-vulnerability",
+          "publishedAt": "2026-10-23T15:38:05.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T15:38:05.000Z",
+      "lastUpdatedAt": "2026-10-23T15:38:05.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_59ebd5316976_1792764010000",
+      "primaryArticleId": "bleepingcomputer_ba3749ef980b3b5303bef6f1",
+      "title": "You gave your AI agent access, but who is giving it orders?",
+      "summary": "AI agents can be manipulated through malicious emails, websites, and plugins into executing commands, stealing data, or deleting files using their legitimate permissions. Gen Digital explains how its Agent Trust Hub helps protect agents through skill verification, secure connectivity, and runtime controls that intercep",
+      "articles": [
+        {
+          "articleId": "bleepingcomputer_ba3749ef980b3b5303bef6f1",
+          "sourceName": "BleepingComputer",
+          "sourceDomain": "bleepingcomputer.com",
+          "link": "https://www.bleepingcomputer.com/news/security/you-gave-your-ai-agent-access-but-who-is-giving-it-orders",
+          "publishedAt": "2026-10-23T14:00:10.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T14:00:10.000Z",
+      "lastUpdatedAt": "2026-10-23T14:00:10.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_d6b937cdf305_1792759680000",
+      "primaryArticleId": "bleepingcomputer_7bc21a5f3f47a4c9560a376e",
+      "title": "HPE patches eight max severity RCE and auth bypass AOS flaws",
+      "summary": "Hewlett Packard Enterprise (HPE) released security updates to patch 72 vulnerabilities in the Aruba Operating System (ArubaOS), including eight maximum-severity authentication bypass and code execution issues. [...]",
+      "articles": [
+        {
+          "articleId": "bleepingcomputer_7bc21a5f3f47a4c9560a376e",
+          "sourceName": "BleepingComputer",
+          "sourceDomain": "bleepingcomputer.com",
+          "link": "https://www.bleepingcomputer.com/news/security/hpe-patches-eight-max-severity-rce-and-auth-bypass-aos-flaws",
+          "publishedAt": "2026-10-23T12:48:00.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-23T12:48:00.000Z",
+      "lastUpdatedAt": "2026-10-23T12:48:00.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_97b29a5c25da_1792704331000",
+      "primaryArticleId": "bleepingcomputer_36aa9e27eea04860f91c2ec0",
+      "title": "Railway warns devs to rotate secrets after potential breach",
+      "summary": "Cloud platform Railway published an urgent warning to users after detecting suspicious activity on its systems that store customer environment variables earlier this week. [...]",
+      "articles": [
+        {
+          "articleId": "bleepingcomputer_36aa9e27eea04860f91c2ec0",
+          "sourceName": "BleepingComputer",
+          "sourceDomain": "bleepingcomputer.com",
+          "link": "https://www.bleepingcomputer.com/news/security/railway-warns-devs-to-rotate-secrets-after-potential-breach",
+          "publishedAt": "2026-10-22T21:25:31.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-22T21:25:31.000Z",
+      "lastUpdatedAt": "2026-10-22T21:25:31.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_9e0eafecb8b6_1792700565000",
+      "primaryArticleId": "bleepingcomputer_a327ea4199ec4c26f4bc2148",
+      "title": "Capcom confirms data breach affecting 11.7 million accounts",
+      "summary": "Japanese gaming giant Capcom has confirmed that hackers breached its membership service, CAPCOM ID, exposing more than 11.7 million customer email addresses and associated information. [...]",
+      "articles": [
+        {
+          "articleId": "bleepingcomputer_a327ea4199ec4c26f4bc2148",
+          "sourceName": "BleepingComputer",
+          "sourceDomain": "bleepingcomputer.com",
+          "link": "https://www.bleepingcomputer.com/news/security/capcom-confirms-data-breach-affecting-117-million-accounts",
+          "publishedAt": "2026-10-22T20:22:45.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-22T20:22:45.000Z",
+      "lastUpdatedAt": "2026-10-22T20:22:45.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_ef741ffa9aad_1792696371000",
+      "primaryArticleId": "bleepingcomputer_cf879587b537377b167988d2",
+      "title": "LiteLLM release pipeline hacked to distribute info-stealer malware",
+      "summary": "Hackers compromised the LiteLLM project's PyPI package and published malicious Docker images with a payload that steals credentials, secrets, and environment variables. [...]",
+      "articles": [
+        {
+          "articleId": "bleepingcomputer_cf879587b537377b167988d2",
+          "sourceName": "BleepingComputer",
+          "sourceDomain": "bleepingcomputer.com",
+          "link": "https://www.bleepingcomputer.com/news/security/litellm-release-pipeline-hacked-to-distribute-info-stealer-malware",
+          "publishedAt": "2026-10-22T19:12:51.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-22T19:12:51.000Z",
+      "lastUpdatedAt": "2026-10-22T19:12:51.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_8302645b4abc_1792689502000",
+      "primaryArticleId": "bleepingcomputer_179faf62f2b237f0f3683e2d",
+      "title": "Arista patches new VeloCloud Orchestrator zero-day exploited in attacks",
+      "summary": "Arista Networks released security updates to patch an actively exploited zero-day vulnerability affecting VeloCloud Orchestrator (VCO) On-Prem deployments. [...]",
+      "articles": [
+        {
+          "articleId": "bleepingcomputer_179faf62f2b237f0f3683e2d",
+          "sourceName": "BleepingComputer",
+          "sourceDomain": "bleepingcomputer.com",
+          "link": "https://www.bleepingcomputer.com/news/security/arista-patches-new-velocloud-orchestrator-zero-day-exploited-in-attacks",
+          "publishedAt": "2026-10-22T17:18:22.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-22T17:18:22.000Z",
+      "lastUpdatedAt": "2026-10-22T17:18:22.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_691d1dbee774_1792684172000",
+      "primaryArticleId": "bleepingcomputer_540959acae587c694ef26964",
+      "title": "Microsoft shares how to fix broken Exchange Online EWS apps",
+      "summary": "Microsoft says IT admins can re-enable the retired Exchange Web Services (EWS) API in Exchange Online to fix EWS apps that have stopped working. [...]",
+      "articles": [
+        {
+          "articleId": "bleepingcomputer_540959acae587c694ef26964",
+          "sourceName": "BleepingComputer",
+          "sourceDomain": "bleepingcomputer.com",
+          "link": "https://www.bleepingcomputer.com/news/microsoft/microsoft-shares-how-to-fix-broken-exchange-online-ews-apps",
+          "publishedAt": "2026-10-22T15:49:32.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-22T15:49:32.000Z",
+      "lastUpdatedAt": "2026-10-22T15:49:32.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_a82bbc87d22b_1792677732000",
+      "primaryArticleId": "bleepingcomputer_dcd4266a8f995cbfb1097db8",
+      "title": "Machine speed attacks require machine speed detection and response",
+      "summary": "Attackers can steal credentials and begin exfiltrating data within minutes, often before security teams can respond. Exaforce examines real-world attacks involving stolen GitHub tokens, malicious AI installers, and MFA phishing, explaining why faster detection and automated containment are critical. [...]",
+      "articles": [
+        {
+          "articleId": "bleepingcomputer_dcd4266a8f995cbfb1097db8",
+          "sourceName": "BleepingComputer",
+          "sourceDomain": "bleepingcomputer.com",
+          "link": "https://www.bleepingcomputer.com/news/security/machine-speed-attacks-require-machine-speed-detection-and-response",
+          "publishedAt": "2026-10-22T14:02:12.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-22T14:02:12.000Z",
+      "lastUpdatedAt": "2026-10-22T14:02:12.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_96c25dd4a341_1792674552000",
+      "primaryArticleId": "bleepingcomputer_d6276a425b1c8d3eb691ee78",
+      "title": "Amazon says PHP2Shell exploitation began 4 days before patches",
+      "summary": "Security researchers at Amazon Threat Intelligence say attackers began targeting the PHP2Shell flaws four days before security patches were released on Wednesday. [...]",
+      "articles": [
+        {
+          "articleId": "bleepingcomputer_d6276a425b1c8d3eb691ee78",
+          "sourceName": "BleepingComputer",
+          "sourceDomain": "bleepingcomputer.com",
+          "link": "https://www.bleepingcomputer.com/news/security/amazon-says-php2shell-exploitation-began-4-days-before-patches",
+          "publishedAt": "2026-10-22T13:09:12.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-22T13:09:12.000Z",
+      "lastUpdatedAt": "2026-10-22T13:09:12.000Z",
+      "articleCount": 1
+    },
+    {
+      "eventId": "evt_7daa9732f743_1792669308000",
+      "primaryArticleId": "bleepingcomputer_d92b1c2b7f1896bbc9489492",
+      "title": "GitLab warns of new max severity code execution vulnerability",
+      "summary": "GitLab has released security patches for a maximum-severity Regular Expression Compiler flaw that can let remote attackers run arbitrary code on vulnerable servers. [...]",
+      "articles": [
+        {
+          "articleId": "bleepingcomputer_d92b1c2b7f1896bbc9489492",
+          "sourceName": "BleepingComputer",
+          "sourceDomain": "bleepingcomputer.com",
+          "link": "https://www.bleepingcomputer.com/news/security/gitlab-warns-of-new-max-severity-code-execution-vulnerability",
+          "publishedAt": "2026-10-22T11:41:48.000Z"
+        }
+      ],
+      "firstSeenAt": "2026-10-22T11:41:48.000Z",
+      "lastUpdatedAt": "2026-10-22T11:41:48.000Z",
+      "articleCount": 1
+    }
+  ]
+}
