@@ -10,13 +10,13 @@ import {
   Bot,
   Database,
   Brain,
-  Route,
 } from 'lucide-react'
 import { CatchupTab } from './catchup/CatchupTab'
 import { TransitTab } from './transit/TransitTab'
 import catchupBg from '../assets/catchup-bg.png'
 
 import { FollowUpPage } from './followUp/FollowUpPage'
+import { TrendView } from './trend/TrendView'
 
 interface HomepageProps {
   currentUser: UserProfile
@@ -346,12 +346,6 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
 
               </div>
             </section>
-
-            {/* Global Footer Note */}
-            <footer className="pt-10 pb-6 border-t border-slate-200/60 text-center text-xs text-slate-500 space-y-1">
-              <p>© 2026 JobTransit Inc. Career navigation built for the AI transformation era.</p>
-              <p>Your skills. Your next destination. A route that adapts.</p>
-            </footer>
           </>
         )}
 
@@ -367,36 +361,48 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
         {/* TRANSIT TAB (GAMIFIED CAREER METRO) */}
         {activeTab === 'transit' && <TransitTab currentUser={currentUser} />}
 
-        {/* TREND & PROFILE PLACEHOLDER FALLBACKS */}
-        {(activeTab === 'trend' || activeTab === 'profile') && (
-          <div className="rounded-3xl glass-card-ambient p-8 sm:p-12 text-center space-y-4 max-w-2xl mx-auto border border-white/80 shadow-[0_12px_40px_rgba(15,23,42,0.06)]">
-            <div className="w-12 h-12 rounded-2xl bg-teal-500/15 text-teal-700 mx-auto flex items-center justify-center">
-              <Route className="w-6 h-6" />
+        {/* TREND TAB: LinkedIn Job Postings & Disruption Radar */}
+        {activeTab === 'trend' && <TrendView />}
+
+        {/* PROFILE TAB */}
+        {activeTab === 'profile' && (
+          <div className="glass-card-ambient rounded-3xl p-8 sm:p-10 max-w-xl mx-auto space-y-6">
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-slate-950 to-indigo-900 text-white flex items-center justify-center text-2xl font-bold font-hero shadow-md">
+                {currentUser.name.charAt(0).toUpperCase()}
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-slate-950 font-hero">
+                  {currentUser.name}
+                </h3>
+                <p className="text-xs text-slate-500 font-medium">{currentUser.email}</p>
+                <span className="inline-block mt-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                  Transit Pro Explorer
+                </span>
+              </div>
             </div>
-            <h2 className="font-hero text-2xl font-bold text-slate-950">
-              {activeTab === 'trend' ? 'Industry Roles & Trends' : 'Explorer Profile'}
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
-              Explore your next station and track industry skill shifts in real-time. Navigate to Catchup to see today's curated tech intelligence briefing.
-            </p>
-            <div className="pt-2 flex items-center justify-center gap-3">
-              <button
-                type="button"
-                onClick={() => setActiveTab('catchup')}
-                className="px-5 py-2.5 rounded-full bg-teal-700 hover:bg-teal-800 text-white text-xs font-semibold shadow-sm transition-all cursor-pointer"
-              >
-                Go to Catchup Tab
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab('home')}
-                className="px-5 py-2.5 rounded-full glass-btn text-slate-800 text-xs font-semibold cursor-pointer"
-              >
-                Return to Home
-              </button>
+
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-1">
+              <div><strong>Active Target:</strong> Agentic AI Engineer</div>
+              <div><strong>Market Alignment Score:</strong> 78% (3 skills to fill)</div>
+              <div><strong>Indexed via:</strong> LinkedIn Market Radar 2026</div>
             </div>
+
+            <button
+              type="button"
+              onClick={() => setActiveTab('trend')}
+              className="w-full py-2.5 rounded-xl bg-slate-950 hover:bg-slate-900 text-white text-xs font-bold transition-all cursor-pointer"
+            >
+              Explore In-Demand Skills for My Profile
+            </button>
           </div>
         )}
+
+        {/* Global Footer Note */}
+        <footer className="pt-10 pb-6 border-t border-slate-200/60 text-center text-xs text-slate-500 space-y-1">
+          <p>© 2026 JobTransit Inc. Career navigation built for the AI transformation era.</p>
+          <p>Your skills. Your next destination. A route that adapts.</p>
+        </footer>
       </main>
     </div>
   )

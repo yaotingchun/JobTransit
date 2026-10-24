@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useLayoutEffect } from 'react'
 import {
   Home,
   Route,
@@ -42,6 +42,38 @@ export const Navbar: React.FC<NavbarProps> = ({
   onLogout,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const dockRef = useRef<HTMLDivElement>(null)
+  const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({})
+  const [indicatorStyle, setIndicatorStyle] = useState<{
+    left: number
+    top: number
+    width: number
+    height: number
+    ready: boolean
+  }>({ left: 0, top: 0, width: 0, height: 0, ready: false })
+
+  useLayoutEffect(() => {
+    const updateIndicator = () => {
+      const currentTabEl = tabRefs.current[activeTab]
+      const dockEl = dockRef.current
+      if (currentTabEl && dockEl) {
+        const dockRect = dockEl.getBoundingClientRect()
+        const tabRect = currentTabEl.getBoundingClientRect()
+        setIndicatorStyle({
+          left: tabRect.left - dockRect.left,
+          top: tabRect.top - dockRect.top,
+          width: tabRect.width,
+          height: tabRect.height,
+          ready: true,
+        })
+      }
+    }
+
+    updateIndicator()
+    window.addEventListener('resize', updateIndicator)
+    return () => window.removeEventListener('resize', updateIndicator)
+  }, [activeTab])
+
   const navItems: NavItemConfig[] = [
     {
       id: 'home',
@@ -112,7 +144,25 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Center: Glass Segmented Navigation Pill Dock (Desktop & Tablet) */}
         <div className="hidden md:flex items-center">
-          <div className="glass-pill-dock p-1.5 rounded-full flex items-center gap-1 shadow-inner">
+          <div
+            ref={dockRef}
+            className="glass-pill-dock p-1.5 rounded-full flex items-center gap-1 shadow-inner relative"
+          >
+            {/* Sliding Active Pill Background */}
+            <div
+              className={`absolute top-0 left-0 rounded-full glass-pill-active pointer-events-none transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+                indicatorStyle.ready ? 'opacity-100' : 'opacity-0'
+              }`}
+              style={{
+                transform: `translate3d(${indicatorStyle.left}px, ${indicatorStyle.top}px, 0)`,
+                width: `${indicatorStyle.width}px`,
+                height: `${indicatorStyle.height}px`,
+              }}
+            >
+              {/* Active highlight reflection glow */}
+              <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-4 h-0.5 rounded-full bg-slate-950/40" />
+            </div>
+
             {navItems.map((item) => {
               const Icon = item.icon
               const isActive = activeTab === item.id
@@ -120,12 +170,15 @@ export const Navbar: React.FC<NavbarProps> = ({
               return (
                 <button
                   key={item.id}
+                  ref={(el) => {
+                    tabRefs.current[item.id] = el
+                  }}
                   type="button"
                   onClick={() => handleTabClick(item.id)}
-                  className={`group relative flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer select-none ${
+                  className={`group relative z-10 flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer select-none ${
                     isActive
-                      ? 'glass-pill-active text-slate-950 shadow-sm scale-[1.02]'
-                      : 'text-slate-600 hover:text-slate-950 hover:bg-white/40'
+                      ? 'text-slate-950 font-bold'
+                      : 'text-slate-600 hover:text-slate-950 hover:bg-white/25'
                   }`}
                   aria-current={isActive ? 'page' : undefined}
                 >
@@ -141,7 +194,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   {/* Badges */}
                   {item.badgeType === 'count' && item.badge && (
                     <span
-                      className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold tracking-tighter ${
+                      className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold tracking-tighter transition-colors duration-200 ${
                         isActive
                           ? 'bg-amber-500 text-white'
                           : 'bg-amber-100 text-amber-800 border border-amber-300/60'
@@ -156,11 +209,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                     </span>
-                  )}
-
-                  {/* Active highlight reflection glow */}
-                  {isActive && (
-                    <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-4 h-0.5 rounded-full bg-slate-950/40" />
                   )}
                 </button>
               )
