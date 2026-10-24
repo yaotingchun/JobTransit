@@ -13,6 +13,7 @@ import {
   Route,
 } from 'lucide-react'
 import { CatchupTab } from './catchup/CatchupTab'
+import { TransitTab } from './transit/TransitTab'
 import catchupBg from '../assets/catchup-bg.png'
 
 interface HomepageProps {
@@ -59,6 +60,12 @@ const topRoles = [
   },
 ]
 
+const roleStationMap: Record<string, string> = {
+  'Agentic AI Engineer': 'agentic',
+  'Data Pipeline Engineer': 'pipeline',
+  'AI Engineer': 'ai-eng',
+}
+
 export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => {
   const [activeTab, setActiveTab] = useState<NavTab>('home')
   const [selectedRole, setSelectedRole] = useState<string>('Agentic AI Engineer')
@@ -66,7 +73,11 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
   return (
     <div
       className={`relative h-screen w-full font-sans overflow-y-auto overflow-x-hidden custom-scrollbar selection:bg-orange-500/20 selection:text-orange-900 transition-colors duration-500 ${
-        activeTab === 'catchup' ? 'bg-slate-900 text-slate-900' : 'bg-[#f8fafc] text-slate-900'
+        activeTab === 'catchup'
+          ? 'bg-slate-900 text-slate-900'
+          : activeTab === 'transit'
+            ? 'bg-[#EDE6D6] text-stone-900 selection:bg-amber-400/40'
+            : 'bg-[#f8fafc] text-slate-900'
       }`}
     >
       {/* Background Layer: Atmospheric Cloudy Sky for Catchup tab, or ambient mesh for Home */}
@@ -80,6 +91,20 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
           {/* Subtle atmospheric wash for pristine legibility and specular light contrast */}
           <div className="absolute inset-0 bg-slate-950/10 backdrop-blur-[0.5px]" />
           <div className="absolute inset-0 bg-gradient-to-b from-white/35 via-white/10 to-slate-900/15" />
+        </div>
+      ) : activeTab === 'transit' ? (
+        /* Warm cartographic parchment for the Career Metro */
+        <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+          <div className="absolute -top-40 right-0 w-[700px] h-[700px] rounded-full bg-amber-200/40 blur-[140px]" />
+          <div className="absolute bottom-0 -left-40 w-[640px] h-[640px] rounded-full bg-orange-100/60 blur-[140px]" />
+          <div
+            className="absolute inset-0 opacity-[0.07]"
+            style={{
+              backgroundImage:
+                'linear-gradient(#1c1917 1px, transparent 1px), linear-gradient(90deg, #1c1917 1px, transparent 1px)',
+              backgroundSize: '44px 44px',
+            }}
+          />
         </div>
       ) : (
         /* Ambient Glassmorphic Background Elements */
@@ -237,7 +262,7 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
                       </span>
                       <button
                         type="button"
-                        onClick={() => setActiveTab('trend')}
+                        onClick={() => setActiveTab('transit')}
                         className="text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors cursor-pointer"
                       >
                         View all
@@ -256,7 +281,14 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
                         return (
                           <div
                             key={role.rank}
-                            onClick={() => setSelectedRole(role.title)}
+                            onClick={() => {
+                              setSelectedRole(role.title)
+                              const stId = roleStationMap[role.title]
+                              if (stId) {
+                                window.location.hash = `#pathway-${stId}`
+                              }
+                              setActiveTab('transit')
+                            }}
                             className={`relative z-10 flex items-center gap-2.5 sm:gap-3 p-1.5 sm:p-2 rounded-xl transition-all cursor-pointer ${
                               isSelected
                                 ? 'bg-white/45 border border-white/50 backdrop-blur-md shadow-xs'
@@ -306,7 +338,7 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
                     <div className="pt-1.5 border-t border-white/40">
                       <button
                         type="button"
-                        onClick={() => setActiveTab('trend')}
+                        onClick={() => setActiveTab('transit')}
                         className="text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors cursor-pointer flex items-center gap-1.5 group"
                       >
                         <span>Compare All Matches</span>
@@ -336,14 +368,17 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
           />
         )}
 
-        {/* TRANSIT & TREND PLACEHOLDER FALLBACKS */}
-        {(activeTab === 'transit' || activeTab === 'trend' || activeTab === 'profile') && (
+        {/* TRANSIT TAB (GAMIFIED CAREER METRO) */}
+        {activeTab === 'transit' && <TransitTab currentUser={currentUser} />}
+
+        {/* TREND & PROFILE PLACEHOLDER FALLBACKS */}
+        {(activeTab === 'trend' || activeTab === 'profile') && (
           <div className="rounded-3xl glass-card-ambient p-8 sm:p-12 text-center space-y-4 max-w-2xl mx-auto border border-white/80 shadow-[0_12px_40px_rgba(15,23,42,0.06)]">
             <div className="w-12 h-12 rounded-2xl bg-teal-500/15 text-teal-700 mx-auto flex items-center justify-center">
               <Route className="w-6 h-6" />
             </div>
             <h2 className="font-hero text-2xl font-bold text-slate-950">
-              {activeTab === 'transit' ? 'Career Transit Route' : activeTab === 'trend' ? 'Industry Roles & Trends' : 'Explorer Profile'}
+              {activeTab === 'trend' ? 'Industry Roles & Trends' : 'Explorer Profile'}
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
               Explore your next station and track industry skill shifts in real-time. Navigate to Catchup to see today's curated tech intelligence briefing.
