@@ -13,7 +13,7 @@
 | **SDG Track (1–17)**   | **SDG 8 — Decent Work and Economic Growth** *(Target 8.5 & 8.6)*        |
 | **Team Leader**        | Evelyn Ang                                                            |
 | **University**         | Universiti Teknologi Malaysia (UTM)                                     |
-| **Number of Members**  | 3                                                                       |
+| **Number of Members**  | 5                                                                       |
 
 ## Links
 
@@ -49,16 +49,13 @@ Rapid advancements in Generative AI and automated agent workflows are transformi
 
 ### Tech Stack
 
-| Layer                  | Technology                                                                                                    |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------- |
-| **Frontend**           | React 19, TypeScript, Vite 8, TailwindCSS v4, Lucide Icons, HTML5 Canvas & 3D CSS transforms                 |
-| **Document / OCR**     | Tesseract.js (WASM OCR), PDF.js (`pdfjs-dist`), Mammoth (DOCX parser), JSZip                                  |
-| **Backend & APIs**     | Node.js 20+, Express & Vite Dev Server Middleware (`server/linkedinScraper.ts`), Firebase Cloud Functions v2 |
-| **Database & Auth**    | Cloud Firestore (User Profiles, Passes, Feed Metadata)      |
-| **AI / GPU Compute**   | **RunPod Serverless GPU** (Python, PyTorch, Transformers, LLM resume extraction & skill vectorization)       |
-| **LLM Enrichment**     | Google Gemini 2.5 API (`@google/generative-ai`) for daily tech news analysis and deduplication              |
-| **Hosting & Dev**      | **Replit** (Multiplayer workspace, Replit Deployments, Secrets management)                                   |
-| **Testing & Tooling**  | Vitest, Oxlint, TypeScript 6                                                                                  |
+| Layer         | Technology                                                                                                    |
+| ------------- | ------------------------------------------------------------------------------------------------------------- |
+| Frontend      | React 19, TypeScript, Vite 8, TailwindCSS v4, Lucide Icons, Tesseract.js OCR, PDF.js, 3D CSS transforms     |
+| Backend       | Node.js 20+, Express & Vite Dev Server Middleware (`server/linkedinScraper.ts`), Firebase Cloud Functions v2  |
+| Database      | Cloud Firestore (User Profiles, Passes, Feed Metadata)                                                        |
+| AI / Compute  | RunPod (GPU Serverless for LLM Resume Extraction & Skill Matching), Google Gemini 2.5 API (News Enrichment)  |
+| Hosting / Dev | Replit (Multiplayer Workspace, Replit Deployments, Secrets Management)                                         |
 
 ---
 
@@ -220,48 +217,6 @@ Our team utilized Replit as our central collaborative development, staging, and 
 
 ---
 
-## How We Use RunPod *(Required)*
-
-JobTransit leverages **RunPod Serverless GPU** computing to handle compute-intensive natural language processing and skill gap vectorization that cannot run efficiently in browser environments:
-
-- **Workload**: High-accuracy resume information extraction, semantic text embeddings, and career pathway score calculation using modern LLMs and transformer models.
-- **Serverless Setup**: The handler located at [`runpod/handler.py`](runpod/handler.py) is containerized and deployed as an on-demand **RunPod Serverless Endpoint**. It auto-scales to zero when idle, minimizing compute costs.
-- **Application Integration**: When a candidate uploads an extensive resume, the frontend issues an authorized POST request to the RunPod endpoint using `RUNPOD_API_KEY` and `RUNPOD_ENDPOINT_ID`. The GPU worker vectorizes the candidate's skills, maps them against target career transit lines, and returns ranked match factors in sub-second latency.
-
-Example request to the RunPod Serverless Endpoint:
-
-```bash
-curl -X POST https://api.runpod.ai/v2/$RUNPOD_ENDPOINT_ID/runsync \
-  -H "Authorization: Bearer $RUNPOD_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "input": {
-      "resumeText": "Alex Morgan, Full Stack Developer with 3 years experience in React, TypeScript, Node.js, and PyTorch. Looking to specialize in Agentic AI systems."
-    }
-  }'
-```
-
-Example response from RunPod endpoint:
-
-```json
-{
-  "output": {
-    "status": "success",
-    "detectedSkills": ["React", "TypeScript", "Node.js", "PyTorch"],
-    "primaryRecommendation": {
-      "lineId": "amber",
-      "lineName": "Agent Line",
-      "fitScore": 78,
-      "bridgeSkills": ["LangGraph", "Tool Calling", "Agent Evals"]
-    }
-  }
-}
-```
-
-📄 Proof of use: [`submission/SDC2026_JobTransit_Runpod_POU.pdf`](submission/SDC2026_JobTransit_Runpod_POU.pdf)
-
----
-
 ## Challenges & Learnings
 
 ### Challenges
@@ -290,26 +245,13 @@ Example response from RunPod endpoint:
 
 ## Team
 
-| Name               | Role                                  | GitHub                                                   |
-| ------------------ | ------------------------------------- | -------------------------------------------------------- |
-| **Yao Ting Chun**  | Team Leader / Full-Stack & AI Pipeline| [@yaotingchun](https://github.com/yaotingchun)           |
-| **Toh Shee Thong** | Frontend Lead / 3D Card & Auth Engine | [@tsthong4](https://github.com/tsthong4)                 |
-| **Evelyn**         | UI/UX Design & Reskilling Architect   | [@evelyn](https://github.com/evelyn)                     |
-
----
-
-## Submission Checklist
-
-- [x] Team name, domain (Domain 1), and SDG track (SDG 8 & 4) filled in
-- [x] Slide deck link placeholder added
-- [x] Demo video link placeholder added
-- [x] Replit used, with proof of use in [`submission/SDC2026_JobTransit_Replit_POU.pdf`](submission/SDC2026_JobTransit_Replit_POU.pdf)
-- [x] RunPod used, with proof of use in [`submission/SDC2026_JobTransit_Runpod_POU.pdf`](submission/SDC2026_JobTransit_Runpod_POU.pdf)
-- [x] Preliminary submission organized ([`submission/SDC2026_JobTransit_Preliminary.pdf`](submission/SDC2026_JobTransit_Preliminary.pdf))
-- [x] Technology declaration completed ([`submission/SDC2026_JobTransit_TechDeclaration.pdf`](submission/SDC2026_JobTransit_TechDeclaration.pdf))
-- [x] Submission files renamed with team name (`JobTransit`)
-- [x] "How to Run" steps verified locally and on Replit
-- [x] No API keys or secrets committed to the repository
+| Name               | Role                                                 | GitHub                                                   |
+| ------------------ | ---------------------------------------------------- | -------------------------------------------------------- |
+| **Evelyn Ang**     | Team Leader / UI/UX Design & Reskilling Architecture | [@evelyn](https://github.com/evelyn)                     |
+| **Yao Ting Chun**  | Full-Stack & AI Pipeline                             | [@yaotingchun](https://github.com/yaotingchun)           |
+| **Toh Shee Thong** | Frontend Lead / 3D Card Engine & Auth                | [@tsthong4](https://github.com/tsthong4)                 |
+| **Angela**         | Frontend / Trend Radar & Market Intelligence         | [@angela](https://github.com/angela)                     |
+| **Teoh Xin Yee**        | Frontend / Weekly Summary & UI Experience            | [@xinyee](https://github.com/xinyee)                     |
 
 ---
 
