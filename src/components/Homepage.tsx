@@ -85,38 +85,22 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
   return (
     <div
       className={`relative h-screen w-full font-sans overflow-y-auto overflow-x-hidden custom-scrollbar selection:bg-orange-500/20 selection:text-orange-900 transition-colors duration-500 ${
-        activeTab === 'catchup'
+        activeTab === 'catchup' || activeTab === 'transit'
           ? 'bg-slate-900 text-slate-900'
-          : activeTab === 'transit'
-            ? 'bg-[#EDE6D6] text-stone-900 selection:bg-amber-400/40'
-            : 'bg-[#f8fafc] text-slate-900'
+          : 'bg-[#f8fafc] text-slate-900'
       }`}
     >
-      {/* Background Layer: Atmospheric Cloudy Sky for Catchup tab, or ambient mesh for Home */}
-      {activeTab === 'catchup' ? (
+      {/* Background Layer: Atmospheric Cloudy Sky for Catchup and Transit tabs, or ambient mesh for Home */}
+      {activeTab === 'catchup' || activeTab === 'transit' ? (
         <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
           <img
             src={catchupBg}
-            alt="Catchup Cloudy Sky Background"
+            alt="Cloudy Sky Background"
             className="w-full h-full object-cover object-center filter saturate-[1.05] brightness-[0.98] transition-opacity duration-700"
           />
           {/* Subtle atmospheric wash for pristine legibility and specular light contrast */}
           <div className="absolute inset-0 bg-slate-950/10 backdrop-blur-[0.5px]" />
           <div className="absolute inset-0 bg-gradient-to-b from-white/35 via-white/10 to-slate-900/15" />
-        </div>
-      ) : activeTab === 'transit' ? (
-        /* Warm cartographic parchment for the Career Metro */
-        <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-          <div className="absolute -top-40 right-0 w-[700px] h-[700px] rounded-full bg-amber-200/40 blur-[140px]" />
-          <div className="absolute bottom-0 -left-40 w-[640px] h-[640px] rounded-full bg-orange-100/60 blur-[140px]" />
-          <div
-            className="absolute inset-0 opacity-[0.07]"
-            style={{
-              backgroundImage:
-                'linear-gradient(#1c1917 1px, transparent 1px), linear-gradient(90deg, #1c1917 1px, transparent 1px)',
-              backgroundSize: '44px 44px',
-            }}
-          />
         </div>
       ) : (
         /* Ambient Glassmorphic Background Elements */
