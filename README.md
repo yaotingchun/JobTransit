@@ -22,7 +22,7 @@
 | ----------------- | ------------------------------------------------------------------------- |
 | GitHub Repository | [https://github.com/yaotingchun/JobTransit](https://github.com/yaotingchun/JobTransit) |
 | Live Demo         | [https://job-transit.replit.app](https://job-transit.replit.app)             |
-| Slide Deck        | [View Slides Here](https://github.com/yaotingchun/JobTransit/blob/master/submission/SDC2026_We%20Need%20New%20Laptops_PitchDeck.pdf) |
+| Slide Deck        | [View Slides Here](https://github.com/yaotingchun/JobTransit/blob/5d76e09d1c6218b6a1d27fe4679c2296f92b51bf/submission/SDC2026_We%20Need%20New%20Laptops_PitchDeck.pdf) |
 | Demo Video        | [https://example.com/jobtransit-video](https://example.com/jobtransit-video) *(Replace with video link)* |
 | Documentation     | [View Documentation Here](https://github.com/yaotingchun/JobTransit/blob/master/submission/SDC2026_We%20Need%20New%20Laptops_Preliminary%20(2).pdf) |
 
