@@ -13,7 +13,10 @@ export interface CardPassData {
   routeLine: string
   validity: string
   skills: string[]
+  // Gauges & Pulse
   matchScore: number
+  careerPrefScore?: number
+  aiMarketScore?: number
   stationsUnlocked: string
   issueDate: string
   serialNumber: string
@@ -78,6 +81,8 @@ export const DEFAULT_PASS_DATA: CardPassData = {
   quote: 'Creativity takes courage.',
   quoteAuthor: 'Henri Matisse',
   matchScore: 98,
+  careerPrefScore: 88,
+  aiMarketScore: 94,
   stationsUnlocked: 'Career Core Certified',
   issueDate: new Date().toISOString().slice(0, 10),
   serialNumber: 'JT-PASS-1001',

@@ -199,6 +199,12 @@ export const Realistic3DCard = React.forwardRef<Realistic3DCardRef, Realistic3DC
       // Only primary mouse button or touch
       if (e.button !== 0) return
 
+      // Don't capture pointer or drag when interacting with buttons, links, or interactive elements
+      const target = e.target as HTMLElement | null
+      if (target?.closest('button, a, input, select, textarea, [data-interactive="true"]')) {
+        return
+      }
+
       // Stop any existing animation
       if (isSpinning) setSpinning(false)
       velocityRef.current = { vx: 0, vy: 0 }
@@ -273,6 +279,11 @@ export const Realistic3DCard = React.forwardRef<Realistic3DCardRef, Realistic3DC
     }
 
     const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+      const target = e.target as HTMLElement | null
+      if (target?.closest('button, a, input, select, textarea, [data-interactive="true"]')) {
+        setIsDragging(false)
+        return
+      }
       if (!isDragging) return
       setIsDragging(false)
       try {

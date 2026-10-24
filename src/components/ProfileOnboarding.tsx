@@ -6,6 +6,7 @@ import {
   Target, Globe, Building2, BookOpen, Award, Languages, Brain,
   Wrench, Heart, ChevronDown, Save, Loader2, AlertCircle,
   Image as ImageIcon, Presentation, RefreshCw, Layers,
+  RotateCw, Play, Square, Compass,
 } from 'lucide-react'
 import { doc, setDoc, getDoc } from 'firebase/firestore'
 import { auth, db } from '../lib/firebase'
@@ -18,7 +19,7 @@ import type {
 import {
   defaultPersonal, defaultEducation, defaultSkills, defaultCareerPreferences,
 } from '../types/profile'
-import { Realistic3DCard } from './transit/Realistic3DCard'
+import { Realistic3DCard, type Realistic3DCardRef } from './transit/Realistic3DCard'
 import { CareerReceipt } from './transit/CareerReceipt'
 import type { CardTheme } from './transit/types'
 import { profileToCardData } from '../lib/cardFirebase'
@@ -125,9 +126,12 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
   const [workExp, setWorkExp] = useState<WorkExperienceEntry[]>([])
   const [projects, setProjects] = useState<Project[]>([])
   const [career, setCareer] = useState<CareerPreferences>(defaultCareerPreferences())
-  const [cardTheme, setCardTheme] = useState<CardTheme>('creative-license')
+  const cardTheme: CardTheme = 'creative-license'
   const [section4Tab, setSection4Tab] = useState<'experience' | 'projects' | 'career' | 'all'>('experience')
   const [showAllDetails, setShowAllDetails] = useState(false)
+  const cardRef = useRef<Realistic3DCardRef>(null)
+  const [isFlipped, setIsFlipped] = useState(false)
+  const [isSpinning, setIsSpinning] = useState(false)
 
   // ── Check if database already has information on mount ──
   React.useEffect(() => {
@@ -1236,6 +1240,7 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
             }`}>
               <div className="w-full space-y-4">
                 <Realistic3DCard
+                  ref={cardRef}
                   data={profileToCardData(
                     {
                       personal,
@@ -1250,31 +1255,64 @@ export const ProfileOnboarding: React.FC<ProfileOnboardingProps> = ({ currentUse
                     currentUser
                   )}
                   theme={cardTheme}
+                  isFlipped={isFlipped}
+                  onFlipChange={setIsFlipped}
+                  isSpinning={isSpinning}
+                  onSpinChange={setIsSpinning}
                 />
 
-                {/* Theme Selector Pills */}
-                <div className="flex flex-wrap items-center justify-center gap-2">
-                  {(['creative-license', 'metro-taipei', 'jobtransit-obsidian', 'emerald-line'] as CardTheme[]).map((t) => (
-                    <button
-                      key={t}
-                      type="button"
-                      onClick={() => setCardTheme(t)}
-                      className={`px-3 py-1 rounded-full text-[11px] font-semibold border transition-all cursor-pointer ${
-                        cardTheme === t
-                          ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
-                          : 'bg-white/60 text-slate-600 border-slate-200 hover:bg-white'
-                      }`}
-                    >
-                      {t === 'creative-license'
-                        ? 'Transit Pass'
-                        : t === 'metro-taipei'
-                        ? 'Taipei 48H'
-                        : t === 'jobtransit-obsidian'
-                        ? 'Cyber Obsidian'
-                        : 'Emerald Line'}
-                    </button>
-                  ))}
+                {/* 3D Card Interactive Quick Action Bar */}
+                <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => cardRef.current?.flip()}
+                    className="px-4 py-2 rounded-xl bg-white/90 hover:bg-white text-stone-800 font-bold text-xs sm:text-sm border border-stone-200/90 shadow-xs hover:shadow-sm transition-all flex items-center gap-1.5 cursor-pointer active:scale-95"
+                    title="Flip between Front and Back face"
+                  >
+                    <RotateCw className="w-3.5 h-3.5 text-amber-600" />
+                    <span>Flip to {isFlipped ? 'Front Face' : 'Back Face'}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (isSpinning) {
+                        cardRef.current?.stopSpin()
+                      } else {
+                        cardRef.current?.startSpin()
+                      }
+                    }}
+                    className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 ${
+                      isSpinning
+                        ? 'bg-amber-500 text-stone-950 border-amber-600 shadow-sm'
+                        : 'bg-white/90 hover:bg-white text-stone-800 border-stone-200/90 shadow-xs'
+                    }`}
+                    title="Continuous 360° rotation"
+                  >
+                    {isSpinning ? (
+                      <>
+                        <Square className="w-3.5 h-3.5 fill-current" />
+                        <span>Stop Spin</span>
+                      </>
+                    ) : (
+                      <>
+                        <Play className="w-3.5 h-3.5 fill-current text-amber-600" />
+                        <span>Spin 360°</span>
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => cardRef.current?.reset()}
+                    className="px-3 py-2 rounded-xl bg-white/90 hover:bg-white text-stone-700 font-bold text-xs border border-stone-200/90 shadow-xs transition-all flex items-center gap-1 cursor-pointer active:scale-95"
+                    title="Reset viewing angle"
+                  >
+                    <Compass className="w-3.5 h-3.5 text-stone-500" />
+                    <span>Reset</span>
+                  </button>
                 </div>
+
 
                 {/* Show all Details Button */}
                 <div className="pt-2 flex justify-center">
