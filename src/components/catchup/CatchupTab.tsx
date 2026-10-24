@@ -14,6 +14,7 @@ import {
   Clock,
   ArrowUpRight,
   ChevronRight,
+  Radio,
 } from 'lucide-react'
 import type { NavTab, UserProfile } from '../Navbar'
 import { WeeklySummaryReport } from './WeeklySummaryReport'
@@ -124,9 +125,9 @@ const CareerTrendThumbnail = () => (
   </div>
 )
 
-// Featured Landscape Artwork for Lead Story (Matching Image 2 wind turbines & clean-tech energy landscape)
-const HeroStoryArtwork = () => (
-  <div className="w-full md:w-72 lg:w-84 h-48 sm:h-56 rounded-xl overflow-hidden relative shadow-sm shrink-0 border border-slate-200/80 group/art select-none">
+// Featured Landscape Artwork for Lead Story (Fallback SVG)
+const WindTurbinesHeroArtwork = () => (
+  <div className="w-full h-full overflow-hidden relative group/art select-none">
     <svg viewBox="0 0 400 250" className="w-full h-full object-cover" preserveAspectRatio="xMidYMid slice">
       <defs>
         <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
@@ -164,7 +165,7 @@ const HeroStoryArtwork = () => (
       {/* Foreground Hills */}
       <path d="M0 205 Q140 170 280 195 Q340 185 400 200 L400 250 L0 250 Z" fill="url(#hillNear)" />
 
-      {/* Wind Turbine 1 (Main Foreground Center-Right matching Image 2) */}
+      {/* Wind Turbines */}
       <g transform="translate(260, 48)">
         <line x1="0" y1="125" x2="0" y2="0" stroke="#f8fafc" strokeWidth="3" strokeLinecap="round" />
         <circle cx="0" cy="0" r="3.5" fill="#f8fafc" />
@@ -172,8 +173,6 @@ const HeroStoryArtwork = () => (
         <line x1="0" y1="0" x2="39" y2="22.5" stroke="#f8fafc" strokeWidth="2.5" strokeLinecap="round" />
         <line x1="0" y1="0" x2="-39" y2="22.5" stroke="#f8fafc" strokeWidth="2.5" strokeLinecap="round" />
       </g>
-
-      {/* Wind Turbine 2 (Mid-ground Left) */}
       <g transform="translate(160, 95)">
         <line x1="0" y1="80" x2="0" y2="0" stroke="#f8fafc" strokeWidth="2" strokeLinecap="round" />
         <circle cx="0" cy="0" r="2.5" fill="#f8fafc" />
@@ -181,29 +180,149 @@ const HeroStoryArtwork = () => (
         <line x1="0" y1="0" x2="26" y2="15" stroke="#f8fafc" strokeWidth="1.8" strokeLinecap="round" />
         <line x1="0" y1="0" x2="-26" y2="15" stroke="#f8fafc" strokeWidth="1.8" strokeLinecap="round" />
       </g>
-
-      {/* Wind Turbine 3 (Far background Right) */}
-      <g transform="translate(340, 105)">
-        <line x1="0" y1="70" x2="0" y2="0" stroke="#f8fafc" strokeWidth="1.6" strokeLinecap="round" />
-        <circle cx="0" cy="0" r="2" fill="#f8fafc" />
-        <line x1="0" y1="0" x2="0" y2="-22" stroke="#f8fafc" strokeWidth="1.4" strokeLinecap="round" />
-        <line x1="0" y1="0" x2="19" y2="11" stroke="#f8fafc" strokeWidth="1.4" strokeLinecap="round" />
-        <line x1="0" y1="0" x2="-19" y2="11" stroke="#f8fafc" strokeWidth="1.4" strokeLinecap="round" />
-      </g>
-
-      {/* Wind Turbine 4 (Far Left) */}
-      <g transform="translate(75, 120)">
-        <line x1="0" y1="65" x2="0" y2="0" stroke="#f8fafc" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="0" cy="0" r="1.8" fill="#f8fafc" />
-        <line x1="0" y1="0" x2="0" y2="-18" stroke="#f8fafc" strokeWidth="1.2" strokeLinecap="round" />
-        <line x1="0" y1="0" x2="15" y2="9" stroke="#f8fafc" strokeWidth="1.2" strokeLinecap="round" />
-        <line x1="0" y1="0" x2="-15" y2="9" stroke="#f8fafc" strokeWidth="1.2" strokeLinecap="round" />
-      </g>
     </svg>
   </div>
 )
 
-function getCategoryColor(catSlug: string): { text: string; bg: string; border: string } {
+function hashString(str: string): number {
+  let hash = 0
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash << 5) - hash + str.charCodeAt(i)
+    hash |= 0
+  }
+  return Math.abs(hash)
+}
+
+// Curated high-resolution Unsplash images mapped to tech engineering domains
+const CATEGORY_IMAGE_SETS: Record<string, string[]> = {
+  'software-engineering': [
+    'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=700&auto=format&fit=crop&q=80', // code editor
+    'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=700&auto=format&fit=crop&q=80', // code monitor
+    'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=700&auto=format&fit=crop&q=80', // laptop code
+    'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=700&auto=format&fit=crop&q=80', // matrix code
+  ],
+  'data-cloud': [
+    'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=700&auto=format&fit=crop&q=80', // global cloud network
+    'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=700&auto=format&fit=crop&q=80', // cloud server rack
+    'https://images.unsplash.com/photo-1506399558188-acca6f8cbf41?w=700&auto=format&fit=crop&q=80', // datacenter corridor
+    'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=700&auto=format&fit=crop&q=80', // server racks
+  ],
+  'security': [
+    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=700&auto=format&fit=crop&q=80', // cyber security lock matrix
+    'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=700&auto=format&fit=crop&q=80', // cyber shield network
+    'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=700&auto=format&fit=crop&q=80', // digital matrix
+  ],
+  'ai-ml': [
+    'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=700&auto=format&fit=crop&q=80', // AI neural brain network
+    'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=700&auto=format&fit=crop&q=80', // deep learning nodes
+    'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=700&auto=format&fit=crop&q=80', // synthetic intelligence waves
+  ],
+  'career-industry': [
+    'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=700&auto=format&fit=crop&q=80', // tech executive workspace
+    'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=700&auto=format&fit=crop&q=80', // engineering collaboration
+    'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=700&auto=format&fit=crop&q=80', // modern tech team
+  ],
+  'general-tech': [
+    'https://images.unsplash.com/photo-1518770660439-4636190af475?w=700&auto=format&fit=crop&q=80', // microchip silicon wafer
+    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=700&auto=format&fit=crop&q=80', // digital circuit
+  ],
+}
+
+function getArticleImageUrl(item: { id?: string; title?: string; categorySlug?: string; subTag?: string }): string {
+  const text = `${item.title || ''} ${item.subTag || ''}`.toLowerCase()
+
+  // 1. High-Precision Story Overrides matching known feed topics
+  if (text.includes('cloudflare') || text.includes('ram') || text.includes('consistent hashing') || text.includes('hashing') || text.includes('pingora')) {
+    return 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&auto=format&fit=crop&q=80'
+  }
+  if (text.includes('daytona') || text.includes('agent cloud') || text.includes('perplextity') || text.includes('datadog')) {
+    return 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&auto=format&fit=crop&q=80'
+  }
+  if (text.includes('csiro') || text.includes('genomic') || text.includes('beacon') || (text.includes('aws') && text.includes('athena'))) {
+    return 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&auto=format&fit=crop&q=80'
+  }
+  if (text.includes('lambda') || text.includes('node') || text.includes('express') || text.includes('hono') || text.includes('functions')) {
+    return 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop&q=80'
+  }
+  if (text.includes('popcorn time') || text.includes('rce') || text.includes('vulnerab') || text.includes('attack') || text.includes('malware') || text.includes('flaw')) {
+    return 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&auto=format&fit=crop&q=80'
+  }
+
+  // General keyword matches
+  if (text.includes('security') || text.includes('cyber') || text.includes('hack') || text.includes('breach')) {
+    return 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&auto=format&fit=crop&q=80'
+  }
+  if (text.includes(' ai') || text.includes('llm') || text.includes('agent') || text.includes('gpt') || text.includes('neural') || text.includes('model')) {
+    return 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&auto=format&fit=crop&q=80'
+  }
+  if (text.includes('aws') || text.includes('cloud') || text.includes('server') || text.includes('database') || text.includes('s3') || text.includes('cluster')) {
+    return 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600&auto=format&fit=crop&q=80'
+  }
+  if (text.includes('rust') || text.includes('code') || text.includes('typescript') || text.includes('react') || text.includes('python') || text.includes('dev')) {
+    return 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop&q=80'
+  }
+
+  // 2. Category Fallback with Deterministic Distribution
+  const cat = item.categorySlug || 'general-tech'
+  const list = CATEGORY_IMAGE_SETS[cat] || CATEGORY_IMAGE_SETS['general-tech']
+  const idx = hashString(item.id || item.title || 'article') % list.length
+  return list[idx]
+}
+
+// Relevant Online Photography Artwork for Lead Story with graceful SVG fallback
+const HeroStoryArtwork = ({ item }: { item?: NewsItem }) => {
+  const [imgFailed, setImgFailed] = useState(false)
+  const imageUrl = item?.imageUrl || (item ? getArticleImageUrl(item) : 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&auto=format&fit=crop&q=80')
+
+  return (
+    <div className="w-full md:w-72 lg:w-84 h-48 sm:h-56 rounded-xl overflow-hidden relative shadow-sm shrink-0 border border-stone-200/90 group/art select-none bg-stone-900">
+      {!imgFailed ? (
+        <div className="relative w-full h-full">
+          <img
+            src={imageUrl}
+            alt={item?.title || 'Lead story visual'}
+            className="w-full h-full object-cover group-hover/art:scale-105 transition-transform duration-500"
+            onError={() => setImgFailed(true)}
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-stone-950/60 via-stone-950/10 to-transparent pointer-events-none" />
+          {item?.category && (
+            <div className="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-stone-950/80 backdrop-blur-xs text-[10px] font-mono-board font-black text-amber-300 uppercase tracking-wider border border-white/10 shadow-xs">
+              {item.categorySlug.toUpperCase().replace('-', ' ')}
+            </div>
+          )}
+        </div>
+      ) : (
+        <WindTurbinesHeroArtwork />
+      )}
+    </div>
+  )
+}
+
+// Relevant Online Photography Thumbnail for Secondary Story Cards with fallback
+const ArticleThumbnailImage = ({ item, fallback: Fallback }: { item: NewsItem; fallback: React.ComponentType }) => {
+  const [imgFailed, setImgFailed] = useState(false)
+  const imageUrl = item.imageUrl || getArticleImageUrl(item)
+
+  if (imgFailed) {
+    return <Fallback />
+  }
+
+  return (
+    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden shrink-0 relative border border-stone-200/90 shadow-2xs group-hover:scale-105 transition-transform duration-300 bg-stone-900">
+      <img
+        src={imageUrl}
+        alt={item.title}
+        className="w-full h-full object-cover"
+        onError={() => setImgFailed(true)}
+        loading="lazy"
+      />
+      <div className="absolute inset-0 bg-stone-950/10 pointer-events-none" />
+    </div>
+  )
+}
+
+export function getCategoryColor(catSlug: string): { text: string; bg: string; border: string } {
   switch (catSlug) {
     case 'ai-ml':
       return { text: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-200' }
@@ -234,6 +353,7 @@ interface NewsItem {
   confidence?: 'high' | 'medium' | 'low'
   skills: string[]
   thumbnail: React.ComponentType
+  imageUrl?: string
   isWeeklySummary?: boolean
   relatedSources?: { name: string; url: string; articleId?: string }[]
   scores?: {
@@ -362,6 +482,12 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
       confidence: art.enrichment?.confidence,
       skills: art.enrichment?.extractedSkills?.length ? art.enrichment.extractedSkills : art.subTags,
       thumbnail: getCategoryThumbnail(art.category),
+      imageUrl: getArticleImageUrl({
+        id: art.id,
+        title: art.cleanedTitle || art.title,
+        categorySlug: art.category,
+        subTag: art.subTags?.[0],
+      }),
       relatedSources: (art.relatedSources || []).map((r) => ({
         name: r.sourceName,
         url: r.link,
@@ -393,31 +519,33 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
   return (
     <div className="w-full space-y-6 animate-in fade-in duration-300">
 
-      {/* VIEW SWITCHER PILLS (Today's News vs Weekly Summary) */}
-      <div className="flex items-center gap-3">
+      {/* VIEW SWITCHER DOCK (Metro Line Control Style) */}
+      <div className="inline-flex p-1.5 rounded-full bg-stone-950 border border-stone-800 shadow-md gap-2 font-mono-board">
         <button
           type="button"
           onClick={() => setViewMode('today')}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer select-none shadow-sm ${viewMode === 'today'
-              ? 'bg-slate-950 text-white shadow-slate-950/25 shadow-md border border-slate-900 scale-[1.02]'
-              : 'bg-white/50 hover:bg-white/75 text-slate-700 hover:text-slate-950 backdrop-blur-xl border border-white/75 shadow-xs'
-            }`}
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer select-none ${
+            viewMode === 'today'
+              ? 'bg-amber-400 text-stone-950 shadow-md scale-[1.02]'
+              : 'text-stone-300 hover:text-white hover:bg-white/10'
+          }`}
         >
-          <Newspaper className="w-4 h-4" />
+          <Newspaper className="w-4 h-4 text-stone-950" />
           <span>Today's News</span>
         </button>
 
         <button
           type="button"
           onClick={() => setViewMode('weekly')}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer select-none shadow-sm ${viewMode === 'weekly'
-              ? 'bg-slate-950 text-white shadow-slate-950/25 shadow-md border border-slate-900 scale-[1.02]'
-              : 'bg-white/50 hover:bg-white/75 text-slate-700 hover:text-slate-950 backdrop-blur-xl border border-white/75 shadow-xs'
-            }`}
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer select-none ${
+            viewMode === 'weekly'
+              ? 'bg-amber-400 text-stone-950 shadow-md scale-[1.02]'
+              : 'text-stone-300 hover:text-white hover:bg-white/10'
+          }`}
         >
           <BarChart3 className="w-4 h-4" />
           <span>Weekly Summary</span>
-          <span className="text-[10px] font-black px-1.5 py-0.5 rounded-md bg-amber-400 text-slate-950 shadow-2xs">
+          <span className="text-[10px] font-black px-1.5 py-0.5 rounded-md bg-stone-950 text-amber-300 shadow-2xs">
             5-Min Flash
           </span>
         </button>
@@ -425,21 +553,21 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
 
       {viewMode === 'today' ? (
         <>
-          {/* SEARCH BAR (Clean, modern rounded input) */}
+          {/* SEARCH BAR (Metro Radar Search Bar) */}
           <div className="relative flex items-center">
-            <Search className="w-4 h-4 text-slate-400 absolute left-4 pointer-events-none" />
+            <Search className="w-4 h-4 text-stone-400 absolute left-4 pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search technologies, topics, or companies..."
-              className="w-full h-11 pl-11 pr-10 rounded-xl bg-white border border-slate-200/90 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900/10 shadow-xs transition-all"
+              className="w-full h-12 pl-11 pr-10 rounded-2xl bg-white/95 border border-stone-300/90 text-sm font-mono-board font-medium text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-400 shadow-[0_4px_16px_rgba(28,25,23,0.04)] transition-all"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3.5 text-slate-400 hover:text-slate-600 cursor-pointer p-1"
+                className="absolute right-3.5 text-stone-400 hover:text-stone-700 cursor-pointer p-1"
                 aria-label="Clear search"
               >
                 <X className="w-4 h-4" />
@@ -447,411 +575,402 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
             )}
           </div>
 
-          {/* AUTHENTIC NEWSPAPER BROADSHEET LAYOUT (Matching Image 2) */}
-          <div className="relative w-full max-w-5xl mx-auto my-3">
-            {/* Stacked Paper Shadow Layer 3 (Background paper sheet tilt) */}
-            <div className="absolute inset-0 bg-[#ebe7dc] rounded-2xl sm:rounded-3xl rotate-[-0.6deg] translate-y-3.5 translate-x-[-3px] border border-stone-300/80 shadow-sm pointer-events-none" />
-            {/* Stacked Paper Shadow Layer 2 (Middle paper sheet tilt) */}
-            <div className="absolute inset-0 bg-[#f4f1e8] rounded-2xl sm:rounded-3xl rotate-[0.4deg] translate-y-1.5 translate-x-[2px] border border-stone-300/90 shadow-md pointer-events-none" />
+          {/* UNDERGROUND / METRO STATION TERMINAL BOARD */}
+          <div className="relative rounded-[28px] sm:rounded-[32px] bg-white/95 backdrop-blur-md border border-stone-300/90 shadow-[0_16px_36px_rgba(28,25,23,0.06)] p-5 sm:p-9 space-y-7 text-stone-900 overflow-hidden font-sans">
 
-            {/* Main Front Broadsheet Page */}
-            <div className="relative bg-[#faf8f4] border border-stone-300/90 rounded-2xl sm:rounded-3xl shadow-xl p-5 sm:p-9 md:p-12 space-y-7 text-stone-900 overflow-hidden">
-              
-              {/* TOP MASTHEAD (Matching Image 2: "THE DAILY BRIEF", Date on top right, "TODAY'S NEWS" kicker) */}
-              <div className="space-y-3">
-                {/* Top Bar: Kicker + Date */}
-                <div className="flex items-start justify-between border-b border-stone-200/80 pb-2">
-                  <div className="text-[11px] sm:text-xs font-bold text-stone-500 uppercase tracking-widest">
-                    Today's News
-                  </div>
-                  <div className="text-right text-[11px] sm:text-xs font-serif font-medium text-stone-600 leading-tight">
-                    <div>{CURRENT_DATE_STR}</div>
-                    <div className="text-stone-400 font-sans text-[10px] sm:text-[11px]">{CURRENT_DAY_OF_WEEK}</div>
-                  </div>
+            {/* TOP METRO STATION MASTHEAD */}
+            <div className="space-y-4">
+              {/* Telemetry Row: Live Beacon + Terminal Date Clock */}
+              <div className="flex items-center justify-between pb-3 border-b border-stone-200">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-900 text-amber-300 text-[10px] font-mono-board tracking-[0.25em] shadow-xs">
+                  <Radio className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+                  <span>Today's News</span>
                 </div>
-
-                {/* Main Newspaper Masthead Title Banner */}
-                <div className="text-center pt-1 pb-1">
-                  <h1 className="font-newspaper-masthead text-3xl sm:text-5xl md:text-6xl font-black text-stone-900 tracking-wider uppercase drop-shadow-2xs">
-                    The Daily Brief
-                  </h1>
-                  <div className="flex items-center justify-center gap-2 pt-1.5">
-                    <span className="font-hero text-xs sm:text-sm font-bold text-stone-800 uppercase tracking-wider">
-                      {viewMode === 'today' ? "Today's Headlines" : "Weekly Executive Syntheses"}
-                    </span>
-                    <span className="text-xs sm:text-sm font-normal text-stone-500">
-                      ({filteredHeadlines.length} {filteredHeadlines.length === 1 ? 'brief' : 'briefs'})
-                    </span>
-                  </div>
-                </div>
-
-                {/* Double Horizontal Rule (Classic Broadsheet divider) */}
-                <div className="border-t-2 border-b border-stone-800/80 my-3 py-2">
-                  {/* Category Navigation Bar & Sort Dropdown */}
-                  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-                    <div className="flex flex-wrap items-center gap-x-3 sm:gap-x-4 gap-y-2 text-xs uppercase tracking-wider font-semibold">
-                      {topicFilters.map((topic, idx) => {
-                        const isSelected = selectedTopic === topic.id
-                        return (
-                          <React.Fragment key={topic.id}>
-                            {idx > 0 && <span className="text-stone-300 font-normal select-none">·</span>}
-                            <button
-                              type="button"
-                              onClick={() => setSelectedTopic(topic.id)}
-                              className={`transition-colors cursor-pointer inline-flex items-center gap-1.5 pb-0.5 shrink-0 ${
-                                isSelected
-                                  ? 'font-bold text-blue-700 underline underline-offset-4 decoration-2'
-                                  : 'font-medium text-stone-600 hover:text-stone-950'
-                              }`}
-                            >
-                              <span>{topic.label}</span>
-                              <span
-                                className={`text-[11px] font-bold px-1.5 py-0.5 rounded-md min-w-[20px] text-center ${
-                                  isSelected
-                                    ? 'bg-blue-100 text-blue-700'
-                                    : 'bg-stone-200/80 text-stone-600'
-                                }`}
-                              >
-                                {topic.count}
-                              </span>
-                            </button>
-                          </React.Fragment>
-                        )
-                      })}
-                    </div>
-
-                    {/* Sort By Dropdown */}
-                    <div className="relative inline-flex items-center gap-1.5 text-xs font-medium text-stone-500 shrink-0 self-end lg:self-auto">
-                      <span>Sort by:</span>
-                      <div className="relative inline-flex items-center">
-                        <select
-                          value={sortBy}
-                          onChange={(e) => setSortBy(e.target.value as 'latest' | 'relevant' | 'impact')}
-                          className="appearance-none bg-stone-100 hover:bg-stone-200 border border-stone-300 rounded-md pl-2 pr-6 py-1 text-xs font-semibold text-stone-800 cursor-pointer focus:outline-none focus:ring-1 focus:ring-stone-900 transition-colors"
-                        >
-                          <option value="latest">Latest</option>
-                          <option value="relevant">Most Relevant</option>
-                          <option value="impact">Highest Impact</option>
-                        </select>
-                        <ChevronDown className="w-3.5 h-3.5 text-stone-500 absolute right-1.5 pointer-events-none" />
-                      </div>
-                    </div>
-                  </div>
+                <div className="text-right font-mono-board text-[11px] sm:text-xs text-stone-600 font-bold">
+                  <div>{CURRENT_DATE_STR}</div>
+                  <div className="text-stone-400 text-[10px] tracking-wider uppercase">{CURRENT_DAY_OF_WEEK}</div>
                 </div>
               </div>
 
-              {/* ARTICLES CONTENT SECTION */}
-              {filteredHeadlines.length === 0 ? (
-                <div className="rounded-2xl bg-stone-100/70 p-12 text-center space-y-3 border border-stone-200">
-                  <Search className="w-8 h-8 text-stone-400 mx-auto" />
-                  <h3 className="font-hero text-base font-bold text-stone-800">
-                    No matching headlines found
-                  </h3>
-                  <p className="text-xs text-stone-500 max-w-sm mx-auto">
-                    Try adjusting your search terms or select another category like "All Topics".
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSearchQuery('')
-                      setSelectedTopic('all')
-                    }}
-                    className="px-4 py-2 rounded-full bg-stone-900 text-white text-xs font-semibold shadow-sm hover:bg-stone-800 cursor-pointer"
-                  >
-                    Reset filters
-                  </button>
+              {/* Station Main Signage Title */}
+              <div className="pt-1 pb-1">
+                <h1 className="font-signage text-4xl sm:text-6xl md:text-7xl font-black text-stone-900 tracking-tight uppercase leading-none">
+                  The Daily Brief
+                </h1>
+                <div className="flex items-center gap-2 pt-2">
+                  <span className="font-mono-board text-xs sm:text-sm font-bold text-amber-800 uppercase tracking-wider">
+                    {viewMode === 'today' ? "Today's Headlines" : "Weekly Executive Syntheses"}
+                  </span>
+                  <span className="font-mono-board text-xs sm:text-sm text-stone-500 font-medium">
+                    ({filteredHeadlines.length} {filteredHeadlines.length === 1 ? 'brief' : 'briefs'})
+                  </span>
                 </div>
-              ) : (
-                <div className="space-y-6">
+              </div>
 
-                  {/* 1. LEAD STORY (Featured top story in Blue-bordered box matching Image 2) */}
-                  {filteredHeadlines[0] && (() => {
-                    const lead = filteredHeadlines[0]
-                    const isBookmarked = bookmarkedIds.has(lead.id)
-                    return (
-                      <div className="border border-blue-300/80 rounded-2xl bg-blue-50/25 p-5 sm:p-7 relative transition-all group shadow-2xs">
-                        <div className="flex flex-col md:flex-row gap-6 items-start justify-between">
-                          
-                          {/* Left: Lead Story Text */}
-                          <div className="flex-1 space-y-3">
-                            {/* Category Kicker */}
-                            <div className="flex items-center gap-2">
-                              <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
-                                {lead.categorySlug.toUpperCase().replace('-', ' ')}
-                              </span>
-                            </div>
-
-                            {/* Headline Title Link */}
-                            <div className="flex items-start justify-between gap-3">
-                              <a
-                                href={lead.sourceUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="font-newspaper-headline text-xl sm:text-2xl font-black text-slate-900 hover:text-blue-700 transition-colors leading-tight group/link flex items-start gap-1.5"
-                                title="Open verified original article in new tab"
-                              >
-                                <span>{lead.title}</span>
-                                <ExternalLink className="w-4 h-4 text-slate-400 group-hover/link:text-blue-700 transition-colors shrink-0 mt-1" />
-                              </a>
-                            </div>
-
-                            {/* Description Summary */}
-                            <p
-                              onClick={() => setActiveArticleModal(lead)}
-                              className="text-xs sm:text-sm text-slate-700 leading-relaxed font-normal cursor-pointer"
-                            >
-                              {lead.description}
-                            </p>
-
-                            {/* Why It Matters Callout (Evidence-Gated) */}
-                            {lead.whyItMatters && (
-                              <div className="p-3.5 rounded-lg border-l-4 border-blue-600 bg-white/70 space-y-1.5 shadow-2xs">
-                                <div className="flex items-center justify-between">
-                                  <div className="flex items-center gap-1.5 text-xs font-bold text-blue-700">
-                                    <Sparkles className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-                                    <span>Why it matters</span>
-                                    {lead.confidence === 'medium' && (
-                                      <span className="text-[10px] text-slate-400 font-normal ml-1">
-                                        (based on available text)
-                                      </span>
-                                    )}
-                                  </div>
-                                  <button
-                                    type="button"
-                                    onClick={(e) => toggleBookmark(lead.id, e)}
-                                    className={`p-1.5 rounded-full transition-colors cursor-pointer ${
-                                      isBookmarked
-                                        ? 'text-blue-700 bg-blue-100/70 hover:bg-blue-200/70'
-                                        : 'text-slate-400 hover:text-slate-700 hover:bg-slate-200/50'
-                                    }`}
-                                    title={isBookmarked ? 'Remove bookmark' : 'Save for later'}
-                                  >
-                                    {isBookmarked ? (
-                                      <BookmarkCheck className="w-4 h-4 fill-blue-600 text-blue-600" />
-                                    ) : (
-                                      <Bookmark className="w-4 h-4" />
-                                    )}
-                                  </button>
-                                </div>
-                                <p className="text-xs text-slate-700 leading-relaxed font-normal">
-                                  {lead.whyItMatters}
-                                </p>
-                                {/* Skills Tags */}
-                                {lead.skills && lead.skills.length > 0 && (
-                                  <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                                    {lead.skills.map((skill) => (
-                                      <button
-                                        key={skill}
-                                        type="button"
-                                        onClick={(e) => handleSkillClick(skill, e)}
-                                        className="px-2 py-0.5 rounded text-[10px] font-semibold bg-white hover:bg-slate-900 hover:text-white text-slate-700 border border-slate-200 shadow-2xs transition-all cursor-pointer"
-                                      >
-                                        {skill}
-                                      </button>
-                                    ))}
-                                  </div>
-                                )}
-                              </div>
-                            )}
-
-                            {/* Metadata Row */}
-                            <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 pt-1">
-                              <span className="font-medium text-slate-600">Source ·</span>
-                              <a
-                                href={lead.sourceUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-slate-700 hover:text-blue-600 hover:underline font-medium inline-flex items-center gap-0.5"
-                              >
-                                <span>{lead.source}</span>
-                                <ExternalLink className="w-3 h-3 text-slate-400" />
-                              </a>
-                              <span>·</span>
-                              <span className="inline-flex items-center gap-1 text-slate-500">
-                                <Clock className="w-3 h-3" />
-                                {lead.timestamp}
-                              </span>
-                              <span>·</span>
-                              <button
-                                type="button"
-                                onClick={() => setActiveArticleModal(lead)}
-                                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-blue-100/80 hover:bg-blue-200/80 text-blue-800 cursor-pointer shadow-2xs transition-colors"
-                              >
-                                <Sparkles className="w-3 h-3 text-blue-600" />
-                                <span>AI Brief</span>
-                              </button>
-                            </div>
-                          </div>
-
-                          {/* Right: Landscape Hero Artwork + Circular Action Button matching Image 2 */}
-                          <div className="flex flex-col items-end gap-3 self-center md:self-stretch justify-between w-full md:w-auto">
-                            <HeroStoryArtwork />
-                            <button
-                              type="button"
-                              onClick={() => setActiveArticleModal(lead)}
-                              className="w-9 h-9 rounded-full bg-white border border-slate-200 hover:border-slate-900 hover:bg-slate-900 text-slate-700 hover:text-white shadow-sm flex items-center justify-center transition-all cursor-pointer self-end shrink-0"
-                              title="View Briefing & Career Transit Details"
-                              aria-label="View Briefing"
-                            >
-                              <ChevronRight className="w-4 h-4" />
-                            </button>
-                          </div>
-
-                        </div>
-                      </div>
-                    )
-                  })()}
-
-                  {/* 2. SECONDARY STORIES (2-COLUMN GRID matching Image 2 layout) */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-1">
-                    {filteredHeadlines.slice(1, displayCount).map((item) => {
-                      const isBookmarked = bookmarkedIds.has(item.id)
-                      const ThumbnailComponent = item.thumbnail
-                      const catColor = getCategoryColor(item.categorySlug)
-
+              {/* Line Navigation & Filter Control Bar */}
+              <div className="border-t border-b border-stone-200 py-3">
+                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+                  {/* Category Lines Filter Pills */}
+                  <div className="flex flex-wrap items-center gap-2 text-xs font-mono-board font-bold">
+                    {topicFilters.map((topic) => {
+                      const isSelected = selectedTopic === topic.id
                       return (
-                        <article
-                          key={item.id}
-                          className="p-5 rounded-2xl border border-stone-200/90 bg-white/70 hover:bg-white hover:shadow-md transition-all flex flex-col justify-between group relative"
+                        <button
+                          key={topic.id}
+                          type="button"
+                          onClick={() => setSelectedTopic(topic.id)}
+                          className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer inline-flex items-center gap-2 shrink-0 shadow-2xs active:scale-95 ${
+                            isSelected
+                              ? 'bg-stone-900 text-amber-300 shadow-xs border border-stone-900'
+                              : 'bg-[#FAF7F0] hover:bg-stone-100 text-stone-700 border border-stone-200'
+                          }`}
                         >
-                          <div className="space-y-3">
-                            {/* Top Row: Category Kicker */}
-                            <div className="flex items-center justify-between">
-                              <span className={`text-[11px] font-bold uppercase tracking-wider ${catColor.text}`}>
-                                {item.categorySlug.toUpperCase().replace('-', ' ')}
-                              </span>
-                              <button
-                                type="button"
-                                onClick={(e) => toggleBookmark(item.id, e)}
-                                className={`p-1 rounded-full transition-colors cursor-pointer ${
-                                  isBookmarked
-                                    ? 'text-blue-700 bg-blue-100/70 hover:bg-blue-200/70'
-                                    : 'text-slate-400 hover:text-slate-700 hover:bg-slate-100'
-                                }`}
-                                title={isBookmarked ? 'Remove bookmark' : 'Save for later'}
-                              >
-                                {isBookmarked ? (
-                                  <BookmarkCheck className="w-3.5 h-3.5 fill-blue-600 text-blue-600" />
-                                ) : (
-                                  <Bookmark className="w-3.5 h-3.5" />
-                                )}
-                              </button>
-                            </div>
-
-                            {/* Headline Title & Square Thumbnail Row */}
-                            <div className="flex items-start justify-between gap-3">
-                              <a
-                                href={item.sourceUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="font-newspaper-headline text-base sm:text-[17px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug line-clamp-3 group/link flex items-start gap-1"
-                                title="Open verified original article in new tab"
-                              >
-                                <span>{item.title}</span>
-                                <ExternalLink className="w-3 h-3 text-slate-400 group-hover/link:text-blue-600 shrink-0 mt-1" />
-                              </a>
-                              {/* Visual Thumbnail Artwork */}
-                              <div className="shrink-0 cursor-pointer" onClick={() => setActiveArticleModal(item)}>
-                                <ThumbnailComponent />
-                              </div>
-                            </div>
-
-                            {/* Description Paragraph */}
-                            <p
-                              onClick={() => setActiveArticleModal(item)}
-                              className="text-xs sm:text-[13px] text-slate-600 line-clamp-3 leading-relaxed font-normal cursor-pointer"
-                            >
-                              {item.description}
-                            </p>
-
-                            {/* Evidence-Gated Why It Matters (if present) */}
-                            {item.whyItMatters && (
-                              <div className="p-2.5 rounded-lg border-l-2 border-blue-500 bg-slate-50/80 space-y-1">
-                                <div className="flex items-center gap-1 text-[11px] font-bold text-blue-700">
-                                  <Sparkles className="w-3 h-3 text-blue-600 shrink-0" />
-                                  <span>Why it matters</span>
-                                </div>
-                                <p className="text-[11px] text-slate-700 leading-normal line-clamp-2">
-                                  {item.whyItMatters}
-                                </p>
-                              </div>
-                            )}
-
-                            {/* Skill Badges */}
-                            {item.skills && item.skills.length > 0 && (
-                              <div className="flex flex-wrap items-center gap-1">
-                                {item.skills.slice(0, 3).map((skill) => (
-                                  <button
-                                    key={skill}
-                                    type="button"
-                                    onClick={(e) => handleSkillClick(skill, e)}
-                                    className="px-2 py-0.5 rounded text-[10px] font-medium bg-stone-100 hover:bg-slate-900 hover:text-white text-stone-700 border border-stone-200 transition-colors cursor-pointer"
-                                  >
-                                    {skill}
-                                  </button>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-
-                          {/* Card Footer: Metadata on Left, Circular Button on Right matching Image 2 */}
-                          <div className="flex items-center justify-between pt-4 mt-3 border-t border-stone-100">
-                            <div className="flex items-center gap-2 text-[11px] text-slate-500 font-medium">
-                              <span className="text-slate-400">Source ·</span>
-                              <a
-                                href={item.sourceUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-slate-700 hover:text-blue-600 hover:underline max-w-[100px] truncate"
-                              >
-                                {item.source}
-                              </a>
-                              <span>·</span>
-                              <span>{item.timestamp}</span>
-                            </div>
-
-                            <button
-                              type="button"
-                              onClick={() => setActiveArticleModal(item)}
-                              className="w-8 h-8 rounded-full bg-white border border-slate-200 text-slate-700 shadow-2xs flex items-center justify-center group-hover:bg-slate-900 group-hover:text-white group-hover:border-slate-900 transition-colors cursor-pointer shrink-0"
-                              title="View AI Brief"
-                              aria-label="View AI Brief"
-                            >
-                              <ChevronRight className="w-4 h-4" />
-                            </button>
-                          </div>
-                        </article>
+                          <span className={`w-2 h-2 rounded-full ${topic.dotColor}`} />
+                          <span>{topic.label}</span>
+                          <span
+                            className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md min-w-[18px] text-center ${
+                              isSelected
+                                ? 'bg-amber-400 text-stone-950'
+                                : 'bg-stone-200 text-stone-700'
+                            }`}
+                          >
+                            {topic.count}
+                          </span>
+                        </button>
                       )
                     })}
                   </div>
 
-                  {/* Load More Button if more briefs exist */}
-                  {filteredHeadlines.length > displayCount && (
-                    <div className="text-center pt-2">
-                      <button
-                        type="button"
-                        onClick={() => setDisplayCount((prev) => prev + 6)}
-                        className="px-6 py-2.5 rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs font-semibold shadow-sm transition-all cursor-pointer inline-flex items-center gap-2"
+                  {/* Sort By Dropdown */}
+                  <div className="relative inline-flex items-center gap-1.5 text-xs font-mono-board font-bold text-stone-500 shrink-0 self-end lg:self-auto">
+                    <span>Sort by:</span>
+                    <div className="relative inline-flex items-center">
+                      <select
+                        value={sortBy}
+                        onChange={(e) => setSortBy(e.target.value as 'latest' | 'relevant' | 'impact')}
+                        className="appearance-none bg-[#FAF7F0] hover:bg-stone-100 border-2 border-stone-200 rounded-xl pl-3 pr-7 py-1 text-xs font-mono-board font-bold text-stone-800 cursor-pointer focus:outline-none focus:ring-1 focus:ring-stone-900 transition-colors shadow-2xs"
                       >
-                        <span>Showing {displayCount} of {filteredHeadlines.length} briefs — Load More Headlines</span>
-                        <ChevronDown className="w-3.5 h-3.5" />
-                      </button>
+                        <option value="latest">Latest</option>
+                        <option value="relevant">Most Relevant</option>
+                        <option value="impact">Highest Impact</option>
+                      </select>
+                      <ChevronDown className="w-3.5 h-3.5 text-stone-500 absolute right-2 pointer-events-none" />
                     </div>
-                  )}
-
-                </div>
-              )}
-
-              {/* DOUBLE RULE & BOTTOM FOOTER (Matching Image 2: "STAY INFORMED  ·  STAY AHEAD") */}
-              <div className="pt-4 border-t border-stone-300">
-                <div className="border-t-2 border-stone-800/80 pt-4 text-center">
-                  <p className="text-xs sm:text-sm font-newspaper-masthead font-black tracking-[0.25em] text-stone-700 uppercase">
-                    STAY INFORMED &nbsp;·&nbsp; STAY AHEAD
-                  </p>
+                  </div>
                 </div>
               </div>
-
             </div>
+
+            {/* ARTICLES CONTENT SECTION */}
+            {filteredHeadlines.length === 0 ? (
+              <div className="rounded-2xl bg-[#FAF7F0] p-12 text-center space-y-3 border-2 border-stone-200 font-mono-board">
+                <Search className="w-8 h-8 text-stone-400 mx-auto" />
+                <h3 className="font-signage text-lg font-black text-stone-800 uppercase tracking-wide">
+                  No matching headlines found
+                </h3>
+                <p className="text-xs text-stone-500 max-w-sm mx-auto font-sans">
+                  Try adjusting your search terms or select another category like "All Topics".
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchQuery('')
+                    setSelectedTopic('all')
+                  }}
+                  className="px-5 py-2 rounded-full bg-stone-900 text-amber-300 text-xs font-bold shadow-sm hover:bg-black cursor-pointer"
+                >
+                  Reset filters
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-6">
+
+                {/* 1. LEAD STORY (Station Flagship Departure Ticket) */}
+                {filteredHeadlines[0] && (() => {
+                  const lead = filteredHeadlines[0]
+                  const isBookmarked = bookmarkedIds.has(lead.id)
+                  return (
+                    <div className="border-2 border-amber-300/80 rounded-[24px] bg-[#FAF7F0] p-5 sm:p-7 relative transition-all group shadow-xs">
+                      <div className="flex flex-col md:flex-row gap-6 items-start justify-between">
+
+                        {/* Left: Lead Story Text */}
+                        <div className="flex-1 space-y-3">
+                          {/* Category Kicker */}
+                          <div className="flex items-center gap-2">
+                            <span className="px-2.5 py-0.5 rounded text-[10px] font-mono-board font-black uppercase tracking-wider bg-amber-400 text-stone-950 shadow-xs">
+                              {lead.categorySlug.toUpperCase().replace('-', ' ')}
+                            </span>
+                          </div>
+
+                          {/* Headline Title Link */}
+                          <div className="flex items-start justify-between gap-3">
+                            <a
+                              href={lead.sourceUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="font-signage text-2xl sm:text-3xl font-black text-stone-900 hover:text-amber-600 transition-colors leading-tight group/link flex items-start gap-2 uppercase tracking-wide"
+                              title="Open verified original article in new tab"
+                            >
+                              <span>{lead.title}</span>
+                              <ExternalLink className="w-4 h-4 text-stone-400 group-hover/link:text-amber-600 transition-colors shrink-0 mt-1" />
+                            </a>
+                          </div>
+
+                          {/* Description Summary */}
+                          <p
+                            onClick={() => setActiveArticleModal(lead)}
+                            className="text-xs sm:text-sm text-stone-700 leading-relaxed font-normal cursor-pointer"
+                          >
+                            {lead.description}
+                          </p>
+
+                          {/* Why It Matters Callout (Evidence-Gated) */}
+                          {lead.whyItMatters && (
+                            <div className="p-4 rounded-xl border-l-4 border-amber-500 bg-white border border-stone-200/90 space-y-1.5 shadow-2xs font-mono-board">
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-1.5 text-xs font-bold text-amber-900 uppercase tracking-wider">
+                                  <Sparkles className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                                  <span>Why it matters</span>
+                                  {lead.confidence === 'medium' && (
+                                    <span className="text-[10px] text-stone-400 font-normal ml-1 lowercase font-sans">
+                                      (based on available text)
+                                    </span>
+                                  )}
+                                </div>
+                                <button
+                                  type="button"
+                                  onClick={(e) => toggleBookmark(lead.id, e)}
+                                  className={`p-1.5 rounded-full transition-colors cursor-pointer ${
+                                    isBookmarked
+                                      ? 'text-amber-600 bg-amber-50 hover:bg-amber-100'
+                                      : 'text-stone-400 hover:text-stone-700 hover:bg-stone-100'
+                                  }`}
+                                  title={isBookmarked ? 'Remove bookmark' : 'Save for later'}
+                                >
+                                  {isBookmarked ? (
+                                    <BookmarkCheck className="w-4 h-4 fill-amber-500 text-amber-500" />
+                                  ) : (
+                                    <Bookmark className="w-4 h-4" />
+                                  )}
+                                </button>
+                              </div>
+                              <p className="text-xs sm:text-sm text-stone-700 leading-relaxed font-normal font-sans">
+                                {lead.whyItMatters}
+                              </p>
+                              {/* Skills Tags */}
+                              {lead.skills && lead.skills.length > 0 && (
+                                <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                                  {lead.skills.map((skill) => (
+                                    <button
+                                      key={skill}
+                                      type="button"
+                                      onClick={(e) => handleSkillClick(skill, e)}
+                                      className="px-2.5 py-1 rounded-lg text-[10px] font-mono-board font-bold bg-[#FAF7F0] hover:bg-amber-400 text-stone-900 hover:text-stone-950 border border-stone-300 shadow-2xs transition-all cursor-pointer"
+                                    >
+                                      {skill}
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          )}
+
+                          {/* Metadata Row */}
+                          <div className="flex flex-wrap items-center gap-2 text-xs font-mono-board text-stone-500 pt-1">
+                            <span className="font-bold text-stone-600">Source ·</span>
+                            <a
+                              href={lead.sourceUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-stone-800 hover:text-amber-700 hover:underline font-bold inline-flex items-center gap-0.5"
+                            >
+                              <span>{lead.source}</span>
+                              <ExternalLink className="w-3 h-3 text-stone-400" />
+                            </a>
+                            <span>·</span>
+                            <span className="inline-flex items-center gap-1 text-stone-500">
+                              <Clock className="w-3 h-3 text-stone-400" />
+                              {lead.timestamp}
+                            </span>
+                            <span>·</span>
+                            <button
+                              type="button"
+                              onClick={() => setActiveArticleModal(lead)}
+                              className="inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-[11px] font-mono-board font-black bg-stone-900 hover:bg-black text-amber-300 cursor-pointer shadow-2xs transition-colors"
+                            >
+                              <Sparkles className="w-3 h-3 text-amber-400" />
+                              <span>AI Brief</span>
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Right: Landscape Hero Artwork + Circular Action Button */}
+                        <div className="flex flex-col items-end gap-3 self-center md:self-stretch justify-between w-full md:w-auto">
+                          <HeroStoryArtwork item={lead} />
+                          <button
+                            type="button"
+                            onClick={() => setActiveArticleModal(lead)}
+                            className="w-10 h-10 rounded-full bg-stone-900 hover:bg-amber-400 text-amber-300 hover:text-stone-950 shadow-sm flex items-center justify-center transition-all cursor-pointer self-end shrink-0"
+                            title="View Briefing & Career Transit Details"
+                            aria-label="View Briefing"
+                          >
+                            <ChevronRight className="w-4 h-4" />
+                          </button>
+                        </div>
+
+                      </div>
+                    </div>
+                  )
+                })()}
+
+                {/* 2. SECONDARY STORIES (2-COLUMN METRO DEPARTURE TILES) */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-1">
+                  {filteredHeadlines.slice(1, displayCount).map((item) => {
+                    const isBookmarked = bookmarkedIds.has(item.id)
+                    const ThumbnailComponent = item.thumbnail
+
+                    return (
+                      <article
+                        key={item.id}
+                        className="p-5 rounded-2xl border-2 border-stone-200/90 bg-[#FAF7F0] hover:bg-white hover:border-amber-400/80 transition-all flex flex-col justify-between group relative shadow-xs"
+                      >
+                        <div className="space-y-3">
+                          {/* Top Row: Category Kicker */}
+                          <div className="flex items-center justify-between font-mono-board">
+                            <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-stone-900 text-amber-300">
+                              {item.categorySlug.toUpperCase().replace('-', ' ')}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={(e) => toggleBookmark(item.id, e)}
+                              className={`p-1.5 rounded-full transition-colors cursor-pointer ${
+                                isBookmarked
+                                  ? 'text-amber-600 bg-amber-50 hover:bg-amber-100'
+                                  : 'text-stone-400 hover:text-stone-700 hover:bg-stone-200/60'
+                              }`}
+                              title={isBookmarked ? 'Remove bookmark' : 'Save for later'}
+                            >
+                              {isBookmarked ? (
+                                <BookmarkCheck className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                              ) : (
+                                <Bookmark className="w-3.5 h-3.5" />
+                              )}
+                            </button>
+                          </div>
+
+                          {/* Headline Title & Square Thumbnail Row */}
+                          <div className="flex items-start justify-between gap-3">
+                            <a
+                              href={item.sourceUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="font-signage text-lg font-black text-stone-900 group-hover:text-amber-600 transition-colors leading-snug line-clamp-3 group/link flex items-start gap-1 uppercase tracking-wide"
+                              title="Open verified original article in new tab"
+                            >
+                              <span>{item.title}</span>
+                              <ExternalLink className="w-3.5 h-3.5 text-stone-400 group-hover/link:text-amber-600 shrink-0 mt-1" />
+                            </a>
+                            {/* Visual Thumbnail Artwork */}
+                            <div className="shrink-0 cursor-pointer" onClick={() => setActiveArticleModal(item)}>
+                              <ArticleThumbnailImage item={item} fallback={ThumbnailComponent} />
+                            </div>
+                          </div>
+
+                          {/* Description Paragraph */}
+                          <p
+                            onClick={() => setActiveArticleModal(item)}
+                            className="text-xs sm:text-[13px] text-stone-600 line-clamp-3 leading-relaxed font-normal cursor-pointer"
+                          >
+                            {item.description}
+                          </p>
+
+                          {/* Evidence-Gated Why It Matters (if present) */}
+                          {item.whyItMatters && (
+                            <div className="p-3 rounded-xl border-l-2 border-amber-500 bg-white border border-stone-200 space-y-1 shadow-2xs font-mono-board">
+                              <div className="flex items-center gap-1 text-[11px] font-bold text-amber-900 uppercase tracking-wider">
+                                <Sparkles className="w-3 h-3 text-amber-600 shrink-0" />
+                                <span>Why it matters</span>
+                              </div>
+                              <p className="text-[11px] font-sans text-stone-700 leading-normal line-clamp-2">
+                                {item.whyItMatters}
+                              </p>
+                            </div>
+                          )}
+
+                          {/* Skill Badges */}
+                          {item.skills && item.skills.length > 0 && (
+                            <div className="flex flex-wrap items-center gap-1 font-mono-board">
+                              {item.skills.slice(0, 3).map((skill) => (
+                                <button
+                                  key={skill}
+                                  type="button"
+                                  onClick={(e) => handleSkillClick(skill, e)}
+                                  className="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-white hover:bg-stone-900 hover:text-white text-stone-700 border border-stone-300 transition-colors cursor-pointer shadow-2xs"
+                                >
+                                  {skill}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Card Footer: Metadata on Left, Circular Button on Right */}
+                        <div className="flex items-center justify-between pt-4 mt-3 border-t border-stone-200 font-mono-board">
+                          <div className="flex items-center gap-2 text-[11px] text-stone-500 font-medium">
+                            <span className="text-stone-400">Source ·</span>
+                            <a
+                              href={item.sourceUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-stone-700 hover:text-amber-800 hover:underline max-w-[100px] truncate font-bold"
+                            >
+                              {item.source}
+                            </a>
+                            <span>·</span>
+                            <span>{item.timestamp}</span>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() => setActiveArticleModal(item)}
+                            className="w-8 h-8 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs flex items-center justify-center group-hover:bg-stone-900 group-hover:text-amber-300 group-hover:border-stone-900 transition-colors cursor-pointer shrink-0"
+                            title="View AI Brief"
+                            aria-label="View AI Brief"
+                          >
+                            <ChevronRight className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </article>
+                    )
+                  })}
+                </div>
+
+                {/* Load More Button if more briefs exist */}
+                {filteredHeadlines.length > displayCount && (
+                  <div className="text-center pt-2 font-mono-board">
+                    <button
+                      type="button"
+                      onClick={() => setDisplayCount((prev) => prev + 6)}
+                      className="px-6 py-2.5 rounded-full bg-stone-900 hover:bg-black text-amber-300 text-xs font-bold shadow-sm transition-all cursor-pointer inline-flex items-center gap-2 active:scale-95"
+                    >
+                      <span>Showing {displayCount} of {filteredHeadlines.length} briefs — Load More Headlines</span>
+                      <ChevronDown className="w-3.5 h-3.5 text-amber-400" />
+                    </button>
+                  </div>
+                )}
+
+              </div>
+            )}
+
+            {/* METRO TERMINAL FOOTER (STAY INFORMED  ·  STAY AHEAD) */}
+            <div className="pt-4 border-t border-stone-200">
+              <div className="border-t-2 border-stone-900 pt-4 text-center">
+                <p className="text-xs sm:text-sm font-mono-board font-black tracking-[0.25em] text-stone-700 uppercase">
+                  STAY INFORMED &nbsp;·&nbsp; STAY AHEAD
+                </p>
+              </div>
+            </div>
+
           </div>
         </>
       ) : (
@@ -882,26 +1001,26 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
             onClick={() => setActiveArticleModal(null)}
           />
 
-          {/* Modal Content */}
-          <div className="relative w-full max-w-2xl my-auto rounded-3xl bg-white/75 backdrop-blur-3xl p-6 sm:p-8 border border-white/90 shadow-[0_25px_60px_rgba(0,0,0,0.25),inset_0_1px_1px_rgba(255,255,255,1)] z-10 space-y-5 animate-in fade-in zoom-in-95 duration-200">
+          {/* Modal Content (Transit Station Inspector Style) */}
+          <div className="relative w-full max-w-2xl my-auto rounded-[28px] bg-[#FAF7F0] border-2 border-stone-900 shadow-[8px_8px_0_0_rgba(28,25,23,0.95)] p-6 sm:p-8 z-10 space-y-5 animate-in fade-in zoom-in-95 duration-200 text-stone-900 font-sans">
             {/* Top row */}
-            <div className="flex items-center justify-between pb-2 border-b border-slate-200/50">
-              <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-950 text-white border border-slate-900 backdrop-blur-sm shadow-2xs">
+            <div className="flex items-center justify-between pb-3 border-b-2 border-stone-300">
+              <div className="flex items-center gap-2 font-mono-board">
+                <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-stone-950 text-amber-300 shadow-2xs">
                   {activeArticleModal.category}
                 </span>
-                <span className="text-xs text-slate-500">{activeArticleModal.timestamp}</span>
+                <span className="text-xs text-stone-500 font-semibold">{activeArticleModal.timestamp}</span>
               </div>
 
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={(e) => toggleBookmark(activeArticleModal.id, e)}
-                  className="p-2 rounded-full hover:bg-slate-100 text-slate-600 transition-colors cursor-pointer"
+                  className="p-2 rounded-full hover:bg-stone-200 text-stone-600 transition-colors cursor-pointer"
                   title="Bookmark"
                 >
                   {bookmarkedIds.has(activeArticleModal.id) ? (
-                    <BookmarkCheck className="w-4 h-4 fill-slate-950 text-slate-950" />
+                    <BookmarkCheck className="w-4 h-4 fill-amber-500 text-amber-500" />
                   ) : (
                     <Bookmark className="w-4 h-4" />
                   )}
@@ -909,7 +1028,7 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
                 <button
                   type="button"
                   onClick={() => setActiveArticleModal(null)}
-                  className="p-2 rounded-full hover:bg-slate-100 text-slate-600 transition-colors cursor-pointer"
+                  className="p-2 rounded-full hover:bg-stone-200 text-stone-600 transition-colors cursor-pointer"
                   aria-label="Close dialog"
                 >
                   <X className="w-4 h-4" />
@@ -917,59 +1036,72 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
               </div>
             </div>
 
+            {/* Online Editorial Image Banner */}
+            {activeArticleModal.imageUrl && (
+              <div className="w-full h-44 sm:h-52 rounded-2xl overflow-hidden border border-stone-200/90 shadow-2xs relative bg-stone-950">
+                <img
+                  src={activeArticleModal.imageUrl}
+                  alt={activeArticleModal.title}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/60 via-transparent to-transparent pointer-events-none" />
+              </div>
+            )}
+
             {/* Title & Description */}
             <div className="space-y-2">
-              <h2 className="font-hero text-xl sm:text-2xl font-bold text-slate-950 leading-snug">
+              <h2 className="font-signage text-2xl sm:text-3xl font-black text-stone-900 leading-snug uppercase tracking-wide">
                 {activeArticleModal.title}
               </h2>
-              <p className="text-sm text-slate-700 leading-relaxed">
+              <p className="text-sm text-stone-700 leading-relaxed font-normal">
                 {activeArticleModal.description}
               </p>
             </div>
 
             {/* Why It Matters Callout Card (Evidence-Gated) */}
             {activeArticleModal.whyItMatters && (
-              <div className="p-4 rounded-2xl bg-white/55 border border-white/80 backdrop-blur-md shadow-2xs space-y-1.5">
-                <div className="text-xs font-bold text-slate-950 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-slate-800" />
-                  Career Route Impact
+              <div className="p-4 rounded-xl bg-amber-50/90 border-l-4 border-amber-500 border border-amber-200 space-y-1.5 shadow-2xs font-mono-board">
+                <div className="text-xs font-bold text-amber-900 flex items-center gap-1.5 uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                  <span>Career Route Impact</span>
                   {activeArticleModal.confidence === 'medium' && (
-                    <span className="text-[10px] text-slate-400 font-normal">
+                    <span className="text-[10px] text-stone-400 font-normal lowercase font-sans ml-1">
                       (based on available text)
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-slate-700 leading-relaxed">
+                <p className="text-xs sm:text-sm text-stone-800 leading-relaxed font-sans font-normal">
                   {activeArticleModal.whyItMatters}
                 </p>
               </div>
             )}
 
             {/* Associated transit skills */}
-            <div className="space-y-2">
-              <div className="text-xs font-bold text-slate-800">
+            <div className="space-y-2 font-mono-board">
+              <div className="text-xs font-bold text-stone-800 uppercase tracking-wider">
                 Targeted Skills for Transit Readiness
               </div>
               <div className="flex flex-wrap gap-2">
                 {activeArticleModal.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="px-3 py-1 rounded-full text-xs font-semibold bg-white text-slate-800 border border-slate-200 shadow-2xs flex items-center gap-1"
+                    className="px-3 py-1 rounded-xl text-xs font-bold bg-white text-stone-800 border-2 border-stone-200 shadow-2xs flex items-center gap-1.5"
                   >
-                    <CheckCircle2 className="w-3 h-3 text-slate-950" />
-                    {skill}
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>{skill}</span>
                   </span>
                 ))}
               </div>
             </div>
 
             {/* Action buttons */}
-            <div className="pt-3 flex items-center justify-between gap-3 border-t border-slate-200/50">
+            <div className="pt-3 flex items-center justify-between gap-3 border-t-2 border-stone-300 font-mono-board">
               <a
                 href={activeArticleModal.sourceUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="text-xs font-semibold text-slate-700 hover:text-slate-950 flex items-center gap-1.5"
+                className="text-xs font-bold text-amber-900 hover:text-stone-950 flex items-center gap-1.5"
               >
                 <span>Read original on {activeArticleModal.source}</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
@@ -981,10 +1113,10 @@ export const CatchupTab: React.FC<CatchupTabProps> = ({
                   onSelectTab('transit')
                   setActiveArticleModal(null)
                 }}
-                className="px-5 py-2.5 rounded-full bg-slate-950 hover:bg-slate-900 text-white font-semibold text-xs transition-all shadow-sm flex items-center gap-2 cursor-pointer"
+                className="px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-stone-950 font-black text-xs transition-all shadow-sm flex items-center gap-2 cursor-pointer active:scale-95"
               >
                 <span>Add to My Learning Route</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-3.5 h-3.5 text-stone-950" />
               </button>
             </div>
           </div>
