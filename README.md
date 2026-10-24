@@ -36,12 +36,11 @@ Rapid advancements in Generative AI and automated agent workflows are transformi
 
 ### Solution
 
-**JobTransit** reimagines tech career progression through the intuitive metaphor of an urban rapid transit network—the **"Career Metro"**. Powered by client-side multimodal OCR/parsing and a dedicated **RunPod GPU Serverless** inference endpoint, JobTransit vectorizes candidate resumes, maps existing competencies onto five distinct metro lines (*Agent Line*, *Data Line*, *Intelligence Line*, *Product Line*, *Cloud Line*), and generates personalized, explainable reskilling pathways complete with ordered milestones, practical project capstones, and HRD Corp-claimable programs—directly advancing **UN SDG 4 (Quality Education)** by fostering lifelong learning and building technical/vocational competencies for the future economy (Target 4.4).
+**JobTransit** reimagines tech career progression through the intuitive metaphor of an urban rapid transit network—the **"Career Metro"**. Powered by client-side multimodal OCR/parsing, JobTransit vectorizes candidate resumes, maps existing competencies onto five distinct metro lines (*Agent Line*, *Data Line*, *Intelligence Line*, *Product Line*, *Cloud Line*), and generates personalized, explainable reskilling pathways complete with ordered milestones, practical project capstones, and HRD Corp-claimable programs—directly advancing **UN SDG 4 (Quality Education)** by fostering lifelong learning and building technical/vocational competencies for the future economy (Target 4.4).
 
 ### Key Features
 
 - **Interactive Career Metro Map (Transit Map)** — An octilinear subway-style visual graph (0°, 45°, 90°) showing interconnected technical stations, interchange hubs, real-time role demand deltas, and salary benchmarks.
-- **Multimodal Resume & Skill Extraction** — Multi-format resume parsing supporting PDF, DOCX, TXT, and scanned image documents via in-browser Tesseract OCR and PDF.js, paired with RunPod GPU LLM extraction to accurately populate structured skill profiles.
 - **Explainable Reskilling Pathways & Learning Plans** — Tailored learning checkpoints featuring transparent match scores (+/- factor weights), curated low-cost/free tutorials, hands-on project deliverables, and verified HRD Corp-claimable courses.
 - **Photorealistic 3D Digital Transit Pass** — A physics-enabled 3D career boarding card with gyroscopic mouse tilt, holographic specular reflections, dynamic QR codes, and real-time Cloud Firestore synchronization.
 - **Real-Time Market Trend Radar & LinkedIn Scraper** — Automated market intelligence crawler aggregating live LinkedIn job postings, hiring volumes, emerging skill momentum, and AI exposure indices across target tech roles.
@@ -55,7 +54,7 @@ Rapid advancements in Generative AI and automated agent workflows are transformi
 | Frontend      | React 19, TypeScript, Vite 8, TailwindCSS v4, Lucide Icons, Tesseract.js OCR, PDF.js, 3D CSS transforms     |
 | Backend       | Node.js 20+, Express & Vite Dev Server Middleware (`server/linkedinScraper.ts`), Firebase Cloud Functions v2  |
 | Database      | Cloud Firestore (User Profiles, Passes, Feed Metadata)                                                        |
-| AI / Compute  | RunPod (GPU Serverless for LLM Resume Extraction & Skill Matching), Google Gemini 2.5 API (News Enrichment)  |
+| AI / Compute  | Google Gemini 2.5 API (News Enrichment)  |
 | Hosting / Dev | Replit (Multiplayer Workspace, Replit Deployments, Secrets Management)                                         |
 
 ---
@@ -66,9 +65,6 @@ Rapid advancements in Generative AI and automated agent workflows are transformi
 JobTransit/
 ├── docs/                                    # Media, architectural diagrams, and documentation
 │   └── README.md
-├── runpod/                                  # RunPod GPU serverless endpoint code
-│   ├── handler.py                           # RunPod serverless handler (GPU model workload)
-│   └── requirements.txt                     # GPU inference dependencies (torch, runpod, etc.)
 ├── server/                                  # Backend scraping and market analysis services
 │   └── linkedinScraper.ts                   # Real-time LinkedIn job postings crawler & cache
 ├── src/                                     # Frontend React application
@@ -98,7 +94,6 @@ JobTransit/
 │   ├── SDC2026_JobTransit_Preliminary.pdf     # Preliminary project document
 │   ├── SDC2026_JobTransit_TechDeclaration.pdf # Technology declaration document
 │   ├── SDC2026_JobTransit_Replit_POU.pdf      # Replit proof of use document
-│   └── SDC2026_JobTransit_Runpod_POU.pdf      # RunPod proof of use document
 ├── tests/                                   # Unit and integration test suites
 │   └── extractor.test.ts                    # Extractor & transit line verification tests
 ├── .env.example                             # Template environment variables
@@ -151,8 +146,6 @@ JobTransit/
 
 1. Open the Replit Project via your dashboard, or import this repository via **Create Repl → Import from GitHub** (`https://github.com/yaotingchun/JobTransit`).
 2. Open the **Secrets** tab (🔒) in Replit and provide the following environment variables (refer to [`.env.example`](.env.example)):
-   - `RUNPOD_API_KEY`
-   - `RUNPOD_ENDPOINT_ID`
    - `VITE_FIREBASE_API_KEY`
    - `VITE_FIREBASE_AUTH_DOMAIN`
    - `VITE_FIREBASE_PROJECT_ID`
@@ -192,7 +185,6 @@ Our team utilized Replit as our central collaborative development, staging, and 
 
 - **Multiplayer Collaborative Development**: Team members worked simultaneously across frontend components, state management, and API endpoints using Replit Multiplayer, drastically accelerating iteration and eliminating merge conflicts.
 - **Cloud Hosting & Deployments**: The production preview is deployed directly via **Replit Deployments** as a high-availability static web application configured in [`.replit`](.replit).
-- **Secure Secrets Management**: Sensitive credentials (such as `RUNPOD_API_KEY`, `RUNPOD_ENDPOINT_ID`, and Firebase configuration tokens) are securely stored in **Replit Secrets** (`process.env`) and injected at build/runtime without committing secrets to version control.
 - **Instant Cloud Workflows**: Built-in shell commands and port mapping (`port 5000` to external HTTP port 80) enabled friction-free live testing on desktop and mobile browsers.
 
 📄 Proof of use: [`submission/SDC2026_JobTransit_Replit_POU.pdf`](submission/SDC2026_JobTransit_Replit_POU.pdf)
