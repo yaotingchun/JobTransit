@@ -364,7 +364,7 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
                       return (
                         <div
                           key={role.id}
-                          className="group relative rounded-xl bg-[#FAF7F0] hover:bg-white border-2 border-stone-200 hover:border-amber-500/70 p-3 sm:px-3.5 sm:py-2.5 transition-all shadow-xs"
+                          className="group relative rounded-xl bg-[#EEF0F3] hover:bg-white border-2 border-stone-300 hover:border-stone-400 p-3 sm:px-3.5 sm:py-2.5 transition-all shadow-xs"
                         >
                           {/* Row 1: Line Badge + Code + Rank + Icon + Title + Telemetry */}
                           <div className="flex flex-wrap items-center justify-between gap-2">
@@ -460,7 +460,7 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
                   </div>
 
                   {/* Featured Story 1: Hermes 3 */}
-                  <div className="rounded-2xl bg-[#FAF7F0] hover:bg-white border-2 border-stone-200 p-3.5 space-y-2.5 hover:border-emerald-500/50 transition-all shadow-xs">
+                  <div className="rounded-2xl bg-[#EEF0F3] hover:bg-white border-2 border-stone-300 p-3.5 space-y-2.5 hover:border-emerald-500/50 transition-all shadow-xs">
                     <div className="flex items-start gap-3">
                       {/* Stylized Neon Emerald 'H' Artwork */}
                       <div className="w-12 h-14 rounded-xl bg-gradient-to-br from-emerald-100 via-teal-50 to-white border border-emerald-300 text-emerald-700 flex items-center justify-center shrink-0 shadow-xs">
@@ -488,7 +488,7 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
                     </div>
 
                     {/* Why It Matters Callout */}
-                    <div className="p-2 rounded-xl bg-amber-50/90 border border-amber-200/90 text-xs text-stone-800 space-y-0.5">
+                    <div className="p-2 rounded-xl bg-white border border-stone-200 text-xs text-stone-800 space-y-0.5">
                       <div className="text-[9.5px] font-mono-board text-amber-800 font-bold uppercase tracking-wider">
                         ⚡ Why it matters for your transition:
                       </div>
@@ -511,7 +511,7 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
                   </div>
 
                   {/* Secondary Story 2: APAC AI Hiring Pulse */}
-                  <div className="rounded-2xl bg-[#FAF7F0] hover:bg-white border-2 border-stone-200 p-3 space-y-1.5 hover:border-sky-500/50 transition-all shadow-xs">
+                  <div className="rounded-2xl bg-[#EEF0F3] hover:bg-white border-2 border-stone-300 p-3 space-y-1.5 hover:border-sky-500/50 transition-all shadow-xs">
                     <div className="flex items-center justify-between">
                       <span className="px-2 py-0.5 rounded bg-sky-100 text-sky-800 border border-sky-200 font-mono-board text-[9px] font-bold">
                         MARKET PULSE
