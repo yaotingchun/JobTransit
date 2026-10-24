@@ -10,7 +10,8 @@
 | ---------------------- | ----------------------------------------------------------------------- |
 | **Team Name**          | JobTransit                                                              |
 | **Team Domain**        | Domain 1 — AI, Smart Society & Future of Work                           |
-| **SDG Track (1–17)**   | **SDG 8 — Decent Work and Economic Growth** *(Target 8.5 & 8.6)*        |
+| **SDG Track (1–17)**   | **SDG 4 — Quality education** *(Target 4.4)*        |
+|    | **SDG 8 — Decent Work and Economic Growth** *(Target 8.5 & 8.6)*        |
 | **Team Leader**        | Evelyn Ang                                                            |
 | **University**         | Universiti Teknologi Malaysia (UTM)                                     |
 | **Number of Members**  | 5                                                                       |
@@ -35,7 +36,7 @@ Rapid advancements in Generative AI and automated agent workflows are transformi
 
 ### Solution
 
-**JobTransit** reimagines tech career progression through the intuitive metaphor of an urban rapid transit network—the **"Career Metro"**. Powered by client-side multimodal OCR/parsing and a dedicated **RunPod GPU Serverless** inference endpoint, JobTransit vectorizes candidate resumes, maps existing competencies onto five distinct metro lines (*Agent Line*, *Data Line*, *Intelligence Line*, *Product Line*, *Cloud Line*), and generates personalized, explainable reskilling pathways complete with ordered milestones, practical project capstones, and HRD Corp-claimable programs.
+**JobTransit** reimagines tech career progression through the intuitive metaphor of an urban rapid transit network—the **"Career Metro"**. Powered by client-side multimodal OCR/parsing and a dedicated **RunPod GPU Serverless** inference endpoint, JobTransit vectorizes candidate resumes, maps existing competencies onto five distinct metro lines (*Agent Line*, *Data Line*, *Intelligence Line*, *Product Line*, *Cloud Line*), and generates personalized, explainable reskilling pathways complete with ordered milestones, practical project capstones, and HRD Corp-claimable programs—directly advancing **UN SDG 4 (Quality Education)** by fostering lifelong learning and building technical/vocational competencies for the future economy (Target 4.4).
 
 ### Key Features
 
