@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import {
   TrendingUp,
   BrainCircuit,
@@ -29,6 +29,16 @@ interface RoleForecastingChartProps {
 export const RoleForecastingChart: React.FC<RoleForecastingChartProps> = ({ role }) => {
   const [horizonWeeks, setHorizonWeeks] = useState<4 | 8 | 12>(8)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const [hasEntered, setHasEntered] = useState(false)
+
+  // On role change or initial load, forecast appears last after historical sweep completes (~700ms)
+  useEffect(() => {
+    setHasEntered(false)
+    const timer = setTimeout(() => {
+      setHasEntered(true)
+    }, 1150)
+    return () => clearTimeout(timer)
+  }, [role.id])
 
   // ── 1. LOAD STORED WAYBACK MACHINE HISTORICAL TIMELINE (Jan 2025 – Present) ──
   const { series, projectedGrowth, projectedVolume, confidenceScore, momentumLabel, totalSnapshotsCount } = useMemo(() => {
@@ -44,12 +54,19 @@ export const RoleForecastingChart: React.FC<RoleForecastingChartProps> = ({ role
       archiveUrl: string
     }>>)[role.id] || []
 
+    const startVal = role.openings2025 || 15000
     const endVal = role.openings2026 || 35000
 
     if (rawRoleData.length > 0) {
-      rawRoleData.forEach((item, idx) => {
-        // If this is the last item (current snapshot), sync with live scraped count if available
-        const val = idx === rawRoleData.length - 1 ? endVal : item.value
+      const rawFirst = rawRoleData[0].value
+      const rawLast = rawRoleData[rawRoleData.length - 1].value
+      const rawSpan = rawLast - rawFirst || 1
+
+      rawRoleData.forEach((item) => {
+        // Smoothly scale the progression so idx 0 starts exactly at startVal and last idx ends at endVal
+        const progress = (item.value - rawFirst) / rawSpan
+        const val = Math.round(startVal + (endVal - startVal) * progress)
+
         historicalPoints.push({
           id: `wayback-${item.snapshotTimestamp}`,
           label: item.label,
@@ -130,10 +147,10 @@ export const RoleForecastingChart: React.FC<RoleForecastingChartProps> = ({ role
 
   // ── 3. SVG COORDINATE COMPUTATIONS ──
   const chartWidth = 740
-  const chartHeight = 220
+  const chartHeight = 226
   const padLeft = 58
-  const padRight = 36
-  const padTop = 24
+  const padRight = 40
+  const padTop = 26
   const padBottom = 34
 
   const plotWidth = chartWidth - padLeft - padRight
@@ -144,11 +161,13 @@ export const RoleForecastingChart: React.FC<RoleForecastingChartProps> = ({ role
   const maxVal = Math.ceil(Math.max(...allVals) * 1.05 / 1000) * 1000
   const valRange = maxVal - minVal || 1
 
-  const getX = (idx: number) => padLeft + (idx / (series.length - 1)) * plotWidth
-  const getY = (val: number) => padTop + plotHeight - ((val - minVal) / valRange) * plotHeight
-
   const histPoints = series.filter((d) => !d.isForecast)
   const lastHistIdx = histPoints.length - 1
+  const maxHorizon = 12
+  const maxTotalPoints = histPoints.length + maxHorizon // Fixed 86-week coordinate space
+  const getX = (idx: number) => padLeft + (idx / (maxTotalPoints - 1)) * plotWidth
+  const getY = (val: number) => padTop + plotHeight - ((val - minVal) / valRange) * plotHeight
+
   const todayX = getX(lastHistIdx)
   const todayY = getY(histPoints[lastHistIdx].value)
 
@@ -203,33 +222,37 @@ export const RoleForecastingChart: React.FC<RoleForecastingChartProps> = ({ role
               <TrendingUp className="w-4 h-4 text-emerald-600" />
               HISTORICAL REQUISITIONS &amp; ML PROJECTION
             </h4>
-            <span className="px-2 py-0.5 rounded text-[9.5px] font-bold bg-purple-100 text-purple-800 border border-purple-200 flex items-center gap-1">
-              <BrainCircuit className="w-3 h-3 text-purple-600" />
-              Prophet-Calibrated
-            </span>
           </div>
           <p className="text-[11px] font-sans text-stone-500 font-medium">
             {totalSnapshotsCount} weekly archive snapshots from Internet Archive (Wayback Machine Jan 2025 – Oct 2026) with statistical trend projection.
           </p>
         </div>
 
-        {/* Forecast Horizon Selector Tabs */}
-        <div className="flex items-center gap-1.5 bg-stone-100 p-1 rounded-xl self-start sm:self-auto border border-stone-200">
-          <span className="text-[10px] text-stone-500 font-bold px-2">HORIZON:</span>
-          {([4, 8, 12] as const).map((w) => (
-            <button
-              key={w}
-              type="button"
-              onClick={() => setHorizonWeeks(w)}
-              className={`px-2.5 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${
-                horizonWeeks === w
-                  ? 'bg-stone-900 text-amber-300 shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900 hover:bg-stone-200/60'
-              }`}
-            >
-              +{w}W
-            </button>
-          ))}
+        {/* Right side: Prophet-Calibrated badge stacked directly above Horizon tabs */}
+        <div className="flex flex-col sm:items-end gap-1.5 self-start sm:self-auto shrink-0">
+          <span className="px-2 py-0.5 rounded text-[9.5px] font-bold bg-purple-100 text-purple-800 border border-purple-200 flex items-center gap-1">
+            <BrainCircuit className="w-3 h-3 text-purple-600" />
+            Prophet-Calibrated
+          </span>
+
+          {/* Forecast Horizon Selector Tabs */}
+          <div className="flex items-center gap-1.5 bg-stone-100 p-1 rounded-xl border border-stone-200">
+            <span className="text-[10px] text-stone-500 font-bold px-2">HORIZON:</span>
+            {([4, 8, 12] as const).map((w) => (
+              <button
+                key={w}
+                type="button"
+                onClick={() => setHorizonWeeks(w)}
+                className={`px-2.5 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${
+                  horizonWeeks === w
+                    ? 'bg-stone-900 text-amber-300 shadow-xs'
+                    : 'text-stone-600 hover:text-stone-900 hover:bg-stone-200/60'
+                }`}
+              >
+                +{w}W
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -336,83 +359,149 @@ export const RoleForecastingChart: React.FC<RoleForecastingChartProps> = ({ role
             )
           })}
 
-          {/* Historical Shaded Area */}
-          <path d={histAreaPath} fill="url(#histAreaGrad)" />
+          {/* Historical Telemetry Group (Synchronized Sweep Reveal) */}
+          <g key={role.id} className="chart-sweep-enter">
+            {/* Historical Shaded Area */}
+            <path d={histAreaPath} fill="url(#histAreaGrad)" />
 
-          {/* 95% Confidence Band Polygon (Forecast Fan) */}
-          <path d={confidenceBandPath} fill="url(#confidenceBandGrad)" stroke="#C4B5FD" strokeWidth="1" strokeDasharray="2 2" />
+            {/* Historical Solid Line */}
+            <path
+              d={histPath}
+              fill="none"
+              stroke="#0F172A"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
 
-          {/* Historical Solid Line */}
-          <path d={histPath} fill="none" stroke="#0F172A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            {/* Anchor Node: Start Jan 2025 */}
+            <circle
+              cx={getX(0)}
+              cy={getY(histPoints[0].value)}
+              r="3.5"
+              fill="#0F172A"
+              stroke="#FFFFFF"
+              strokeWidth="1.5"
+            />
 
-          {/* Forecast Dashed Line */}
-          <path
-            d={fcPath}
-            fill="none"
-            stroke="#7C3AED"
-            strokeWidth="2.5"
-            strokeDasharray="5 4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
+            {/* Anchor Node: Jul 2025 */}
+            {jul25Idx !== -1 && (
+              <circle
+                cx={getX(jul25Idx)}
+                cy={getY(histPoints[jul25Idx].value)}
+                r="3"
+                fill="#0F172A"
+                stroke="#FFFFFF"
+                strokeWidth="1.2"
+              />
+            )}
 
-          {/* Vertical 'TODAY' Line Marker */}
-          <line
-            x1={todayX}
-            y1={padTop}
-            x2={todayX}
-            y2={padTop + plotHeight}
-            stroke="#10B981"
-            strokeWidth="1.5"
-            strokeDasharray="4 3"
-          />
+            {/* Anchor Node: Mid-way milestone Jan 2026 */}
+            {jan26Idx !== -1 && (
+              <circle
+                cx={getX(jan26Idx)}
+                cy={getY(histPoints[jan26Idx].value)}
+                r="3.5"
+                fill="#0F172A"
+                stroke="#FFFFFF"
+                strokeWidth="1.5"
+              />
+            )}
 
-          {/* "TODAY" Badge on X-axis */}
-          <g transform={`translate(${todayX}, ${padTop + plotHeight + 16})`}>
-            <rect x="-24" y="-8" width="48" height="15" rx="3" fill="#10B981" />
-            <text x="0" y="2" textAnchor="middle" fill="#FFFFFF" className="text-[8.5px] font-mono-board font-black">
-              TODAY
-            </text>
+            {/* Anchor Node: Jul 2026 */}
+            {jul26Idx !== -1 && (
+              <circle
+                cx={getX(jul26Idx)}
+                cy={getY(histPoints[jul26Idx].value)}
+                r="3"
+                fill="#0F172A"
+                stroke="#FFFFFF"
+                strokeWidth="1.2"
+              />
+            )}
+
+            {/* Unified TODAY System (Guideline, Top Pin, Beacon Ring, Live Point) */}
+            <g>
+              {/* Vertical 'TODAY' Line Marker */}
+              <line
+                x1={todayX}
+                y1={padTop}
+                x2={todayX}
+                y2={padTop + plotHeight}
+                stroke="#10B981"
+                strokeWidth="1.5"
+                strokeDasharray="4 3"
+              />
+
+              {/* "TODAY" Pin at the TOP of vertical guideline */}
+              <g transform={`translate(${todayX}, ${padTop - 8})`}>
+                <rect x="-22" y="-7" width="44" height="14" rx="3" fill="#10B981" />
+                <polygon points="-3.5,7 3.5,7 0,10.5" fill="#10B981" />
+                <text x="0" y="3" textAnchor="middle" fill="#FFFFFF" className="text-[8px] font-mono-board font-black tracking-wide">
+                  TODAY
+                </text>
+              </g>
+
+              {/* Radar Beacon Wave expanding from TODAY */}
+              <circle
+                cx={todayX}
+                cy={todayY}
+                r="5"
+                fill="none"
+                stroke="#10B981"
+                className="chart-beacon-ring"
+              />
+
+              {/* Anchor Node: Today's live count point */}
+              <circle
+                cx={todayX}
+                cy={todayY}
+                r="5"
+                fill="#10B981"
+                stroke="#FFFFFF"
+                strokeWidth="2"
+                filter="url(#glow)"
+              />
+            </g>
           </g>
 
-          {/* Anchor Node: Start Jan 2025 */}
-          <circle cx={getX(0)} cy={getY(histPoints[0].value)} r="3.5" fill="#0F172A" stroke="#FFFFFF" strokeWidth="1.5" />
+          {/* Forecast Projection Group (Appears LAST after historical sweep completes) */}
+          <g
+            key={`forecast-${role.id}-${horizonWeeks}`}
+            className={hasEntered ? 'chart-forecast-immediate' : 'chart-forecast-delayed'}
+          >
+            {/* 95% Confidence Band Polygon (Forecast Fan) */}
+            <path
+              d={confidenceBandPath}
+              fill="url(#confidenceBandGrad)"
+              stroke="#C4B5FD"
+              strokeWidth="1"
+              strokeDasharray="2 2"
+            />
 
-          {/* Anchor Node: Jul 2025 */}
-          {jul25Idx !== -1 && (
-            <circle cx={getX(jul25Idx)} cy={getY(histPoints[jul25Idx].value)} r="3" fill="#0F172A" stroke="#FFFFFF" strokeWidth="1.2" />
-          )}
+            {/* Forecast Dashed Line */}
+            <path
+              d={fcPath}
+              fill="none"
+              stroke="#7C3AED"
+              strokeWidth="2.5"
+              strokeDasharray="5 4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
 
-          {/* Anchor Node: Mid-way milestone Jan 2026 */}
-          {jan26Idx !== -1 && (
-            <circle cx={getX(jan26Idx)} cy={getY(histPoints[jan26Idx].value)} r="3.5" fill="#0F172A" stroke="#FFFFFF" strokeWidth="1.5" />
-          )}
-
-          {/* Anchor Node: Jul 2026 */}
-          {jul26Idx !== -1 && (
-            <circle cx={getX(jul26Idx)} cy={getY(histPoints[jul26Idx].value)} r="3" fill="#0F172A" stroke="#FFFFFF" strokeWidth="1.2" />
-          )}
-
-          {/* Anchor Node: Today's live count point */}
-          <circle
-            cx={todayX}
-            cy={todayY}
-            r="5"
-            fill="#10B981"
-            stroke="#FFFFFF"
-            strokeWidth="2"
-            filter="url(#glow)"
-          />
-
-          {/* Terminal Forecast Point */}
-          <circle
-            cx={getX(series.length - 1)}
-            cy={getY(series[series.length - 1].value)}
-            r="4"
-            fill="#7C3AED"
-            stroke="#FFFFFF"
-            strokeWidth="1.5"
-          />
+            {/* Terminal Forecast Point - Pops last */}
+            <circle
+              cx={getX(series.length - 1)}
+              cy={getY(series[series.length - 1].value)}
+              r="4"
+              fill="#7C3AED"
+              stroke="#FFFFFF"
+              strokeWidth="1.5"
+              className="chart-terminal-node"
+              style={{ animationDelay: hasEntered ? '180ms' : '980ms' }}
+            />
+          </g>
 
           {/* Key X-Axis Date Labels */}
           <text x={getX(0)} y={padTop + plotHeight + 16} textAnchor="start" className="text-[9px] fill-stone-500 font-mono-board font-bold">
@@ -433,9 +522,17 @@ export const RoleForecastingChart: React.FC<RoleForecastingChartProps> = ({ role
               Jul 26
             </text>
           )}
-          <text x={getX(series.length - 1)} y={padTop + plotHeight + 16} textAnchor="end" className="text-[9px] fill-purple-700 font-mono-board font-black">
+          <text
+            x={getX(series.length - 1)}
+            y={padTop + plotHeight + 16}
+            textAnchor={horizonWeeks === 12 ? 'end' : 'middle'}
+            className={`text-[9px] fill-purple-700 font-mono-board font-black transition-all duration-300 ${
+              hasEntered ? '' : 'chart-label-delayed'
+            }`}
+          >
             +{horizonWeeks}W Projection
           </text>
+
 
           {/* Hover Crosshair and Dot */}
           {hoveredIndex !== null && (

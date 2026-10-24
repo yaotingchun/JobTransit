@@ -477,7 +477,7 @@ export const TrendView: React.FC = () => {
               return (
                 <div
                   key={role.id}
-                  className="rounded-[24px] bg-[#EEF0F3] hover:bg-white border-2 border-stone-300 hover:border-stone-400 p-5 sm:p-6 transition-all shadow-xs cursor-pointer flex flex-col justify-between space-y-4 group"
+                  className="rounded-[24px] bg-[#EEF0F3] hover:bg-white border-2 border-stone-300 hover:border-amber-400/80 p-5 sm:p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg active:scale-[0.985] cursor-pointer flex flex-col justify-between space-y-4 group select-none"
                   onClick={() => setSelectedRoleForModal(role)}
                 >
                   {/* Top Bar: Title, Domain Code & Live 24h Velocity Badge */}
@@ -662,9 +662,9 @@ export const TrendView: React.FC = () => {
                       ))}
                     </div>
 
-                    <div className="font-mono-board text-xs font-black text-stone-800 group-hover:text-stone-950 flex items-center gap-0.5">
-                      <span>Dossier</span>
-                      <ChevronRight className="w-3.5 h-3.5" />
+                    <div className="font-mono-board text-xs font-black text-stone-800 group-hover:text-amber-700 flex items-center gap-1 transition-colors">
+                      <span className="group-hover:underline">Dossier</span>
+                      <ChevronRight className="w-3.5 h-3.5 transform group-hover:translate-x-1.5 transition-transform duration-200" />
                     </div>
                   </div>
                 </div>
@@ -865,11 +865,12 @@ export const TrendView: React.FC = () => {
             {filteredRoles.map((role) => (
               <div
                 key={role.id}
-                className="p-5 rounded-2xl bg-[#EEF0F3] hover:bg-white border-2 border-stone-300 hover:border-stone-400 shadow-xs space-y-3.5 transition-all"
+                onClick={() => setSelectedRoleForModal(role)}
+                className="p-5 rounded-2xl bg-[#EEF0F3] hover:bg-white border-2 border-stone-300 hover:border-amber-400/80 shadow-xs hover:shadow-md hover:-translate-y-0.5 active:scale-[0.99] space-y-3.5 transition-all duration-200 cursor-pointer group"
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <h5 className="font-signage text-xl font-black text-stone-900 tracking-wide">
+                    <h5 className="font-signage text-xl font-black text-stone-900 group-hover:text-amber-700 tracking-wide transition-colors">
                       {role.title.toUpperCase()}
                     </h5>
                     <div className="text-[11px] font-mono-board font-bold text-stone-500">
@@ -927,24 +928,33 @@ export const TrendView: React.FC = () => {
                     <strong className="text-stone-900">TELEMETRY INSIGHT:</strong> {role.entryLevelAccess.insight}
                   </div>
 
-                  <div className="pt-1 flex flex-wrap items-center gap-2 border-t border-stone-200">
-                    <span className="text-[10px] text-stone-500 font-bold">COMPARE:</span>
-                    <a
-                      href={`https://www.linkedin.com/jobs/search?keywords=${encodeURIComponent('Senior ' + (role.searchKeyword || role.title))}&location=Worldwide`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="px-2 py-0.5 rounded bg-stone-100 hover:bg-stone-200 text-stone-800 text-[10px] font-bold border border-stone-300"
-                    >
-                      Senior Postings ↗
-                    </a>
-                    <a
-                      href={`https://www.linkedin.com/jobs/search?keywords=${encodeURIComponent('Junior ' + (role.searchKeyword || role.title))}&location=Worldwide`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="px-2 py-0.5 rounded bg-emerald-100 hover:bg-emerald-200 text-emerald-900 text-[10px] font-bold border border-emerald-300"
-                    >
-                      Junior Postings ↗
-                    </a>
+                  <div className="pt-1 flex flex-wrap items-center justify-between gap-2 border-t border-stone-200">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] text-stone-500 font-bold">COMPARE:</span>
+                      <a
+                        href={`https://www.linkedin.com/jobs/search?keywords=${encodeURIComponent('Senior ' + (role.searchKeyword || role.title))}&location=Worldwide`}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="px-2 py-0.5 rounded bg-stone-100 hover:bg-stone-200 text-stone-800 text-[10px] font-bold border border-stone-300"
+                      >
+                        Senior Postings ↗
+                      </a>
+                      <a
+                        href={`https://www.linkedin.com/jobs/search?keywords=${encodeURIComponent('Junior ' + (role.searchKeyword || role.title))}&location=Worldwide`}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="px-2 py-0.5 rounded bg-emerald-100 hover:bg-emerald-200 text-emerald-900 text-[10px] font-bold border border-emerald-300"
+                      >
+                        Junior Postings ↗
+                      </a>
+                    </div>
+
+                    <div className="text-[10.5px] font-bold text-amber-700 flex items-center gap-0.5 group-hover:underline">
+                      <span>Dossier</span>
+                      <ChevronRight className="w-3 h-3 transform group-hover:translate-x-1 transition-transform" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1179,22 +1189,23 @@ export const TrendView: React.FC = () => {
         </span>
       </div>
 
-      {/* ── 9. ROLE DETAILS MODAL / DOSSIER (PORTALED ABOVE NAVBAR WITH BLUR) ── */}
+      {/* ── 9. ROLE DETAILS MODAL / DOSSIER (PORTALED ABOVE NAVBAR WITH BLUR & SMOOTH SPRING PHYSICS) ── */}
       {selectedRoleForModal && typeof document !== 'undefined' && createPortal(
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-stone-950/75 backdrop-blur-md animate-in fade-in duration-200"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 bg-stone-950/75 dossier-backdrop-enter"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               setSelectedRoleForModal(null)
             }
           }}
         >
-          <div className="relative w-full max-w-3xl max-h-[90vh] bg-[#EEF0F3] rounded-3xl shadow-2xl border-2 border-stone-300 overflow-y-auto p-6 sm:p-8 space-y-6 custom-scrollbar">
+          <div className="relative w-full max-w-3xl max-h-[90vh] bg-[#EEF0F3] rounded-3xl shadow-[0_25px_70px_-15px_rgba(0,0,0,0.55)] border-2 border-stone-300 overflow-y-auto p-6 sm:p-8 space-y-6 custom-scrollbar dossier-card-enter">
             {/* Modal Close Button */}
             <button
               type="button"
               onClick={() => setSelectedRoleForModal(null)}
-              className="absolute top-5 right-5 p-2 rounded-full bg-stone-200 hover:bg-stone-300 text-stone-800 transition-colors cursor-pointer"
+              className="absolute top-5 right-5 p-2 rounded-full bg-stone-200/90 hover:bg-stone-300 text-stone-800 hover:rotate-90 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer shadow-xs"
+              aria-label="Close Station Dossier"
             >
               <X className="w-5 h-5" />
             </button>
