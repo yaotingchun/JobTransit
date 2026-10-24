@@ -10,14 +10,12 @@ interface HeaderProps {
   onOpenAuth: (mode: 'login' | 'signup') => void
   currentUser?: UserProfile | null
   onLogout?: () => void
-  onDemoLogin?: () => void
 }
 
 export const Header: React.FC<HeaderProps> = ({
   onOpenAuth,
   currentUser = null,
   onLogout,
-  onDemoLogin,
 }) => {
   return (
     <header className="fixed top-0 left-0 right-0 z-30 px-6 sm:px-10 lg:px-16 pt-6 sm:pt-8 flex items-center justify-between pointer-events-none">
@@ -55,29 +53,17 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           </div>
         ) : (
-          <>
-            {/* Quick 3D Pass Experience Button */}
-            <button
-              type="button"
-              onClick={onDemoLogin}
-              className="group inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold text-orange-950 bg-gradient-to-r from-orange-400 via-amber-300 to-orange-400 hover:brightness-105 border border-orange-300/80 shadow-[0_4px_16px_rgba(249,115,22,0.3)] cursor-pointer transition-all duration-300 active:scale-95"
-              aria-label="3D Travel Pass"
-            >
-              <span>3D Travel Pass 🚀</span>
-            </button>
-
-            {/* Get Started Glassmorphism Button */}
-            <button
-              type="button"
-              onClick={() => onOpenAuth('signup')}
-              className="group relative inline-flex items-center gap-2 px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-base font-semibold text-slate-900 glass-btn cursor-pointer transition-all duration-300"
-              aria-label="Get Started"
-            >
-              <span>Get Started</span>
-              <ArrowUpRight className="w-4 h-4 text-slate-800 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              <span className="absolute inset-0 rounded-full bg-gradient-to-r from-white/0 via-white/25 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            </button>
-          </>
+          /* Get Started Glassmorphism Button */
+          <button
+            type="button"
+            onClick={() => onOpenAuth('signup')}
+            className="group relative inline-flex items-center gap-2 px-5 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-base font-semibold text-slate-900 glass-btn cursor-pointer transition-all duration-300"
+            aria-label="Get Started"
+          >
+            <span>Get Started</span>
+            <ArrowUpRight className="w-4 h-4 text-slate-800 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <span className="absolute inset-0 rounded-full bg-gradient-to-r from-white/0 via-white/25 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+          </button>
         )}
       </div>
     </header>
