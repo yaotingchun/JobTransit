@@ -2,14 +2,14 @@ import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 
-// Your web app's Firebase configuration
+// Clean Firebase configuration loaded exclusively from environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyBashU8JtBdXPZRiAGBh1CLOQM5k2n2Y-o",
-  authDomain: "jobtransit.firebaseapp.com",
-  projectId: "jobtransit",
-  storageBucket: "jobtransit.firebasestorage.app",
-  messagingSenderId: "997674712625",
-  appId: "1:997674712625:web:1461b8d6cb6b11fc551f10"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 }
 
 // Initialize Firebase

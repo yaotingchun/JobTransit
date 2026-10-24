@@ -15,7 +15,21 @@ interface ChatRequestPayload {
 let cachedAuth: GoogleAuth | null = null
 let cachedProjectId: string | null = null
 
-function getGoogleCredentials() {
+function getGoogleCredentials(): { credentials?: any; credPath?: string; projectId: string } {
+  // 1. Check Replit Secrets / Environment variable first (Never commit files to public Git)
+  const envCreds = process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON || process.env.GOOGLE_CREDENTIALS_JSON
+  if (envCreds) {
+    try {
+      const parsed = JSON.parse(envCreds)
+      if (parsed.project_id && (parsed.private_key || parsed.client_email)) {
+        return { credentials: parsed, projectId: parsed.project_id }
+      }
+    } catch (e) {
+      console.warn('[AI Chat Service] Failed to parse GOOGLE_APPLICATION_CREDENTIALS_JSON environment variable:', e)
+    }
+  }
+
+  // 2. Fall back to local file paths
   const possiblePaths = [
     path.resolve(process.cwd(), 'credentials/google.json'),
     path.resolve('c:/Users/xinye/JobTransit/credentials/google.json'),
@@ -28,25 +42,24 @@ function getGoogleCredentials() {
         const content = fs.readFileSync(p, 'utf8')
         const parsed = JSON.parse(content)
         if (parsed.project_id && (parsed.private_key || parsed.client_email)) {
-          return { credPath: p, projectId: parsed.project_id }
+          return { credPath: p, projectId: parsed.project_id, credentials: parsed }
         }
       } catch {
         // try next
       }
     }
   }
-  throw new Error('Google service account credentials file (credentials/google.json) not found.')
+  throw new Error('Google service account credentials not found in environment variables (GOOGLE_APPLICATION_CREDENTIALS_JSON) or credentials/google.json file.')
 }
 
 function getAuth() {
   if (cachedAuth && cachedProjectId) {
     return { auth: cachedAuth, projectId: cachedProjectId }
   }
-  const { credPath, projectId } = getGoogleCredentials()
-  cachedAuth = new GoogleAuth({
-    keyFile: credPath,
-    scopes: ['https://www.googleapis.com/auth/cloud-platform'],
-  })
+  const { credentials, credPath, projectId } = getGoogleCredentials()
+  cachedAuth = credentials
+    ? new GoogleAuth({ credentials, scopes: ['https://www.googleapis.com/auth/cloud-platform'] })
+    : new GoogleAuth({ keyFile: credPath, scopes: ['https://www.googleapis.com/auth/cloud-platform'] })
   cachedProjectId = projectId
   return { auth: cachedAuth, projectId: cachedProjectId }
 }
