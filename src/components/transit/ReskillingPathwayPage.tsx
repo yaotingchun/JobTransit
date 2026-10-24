@@ -17,6 +17,7 @@ import {
   Target,
   TrainFront,
   TrendingUp,
+  Globe2,
 } from 'lucide-react'
 import {
   getReskillingPathway,
@@ -25,6 +26,7 @@ import {
   type LearningResource,
 } from './pathwayData'
 import { LINES, RANK_COLORS, type Station } from './transitData'
+import { getStationSDGMapping, getSkillSDG, SDG_GOALS } from './sdgData'
 
 interface ReskillingPathwayPageProps {
   station: Station
@@ -36,7 +38,7 @@ interface ReskillingPathwayPageProps {
   onToggleCheckpoint: (checkpointId: string, title: string) => void
 }
 
-type TabKey = 'checklist' | 'match' | 'requirements'
+type TabKey = 'checklist' | 'match' | 'requirements' | 'sdg'
 type FilterType = 'all' | 'free' | 'hrd-corp'
 
 export const ReskillingPathwayPage: React.FC<ReskillingPathwayPageProps> = ({
@@ -89,6 +91,11 @@ export const ReskillingPathwayPage: React.FC<ReskillingPathwayPageProps> = ({
   const pathway = useMemo(
     () => getReskillingPathway(station.id, station.name, station.code),
     [station.id, station.name, station.code],
+  )
+
+  const sdgMapping = useMemo(
+    () => getStationSDGMapping(station.id, station.name),
+    [station.id, station.name],
   )
 
   const line = LINES[station.lines[0]] ?? { code: 'A', name: 'Main Line', color: '#10B981' }
@@ -249,6 +256,26 @@ export const ReskillingPathwayPage: React.FC<ReskillingPathwayPageProps> = ({
             <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono-board tracking-widest bg-white/10 text-stone-300 border border-white/10">
               {pathway.level.toUpperCase()}
             </span>
+
+            {/* UN SDG Primary Badges in Header */}
+            <div className="flex items-center gap-1.5 flex-wrap ml-1">
+              {sdgMapping.primarySDGs.map((sdgId) => {
+                const g = SDG_GOALS[sdgId]
+                return (
+                  <button
+                    key={sdgId}
+                    type="button"
+                    onClick={() => setActiveTab('sdg')}
+                    className="px-2.5 py-0.5 rounded-full text-[10px] font-mono-board font-black tracking-wider text-white flex items-center gap-1 shadow-2xs hover:scale-105 transition-all cursor-pointer"
+                    style={{ background: g.color }}
+                    title={`${g.name} (${g.primaryTarget})`}
+                  >
+                    <Globe2 className="w-2.5 h-2.5" />
+                    <span>{g.badge}</span>
+                  </button>
+                )
+              })}
+            </div>
           </div>
 
           <div className="text-[11px] font-mono-board text-emerald-400 font-bold bg-emerald-950/80 border border-emerald-500/30 px-3 py-1 rounded-full flex items-center gap-1.5 shadow-xs">
@@ -354,6 +381,20 @@ export const ReskillingPathwayPage: React.FC<ReskillingPathwayPageProps> = ({
           >
             <Briefcase className="w-3.5 h-3.5" />
             <span>ROLE REQUIREMENTS & BLUEPRINT</span>
+          </button>
+
+          <button
+            type="button"
+            id="tab-btn-sdg"
+            onClick={() => setActiveTab('sdg')}
+            className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs font-bold font-mono-board tracking-wider transition-all cursor-pointer ${
+              activeTab === 'sdg'
+                ? 'bg-rose-700 text-white shadow-xs'
+                : 'text-stone-600 hover:text-stone-900 hover:bg-stone-200/60'
+            }`}
+          >
+            <Globe2 className="w-3.5 h-3.5 text-rose-500" />
+            <span>UN SDG IMPACT & CONTRIBUTION</span>
           </button>
         </div>
 
@@ -573,19 +614,29 @@ export const ReskillingPathwayPage: React.FC<ReskillingPathwayPageProps> = ({
                       </div>
                     </div>
 
-                    {/* Skills Gained Tags */}
+                    {/* Skills Gained Tags with SDG Mapping */}
                     <div className="pt-3 flex flex-wrap items-center gap-1.5">
                       <span className="text-[10px] font-mono-board font-bold text-stone-400 uppercase mr-1">
                         Competencies Gained:
                       </span>
-                      {cp.skillsGained.map((sk) => (
-                        <span
-                          key={sk}
-                          className="px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-stone-100 text-stone-700 border border-stone-200"
-                        >
-                          {sk}
-                        </span>
-                      ))}
+                      {cp.skillsGained.map((sk) => {
+                        const skSdg = getSkillSDG(sk)
+                        return (
+                          <span
+                            key={sk}
+                            className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-xs font-semibold bg-stone-100 text-stone-700 border border-stone-200"
+                            title={`Advancing ${skSdg.badge}: ${skSdg.name}`}
+                          >
+                            <span>{sk}</span>
+                            <span
+                              className="px-1.5 py-0.2 rounded text-[8.5px] font-mono-board font-black text-white shadow-2xs"
+                              style={{ background: skSdg.color }}
+                            >
+                              {skSdg.badge}
+                            </span>
+                          </span>
+                        )
+                      })}
                     </div>
 
                     {/* Curated Resources Section (Real Working Links) */}
@@ -881,6 +932,7 @@ export const ReskillingPathwayPage: React.FC<ReskillingPathwayPageProps> = ({
                 <div className="flex flex-wrap gap-2 pt-1">
                   {pathway.roleOverview.coreTechStack.map((tech: string) => {
                     const isHave = station.skillsHave.some((h) => tech.toLowerCase().includes(h.toLowerCase()))
+                    const skSdg = getSkillSDG(tech)
                     return (
                       <span
                         key={tech}
@@ -892,12 +944,153 @@ export const ReskillingPathwayPage: React.FC<ReskillingPathwayPageProps> = ({
                       >
                         {isHave ? <Check className="w-3.5 h-3.5 text-emerald-700" /> : <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />}
                         <span>{tech}</span>
+                        <span
+                          className="px-1.5 py-0.2 rounded text-[8.5px] font-mono-board font-black text-white shadow-2xs"
+                          style={{ background: skSdg.color }}
+                          title={`${skSdg.badge}: ${skSdg.name}`}
+                        >
+                          {skSdg.badge}
+                        </span>
                         {isHave && <span className="text-[10px] font-mono-board text-emerald-700 font-bold">(IN HAND)</span>}
                       </span>
                     )
                   })}
                 </div>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* ══════════════════════════════════════════════════
+            TAB 4: UN SDG IMPACT & SUSTAINABILITY CONTRIBUTION
+           ══════════════════════════════════════════════════ */}
+        {activeTab === 'sdg' && (
+          <div className="space-y-6">
+            {/* Hero SDG Impact Card */}
+            <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-stone-900 via-stone-900 to-rose-950 text-white border border-stone-800 shadow-md space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
+                <div className="flex items-center gap-2">
+                  <Globe2 className="w-5 h-5 text-rose-400" />
+                  <span className="text-xs font-mono-board tracking-[0.2em] uppercase font-bold text-rose-300">
+                    UNITED NATIONS SUSTAINABLE DEVELOPMENT GOALS (SDG) ALIGNMENT
+                  </span>
+                </div>
+                <span className="px-3 py-1 rounded-full text-xs font-mono-board font-bold bg-white/10 text-amber-300 border border-white/15">
+                  LEAD {sdgMapping.leadTarget}
+                </span>
+              </div>
+
+              <div>
+                <h2 className="font-signage text-2xl sm:text-3xl font-black text-white">
+                  {sdgMapping.impactHeadline}
+                </h2>
+                <p className="text-sm sm:text-base text-stone-300 leading-relaxed max-w-4xl pt-2">
+                  {sdgMapping.contributionNarrative}
+                </p>
+              </div>
+            </div>
+
+            {/* Primary SDGs Championed Cards */}
+            <div className="space-y-3">
+              <div className="text-xs font-mono-board tracking-wider text-stone-500 uppercase font-bold">
+                GLOBAL GOALS CHAMPIONED BY THIS RESKILLING ROUTE:
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {sdgMapping.primarySDGs.map((sdgId) => {
+                  const g = SDG_GOALS[sdgId]
+                  return (
+                    <div
+                      key={sdgId}
+                      className="p-6 rounded-2xl bg-white border border-stone-200 shadow-xs flex flex-col justify-between space-y-4 relative overflow-hidden group hover:shadow-sm transition-all"
+                    >
+                      <div className="absolute top-0 left-0 right-0 h-1.5" style={{ background: g.color }} />
+
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span
+                            className="px-2.5 py-1 rounded-lg text-xs font-mono-board font-black text-white shadow-xs"
+                            style={{ background: g.color }}
+                          >
+                            {g.badge}
+                          </span>
+                          <span className="text-xs font-mono-board font-bold text-stone-500">
+                            {g.primaryTarget}
+                          </span>
+                        </div>
+
+                        <h3 className="font-signage text-xl font-bold text-stone-900 pt-1">
+                          {g.name}
+                        </h3>
+
+                        <p className="text-xs text-stone-600 leading-relaxed">
+                          <strong>UN Target:</strong> {g.targetDescription}
+                        </p>
+                      </div>
+
+                      <div className="p-3.5 rounded-xl bg-stone-50 border border-stone-200/80 text-xs text-stone-700 leading-relaxed">
+                        <strong className="text-stone-900 font-semibold block mb-0.5">How this role makes an impact:</strong>
+                        {g.careerImpactTheme}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+
+            {/* Skill-to-SDG Contribution Matrix */}
+            <div className="p-6 sm:p-7 rounded-2xl bg-white border border-stone-200 shadow-xs space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-200 pb-3">
+                <div>
+                  <div className="text-[10px] font-mono-board tracking-widest text-stone-500 uppercase font-bold">
+                    TECHNICAL COMPETENCY BREAKDOWN
+                  </div>
+                  <h3 className="font-signage text-xl sm:text-2xl font-black text-stone-900">
+                    Skill-to-SDG Contribution Matrix
+                  </h3>
+                </div>
+                <span className="text-xs font-mono-board text-stone-500">
+                  {sdgMapping.skillContributions.length} Competencies Mapped
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+                {sdgMapping.skillContributions.map((item, idx) => {
+                  const g = SDG_GOALS[item.sdgId]
+                  return (
+                    <div
+                      key={idx}
+                      className="p-4 rounded-xl bg-stone-50 border border-stone-200/90 flex flex-col justify-between space-y-2 hover:bg-stone-100/60 transition-colors"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono-board text-xs font-bold text-stone-900">
+                          {item.skill}
+                        </span>
+                        <span
+                          className="px-2 py-0.5 rounded text-[10px] font-mono-board font-black text-white shadow-2xs"
+                          style={{ background: g.color }}
+                        >
+                          {g.badge}
+                        </span>
+                      </div>
+                      <p className="text-xs text-stone-600 leading-relaxed">
+                        {item.howItHelps}
+                      </p>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+
+            {/* National & Socio-Economic Impact Statement */}
+            <div className="p-6 rounded-2xl bg-amber-50/70 border border-amber-300 text-stone-900 space-y-2">
+              <h4 className="font-signage text-lg font-bold text-amber-950 flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-amber-600" />
+                <span>Malaysian & Regional Workforce Alignment</span>
+              </h4>
+              <p className="text-xs sm:text-sm text-stone-700 leading-relaxed">
+                By grounding technical training in accredited national reskilling programs (<strong>HRD Corp Claimable</strong>) and high-quality open educational resources (<strong>SDG 4</strong>), JobTransit reduces friction for career changers and graduates, directly supporting national targets under the Malaysia Digital Economy Blueprint (MyDIGITAL) and the National AI Roadmap (<strong>SDG 8 & SDG 9</strong>).
+              </p>
             </div>
           </div>
         )}
