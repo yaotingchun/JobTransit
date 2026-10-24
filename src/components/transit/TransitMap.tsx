@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import {
   EDGES,
   LINES,
@@ -20,6 +20,8 @@ import { ZoomIn, ZoomOut, RotateCcw, ArrowRight, GraduationCap, X } from 'lucide
 
 interface TransitMapProps {
   selectedId: string
+  activeCalloutId?: string | null
+  onCloseCallout?: () => void
   hoveredId: string | null
   discovered: Set<string>
   activeRoute: Route | null
@@ -93,6 +95,8 @@ function labelLayout(s: Station) {
 
 export const TransitMap: React.FC<TransitMapProps> = ({
   selectedId,
+  activeCalloutId,
+  onCloseCallout,
   hoveredId,
   discovered,
   activeRoute,
@@ -106,10 +110,30 @@ export const TransitMap: React.FC<TransitMapProps> = ({
 }) => {
   const motionRef = useRef<SVGAnimateMotionElement>(null)
   const origin = STATION_MAP[ORIGIN_ID]
-  const selectedStation = STATION_MAP[selectedId]
 
-  // Callout dismiss state for the selected station
-  const [dismissedId, setDismissedId] = useState<string | null>(null)
+  // Internal fallback callout state if not controlled by parent
+  const [localCalloutId, setLocalCalloutId] = useState<string | null>(null)
+  const currentCalloutId = activeCalloutId !== undefined ? activeCalloutId : localCalloutId
+  const calloutStation = currentCalloutId ? STATION_MAP[currentCalloutId] : null
+
+  const handleDismissCallout = () => {
+    if (onCloseCallout) {
+      onCloseCallout()
+    } else {
+      setLocalCalloutId(null)
+    }
+  }
+
+  // Dismiss active callout with Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && currentCalloutId) {
+        handleDismissCallout()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [currentCalloutId, onCloseCallout])
 
   // Zoom & Pan state for interactive metro map experience
   const [zoom, setZoom] = useState(1)
@@ -397,13 +421,17 @@ export const TransitMap: React.FC<TransitMapProps> = ({
                 onFocus={() => onHover(s.id)}
                 onBlur={() => onHover(null)}
                 onClick={() => {
-                  setDismissedId(null)
+                  if (activeCalloutId === undefined) {
+                    setLocalCalloutId(s.id)
+                  }
                   onSelect(s.id)
                 }}
                 onKeyDown={(ev) => {
                   if (ev.key === 'Enter' || ev.key === ' ') {
                     ev.preventDefault()
-                    setDismissedId(null)
+                    if (activeCalloutId === undefined) {
+                      setLocalCalloutId(s.id)
+                    }
                     onSelect(s.id)
                   }
                 }}
@@ -615,10 +643,10 @@ export const TransitMap: React.FC<TransitMapProps> = ({
 
 
       {/* ── Interactive Station Callout Popover on Click (with Button to View Pathway) ── */}
-      {selectedStation && selectedStation.id !== ORIGIN_ID && dismissedId !== selectedStation.id && (() => {
+      {calloutStation && calloutStation.id !== ORIGIN_ID && (() => {
         // Calculate dynamic coordinates accounting for zoom and pan
-        const stationSvgX = (selectedStation.x - MAP_W / 2) * zoom + MAP_W / 2 + pan.x
-        const stationSvgY = (selectedStation.y - MAP_H / 2) * zoom + MAP_H / 2 + pan.y
+        const stationSvgX = (calloutStation.x - MAP_W / 2) * zoom + MAP_W / 2 + pan.x
+        const stationSvgY = (calloutStation.y - MAP_H / 2) * zoom + MAP_H / 2 + pan.y
         const posX = (stationSvgX / MAP_W) * 100
         const posY = (stationSvgY / MAP_H) * 100
 
@@ -644,7 +672,7 @@ export const TransitMap: React.FC<TransitMapProps> = ({
               {/* Callout Header */}
               <div className="flex items-center justify-between gap-2 mb-2">
                 <div className="flex items-center gap-1.5 flex-wrap">
-                  {selectedStation.lines.map((l) => (
+                  {calloutStation.lines.map((l) => (
                     <span
                       key={l}
                       className="w-4 h-4 rounded-full text-[9px] font-black flex items-center justify-center text-white shadow-xs"
@@ -653,10 +681,10 @@ export const TransitMap: React.FC<TransitMapProps> = ({
                       {LINES[l].code}
                     </span>
                   ))}
-                  <span className="font-mono-board text-[10px] text-amber-300 font-bold">[{selectedStation.code}]</span>
-                  {selectedStation.topRank && (
+                  <span className="font-mono-board text-[10px] text-amber-300 font-bold">[{calloutStation.code}]</span>
+                  {calloutStation.topRank && (
                     <span className="text-[9px] font-black tracking-widest px-1.5 py-0.5 rounded bg-amber-400 text-stone-950">
-                      ★ TOP #{selectedStation.topRank}
+                      ★ TOP #{calloutStation.topRank}
                     </span>
                   )}
                 </div>
@@ -664,7 +692,7 @@ export const TransitMap: React.FC<TransitMapProps> = ({
                 <button
                   type="button"
                   id="dismiss-map-callout-btn"
-                  onClick={() => setDismissedId(selectedStation.id)}
+                  onClick={handleDismissCallout}
                   className="p-1 rounded-full text-stone-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
                   title="Dismiss Callout"
                 >
@@ -674,10 +702,10 @@ export const TransitMap: React.FC<TransitMapProps> = ({
 
               {/* Station Title */}
               <h4 className="font-signage text-lg font-black tracking-wide leading-tight text-white">
-                {selectedStation.name.toUpperCase()}
+                {calloutStation.name.toUpperCase()}
               </h4>
 
-              {isLocked(selectedStation) ? (
+              {isLocked(calloutStation) ? (
                 <div className="mt-2 space-y-1.5">
                   <p className="text-xs text-stone-400">
                     This station is uncharted in fog. Spend tokens on the ticket inspector to reveal routes and skills.
@@ -686,22 +714,22 @@ export const TransitMap: React.FC<TransitMapProps> = ({
               ) : (
                 <>
                   <p className="text-xs text-stone-300 line-clamp-2 mt-1 leading-snug">
-                    {selectedStation.blurb}
+                    {calloutStation.blurb}
                   </p>
 
                   {/* Metrics Pill Grid */}
                   <div className="mt-2.5 pt-2 border-t border-stone-800 grid grid-cols-3 gap-1.5 font-mono-board text-center text-[10px]">
                     <div className="bg-white/5 p-1 rounded-lg">
                       <div className="text-stone-400">FIT</div>
-                      <div className="text-emerald-400 font-bold">{selectedStation.fit}%</div>
+                      <div className="text-emerald-400 font-bold">{calloutStation.fit}%</div>
                     </div>
                     <div className="bg-white/5 p-1 rounded-lg">
                       <div className="text-stone-400">RIDE</div>
-                      <div className="text-stone-200 font-bold">{selectedStation.months} MO</div>
+                      <div className="text-stone-200 font-bold">{calloutStation.months} MO</div>
                     </div>
                     <div className="bg-white/5 p-1 rounded-lg">
                       <div className="text-stone-400">SALARY</div>
-                      <div className="text-amber-300 font-bold truncate">{selectedStation.salary.split('–')[0]}</div>
+                      <div className="text-amber-300 font-bold truncate">{calloutStation.salary.split('–')[0]}</div>
                     </div>
                   </div>
 
@@ -709,7 +737,7 @@ export const TransitMap: React.FC<TransitMapProps> = ({
                   <button
                     type="button"
                     id="map-callout-view-pathway-btn"
-                    onClick={() => onOpenPathway?.(selectedStation.id)}
+                    onClick={() => onOpenPathway?.(calloutStation.id)}
                     className="w-full mt-3 py-2 px-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-stone-950 font-mono-board text-xs font-black tracking-wider flex items-center justify-between shadow-lg transition-all active:scale-95 cursor-pointer group"
                   >
                     <div className="flex items-center gap-1.5">

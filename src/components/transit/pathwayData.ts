@@ -14,6 +14,136 @@ export interface LearningResource {
   duration: string
 }
 
+/** Resolves an authoritative, working direct destination URL for any learning resource. */
+export function resolveResourceUrl(res: LearningResource): string {
+  if (res.url && res.url.startsWith('http')) return res.url
+
+  const title = (res.title || '').toLowerCase()
+  const provider = (res.provider || '').toLowerCase()
+
+  // DeepLearning.AI
+  if (title.includes('functions, tools and agents')) {
+    return 'https://www.deeplearning.ai/short-courses/functions-tools-agents-langchain/'
+  }
+  if (title.includes('vector databases for production rag') || (title.includes('rag') && provider.includes('deeplearning.ai'))) {
+    return 'https://www.deeplearning.ai/short-courses/building-evaluating-advanced-rag/'
+  }
+  if (title.includes('automated testing & evaluation') || (title.includes('testing') && provider.includes('deeplearning.ai'))) {
+    return 'https://www.deeplearning.ai/short-courses/automated-testing-llm-ops/'
+  }
+  if (title.includes('prompt engineering') && provider.includes('deeplearning.ai')) {
+    return 'https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/'
+  }
+  if (provider.includes('deeplearning.ai')) {
+    return 'https://www.deeplearning.ai/short-courses/'
+  }
+
+  // LangChain & LangGraph
+  if (title.includes('langgraph academy') || provider.includes('langchain academy')) {
+    return 'https://academy.langchain.com/courses/intro-to-langgraph'
+  }
+  if (title.includes('stateful agent') || title.includes('langgraph') || provider.includes('langgraph')) {
+    return 'https://langchain-ai.github.io/langgraph/'
+  }
+
+  // Nous Research / Hermes / Hugging Face
+  if (title.includes('hermes') || provider.includes('nous research')) {
+    return 'https://huggingface.co/NousResearch/Hermes-3-Llama-3.1-8B'
+  }
+  if (title.includes('python for javascript') || (provider.includes('hugging face') && title.includes('dataset'))) {
+    return 'https://huggingface.co/learn'
+  }
+  if (provider.includes('hugging face') || title.includes('hugging face')) {
+    return 'https://huggingface.co/'
+  }
+
+  // Anthropic
+  if (title.includes('anthropic') || provider.includes('anthropic')) {
+    return 'https://www.anthropic.com/research/building-effective-agents'
+  }
+
+  // Vector DBs (Qdrant, Pinecone)
+  if (provider.includes('qdrant') || title.includes('qdrant')) {
+    return 'https://qdrant.tech/documentation/'
+  }
+  if (provider.includes('pinecone') || title.includes('pinecone')) {
+    return 'https://docs.pinecone.io/'
+  }
+
+  // Evals & Guardrails
+  if (title.includes('ragas') || title.includes('trulens')) {
+    return 'https://docs.ragas.io/'
+  }
+  if (title.includes('nemo guardrails') || provider.includes('nvidia')) {
+    return 'https://github.com/NVIDIA/NeMo-Guardrails'
+  }
+  if (title.includes('guardrails') || title.includes('llama-guard')) {
+    return 'https://www.guardrailsai.com/'
+  }
+
+  // dbt
+  if (title.includes('dbt fundamentals') || provider.includes('dbt labs')) {
+    return 'https://courses.getdbt.com/courses/fundamentals'
+  }
+
+  // Mode / SQL
+  if (title.includes('sql for data engineering') || provider.includes('mode')) {
+    return 'https://mode.com/sql-tutorial/'
+  }
+
+  // Airflow / Astronomer
+  if (title.includes('airflow') || provider.includes('astronomer')) {
+    return 'https://academy.astronomer.io/'
+  }
+
+  // Kafka / Confluent
+  if (title.includes('kafka') || provider.includes('confluent')) {
+    return 'https://developer.confluent.io/learn-kafka/'
+  }
+
+  // LlamaIndex
+  if (title.includes('llamaindex') || provider.includes('llamaindex')) {
+    return 'https://docs.llamaindex.ai/'
+  }
+
+  // Fast.ai
+  if (provider.includes('fast.ai') || title.includes('fast.ai')) {
+    return 'https://course.fast.ai/'
+  }
+
+  // Unsloth
+  if (title.includes('unsloth') || provider.includes('unsloth')) {
+    return 'https://github.com/unslothai/unsloth'
+  }
+
+  // Full Stack Deep Learning
+  if (title.includes('full stack llm') || provider.includes('full stack')) {
+    return 'https://fullstackdeeplearning.com/llm-bootcamp/'
+  }
+
+  // vLLM / Inference
+  if (title.includes('vllm') || provider.includes('vllm')) {
+    return 'https://docs.vllm.ai/'
+  }
+
+  // FastAPI
+  if (title.includes('fastapi')) {
+    return 'https://fastapi.tiangolo.com/'
+  }
+
+  // HRD Corp Approved Schemes
+  if (provider.includes('hrd corp') || title.includes('hrd corp') || res.type === 'hrd-corp') {
+    return 'https://hrdcorp.gov.my/sbl-khas-scheme/'
+  }
+
+  // Coursera
+  if (provider.includes('coursera')) {
+    return `https://www.coursera.org/search?query=${encodeURIComponent(res.title)}`
+  }
+
+  return `https://www.google.com/search?q=${encodeURIComponent(`${res.title} ${res.provider}`)}`
+}
+
 export interface LearningCheckpoint {
   id: string
   phaseNumber: number

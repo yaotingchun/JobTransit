@@ -1,14 +1,15 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   ArrowLeftRight,
+  ArrowRight,
   Coins,
   Eye,
   EyeOff,
+  FileCheck,
   Flame,
   Footprints,
   GraduationCap,
   MapPinned,
-  Target,
   Trophy,
 } from 'lucide-react'
 import type { UserProfile } from '../Navbar'
@@ -16,6 +17,7 @@ import { TransitMap } from './TransitMap'
 import { DepartureBoard } from './DepartureBoard'
 import { StationTicket } from './StationTicket'
 import { ReskillingPathwayPage } from './ReskillingPathwayPage'
+import { getReskillingPathway } from './pathwayData'
 import {
   LINES,
   LINE_ORDER,
@@ -101,6 +103,7 @@ const START_XP = 6340
 
 export const TransitTab: React.FC<TransitTabProps> = ({ currentUser }) => {
   const [selectedId, setSelectedId] = useState<string>(TOP_PICKS[0].id)
+  const [activeCalloutId, setActiveCalloutId] = useState<string | null>(null)
   const [hoveredId, setHoveredId] = useState<string | null>(null)
   const [routeIdx, setRouteIdx] = useState(0)
   const [trainKey, setTrainKey] = useState(1)
@@ -128,6 +131,7 @@ export const TransitTab: React.FC<TransitTabProps> = ({ currentUser }) => {
       return new Set()
     }
   })
+  const [checklistTab, setChecklistTab] = useState<'missions' | 'pathway'>('missions')
   const toastId = useRef(0)
 
   // Listen to hash changes for deep linking to / from full page pathway
@@ -237,10 +241,14 @@ export const TransitTab: React.FC<TransitTabProps> = ({ currentUser }) => {
   const routes = useMemo(() => findRoutes(selectedId), [selectedId])
   const activeRoute = routes[routeIdx] ?? routes[0] ?? null
   const ghostRoutes = showAlts ? routes.filter((r) => r !== activeRoute) : []
+  const rolePathway = useMemo(() => {
+    if (selected.id === ORIGIN_ID || selectedLocked) return null
+    return getReskillingPathway(selected.id, selected.name, selected.code)
+  }, [selected.id, selected.name, selected.code, selectedLocked])
 
   const routeMonths = useMemo(() => {
     const out: Record<string, number> = {}
-    TOP_PICKS.forEach((p) => {
+    STATIONS.forEach((p) => {
       out[p.id] = findRoutes(p.id, 1)[0]?.months ?? p.months
     })
     return out
@@ -248,8 +256,8 @@ export const TransitTab: React.FC<TransitTabProps> = ({ currentUser }) => {
 
   const market = useMemo(() => {
     const out: Record<string, number> = {}
-    TOP_PICKS.forEach((p) => {
-      out[p.id] = Math.max(0, Math.min(99, (p.signal?.market ?? 0) + (marketJitter[p.id] ?? 0)))
+    STATIONS.forEach((p) => {
+      out[p.id] = Math.max(0, Math.min(99, (p.signal?.market ?? 80) + (marketJitter[p.id] ?? 0)))
     })
     return out
   }, [marketJitter])
@@ -261,6 +269,7 @@ export const TransitTab: React.FC<TransitTabProps> = ({ currentUser }) => {
   // ── Actions ──
   const handleSelect = (id: string, openPathway = false) => {
     setSelectedId(id)
+    setActiveCalloutId(id)
     setRouteIdx(0)
     setRoutesViewed(new Set())
     const st = STATION_MAP[id]
@@ -282,6 +291,7 @@ export const TransitTab: React.FC<TransitTabProps> = ({ currentUser }) => {
 
   const handleBackToMap = () => {
     setTransitView('map')
+    setActiveCalloutId(null)
     window.location.hash = '#transit'
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -333,7 +343,7 @@ export const TransitTab: React.FC<TransitTabProps> = ({ currentUser }) => {
     setLastScan(Date.now())
     setNowTick(Date.now())
     const j: Record<string, number> = {}
-    TOP_PICKS.forEach((p) => (j[p.id] = Math.floor(Math.random() * 6) - 2))
+    STATIONS.forEach((p) => (j[p.id] = Math.floor(Math.random() * 6) - 2))
     setMarketJitter(j)
     earnStamp('trend')
   }
@@ -526,6 +536,8 @@ export const TransitTab: React.FC<TransitTabProps> = ({ currentUser }) => {
               <div className="min-w-[760px]">
                 <TransitMap
                   selectedId={selectedId}
+                  activeCalloutId={activeCalloutId}
+                  onCloseCallout={() => setActiveCalloutId(null)}
                   hoveredId={hoveredId}
                   discovered={discovered}
                   activeRoute={selectedLocked ? null : activeRoute}
@@ -657,6 +669,166 @@ export const TransitTab: React.FC<TransitTabProps> = ({ currentUser }) => {
               </div>
             )}
           </div>
+
+          {/* ── COMMUTE & CAREER CHECKLIST ── */}
+          <div className="planner-card rounded-[26px] p-5" id="daily-missions">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <div className="flex items-center gap-2">
+                <FileCheck className="w-5 h-5 text-stone-900" />
+                <h3 className="font-signage text-xl font-black tracking-wider text-stone-900">
+                  {checklistTab === 'missions' || !rolePathway
+                    ? "COMMUTE CHECKLIST · MISSIONS"
+                    : `${selected.name.toUpperCase()} · LEARNING CHECKLIST`}
+                </h3>
+              </div>
+
+              {/* View Selector Tabs */}
+              <div className="flex items-center gap-1.5 bg-stone-200/70 p-1 rounded-xl">
+                <button
+                  type="button"
+                  id="tab-checklist-missions"
+                  onClick={() => setChecklistTab('missions')}
+                  className={`px-3 py-1 rounded-lg text-xs font-mono-board tracking-wider font-bold transition-all cursor-pointer ${
+                    checklistTab === 'missions' || !rolePathway
+                      ? 'bg-stone-900 text-amber-300 shadow-xs'
+                      : 'text-stone-600 hover:text-stone-900'
+                  }`}
+                >
+                  DAILY MISSIONS ({missionsDone.size}/{MISSIONS.length})
+                </button>
+                {rolePathway && (
+                  <button
+                    type="button"
+                    id="tab-checklist-pathway"
+                    onClick={() => setChecklistTab('pathway')}
+                    className={`px-3 py-1 rounded-lg text-xs font-mono-board tracking-wider font-bold transition-all cursor-pointer ${
+                      checklistTab === 'pathway'
+                        ? 'bg-stone-900 text-amber-300 shadow-xs'
+                        : 'text-stone-600 hover:text-stone-900'
+                    }`}
+                  >
+                    LEARNING STEPS ({rolePathway.checkpoints.filter((c) => completedCheckpoints.has(c.id)).length}/{rolePathway.checkpoints.length})
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Checklist Tab 1: Daily Missions */}
+            {(checklistTab === 'missions' || !rolePathway) && (
+              <div className="space-y-2">
+                {MISSIONS.map((m) => {
+                  const done = missionsDone.has(m.id)
+                  return (
+                    <div
+                      key={m.id}
+                      className={`flex items-center gap-3 rounded-xl px-3.5 py-2.5 border transition-all ${
+                        done ? 'bg-emerald-50 border-emerald-200' : 'bg-white/70 border-stone-200'
+                      }`}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (!done) {
+                            completeMission(m.id)
+                            setTokens((t) => t + 1)
+                          }
+                        }}
+                        className={`w-6 h-6 rounded-md border-2 flex items-center justify-center text-xs font-black shrink-0 transition-all ${
+                          done ? 'bg-emerald-600 border-emerald-600 text-white rotate-[-6deg]' : 'border-stone-300 text-transparent hover:border-stone-400'
+                        }`}
+                      >
+                        ✓
+                      </button>
+                      <span className={`flex-1 text-sm ${done ? 'text-emerald-900 line-through decoration-emerald-400 font-medium' : 'text-stone-800'}`}>
+                        {m.title}
+                      </span>
+                      <span className="font-mono-board text-xs font-bold text-amber-600">+{m.xp} XP</span>
+                      {!m.auto && !done && (
+                        <button
+                          type="button"
+                          id={`mission-${m.id}-btn`}
+                          onClick={() => {
+                            completeMission(m.id)
+                            setTokens((t) => t + 1)
+                          }}
+                          className="text-[10px] font-mono-board tracking-widest px-2.5 py-1 rounded-md bg-stone-900 text-amber-300 hover:bg-black cursor-pointer transition-all active:scale-95"
+                        >
+                          START
+                        </button>
+                      )}
+                    </div>
+                  )
+                })}
+
+                {planned && (
+                  <div className="mt-3 flex items-center gap-2 text-xs text-stone-600 pt-2 border-t border-stone-200">
+                    <Trophy className="w-3.5 h-3.5 text-amber-500" />
+                    <span>Transit Card destination: <strong className="text-stone-900">{STATION_MAP[planned]?.name ?? planned}</strong></span>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Checklist Tab 2: Role Learning Checkpoints */}
+            {checklistTab === 'pathway' && rolePathway && (
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between text-xs text-stone-500 mb-1 px-1">
+                  <span>Ordered learning checkpoints for transition from your background</span>
+                  <button
+                    type="button"
+                    onClick={() => handleOpenPathway()}
+                    className="inline-flex items-center gap-1 font-mono-board font-bold text-stone-800 hover:text-black underline underline-offset-2"
+                  >
+                    <span>Full Syllabus & Resources</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </button>
+                </div>
+                {rolePathway.checkpoints.map((cp) => {
+                  const done = completedCheckpoints.has(cp.id)
+                  return (
+                    <div
+                      key={cp.id}
+                      className={`flex items-start gap-3 rounded-xl p-3 border transition-all ${
+                        done ? 'bg-emerald-50 border-emerald-200' : 'bg-white/70 border-stone-200 hover:bg-white'
+                      }`}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => handleToggleCheckpoint(cp.id, cp.title)}
+                        className={`w-6 h-6 rounded-md border-2 flex items-center justify-center text-xs font-black shrink-0 mt-0.5 transition-all cursor-pointer ${
+                          done ? 'bg-emerald-600 border-emerald-600 text-white rotate-[-6deg]' : 'border-stone-300 text-transparent hover:border-emerald-500'
+                        }`}
+                        title={done ? 'Mark as incomplete' : 'Mark checkpoint complete (+50 XP)'}
+                      >
+                        ✓
+                      </button>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-baseline justify-between gap-2">
+                          <h4 className={`text-sm font-bold ${done ? 'text-emerald-950 line-through decoration-emerald-400' : 'text-stone-900'}`}>
+                            {cp.title}
+                          </h4>
+                          <span className="text-[10px] font-mono-board text-stone-500 shrink-0 font-medium">
+                            {cp.timeEstimate}
+                          </span>
+                        </div>
+                        <p className="text-xs text-stone-600 mt-0.5 line-clamp-1">{cp.objective}</p>
+                        <div className="flex flex-wrap items-center gap-1.5 mt-2">
+                          {cp.skillsGained.slice(0, 3).map((sk) => (
+                            <span key={sk} className="text-[10px] font-mono-board px-2 py-0.5 rounded bg-stone-100 text-stone-700 border border-stone-200">
+                              {sk}
+                            </span>
+                          ))}
+                          <span className="ml-auto font-mono-board text-[11px] font-bold text-amber-600">
+                            +50 XP
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Right column */}
@@ -684,98 +856,6 @@ export const TransitTab: React.FC<TransitTabProps> = ({ currentUser }) => {
             onBoard={handleBoard}
             onOpenPathway={() => handleOpenPathway()}
           />
-        </div>
-      </div>
-
-      {/* ── MISSIONS + PASSPORT ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <div className="planner-card rounded-[26px] p-5" id="daily-missions">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <Target className="w-4 h-4 text-stone-900" />
-              <h3 className="font-signage text-xl font-black tracking-wider text-stone-900">TODAY'S MISSIONS</h3>
-            </div>
-            <span className="text-[10px] font-mono-board tracking-widest text-stone-500">
-              {missionsDone.size}/{MISSIONS.length} CLEARED
-            </span>
-          </div>
-          <div className="space-y-2">
-            {MISSIONS.map((m) => {
-              const done = missionsDone.has(m.id)
-              return (
-                <div
-                  key={m.id}
-                  className={`flex items-center gap-3 rounded-xl px-3 py-2.5 border transition-all ${
-                    done ? 'bg-emerald-50 border-emerald-200' : 'bg-white/70 border-stone-200'
-                  }`}
-                >
-                  <span
-                    className={`w-6 h-6 rounded-md border-2 flex items-center justify-center text-xs font-black shrink-0 transition-all ${
-                      done ? 'bg-emerald-600 border-emerald-600 text-white rotate-[-6deg]' : 'border-stone-300 text-transparent'
-                    }`}
-                  >
-                    ✓
-                  </span>
-                  <span className={`flex-1 text-sm ${done ? 'text-emerald-900 line-through decoration-emerald-400' : 'text-stone-800'}`}>
-                    {m.title}
-                  </span>
-                  <span className="font-mono-board text-xs font-bold text-amber-600">+{m.xp}</span>
-                  {!m.auto && !done && (
-                    <button
-                      type="button"
-                      id={`mission-${m.id}-btn`}
-                      onClick={() => {
-                        completeMission(m.id)
-                        setTokens((t) => t + 1)
-                      }}
-                      className="text-[10px] font-mono-board tracking-widest px-2 py-1 rounded-md bg-stone-900 text-amber-300 hover:bg-black cursor-pointer"
-                    >
-                      START
-                    </button>
-                  )}
-                </div>
-              )
-            })}
-          </div>
-          {planned && (
-            <div className="mt-3 flex items-center gap-2 text-xs text-stone-600">
-              <Trophy className="w-3.5 h-3.5 text-amber-500" />
-              Transit Card destination: <span className="font-bold text-stone-900">{STATION_MAP[planned].name}</span>
-            </div>
-          )}
-        </div>
-
-        <div className="passport-card rounded-[26px] p-5 relative overflow-hidden" id="passport-stamps">
-          <div className="flex items-center justify-between mb-3 relative">
-            <h3 className="font-signage text-xl font-black tracking-wider text-[#3B2F1E]">COMMUTER PASSPORT</h3>
-            <span className="text-[10px] font-mono-board tracking-widest text-[#8A7550]">
-              {stamps.size}/{STAMPS.length} STAMPS
-            </span>
-          </div>
-          <div className="grid grid-cols-3 gap-3 relative">
-            {STAMPS.map((st, i) => {
-              const got = stamps.has(st.id)
-              return (
-                <div key={st.id} className="flex flex-col items-center gap-1.5">
-                  <div
-                    className={`passport-stamp w-[74px] h-[74px] rounded-full flex flex-col items-center justify-center transition-all duration-500 ${
-                      got ? 'stamp-in' : 'opacity-30 grayscale'
-                    }`}
-                    style={{
-                      color: st.color,
-                      transform: `rotate(${(i % 2 ? 1 : -1) * (6 + i * 3)}deg)`,
-                      borderColor: st.color,
-                    }}
-                  >
-                    <span className="text-2xl leading-none">{st.glyph}</span>
-                    <span className="font-signage text-[9px] font-black tracking-widest mt-0.5 text-center leading-[1.05] px-1">
-                      {st.name.toUpperCase()}
-                    </span>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
         </div>
       </div>
 
