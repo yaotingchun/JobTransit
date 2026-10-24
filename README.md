@@ -205,8 +205,7 @@ Our team utilized Replit as our central collaborative development, staging, and 
 
 1. **Client-Side Document Parsing & OCR**: Processing complex multi-column resumes and scanned images directly in the browser without freezing the UI required configuring asynchronous Web Workers with `Tesseract.js` WASM, combined with fallback regex parsers for PDF.js and Mammoth.
 2. **Real-Time Market Crawling & Anti-Scraping Defenses**: Fetching live hiring statistics from LinkedIn without incurring aggressive rate limiting required building an intelligent server-side caching layer in [`server/linkedinScraper.ts`](server/linkedinScraper.ts) that caches results for 24 hours with scheduled background heartbeats.
-3. **High-Performance 3D Glassmorphism**: Achieving a photorealistic 3D transit pass with gyroscopic specular glare, dynamic holograms, and smooth 60 FPS transitions across mobile and desktop required careful GPU layer composition using CSS 3D transforms (`preserve-3d`) and PointerEvent physics dampening.
-4. **Idempotent News Pipeline**: Building an automated tech news aggregator required implementing distributed lease locks in Firebase Cloud Functions v2 (`functions/src/lib/lease.ts`) to prevent concurrent cron invocations from creating duplicate feed articles.
+3. **Idempotent News Pipeline**: Building an automated tech news aggregator required implementing distributed lease locks in Firebase Cloud Functions v2 (`functions/src/lib/lease.ts`) to prevent concurrent cron invocations from creating duplicate feed articles.
 
 ### Learnings
 
