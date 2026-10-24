@@ -54,7 +54,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   useLayoutEffect(() => {
     const updateIndicator = () => {
-      const currentTabEl = tabRefs.current[activeTab]
+      const currentTabEl = activeTab ? tabRefs.current[activeTab] : null
       const dockEl = dockRef.current
       if (currentTabEl && dockEl) {
         const dockRect = dockEl.getBoundingClientRect()
