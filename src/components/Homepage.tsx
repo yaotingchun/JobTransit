@@ -20,7 +20,6 @@ import {
   Newspaper,
   ChevronRight,
   TrainFront,
-  ShieldCheck,
 } from 'lucide-react'
 import { CatchupTab } from './catchup/CatchupTab'
 import { TransitTab } from './transit/TransitTab'
@@ -29,8 +28,6 @@ import { TrendView } from './trend/TrendView'
 import { ProfileOnboarding } from './ProfileOnboarding'
 import { AIChatbox } from './chat/AIChatbox'
 import { FloatingAIChatTrigger } from './chat/FloatingAIChatTrigger'
-import { QUICK_QUESTIONS } from './chat/chatKnowledge'
-import aiMascotImg from '../assets/ai-mascot.png'
 interface HomepageProps {
   currentUser: UserProfile
   onLogout: () => void
@@ -130,10 +127,6 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
   const [isAIChatOpen, setIsAIChatOpen] = useState(false)
   const [activeAIChatQuery, setActiveAIChatQuery] = useState<string | null>(null)
 
-  const handleOpenAIChatWithQuery = (questionText: string) => {
-    setActiveAIChatQuery(questionText)
-    setIsAIChatOpen(true)
-  }
 
   const handleNavigateToPathway = (stationId: string) => {
     window.location.hash = `#pathway-${stationId}`
@@ -160,10 +153,6 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
         onSelectTab={setActiveTab}
         currentUser={currentUser}
         onLogout={onLogout}
-        onOpenAIChat={() => {
-          setActiveAIChatQuery(null)
-          setIsAIChatOpen(true)
-        }}
       />
 
       {/* Main Container */}
@@ -219,18 +208,6 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
                     <span>2026 DISRUPTION RADAR</span>
                   </button>
 
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setActiveAIChatQuery(null)
-                      setIsAIChatOpen(true)
-                    }}
-                    className="px-5 py-2.5 rounded-full bg-amber-400 hover:bg-amber-300 text-stone-950 font-mono-board text-xs font-black tracking-wider shadow-md transition-all active:scale-95 cursor-pointer flex items-center gap-2 group"
-                  >
-                    <img src={aiMascotImg} alt="AI Mascot" className="w-5 h-5 object-contain group-hover:rotate-6 transition-transform" />
-                    <span>AI CHAT NAVIGATOR</span>
-                    <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
-                  </button>
                 </div>
               </div>
 
@@ -347,79 +324,6 @@ export const Homepage: React.FC<HomepageProps> = ({ currentUser, onLogout }) => 
               </div>
             </div>
 
-            {/* ── 3.5. AI EMPIRICAL RESEARCH HUB: 6 SAMPLE INQUIRIES ── */}
-            <div className="rounded-[28px] p-5 sm:p-6 bg-white/90 backdrop-blur-md border border-stone-300/80 shadow-[0_16px_36px_rgba(28,25,23,0.06)] space-y-4">
-              <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-stone-200">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded bg-stone-900 text-amber-300 font-mono-board text-[10px] font-black tracking-widest shadow-xs flex items-center gap-1">
-                      <ShieldCheck className="w-3 h-3 text-amber-400" />
-                      EMPIRICAL RESEARCH HUB
-                    </span>
-                    <span className="font-mono-board text-xs text-stone-500 font-bold">
-                      STRICT AI GUIDELINES · HARD DATA & TRANSPARENCY
-                    </span>
-                  </div>
-                  <h2 className="font-signage text-2xl sm:text-3xl font-black text-stone-900 tracking-wide mt-1">
-                    AI MARKET INTELLIGENCE: 6 SAMPLE INQUIRIES
-                  </h2>
-                  <p className="text-xs sm:text-sm text-stone-600 mt-1 max-w-3xl leading-relaxed">
-                    Grounded in 210,000+ verified active job postings with live 24-hour replenishment velocity tracking.
-                    Click any sample inquiry to audit verified figures, task automation ratios, and reliability benchmarks.
-                  </p>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setActiveAIChatQuery(null)
-                    setIsAIChatOpen(true)
-                  }}
-                  className="px-4 py-2 rounded-full bg-stone-900 hover:bg-black text-white font-mono-board text-xs font-bold tracking-wider transition-all cursor-pointer flex items-center gap-2 shadow-sm"
-                >
-                  <img src={aiMascotImg} alt="AI Mascot" className="w-4 h-4 object-contain" />
-                  <span>Open Interactive Chat</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-amber-400" />
-                </button>
-              </div>
-
-              {/* 6 Quick Question Cards Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 pt-1">
-                {QUICK_QUESTIONS.map((q) => (
-                  <button
-                    key={q.id}
-                    type="button"
-                    onClick={() => handleOpenAIChatWithQuery(q.question)}
-                    className="group rounded-2xl bg-[#FAF7F0] hover:bg-white border-2 border-stone-200 hover:border-amber-500/70 p-4 text-left transition-all shadow-2xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-3"
-                  >
-                    <div className="space-y-1.5">
-                      <div className="flex items-center justify-between">
-                        <span className="px-2 py-0.5 rounded text-[9.5px] font-mono-board font-bold uppercase tracking-wider bg-amber-100 text-amber-900 border border-amber-300">
-                          {q.category}
-                        </span>
-                        <span className="text-[10px] font-mono-board text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200 font-bold">
-                          94% Conf.
-                        </span>
-                      </div>
-
-                      <h3 className="font-signage text-sm sm:text-base font-bold text-stone-900 group-hover:text-amber-700 transition-colors leading-snug">
-                        {q.question}
-                      </h3>
-                    </div>
-
-                    <div className="pt-2 border-t border-stone-200/80 flex items-center justify-between text-[11px] font-mono-board text-stone-500">
-                      <span className="text-stone-600 font-medium group-hover:text-stone-900">
-                        {q.shortTitle}
-                      </span>
-                      <span className="font-bold text-amber-700 group-hover:text-amber-800 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
-                        <span>Ask AI</span>
-                        <ArrowRight className="w-3 h-3" />
-                      </span>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
 
             {/* ── 4. THE TWO CORE PILLARS: TOP 3 ROLES + DAILY NEWS CATCHUP (LIGHT MODE) ── */}
             <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-stretch">

@@ -11,7 +11,6 @@ import {
   Compass,
 } from 'lucide-react'
 import logoImg from '../assets/JobTransitLogo.png'
-import aiMascotImg from '../assets/ai-mascot.png'
 
 export type NavTab = 'home' | 'transit' | 'catchup' | 'trend' | 'profile'
 
@@ -25,7 +24,6 @@ export interface NavbarProps {
   onSelectTab: (tab: NavTab) => void
   currentUser: UserProfile
   onLogout: () => void
-  onOpenAIChat?: () => void
 }
 
 interface NavItemConfig {
@@ -41,7 +39,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   onSelectTab,
   currentUser,
   onLogout,
-  onOpenAIChat,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const dockRef = useRef<HTMLDivElement>(null)
@@ -213,20 +210,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Right: Notifications, User Profile & Actions */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* AI Navigator Glass Button */}
-          {onOpenAIChat && (
-            <button
-              type="button"
-              onClick={onOpenAIChat}
-              className="relative flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-400/20 hover:bg-amber-400/35 border border-amber-500/40 text-stone-900 transition-all cursor-pointer backdrop-blur-md active:scale-95 shadow-xs group"
-              title="Ask JobTransit AI Navigator (6 Sample Inquiries)"
-              aria-label="AI Navigator"
-            >
-              <img src={aiMascotImg} alt="AI Mascot" className="w-4 h-4 object-contain group-hover:rotate-6 transition-transform" />
-              <span className="hidden sm:inline text-xs font-mono-board font-black text-amber-950">AI Chat</span>
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            </button>
-          )}
+
 
           {/* Notifications Glass Button */}
           <button
