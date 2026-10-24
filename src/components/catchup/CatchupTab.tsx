@@ -322,7 +322,7 @@ const ArticleThumbnailImage = ({ item, fallback: Fallback }: { item: NewsItem; f
   )
 }
 
-function getCategoryColor(catSlug: string): { text: string; bg: string; border: string } {
+export function getCategoryColor(catSlug: string): { text: string; bg: string; border: string } {
   switch (catSlug) {
     case 'ai-ml':
       return { text: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-200' }

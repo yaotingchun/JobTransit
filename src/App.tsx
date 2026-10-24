@@ -5,6 +5,8 @@ import { HeroText } from './components/HeroText'
 import { AuthModal, type UserProfile } from './components/auth/AuthModal'
 import { Homepage } from './components/Homepage'
 import { FollowUpPage } from './components/followUp/FollowUpPage'
+import { AIChatbox } from './components/chat/AIChatbox'
+import { FloatingAIChatTrigger } from './components/chat/FloatingAIChatTrigger'
 
 export default function App() {
   const [route, setRoute] = useState<'default' | 'follow-up'>(() => {
@@ -34,6 +36,7 @@ export default function App() {
 
   const [isAuthOpen, setIsAuthOpen] = useState(false)
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login')
+  const [isLandingAIChatOpen, setIsLandingAIChatOpen] = useState(false)
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(() => {
     try {
       const saved = localStorage.getItem('jobtransit_user')
@@ -110,6 +113,18 @@ export default function App() {
         initialMode={authMode}
         onClose={() => setIsAuthOpen(false)}
         onAuthSuccess={handleAuthSuccess}
+      />
+
+      {/* Landing Floating AI Navigator Trigger & Chatbox */}
+      <FloatingAIChatTrigger
+        isOpen={isLandingAIChatOpen}
+        onClick={() => setIsLandingAIChatOpen(true)}
+      />
+
+      <AIChatbox
+        isOpen={isLandingAIChatOpen}
+        onClose={() => setIsLandingAIChatOpen(false)}
+        onNavigateTab={() => handleOpenAuth('signup')}
       />
     </main>
   )

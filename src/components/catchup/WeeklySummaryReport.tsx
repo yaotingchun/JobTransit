@@ -30,7 +30,7 @@ export interface WeeklySummaryReportProps {
   liveArticles?: any[]
 }
 
-function getCategoryBadge(cat: string) {
+export function getCategoryBadge(cat: string) {
   switch (cat) {
     case 'ai-ml':
       return { text: 'text-blue-700', bg: 'bg-blue-50', border: 'border-blue-200', label: 'AI & Machine Learning' }
@@ -495,7 +495,6 @@ export const WeeklySummaryReport: React.FC<WeeklySummaryReportProps> = ({
       {viewStyle === 'list' && (
         <section className="space-y-5">
           {topArticles.map((art, idx) => {
-            const badge = getCategoryBadge(art.category)
             return (
               <article
                 key={art.id}

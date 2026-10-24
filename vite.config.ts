@@ -9,6 +9,7 @@ import {
   readDailyScrapeCache,
   DAILY_SCRAPE_INTERVAL_MS,
 } from './server/linkedinScraper.ts'
+import { generateAIChatReply } from './server/aiChatService.ts'
 
 function linkedInScraperPlugin(): Plugin {
   return {
@@ -122,6 +123,48 @@ function linkedInScraperPlugin(): Plugin {
             res.statusCode = 500
             res.end(JSON.stringify({ error: String(err) }))
           }
+          return
+        }
+
+        // Endpoint 3: Dynamic AI Chat grounded in google.json
+        if (parsedUrl.pathname === '/api/ai/chat') {
+          res.setHeader('Content-Type', 'application/json')
+          res.setHeader('Access-Control-Allow-Origin', '*')
+          res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
+          res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+
+          if (req.method === 'OPTIONS') {
+            res.statusCode = 204
+            res.end()
+            return
+          }
+
+          if (req.method !== 'POST') {
+            res.statusCode = 405
+            res.end(JSON.stringify({ error: 'Method not allowed' }))
+            return
+          }
+
+          let body = ''
+          req.on('data', (chunk) => {
+            body += chunk
+          })
+          req.on('end', async () => {
+            try {
+              const payload = JSON.parse(body || '{}')
+              if (!payload.message || typeof payload.message !== 'string') {
+                res.statusCode = 400
+                res.end(JSON.stringify({ error: 'Missing message parameter' }))
+                return
+              }
+              const aiReply = await generateAIChatReply(payload)
+              res.end(JSON.stringify(aiReply))
+            } catch (err) {
+              console.error('[API /api/ai/chat] Error:', err)
+              res.statusCode = 500
+              res.end(JSON.stringify({ error: String(err) }))
+            }
+          })
           return
         }
 
