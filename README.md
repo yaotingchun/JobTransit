@@ -24,7 +24,7 @@
 | Live Demo         | [https://job-transit.replit.app](https://job-transit.replit.app)             |
 | Slide Deck        | [https://example.com/jobtransit-slides](https://example.com/jobtransit-slides) *(Replace with pitch deck link)* |
 | Demo Video        | [https://example.com/jobtransit-video](https://example.com/jobtransit-video) *(Replace with video link)* |
-| Documentation     | [https://example.com/jobtransit-video](https://example.com/jobtransit-video) *(Replace with video link)* |
+| Documentation     | [View Documentation Here](https://github.com/yaotingchun/JobTransit/blob/master/submission/SDC2026_We%20Need%20New%20Laptops_Preliminary%20(2).pdf) |
 
 ---
 
